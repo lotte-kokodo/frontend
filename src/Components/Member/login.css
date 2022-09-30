@@ -6,7 +6,7 @@
 }
 
 .card{
-    height: 450px;
+    height: 550px;
     margin-top: auto;
     margin-bottom: auto;
     width: 600px;
@@ -51,7 +51,7 @@ input:focus{
 }
 
 .idCheck{
-    margin-bottom: 10px;
+    margin-top: 15px;
     float: right;
 }
 
@@ -71,8 +71,7 @@ input:focus{
     color: #ffffff;
     background-color: #fb7d98;
     width: 500px;
-    margin:0 auto;
-    margin-bottom: 20px;
+    margin: 30px auto;    
 }
 
 .login_btn:hover{
@@ -85,7 +84,7 @@ input:focus{
     background-color: #F9E000;
     width: 500px;
     margin:0 auto;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .kakao:hover{

@@ -20,8 +20,15 @@ function Login() {
         fetchData(inputId,inputPw);
     }
 
+    const onClickKakao = () => {
+        
+    }
+
+    const onClickNaver = () => {}
+    
+
     const fetchData = async (id,pwd) => {
-        await axios.post("http://localhost:3000/login",null ,{ params:{ "id":id, "pwd":pwd} } )
+        await axios.post("http://localhost:9001/user-service/login",null ,{ params:{ "id":id, "pwd":pwd} } )
         .then(function(resp){
             if(resp.data.id === undefined){
                 alert('입력하신 id가 일치하지 않습니다.');
@@ -65,14 +72,16 @@ function Login() {
                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
                                 <label className="form-check-label" for="flexCheckChecked">아이디 저장</label>
                             </div>
-                            <div className="form-group">
-                                <Link className="btn float-right login_btn" onClick={onClickLogin} to="/">로그인하기 </Link>
-                            </div>
-                            <div className="form-group">
-                                <button className="btn float-right kakao">카카오로 시작하기</button>
-                            </div>
-                            <div className="form-group">
-                                <button className="btn float-right naver">네이버로 시작하기</button>
+                            <div className="login-group">
+                                <div className="form-group">
+                                    <Link className="btn float-right login_btn" onClick={onClickLogin} to="/">로그인하기 </Link>
+                                </div>
+                                <div className="form-group">
+                                    <Link className="btn float-right kakao" onClick={onClickKakao} to="/loginKakao">카카오로 시작하기 </Link>
+                                </div>
+                                <div className="form-group">
+                                    <Link className="btn float-right naver" onClick={onClickNaver} to="/loginNaver">네이버로 시작하기 </Link>
+                                </div>
                             </div>
                         </form>
                     </div>
