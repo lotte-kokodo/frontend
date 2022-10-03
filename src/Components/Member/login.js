@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 import "./login.css";
 
@@ -20,10 +20,7 @@ function Login() {
         fetchData(inputId,inputPw);
     }
 
-    const onClickKakao = () => {
-        
-    }
-
+    const onClickKakao = () => {}
     const onClickNaver = () => {}
     
 
@@ -69,8 +66,8 @@ function Login() {
                                 <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
                             </div>
                             <div className="form-check idCheck">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
-                                <label className="form-check-label" for="flexCheckChecked">아이디 저장</label>
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                                <label className="form-check-label" >아이디 저장</label>
                             </div>
                             <div className="login-group">
                                 <div className="form-group">
@@ -80,7 +77,7 @@ function Login() {
                                     <Link className="btn float-right kakao" onClick={onClickKakao} to="/loginKakao">카카오로 시작하기 </Link>
                                 </div>
                                 <div className="form-group">
-                                    <Link className="btn float-right naver" onClick={onClickNaver} to="/loginNaver">네이버로 시작하기 </Link>
+                                    <Link className="btn float-right naver" onClick={onClickNaver} to="/NaverLogin">네이버로 시작하기</Link>
                                 </div>
                             </div>
                         </form>

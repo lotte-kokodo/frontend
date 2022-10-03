@@ -3,7 +3,8 @@ import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
 import Login from "./Components/Member/login"
 import Signup from "./Components/Member/signup"
-import LoginNaver from './Components/Member/loginNaver';
+import LoginKakao from './Components/Member/loginKakao';
+import NaverLogin from './Components/Member/NaverLogin';
 
 function App() {
   return (
@@ -38,8 +39,8 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/loginKakao" element={<LoginNaver />}></Route>
-            <Route path="/loginNaver" element={<LoginNaver />}></Route>
+            <Route path="/loginKakao" element={<LoginKakao />}></Route>
+            <Route path="/NaverLogin" element={<NaverLogin />}></Route>
           </Routes>
         </div>
         </main>
