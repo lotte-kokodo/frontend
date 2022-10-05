@@ -1,0 +1,70 @@
+.contents:after {
+    clear: both; display: inline-block; content: ''; 
+ }
+ 
+ .contents {
+     /* border: 1px solid black; */
+ }
+ 
+ .content {
+     display: flex;
+     margin: 10px;
+     border-bottom: 1px solid #999999;
+     padding-bottom: 1rem;
+ }
+ 
+ .content .image {
+     width: 30%;
+     height: auto;
+     float: left;
+     color: red;
+ }
+ 
+ .content .values {
+     float: right;
+     margin-right: auto;
+ }
+ 
+ .values .values-top {
+     display: block;
+ }
+ 
+ .values .values-bottom {
+     display: block;
+ }
+ 
+ .values .price, .qty {
+     float:left;
+     margin-top: 10px;
+     margin-right: 10px;
+ }
+ 
+ 
+ .content .status {
+     float: right;
+     margin: 0 auto;
+     font-weight: bold;
+ }
+ 
+ .order-status {
+     float: right;
+     margin: 0 auto;
+     font-weight: bold;
+     /* top: 30%; */
+ }
+ 
+ 
+ .content .button {
+     float: right;
+     margin-right: 5%;
+ }
+ 
+ .button {
+     background-color: white;
+     border: 3px solid #FB7D98;
+     border-radius: 20px;
+     width: 180px;
+     height: 50px;
+     color: #FB7D98;
+     font-size: 25px;
+ }
