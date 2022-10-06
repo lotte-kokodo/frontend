@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom"
 
-import "./login.css";
+import "../css/login.css";
 
 function Login() {
     const [inputId, setInputId] = useState('');
@@ -24,7 +24,19 @@ function Login() {
         
     }
 
-    const onClickNaver = () => {}
+    const onClickNaver = () => {
+        naverData();
+    }
+
+    const naverData = async () => {
+        await axios.post("http://localhost:9001/user-service/oauth2/authorization/naver",null)
+        .then(function(){
+            console.log("naver");
+         })
+         .catch(function(error){
+            console.log(error);
+         })
+    }
     
 
     const fetchData = async (id,pwd) => {
@@ -60,27 +72,25 @@ function Login() {
                     <div className="card-body">
                         <form>
                             <div className="input-group form-group">
-                                {/* <div className="input-group-prepend"> <span className="input-group-text"><i className="fas fa-user"></i></span> </div> */}
                                 <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
                                 
                             </div>
                             <div className="input-group form-group">
-                                {/* <div className="input-group-prepend"><span className="input-group-text"><i className="fas fa-key"></i></span></div>*/}
                                 <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
                             </div>
                             <div className="form-check idCheck">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
-                                <label className="form-check-label" for="flexCheckChecked">아이디 저장</label>
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                                <label className="form-check-label">아이디 저장</label>
                             </div>
                             <div className="login-group">
                                 <div className="form-group">
-                                    <Link className="btn float-right login_btn" onClick={onClickLogin} to="/">로그인하기 </Link>
+                                    <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
                                 </div>
                                 <div className="form-group">
-                                    <Link className="btn float-right kakao" onClick={onClickKakao} to="/loginKakao">카카오로 시작하기 </Link>
+                                    <button className="btn float-right kakao" onClick={onClickKakao} >카카오로 시작하기 </button>
                                 </div>
                                 <div className="form-group">
-                                    <Link className="btn float-right naver" onClick={onClickNaver} to="/loginNaver">네이버로 시작하기 </Link>
+                                    <button className="btn float-right naver" onClick={onClickNaver} >네이버로 시작하기 </button>                                
                                 </div>
                             </div>
                         </form>

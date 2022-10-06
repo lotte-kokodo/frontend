@@ -6,7 +6,7 @@
 }
 
 .card{
-    height: 550px;
+    height: 570px;
     margin-top: auto;
     margin-bottom: auto;
     width: 600px;
@@ -14,7 +14,7 @@
 }
 
 .card-body{
-    margin:0 auto;
+    margin:5px auto;
 }
 
 .social_icon span {
@@ -75,8 +75,9 @@ input:focus{
 }
 
 .login_btn:hover{
-    color: black;
-    background-color: white;
+    color: #fb7d98;
+    background-color: #ffffff;
+    border-color: #fb7d98;
 }
 
 .kakao{
@@ -88,8 +89,9 @@ input:focus{
 }
 
 .kakao:hover{
-    color: black;
-    background-color: white;
+    color: #fb7d98;
+    background-color: #ffffff;
+    border-color: #fb7d98;
 }
 
 .naver{
@@ -100,8 +102,9 @@ input:focus{
 }
 
 .naver:hover{
-    color: black;
-    background-color: white;
+    color: #fb7d98;
+    background-color: #ffffff;
+    border-color: #fb7d98;
 }
 
 
