@@ -1,13 +1,15 @@
 import React, { useState} from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 import "../css/login.css";
 
 function Login() {
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputPw] = useState('');
-    
+    const history = useNavigate();
+
     const handleInputId = (e) => {
         setInputId(e.target.value);
     }
@@ -32,10 +34,14 @@ function Login() {
         })
         .then(function(response){
             console.log(response);
-            console.log(response.headers.token);
-            alert("성공");
+            localStorage.setItem("memberId",response.headers.memberid)
+            localStorage.setItem("token",response.headers.token)
+            alert("로그인에 성공했습니다.");
+            history("/");
          })
          .catch(function(error){
+            alert("로그인에 실패했습니다.");
+            console.log(error);
          })
     }
 
