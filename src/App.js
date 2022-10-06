@@ -108,6 +108,7 @@ function App() {
         </nav>
 
         <main>
+
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />}></Route>
@@ -115,6 +116,7 @@ function App() {
               <Route path="/signup" element={<Signup />}></Route>
             </Routes>
           </div>
+
         </main>
       </BrowserRouter>
         

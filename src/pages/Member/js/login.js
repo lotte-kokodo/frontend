@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 import "../css/login.css";
 
@@ -20,23 +20,8 @@ function Login() {
         fetchData(inputId,inputPw);
     }
 
-    const onClickKakao = () => {
-        
-    }
-
-    const onClickNaver = () => {
-        naverData();
-    }
-
-    const naverData = async () => {
-        await axios.post("http://localhost:9001/user-service/oauth2/authorization/naver",null)
-        .then(function(){
-            console.log("naver");
-         })
-         .catch(function(error){
-            console.log(error);
-         })
-    }
+    const onClickKakao = () => {}
+    const onClickNaver = () => {}
     
 
     const fetchData = async (id,pwd) => {
@@ -80,7 +65,7 @@ function Login() {
                             </div>
                             <div className="form-check idCheck">
                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-                                <label className="form-check-label">아이디 저장</label>
+                                <label className="form-check-label" >아이디 저장</label>
                             </div>
                             <div className="login-group">
                                 <div className="form-group">
