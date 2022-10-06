@@ -1,63 +1,69 @@
-.contents:after {
-    clear: both; display: inline-block; content: ''; 
- }
- 
- .contents {
-     /* border: 1px solid black; */
- }
- 
- .content {
-     display: flex;
+.contents {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+
+.content {
+     /* float: left; */
+     position:relative;
      margin: 10px;
      border-bottom: 1px solid #999999;
      padding-bottom: 1rem;
+
  }
  
- .content .image {
-     width: 30%;
-     height: auto;
-     float: left;
-     color: red;
+div.order-date {
+    display: block;
+    font-size: 20px;
+}
+
+.content-value {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.content-name {
+    display: inline-block;
+    font-size: 20px;
+
+}
+
+.content-value-detail {
+    display: flex;
+    position: relative;
+    width: 100%;
+    vertical-align: middle;
+    border-top: 1px solid black;
+    padding-top: 10px;
+}
+
+.content-thumbnail{
+    width: 30%;
+
+}
+
+.content-thumbnail img{
+     /* float: left; */
+    width: 200px;
  }
- 
- .content .values {
-     float: right;
-     margin-right: auto;
- }
- 
- .values .values-top {
-     display: block;
- }
- 
- .values .values-bottom {
-     display: block;
- }
- 
- .values .price, .qty {
-     float:left;
-     margin-top: 10px;
-     margin-right: 10px;
- }
- 
- 
- .content .status {
-     float: right;
-     margin: 0 auto;
-     font-weight: bold;
- }
- 
- .order-status {
-     float: right;
-     margin: 0 auto;
-     font-weight: bold;
-     /* top: 30%; */
- }
- 
- 
- .content .button {
-     float: right;
-     margin-right: 5%;
- }
+
+.order-value {
+    position: relative;
+    padding-top: 6%;
+    width: 50%;
+}
+
+.order-value > * {
+    /* vertical-align: bottom; */
+}
+
+
+.cancel-button {
+    position: relative;
+    margin-right: 5%;
+    padding-top: 6%;
+}
  
  .button {
      background-color: white;
@@ -67,4 +73,8 @@
      height: 50px;
      color: #FB7D98;
      font-size: 25px;
+ }
+ 
+ .click-button {
+    display: inline-block;
  }
