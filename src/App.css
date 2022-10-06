@@ -28,6 +28,22 @@
   color: #61dafb;
 }
 
+.login_btn{
+  color: #ffffff;
+  background-color: #fb7d98;
+}
+
+.login_btn:hover{
+  color: #fb7d98;
+  background-color: #ffffff;
+  border-color: #fb7d98;
+}
+
+.button{
+  border: 0;
+  outline: 0;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
