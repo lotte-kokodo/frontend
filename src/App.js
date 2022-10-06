@@ -8,7 +8,9 @@ import "./Components/Frame/css/header.css"
 
 function App() {
   const [inputIdHomeInput, setInputHomeInput] = useState('');
-
+  const headers = {
+    'Content-Type' : 'application/json'
+}
 
   const handleHomeInput = (e) => {
     setInputHomeInput(e.target.value);
