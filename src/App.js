@@ -1,9 +1,9 @@
 import React, {useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
+import ProductDetail from "./Components/product/ProductDetail"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
-
 import "./Components/Frame/css/header.css"
 
 function App() {
@@ -110,15 +110,14 @@ function App() {
         </nav>
 
         <main>
-
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/signup" element={<Signup />}></Route>
-            </Routes>
-          </div>
-
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+          </Routes>
+        </div>
         </main>
       </BrowserRouter>
         
