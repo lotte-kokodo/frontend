@@ -17,28 +17,25 @@ function Login() {
     }
 
     const onClickLogin = () => {
-        fetchData(inputId,inputPw);
+        const params = {"loginId":inputId,"password":inputPw};
+        fetchLogin(params);
     }
 
     const onClickKakao = () => {}
     const onClickNaver = () => {}
-    
 
-    const fetchData = async (id,pwd) => {
-        await axios.post("http://localhost:9001/user-service/login",null ,{ params:{ "id":id, "pwd":pwd} } )
-        .then(function(resp){
-            if(resp.data.id === undefined){
-                alert('입력하신 id가 일치하지 않습니다.');
-            } else if(resp.data.id === null){
-                alert('입력하신 비밀번호가 일치하지 않습니다.');
-            } else{
-                alert('로그인 됐습니다.');
-                localStorage.setItem('user_id', inputId);
-                window.location.reload(); // 새로고침
-            }
+    const fetchLogin = async (params) => {
+        await axios({
+            method: "post",
+            url: "http://localhost:8080/login",
+            data : params
+        })
+        .then(function(response){
+            console.log(response);
+            console.log(response.headers.token);
+            alert("성공");
          })
          .catch(function(error){
-                console.log(error);
          })
     }
 
@@ -55,30 +52,28 @@ function Login() {
                         </div> */}
                     </div>
                     <div className="card-body">
-                        <form>
-                            <div className="input-group form-group">
-                                <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
-                                
+                        <div className="input-group form-group">
+                            <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
+                            
+                        </div>
+                        <div className="input-group form-group">
+                            <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
+                        </div>
+                        <div className="form-check idCheck">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                            <label className="form-check-label" >아이디 저장</label>
+                        </div>
+                        <div className="login-group">
+                            <div className="form-group">
+                                <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
                             </div>
-                            <div className="input-group form-group">
-                                <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
+                            <div className="form-group">
+                                <button className="btn float-right kakao" onClick={onClickKakao} >카카오로 시작하기 </button>
                             </div>
-                            <div className="form-check idCheck">
-                                <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-                                <label className="form-check-label" >아이디 저장</label>
+                            <div className="form-group">
+                                <button className="btn float-right naver" onClick={onClickNaver} >네이버로 시작하기 </button>                                
                             </div>
-                            <div className="login-group">
-                                <div className="form-group">
-                                    <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
-                                </div>
-                                <div className="form-group">
-                                    <button className="btn float-right kakao" onClick={onClickKakao} >카카오로 시작하기 </button>
-                                </div>
-                                <div className="form-group">
-                                    <button className="btn float-right naver" onClick={onClickNaver} >네이버로 시작하기 </button>                                
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                     <div className="card-footer">
                         <div className="d-flex justify-content-center links">

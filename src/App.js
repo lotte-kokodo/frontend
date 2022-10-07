@@ -1,16 +1,18 @@
 import React, {useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
+import ProductDetail from "./Components/product/ProductDetail"
 import Login from "./pages/Member/js/login"
 import OrderDetailList from "./Components/Order/orderDetailList";
 import OrderList from "./Components/Order/orderList";
 import Signup from "./pages/Member/js/signup"
-
 import "./Components/Frame/css/header.css"
 
 function App() {
   const [inputIdHomeInput, setInputHomeInput] = useState('');
-
+  const headers = {
+    'Content-Type' : 'application/json'
+}
 
   const handleHomeInput = (e) => {
     setInputHomeInput(e.target.value);
@@ -115,6 +117,9 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/orderList" element={<OrderList />}></Route>
             <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
           </Routes>
         </div>
         </main>
