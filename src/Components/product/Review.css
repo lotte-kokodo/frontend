@@ -1,0 +1,660 @@
+element.style {
+}
+.groupProd .util.isOptionType[data-v-2d2cca6e] {
+    border-bottom: 1px solid #333;
+}
+.util.isOptionType[data-v-2d2cca6e] {
+    border-bottom: 0;
+}
+.util[data-v-2d2cca6e] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    widows: 1;
+}
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+body, html {
+    line-height: 1;
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    height: 100%;
+    position: relative;
+    letter-spacing: -.02em;
+}
+body {
+    line-height: 1;
+    background-color: #fff;
+}
+style attribute {
+    --actual-width: 1440px;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+.util .searchAreaWrap[data-v-2d2cca6e] {
+    max-width: 400px;
+    width: 400px;
+    margin-left: auto;
+}
+.searchAreaWrap .searchArea[data-v-225e91e0] {
+    position: relative;
+    width: 100%;
+}
+.searchAreaWrap .searchArea .btnSearchInner[data-v-225e91e0] {
+    overflow: hidden;
+    text-indent: -99999px;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_search_black.svg) no-repeat 50%;
+    background-size: 26px auto;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: 9px;
+    right: 14px;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.searchAreaWrap .searchArea input[data-v-225e91e0] {
+    border: 0;
+    background-image: none;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0 72px 0 14px;
+    font-size: 14px;
+    line-height: 22px;
+    height: 44px;
+    letter-spacing: -.3px;
+    width: 100%;
+}
+input[type=search] {
+    -webkit-appearance: textfield;
+}
+input[type=search] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.blind, .hiddenTxt {
+    overflow: hidden;
+    display: inline-block;
+    border: 0;
+    margin: 0;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px,1px,1px,1px);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    position: absolute;
+    top: 0!important;
+    left: 0!important;
+}
+.searchAreaWrap .searchArea .btnSearchDel[data-v-225e91e0] {
+    overflow: hidden;
+    text-indent: -99999px;
+    background: url(//static.lotteon.com/p/product/assets/img/btnInputReset.svg) no-repeat 0 0;
+    background-size: 18px auto;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 51px;
+    top: 13px;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.cores[data-v-2d2cca6e] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    position: relative;
+    padding: 30px 0 30px;
+}
+.cores .staring[data-v-2d2cca6e] {
+    display: inline-block;
+    width: 28%;
+    max-width: 100%;
+}
+.cores .staring .star[data-v-2d2cca6e] {
+    display: block;
+    margin: 0 auto 7px;
+    width: 130px;
+    height: 26px;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_star.svg) repeat-x 0/26px 26px;
+}
+.cores .staring .star strong[data-v-2d2cca6e] {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_star_full.svg) repeat-x 0/26px 26px;
+}
+.blind, .hiddenTxt {
+    overflow: hidden;
+    display: inline-block;
+    border: 0;
+    margin: 0;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px,1px,1px,1px);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    position: absolute;
+    top: 0!important;
+    left: 0!important;
+}
+.cores .staring .score[data-v-2d2cca6e] {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+}
+.cores .staring .score .total[data-v-2d2cca6e], .cores .staring .score em[data-v-2d2cca6e] {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 4px;
+    font-size: 28px;
+    line-height: 1.36;
+}
+.cores .staring .score em[data-v-2d2cca6e] {
+    font-weight: 700;
+    letter-spacing: -.07em;
+}
+.cores .staring .score .total[data-v-2d2cca6e], .cores .staring .score em[data-v-2d2cca6e] {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 4px;
+    font-size: 28px;
+    line-height: 1.36;
+}
+.info[data-v-597ad349] {
+    padding: 24px 0 12px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    font-size: 13px;
+    line-height: 1.46;
+    letter-spacing: -.02em;
+}
+.info .total[data-v-597ad349] {
+    font-size: 15px;
+    line-height: 1.47;
+}
+.info .sort[data-v-597ad349] {
+    margin-left: auto;
+    margin-right: 16px;
+}
+.info .sort a[data-v-597ad349], .info .sort button[data-v-597ad349] {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1.47;
+    color: #999;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.info .sort a+button[data-v-597ad349], .info .sort a a[data-v-597ad349], .info .sort button+button[data-v-597ad349], .info .sort button a[data-v-597ad349] {
+    position: relative;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+.info .sort a[data-v-597ad349], .info .sort button[data-v-597ad349] {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1.47;
+    color: #999;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.info .sort a+button[data-v-597ad349]:before, .info .sort a a[data-v-597ad349]:before, .info .sort button+button[data-v-597ad349]:before, .info .sort button a[data-v-597ad349]:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 1px;
+    height: 10px;
+    background: #e7e7e7;
+}
+.info .sort a.on[data-v-597ad349], .info .sort button.on[data-v-597ad349] {
+    color: #000;
+}
+.info .sort a+button[data-v-597ad349], .info .sort a a[data-v-597ad349], .info .sort button+button[data-v-597ad349], .info .sort button a[data-v-597ad349] {
+    position: relative;
+    padding-left: 10px;
+    margin-left: 10px;
+}
+.info .btnFilter[data-v-597ad349] {
+    display: block;
+    width: 76px;
+    height: 44px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.info .btnFilter span[data-v-597ad349] {
+    font-size: 14px;
+    line-height: 1.5;
+    padding-left: 26px;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_btn_sorting_square.svg) no-repeat 0/22px 22px;
+}
+button span {
+    position: relative;
+}
+.reviewList[data-v-05ce94ee] {
+    border-bottom: 1px solid #eee;
+    padding: 23px 0 20px;
+}
+.uswersAndMoremenu[data-v-05ce94ee] {
+    position: relative;
+}
+.users[data-v-05ce94ee] {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+a {
+    text-decoration: none;
+    color: #333;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.users figure.profileImg5[data-v-05ce94ee] {
+    background: url(//static.lotteon.com/p/product/assets/img/img_profile_default_random_05.svg) no-repeat 50%/cover;
+}
+.users figure[data-v-05ce94ee] {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+figure, form {
+    margin: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+.blind, .hiddenTxt {
+    overflow: hidden;
+    display: inline-block;
+    border: 0;
+    margin: 0;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px,1px,1px,1px);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    position: absolute;
+    top: 0!important;
+    left: 0!important;
+}
+.users .identities[data-v-05ce94ee] {
+    margin-left: 8px;
+}
+.users .identities .userNameWrap[data-v-05ce94ee] {
+    display: block;
+}
+.users .identities .userNameWrap .userName[data-v-05ce94ee] {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.users .identities .badges[data-v-05ce94ee] {
+    display: block;
+}
+[data-v-05ce94ee] .moreMenuWrap.absolute {
+    top: 10px;
+}
+.moreMenuWrap.absolute {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.moreMenuWrap {
+    z-index: 1;
+}
+a.icon[data-v-2292bccc], a.iconCircle[data-v-2292bccc], button.icon[data-v-2292bccc], button.iconCircle[data-v-2292bccc] {
+    width: auto;
+    height: auto;
+    border: none;
+    font-size: 0;
+}
+a[data-v-2292bccc], button[data-v-2292bccc] {
+    display: inline-block;
+    width: 100%;
+    height: 52px;
+    -o-object-fit: contain;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid #bfbfbf;
+    background-color: transparent;
+    font-size: 18px;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: -.5px;
+    text-align: center;
+    color: #757575;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+    *overflow: visible;
+}
+button, select {
+    text-transform: none;
+}
+button, input {
+    line-height: normal;
+}
+a .inner[data-v-2292bccc], button .inner[data-v-2292bccc] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    vertical-align: top;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+a span[data-v-2292bccc], button span[data-v-2292bccc] {
+    white-space: nowrap;
+}
+a .icon.more[data-v-2292bccc], button .icon.more[data-v-2292bccc] {
+    width: 20px;
+    height: 20px;
+    background-image: url(//static.lotteon.com/p/product/assets/img/btn_icon_more.svg);
+}
+a .icon[data-v-2292bccc], button .icon[data-v-2292bccc] {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+a span[data-v-2292bccc], button span[data-v-2292bccc] {
+    white-space: nowrap;
+}
+button span {
+    position: relative;
+}
+a span[data-v-2292bccc], button span[data-v-2292bccc] {
+    white-space: nowrap;
+}
+.blind, .hiddenTxt {
+    overflow: hidden;
+    display: inline-block;
+    border: 0;
+    margin: 0;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px,1px,1px,1px);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    position: absolute;
+    top: 0!important;
+    left: 0!important;
+}
+.contents[data-v-05ce94ee] {
+    padding-top: 15px;
+    word-break: break-all;
+}
+.contents .staring[data-v-05ce94ee] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.contents .staring .star[data-v-05ce94ee] {
+    width: 85px;
+    height: 17px;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_star.svg) repeat-x 0/17px 17px;
+}
+.contents .staring .star strong[data-v-05ce94ee] {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_star_full.svg) repeat-x 0/17px 17px;
+}
+.blind, .hiddenTxt {
+    overflow: hidden;
+    display: inline-block;
+    border: 0;
+    margin: 0;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px,1px,1px,1px);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    position: absolute;
+    top: 0!important;
+    left: 0!important;
+}
+.contents .staring em[data-v-05ce94ee] {
+    display: inline-block;
+    margin-top: 1px;
+    padding-left: 4px;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -.03em;
+}
+.contents .options[data-v-05ce94ee] {
+    margin-top: 7px;
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 1.57;
+    color: #757575;
+    display: block;
+    white-space: nowrap;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: horizontal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+    margin-right: 20px;
+}
+.contents .options+.seller[data-v-05ce94ee] {
+    position: relative;
+}
+.contents .seller[data-v-05ce94ee] {
+    display: inline-block;
+    max-width: 100%;
+    margin-top: 7px;
+    font-size: 14px;
+    line-height: 1.57;
+    color: #757575;
+}
+.contents .seller .sellerTextWrap[data-v-05ce94ee] {
+    display: inline-block;
+    position: relative;
+    padding-left: 47px;
+    max-width: 100%;
+}
+.contents .seller .sellerTextWrap em[data-v-05ce94ee] {
+    position: absolute;
+    left: 0;
+}
+.contents .texts[data-v-05ce94ee] {
+    display: block;
+    padding-top: 10px;
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.47;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+    *overflow: visible;
+}
+button, select {
+    text-transform: none;
+}
+button span {
+    position: relative;
+}
+.underAction[data-v-05ce94ee] {
+    margin-top: 21px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.feedbacks .btnHelpful[data-v-05ce94ee] {
+    padding-left: 27px;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_helpful.svg) no-repeat 0/23px 23px;
+}
+.feedbacks [class^=btn][data-v-05ce94ee] {
+    display: inline-block;
+    height: 23px;
+    font-size: 14px;
+    line-height: 1.57;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+.feedbacks .btnHelpful .num[data-v-05ce94ee] {
+    display: inline-block;
+    margin-left: 2px;
+}
+button span {
+    position: relative;
+}
+.feedbacks .btnReply[data-v-05ce94ee] {
+    padding-left: 27px;
+    margin-left: 14px;
+    background: url(//static.lotteon.com/p/product/assets/img/ico_comment.svg) no-repeat 0 0/24px 24px;
+}
+.feedbacks [class^=btn][data-v-05ce94ee] {
+    display: inline-block;
+    height: 23px;
+    font-size: 14px;
+    line-height: 1.57;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer;
+    *overflow: visible;
+}
+.blind, .hiddenTxt {
+    overflow: hidden;
+    display: inline-block;
+    border: 0;
+    margin: 0;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px,1px,1px,1px);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    position: absolute;
+    top: 0!important;
+    left: 0!important;
+}
+.date[data-v-05ce94ee] {
+    margin-left: auto;
+    font-size: 13px;
+    line-height: 1.46;
+    color: #999;
+}
+.util .sum strong[data-v-2d2cca6e] {
+    display: inline-block;
+    font-size: 28px;
+    line-height: 1.36;
+}
+.util .sum span[data-v-2d2cca6e] {
+    display: inline-block;
+    padding-left: 4px;
+    vertical-align: text-bottom;
+    font-size: 18px;
+}
+.info .total[data-v-597ad349] {
+    font-size: 15px;
+    line-height: 1.47;
+}

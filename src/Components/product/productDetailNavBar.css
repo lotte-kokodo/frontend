@@ -1,0 +1,166 @@
+element.style {
+}
+.contentsWrap.fullType .stickyTab {
+    width: 1140px;
+}
+.vue-affix.affix-top {
+    position: static!important;
+}
+.vue-affix {
+    position: relative;
+}
+.stickyTab {
+    float: left;
+    width: 785px;
+    background: #fff;
+    z-index: 100;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    widows: 1;
+}
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+body, html {
+    line-height: 1;
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    height: 100%;
+    position: relative;
+    letter-spacing: -.02em;
+}
+body {
+    line-height: 1;
+    background-color: #fff;
+}
+style attribute {
+    --actual-width: 1440px;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+.scrollTab.full {
+    padding: 0 153px;
+}
+.scrollTab {
+    padding: 0 84px;
+    border-bottom: 1px solid #eee;
+}
+.scrollTabInner, .scrollTab ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.scrollTabInner {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    widows: 1;
+}
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+body, html {
+    line-height: 1;
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    height: 100%;
+    position: relative;
+    letter-spacing: -.02em;
+}
+body {
+    line-height: 1;
+    background-color: #fff;
+}
+style attribute {
+    --actual-width: 1440px;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+.scrollTab ul {
+    width: 100%;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.scrollTabInner, .scrollTab ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+ol, ul {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.scrollTab li.customActive a {
+    font-weight: 700;
+    color: #333;
+    border-bottom: 3px solid #333;
+}
+.scrollTab li a {
+    position: relative;
+    display: block;
+    padding: 20px 0;
+    font-size: 20px;
+    line-height: 28px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #757575;
+}
+a {
+    text-decoration: none;
+    color: #333;
+}
+a, button, html, input, select, textarea {
+    font-family: NotoSansKR,Malgun Gothic,arial,sans-serif;
+    color: #333;
+    padding: 0;
+}

@@ -1,7 +1,8 @@
 import React, {useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
-import ProductDetail from "./Components/product/ProductDetail"
+import ProductDetail from "./pages/Product/productDetail"
+import ProductDetailNavBar from "./Components/product/ProductDetailNavBar"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 import "./Components/Frame/css/header.css"
@@ -115,7 +116,8 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+            <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
+            {/* <Route path="/product/detailNav/:productId" element={<ProductDetailNavBar />}></Route> */}
           </Routes>
         </div>
         </main>
