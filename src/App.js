@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
+import ProductDetail from "./Components/product/ProductDetail"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 import Mypage from "./pages/Member/js/mypage"
@@ -8,6 +9,7 @@ import Mypage from "./pages/Member/js/mypage"
 import Home from "./pages/Main/js/home"
 
 import "./pages/Main/css/header.css"
+
 
 function App() {
   const [inputIdHomeInput, setInputHomeInput] = useState('');
@@ -129,7 +131,6 @@ function App() {
         </nav>
 
         <main>
-
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />}></Route>
@@ -137,9 +138,9 @@ function App() {
               <Route path="/login" element={<Login />}></Route>
               <Route path="/signup" element={<Signup />}></Route>
               <Route path="/mypage" element={<Mypage />}></Route>
+              <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
             </Routes>
           </div>
-
         </main>
       </BrowserRouter>
         
