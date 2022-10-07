@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
 import Login from "./Components/Member/login"
+import ProductDetail from "./Components/product/ProductDetail"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
           </Routes>
         </div>
         </main>
