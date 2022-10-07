@@ -1,85 +1,109 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import "./orderDetailList.css";
 
+function changeOrderStatus(orderStatus) {
+    let result;
+    switch(orderStatus) {
+        case "ORDER_SUCCESS":
+            result = "주문 완료";
+        break;
+        case "PURCHASE_CONFIRM":
+            result = "구매 확정"
+        break;
+        case "REFUND_PROCESS":
+            result = "환불 진행중";
+        break;
+        default:
+        result = "에러";
+    }
+    return result;
+}
+
 function OrderDetailList() {
-    const memberId = 1;
-    const getOrderDetailList = async() => {
-        await axios.get(`http://127.0.0.1:8080/orders/${memberId}`,
-            // { params: {memberId:1, orderId:1}}
+    const [orderDetails, setOrderDetails] = useState([]);
+    const state = useLocation();
+    const userId = state.state.userId;
+    const orderId = state.state.orderId;
+
+    useEffect(() => {
+        console.log(state);
+
+        const fetchData = async () => {
+            // const memberId = 1;
+            // const orderId = 1;
+            await axios.get(`http://127.0.0.1:8080/orders/${userId}/${orderId}`
             )
-        .then(function (resp) {
-            alert(resp.value);
-        })
-        .catch(function (err) {
-            alert(err);
-        });
+                .then(function (resp) {
+                    setOrderDetails(resp.data);
+                })
+                .catch(function (err) {
+                    alert(err);
+                })
+        }
+        fetchData();
+    }, [])
+
+    // 환불을 위한 API확인 필요
+    const setRefundOrderDetail = async () => {
+        await axios.get(`http://127.0.0.1:8080/orders/`)
+            .then(function (resp) {
+
+            })
+            .catch(function (err) {
+                alert(err);
+            })
     }
 
-    return(
+    function GetOrderDetailList(orderDetail) {
+        return (
+            <div className="content-detail">
+                <div className="content-detail-image">
+                    <img className="image" src={orderDetail.obj.thumbnail} />
+                </div>
+                <div className="detail-values">
+                    <div className="values-top">
+                        <div className="content-detail-name">{orderDetail.obj.name}</div>
+                    </div>
+                    <br></br>
+                    <div className="values-bottom">
+                        <div className="price">{orderDetail.obj.price}원</div>
+                        <div className="qty">{orderDetail.obj.qty}개</div>
+                    </div>
+                </div>
+                <div className="status">
+                    <div className="order-status">{changeOrderStatus(orderDetail.obj.orderStatus)}</div>
+                </div>
+                <div className='refund-button-value'>
+                    <button type="button" onClick={() => setRefundOrderDetail()} className="refund-button">환불 요청</button>
+                </div>
+            </div>
+        )
+    }
+
+
+    return (
         <div>
             <h1>주문 내역 상세</h1>
-            <br/>
-            <div class="contents">
-                <div class="content">
-                    <div class="image">
-                        <img class="image" src="https://file.rankingdak.com/image/RANK/PRODUCT/PRD001/20220826/IMG1661ECG509930627_330_330.jpg" />
-                    </div>
-                    <div class="values">
-                        <div class="values-top">
-                            <div class="name">폰타나 오리엔탈 드레싱</div>
-                        </div>
-                    <div class="values-bottom">
-                        <div class="price">2,830원</div>
-                        <div class="qty">2개</div>
-                    </div>
-                </div>
-            <div class="status">
-                <div class="order-status">주문완료</div>
+            <br />
+            <div className="contents">
+                {
+                    orderDetails.map(function (object) {
+                        return (
+                            <GetOrderDetailList obj={object} />
+                        )
+                    })
+                }
+                <Link className='moveButton' to={`/orderList`}
+                    state={{
+                        userId: userId
+                    }
+                    }
+                >뒤로가기</Link>
             </div>
-            <button type="button" class="button">환불 요청</button>
         </div>
-        <div class="content">
-            <div class="image">
-                <img class="image" src="https://file.rankingdak.com/image/RANK/PRODUCT/PRD001/20220826/IMG1661ECG509930627_330_330.jpg" />
-            </div>
-            <div class="values">
-                <div class="values-top">
-                    <div class="name">폰타나 오리엔탈 드레싱</div>
-                </div>
-                <div class="values-bottom">
-                    <div class="price">2,830원</div>
-                    <div class="qty">2개</div>
-                </div>
-            </div>
-            <div class="status">
-                <div class="order-status">주문완료</div>
-            </div>
-            <button type="button" class="button">환불 요청</button>
-        </div>
-        <div class="content">
-            <div class="image">
-                <img class="image" src="https://file.rankingdak.com/image/RANK/PRODUCT/PRD001/20220826/IMG1661ECG509930627_330_330.jpg" />
-            </div>
-            <div class="values">
-                <div class="values-top">
-                    <div class="name">폰타나 오리엔탈 드레싱</div>
-                </div>
-                <div class="values-bottom">
-                    <div class="price">2,830원</div>
-                    <div class="qty">2개</div>
-                </div>
-            </div>
-            <div class="status">
-                <div class="order-status">주문완료</div>
-            </div>
-            <button type="button" class="button">환불 요청</button>
-        </div>
-        <button onClick={() => getOrderDetailList()}>가져오기</button>
-        </div>
-    </div>
     )
 }
 

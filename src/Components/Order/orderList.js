@@ -1,18 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom"
 
 import "./orderList.css";
 
+function ChangeLocalDateTime(dateTime) {
+    var resultDate = new Date("2022-09-12T12:00:00")//"YYYY-MM-DDTHH:mm:sszz"
+    resultDate = resultDate.toString().substring(0, 24);
+
+    return resultDate.toString();
+}
+
 function GetOrderList(order) {
-    console.log("order : ");
-    console.log(order);
+    const orderId = order.obj.orderId;
+    const userId = 1;
     return (
         <div className='content'>
-            <div className='order-date'>{order.obj.orderDate}</div>
+            <div className='order-date'>{ChangeLocalDateTime(order.obj.orderDate)}</div>
+
             <div className='content-value'>
                 <div className='content-name'>
                     <div className='name'>{order.obj.name}</div>
+                    <div className='move-button'>
+                        <Link className='moveButton' to = {`/orderDetailList`}
+                                    state = {{
+                                        userId:userId,
+                                        orderId:orderId
+                                    }
+                                }
+                        >이동</Link>
+                    </div>
                 </div>
                 <div className='content-value-detail'>
                     <div className='content-thumbnail'>
@@ -35,18 +52,21 @@ function GetOrderList(order) {
 
 function OrderList() {
     const [orders, setOrders] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const memberId = 1;
+            await axios.get(`http://localhost:8080/orders/${memberId}`
+            )
+                .then(function (resp) {
+                    setOrders(resp.data.result.data);
+                })
+                .catch(function (err) {
+                    alert(err);
+                });
+        }
 
-    const getOrderList = async () => {
-        const memberId = 1;
-        await axios.get(`http://localhost:8080/orders/${memberId}`
-        )
-            .then(function (resp) {
-                setOrders(resp.data.result.data);
-            })
-            .catch(function (err) {
-                alert(err);
-            });
-    }
+        fetchData();
+    }, []);
 
     return (
         <div className='main'>
@@ -60,10 +80,6 @@ function OrderList() {
                         )
                     })
                 }
-
-                <div className="click-button">
-                    <button onClick={() => getOrderList()}>가져오기</button>
-                </div>
             </div>
         </div>
 

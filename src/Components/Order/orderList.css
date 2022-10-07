@@ -19,14 +19,36 @@ div.order-date {
 }
 
 .content-value {
-    padding: 10px;
+    padding: 30px;
     border: 1px solid black;
 }
 
 .content-name {
-    display: inline-block;
+    display: flex;
     font-size: 20px;
+    padding-bottom: 15px;
 
+}
+
+.name {
+    float: left;
+    width: 80%;
+}
+
+.move-button {
+    width: 20%;
+}
+
+.moveButton {
+    float: right;
+    background-color: white;
+    border: 3px solid #FB7D98;
+    border-radius: 20px;
+    width: 180px;
+    height: 50px;
+    color: #FB7D98;
+    font-size: 25px;
+    text-align: center;
 }
 
 .content-value-detail {
@@ -40,7 +62,6 @@ div.order-date {
 
 .content-thumbnail{
     width: 30%;
-
 }
 
 .content-thumbnail img{
@@ -53,11 +74,6 @@ div.order-date {
     padding-top: 6%;
     width: 50%;
 }
-
-.order-value > * {
-    /* vertical-align: bottom; */
-}
-
 
 .cancel-button {
     position: relative;
@@ -73,8 +89,8 @@ div.order-date {
      height: 50px;
      color: #FB7D98;
      font-size: 25px;
- }
+}
  
  .click-button {
     display: inline-block;
- }
+}

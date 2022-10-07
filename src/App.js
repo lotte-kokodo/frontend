@@ -113,6 +113,8 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/orderList" element={<OrderList />}></Route>
+            <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
           </Routes>
         </div>
         </main>
