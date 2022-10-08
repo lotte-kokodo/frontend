@@ -1,0 +1,114 @@
+.mypage-top-button{
+    border: 0;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    background-color: #F0F0F0;
+}
+
+.mypage{
+    width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.mypageTop{
+    width: 1000px;
+    height: 170px;
+    background-color: #F0F0F0;
+    overflow: hidden;
+}
+
+.mypage-top-left{
+    width: 400px;
+    float: left;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+.mypage-top-left-profile{
+    width:120px;
+    float: left;
+}
+
+.mypage-top-left-profile-image{
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+.mypage-top-left-writing{
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.mypage-top-left-profile-name {
+    margin-top: 20px;
+}
+
+
+.mypage-top-center{
+    font-size: 100px;
+    margin-left: 40px;
+    width: 100px;
+
+    float: left;
+}
+
+.mypage-top-right{
+    width: 300px;
+    font-size: 18px;
+    margin-top: 40px;
+    float: left;
+}
+
+.mypage-top-right-coupon{
+    width: 100px;
+    margin-right: 100px;
+    float: left;
+}
+
+.mypage-top-right-inquire{
+    width: 100px;
+    float: left;
+}
+
+.mypage-top-right-coupon-two{
+    margin-top:30px;
+}
+
+.mypage-top-right-inquire-two{
+    margin-top:30px;
+}
+
+.mypage-nav{
+    width:1000px;
+    height: 60px;
+    margin: 50px auto;
+}
+
+.mypage-nav-ul{
+    list-style-type: none;
+    margin-left: 300px;
+    font-size: 30px;
+}
+
+.mypage-nav-ul li{
+    float: left;
+}
+
+.mypage-nav-ul li:nth-child(1){
+    margin-right:80px;
+}
+
+.mypage-nav-ul li:nth-child(1):hover{
+    color: #fb7d98;
+    background-color: #ffffff;
+    border-color: #fb7d98;
+}
+
+.mypage-nav-ul li:nth-child(2):hover{
+    color: #fb7d98;
+    background-color: #ffffff;
+    border-color: #fb7d98;
+}

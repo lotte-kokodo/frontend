@@ -1,32 +1,25 @@
-import React, { useState} from 'react';
+import React, {useEffect ,useState} from 'react';
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
 
 import "../css/signup.css";
 
-function Signup(){
+function MypageRead(){
+    const id = localStorage.getItem("memberId");
     const [inputId, setInputId] = useState("");
-    const [idCheck, setIdCheck] = useState(false);
     const [inputPw, setInputPw] = useState("");
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputBirth, setInputBirth] = useState("");
     const [inputPhone, setInputPhone] = useState("");
     const [inputAddr, setInputAddr] = useState("");
-
-    const handleInputId = (e) => {
-        setInputId(e.target.value);
-    }
-
-    const checkId = () => {
-        if(inputId === null || inputId.trim() === "" || inputId.length < 6){
-            alert('아이디는 6자 이상이여야 합니다.');
-        }else{
-            fetchCheckId(inputId);
-        }
-    }
-
+    const [inputGrade, setInputGrade]= useState("");
+    const [profileImageUrl, setInputProfileImageUrl]= useState("");
     const history = useNavigate();
+
+    useEffect(() => {
+        fetchMypage();
+    },[]);
 
     const handleInputPw = (e) => {
         setInputPw(e.target.value);
@@ -47,14 +40,8 @@ function Signup(){
         setInputAddr(e.target.value);
     }
 
-    const signUpSuc = () => {
-        if(inputId === null || inputId.trim() === "" || inputId.length < 6){
-            alert('아이디는 6자 이상이여야 합니다.');
-        }
-        else if(idCheck === false){
-            alert('아이디체크를 해야합니다.');
-        }
-        else if(inputPw === null || inputPw.trim() === "" || inputPw.length < 6){
+    const updateMypage = (e) => {
+        if(inputPw === null || inputPw.trim() === "" || inputPw.length < 6){
             alert('패스워드는 6자 이상이여야 합니다.');
         }
         else if(inputName === null || inputName.trim() === "" || inputName.length < 2){
@@ -69,48 +56,52 @@ function Signup(){
         }else if(inputAddr === null || inputAddr.trim() === "" || inputAddr.length > 10 || inputAddr.length === 11) {
             alert("주소를 자세히 입력해주세요.");
         }else {
-            const params = {"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "profileImageUrl":"https://ibb.co/4SFQqZn", "phoneNumber":inputPhone, "address":inputAddr, "grade":"ACE"};
-            fetchSignUp(params)
+            const params = {"id":id,"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "profileImageUrl":profileImageUrl, "phoneNumber":inputPhone, "address":inputAddr, "grade":inputGrade};
+            fetchUpdateMypage(params)
         }
     };
 
-    const fetchCheckId = async (id) => {
+    
+    const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8080/member/signup/" + id
+            url: "http://localhost:8080/member/myPage/" + localStorage.getItem("memberId")
         })
-        .then((response) => {
-            if(response.data.result.data === "success") {
-                setIdCheck(true);
-                alert("해당 아이디는 사용 가능합니다.");
-            }else{
-                setIdCheck(false);
-                alert("해당 아아디는 중복입니다.");
-            }
+        .then(function(response){
+            setInputId(response.data.result.data.loginId);
+            setInputName(response.data.result.data.name);
+            setInputEmail(response.data.result.data.email);
+            setInputBirth(response.data.result.data.birthday);
+            setInputProfileImageUrl(response.data.result.data.profileImageUrl)
+            setInputPhone(response.data.result.data.phoneNumber);
+            setInputAddr(response.data.result.data.address);
+            setInputGrade(response.data.result.data.grade);
         })
-        .catch((error) => console.log(error))
-        .finally(() => {});
+        .catch(function(error){
+            console.log(error)
+        })
     }
 
-    const fetchSignUp = async (params) => {
+    const fetchUpdateMypage = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8080/member/signup",
+            url: "http://localhost:8080/member/myPage",
             data : params
         })
         .then(function(response){
             if(response.data.result.data === "success") {
-                alert("회원 가입에 성공하셨습니다.");
-                history('/login');
+                alert("회원 수정에 성공하셨습니다.");
+                history('/mypage');
             }else{
-                alert("회원 가입에 실패하셨습니다.");
+                alert("회원 수정에 실패하셨습니다.");
             }
          })
          .catch(function(error){
-            alert("회원 가입에 실패하셨습니다.");
+            alert("회원 수정에 실패하셨습니다.");
             console.log(error);
          })
     }
+
 
     return(
         <div className="container">
@@ -122,8 +113,7 @@ function Signup(){
                     <div className="card-body">
                         <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
-                                <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId}/>
-                                <button className="btn idcheck-right" onClick={checkId}>아이디체크 </button>
+                                <input type="text" className="form-control" name='input_id' value={inputId} readOnly/>
                         </div>
 
                         <div className="input-group form-group">
@@ -158,7 +148,7 @@ function Signup(){
 
                         <div className="login-group">
                             <div className="form-group">
-                                <button className="btn float-right login_btn" onClick={signUpSuc}>회원가입하기 </button>
+                                <button className="btn float-right login_btn" onClick={updateMypage}>회원수정 </button>
                             </div>
                         </div>
                     </div>
@@ -168,4 +158,4 @@ function Signup(){
     )
 }
 
-export default Signup;
+export default MypageRead;

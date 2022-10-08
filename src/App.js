@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
-import ProductDetail from "./Components/product/ProductDetail"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 import Mypage from "./pages/Member/js/mypage"
+import MypageRead from "./pages/Member/js/mypageRead.js"
 
 import Home from "./pages/Main/js/home"
 
 import "./pages/Main/css/header.css"
+import axios from "axios"
 
 
 function App() {
   const [inputIdHomeInput, setInputHomeInput] = useState('');
   const [isLogin, setIsLogin] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
     if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
@@ -28,6 +30,51 @@ function App() {
     localStorage.removeItem('memberId');
     setIsLogin(false);
     alert("로그아웃 됐습니다.");
+  }
+
+  const ImgHover = () => {
+    const [isListHover, setIsListHover] = useState(false);
+
+    return (
+      <div
+        onMouseOver={() => {
+            setIsListHover(true);
+            fetchCategory();
+          }
+        }
+        onMouseOut={() => setIsListHover(false)}
+      >
+        <div className="navContainer-category-overlap">
+          <div>
+            <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+          </div>
+          <div>
+            <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+          </div>
+          <div>
+            <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+          </div>
+        </div>
+        
+        <img
+          className="navContainer-category-Rectangle" alt="nav-rec"
+          src={isListHover ? "img/top/header-hover-rectangle.png" : "img/top/navContainer-category-Rectangle.png"}
+        />
+      </div>
+    )
+  }
+
+  const fetchCategory = async () => {
+    await axios({
+      method: "get",
+      url: "http://localhost:9270/category/all"
+    })
+    .then(function(response){
+      console.log(response.data.result);
+    })
+    .catch(function(error){
+      console.log(error)
+    })
   }
 
   const handleHomeInput = (e) => {
@@ -97,20 +144,7 @@ function App() {
         <nav className="nav">
           <div className="navContainer">
             <div className="navContainer-category">
-              <button>
-                <div className="navContainer-category-overlap">
-                  <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-                  </div>
-                  <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-                  </div>
-                  <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-                  </div>
-                </div>
-                <img className="navContainer-category-Rectangle" alt="nav-rec" src="img/top/navContainer-category-Rectangle.png" />
-              </button>
+              <ImgHover />
             </div>
 
             <div className="navContainer-subject">
@@ -138,7 +172,7 @@ function App() {
               <Route path="/login" element={<Login />}></Route>
               <Route path="/signup" element={<Signup />}></Route>
               <Route path="/mypage" element={<Mypage />}></Route>
-              <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+              <Route path="/mypageRead" element={<MypageRead />}></Route>
             </Routes>
           </div>
         </main>
