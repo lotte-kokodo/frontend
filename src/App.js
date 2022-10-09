@@ -7,9 +7,11 @@ import AuthProvider from "./Context/AuthProvider"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 
+import Cart from "./Components/Cart/Cart"
 import OrderSheet from "./Components/Order/OrderSheet"
 
 import "./Components/Frame/css/header.css"
+import HttpHeadersProvider from "./Context/HttpHeadersProvider"
 
 
 function App() {
@@ -79,57 +81,60 @@ function App() {
 
         <hr className="headerBottom-hr"></hr>
 
-        <AuthProvider>
-          <nav className="nav">
-            <div className="navContainer">
-              <div className="navContainer-category">
-                <button>
-                  <div className="navContainer-category-overlap">
-                    <div>
-                      <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+        <HttpHeadersProvider>
+          <AuthProvider>
+            <nav className="nav">
+              <div className="navContainer">
+                <div className="navContainer-category">
+                  <button>
+                    <div className="navContainer-category-overlap">
+                      <div>
+                        <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                      </div>
+                      <div>
+                        <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                      </div>
+                      <div>
+                        <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                      </div>
                     </div>
-                    <div>
-                      <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-                    </div>
-                    <div>
-                      <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-                    </div>
-                  </div>
-                  <img className="navContainer-category-Rectangle" alt="nav-rec" src="img/top/navContainer-category-Rectangle.png" />
-                </button>
+                    <img className="navContainer-category-Rectangle" alt="nav-rec" src="img/top/navContainer-category-Rectangle.png" />
+                  </button>
+                </div>
+
+                <div className="navContainer-subject">
+                  <ul className="navContainer-subject-ul">
+                    <Link to="/">
+                      <li>베스트</li>
+                    </Link>
+                    <Link to="/">
+                      <li>특가</li>
+                    </Link>
+                    <Link to="/">
+                      <li>프로모션</li>
+                    </Link>
+                  </ul>
+                </div>
+
+              </div>
+            </nav>
+
+            <main>
+
+              <div className="container">
+                <Routes>
+                  <Route path="/" element={<Home />}></Route>
+                  <Route path="/login" element={<Login />}></Route>
+                  <Route path="/signup" element={<Signup />}></Route>
+
+                  <Route path="/cart" element={<Cart />}></Route>
+                  <Route path="/ordersheet" element={<OrderSheet />}></Route>
+                </Routes>
               </div>
 
-              <div className="navContainer-subject">
-                <ul className="navContainer-subject-ul">
-                  <Link to="/">
-                    <li>베스트</li>
-                  </Link>
-                  <Link to="/">
-                    <li>특가</li>
-                  </Link>
-                  <Link to="/">
-                    <li>프로모션</li>
-                  </Link>
-                </ul>
-              </div>
-
-            </div>
-          </nav>
-
-          <main>
-
-            <div className="container">
-              <Routes>
-                <Route path="/" element={<Home />}></Route>
-                <Route path="/login" element={<Login />}></Route>
-                <Route path="/signup" element={<Signup />}></Route>
-
-                <Route path="/ordersheet" element={<OrderSheet />}></Route>
-              </Routes>
-            </div>
-
-          </main>
-        </AuthProvider>
+            </main>
+          </AuthProvider>
+        </HttpHeadersProvider>
       </BrowserRouter>
 
       <footer>
