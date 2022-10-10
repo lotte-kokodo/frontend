@@ -5,6 +5,7 @@ import ProductDetail from "./Components/product/ProductDetail"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 import Mypage from "./pages/Member/js/mypage"
+import DiscountPolicy from "./pages/DiscountPolicy/js/discountPolicy"
 
 import Home from "./pages/Main/js/home"
 
@@ -139,7 +140,8 @@ function App() {
               <Route path="/signup" element={<Signup />}></Route>
               <Route path="/mypage" element={<Mypage />}></Route>
               <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
-            </Routes>
+              <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
+            </Routes> 
           </div>
         </main>
       </BrowserRouter>
