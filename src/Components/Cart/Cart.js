@@ -138,18 +138,25 @@ function Cart() {
 		const cart = props.cart;
 		const idMap = {cartId: cart.id, productId: cart.productId};
 
-		let [qty, setQty] = useState(cart.qty);
+		const [productId, setProductId] = useState(cart.productId)
+		const [qty, setQty] = useState(cart.qty);
+
+		const unitPrice = cart.unitPrice;
+		const [totalPrice, setTotalPrice] = useState(cart.totalPrice);
 
 		function increaseQty() {
-			qty = qty + 1;
-			setQty(qty);
+			const updatedQty = qty + 1;
+			setQty(updatedQty);
+			setTotalPrice(unitPrice*updatedQty);
 		}
 		function decreaseQty() {
-			qty = qty - 1;
-			if (qty <= 0) {
+			const updatedQty = qty - 1;
+			if (updatedQty <= 0) {
 				return;
 			}
-			setQty(qty);
+
+			setQty(updatedQty);
+			setTotalPrice(unitPrice*updatedQty);
 		}
 	
 		return (
@@ -171,13 +178,13 @@ function Cart() {
 					</div>
 					<div className="col-2">
 						<button onClick={decreaseQty}>-</button> &nbsp;
-						<span>{cart.qty}</span> &nbsp;
+						<span>{qty}</span> &nbsp;
 						<button onClick={increaseQty}>+</button> &nbsp;
 					</div>
 					<div className="col-3">
 						{/* TODO: coupon NULL 처리 (할인 정책) */}
 						<div className="row">
-							<span>{cart.totalPrice}</span> 원
+							<span>{totalPrice}</span> 원
 						</div>
 						<div className="row">
 							
