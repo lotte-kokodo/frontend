@@ -144,19 +144,40 @@ function Cart() {
 		const unitPrice = cart.unitPrice;
 		const [totalPrice, setTotalPrice] = useState(cart.totalPrice);
 
+		const updateQty = async (updatedQty) => {
+
+			const req = {
+				qty: updatedQty
+			}
+
+			await axios.patch(`http://localhost:8001/order-payment-service/carts/${cart.id}/qty`, req, {headers: headers} )
+			.then((resp) => {
+				console.log("[CartRow] increaseQty() success.");
+				console.log(resp);
+
+
+				setQty(updatedQty);
+				setTotalPrice(unitPrice*updatedQty);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+		}
+
 		function increaseQty() {
 			const updatedQty = qty + 1;
-			setQty(updatedQty);
-			setTotalPrice(unitPrice*updatedQty);
+
+			updateQty(updatedQty);
 		}
+
 		function decreaseQty() {
 			const updatedQty = qty - 1;
 			if (updatedQty <= 0) {
 				return;
 			}
-
-			setQty(updatedQty);
-			setTotalPrice(unitPrice*updatedQty);
+			
+			updateQty(updatedQty);
 		}
 	
 		return (
