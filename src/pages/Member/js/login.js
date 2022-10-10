@@ -18,7 +18,7 @@ function Login() {
             setInputId(cookies.rememberId);
             setChecked(true);
         }
-    },[]);
+    },[cookies.rememberId]);
 
     const handleInputId = (e) => {
         setInputId(e.target.value);

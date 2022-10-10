@@ -15,7 +15,7 @@ function Mypage() {
         }else{
             fetchMypage();
         }
-    },[]);
+    },[history]);
 
     const fetchMypage = async () => {
         await axios({

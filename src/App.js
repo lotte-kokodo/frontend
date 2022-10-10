@@ -1,171 +1,33 @@
-import React, {useEffect, useState} from "react"
-import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
+import React from "react"
+import {BrowserRouter, Routes, Route} from "react-router-dom"
 
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 import Mypage from "./pages/Member/js/mypage"
-import MypageRead from "./pages/Member/js/mypageRead.js"
+import MypageRead from "./pages/Member/js/mypageRead"
 
+import Header from './pages/Main/js/header'
+import Nav from './pages/Main/js/nav'
 import Home from "./pages/Main/js/home"
 
+import Category from './pages/Product/js/category'
+import Search from "./pages/Product/js/search"
+
 import "./pages/Main/css/header.css"
-import axios from "axios"
+
 
 
 function App() {
-  const [inputIdHomeInput, setInputHomeInput] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
-  const [categoryList, setCategoryList] = useState([]);
-
-  useEffect(() => {
-    if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
-      setIsLogin(false);
-    } else {
-      setIsLogin(true);
-    }
-  }, [isLogin]);
-
-  const onLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('memberId');
-    setIsLogin(false);
-    alert("로그아웃 됐습니다.");
-  }
-
-  const ImgHover = () => {
-    const [isListHover, setIsListHover] = useState(false);
-
-    return (
-      <div
-        onMouseOver={() => {
-            setIsListHover(true);
-            fetchCategory();
-          }
-        }
-        onMouseOut={() => setIsListHover(false)}
-      >
-        <div className="navContainer-category-overlap">
-          <div>
-            <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-          </div>
-          <div>
-            <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-          </div>
-          <div>
-            <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
-          </div>
-        </div>
-        
-        <img
-          className="navContainer-category-Rectangle" alt="nav-rec"
-          src={isListHover ? "img/top/header-hover-rectangle.png" : "img/top/navContainer-category-Rectangle.png"}
-        />
-      </div>
-    )
-  }
-
-  const fetchCategory = async () => {
-    await axios({
-      method: "get",
-      url: "http://localhost:9270/category/all"
-    })
-    .then(function(response){
-      console.log(response.data.result);
-    })
-    .catch(function(error){
-      console.log(error)
-    })
-  }
-
-  const handleHomeInput = (e) => {
-    setInputHomeInput(e.target.value);
-  }
-
-  const onClicktotalSearch = () => {
-
-  }
   
   return (
     <div>
-
       <BrowserRouter>
-        <header className="header">
-
-          <div className="headerTop">
-              {isLogin ?
-                <ul className="headerTopUl">
-                  <li className="header-item">
-                    <Link className="header-item-link" to="/">입점신청</Link>
-                  </li>
-                  <li className="header-item">
-                    <Link className="header-item-link" onClick={onLogout} to="/">로그아웃</Link>
-                  </li>
-                </ul>
-                :
-                <ul className="headerTopUl">
-                  <li className="header-item">
-                    <Link className="header-item-link" to="/">입점신청</Link>
-                  </li>
-                  <li className="header-item">
-                    <Link className="header-item-link" to="/signup">회원가입</Link>
-                  </li>
-                  <li className="header-item">
-                    <Link className="header-item-link" to="/login">로그인</Link>
-                  </li>
-                </ul>
-              }
-          </div>
-
-          <div className="headerCenter">
-            <div className="headerCenter-logo">
-              <Link to="/">KOKODO</Link></div>
-            <div className="headerCenter-search">
-              <input type="text" className="headerCenter-mypageCart-home-input" name='input_id' value={inputIdHomeInput} onChange={handleHomeInput} />
-              <div className="headerCenter-search-overlap">
-                <button onClick={onClicktotalSearch}>
-                  <img className="headerCenter-search-search" alt="search" src="img/top/headerCenter-search.png" />
-                </button>
-              </div>
-            </div>
-            <div className="headerCenter-mypageCart">
-              <Link to="/mypage">
-                <img className="headerCenter-mypageCart-home" alt="mypage" src="img/top/headerCenter-mypageCart-home.png" />
-              </Link>
-              <Link to="/">
-                <img className="headerCenter-mypageCart-cart" alt="cart" src="img/top/headerCenter-mypageCart-cart.png" />
-              </Link>
-            </div>
-          </div>
-
-        </header>
-
+        <Header />
         <hr className="headerBottom-hr"></hr>
-
-        <nav className="nav">
-          <div className="navContainer">
-            <div className="navContainer-category">
-              <ImgHover />
-            </div>
-
-            <div className="navContainer-subject">
-              <ul className="navContainer-subject-ul">
-                <Link to="/">
-                  <li>베스트</li>
-                </Link>
-                <Link to="/">
-                  <li>특가</li>
-                </Link>
-                <Link to="/">
-                <li>프로모션</li>
-                </Link>
-              </ul>
-            </div>
-
-          </div>
-        </nav>
+        <Nav />
 
         <main>
-          <div className="container">
+          <div>
             <Routes>
               <Route path="/" element={<Home />}></Route>
 
@@ -173,6 +35,9 @@ function App() {
               <Route path="/signup" element={<Signup />}></Route>
               <Route path="/mypage" element={<Mypage />}></Route>
               <Route path="/mypageRead" element={<MypageRead />}></Route>
+
+              <Route path='/search' element={<Search />}></Route>
+              <Route path="/category" element={<Category />}></Route>
             </Routes>
           </div>
         </main>
