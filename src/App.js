@@ -7,6 +7,7 @@ import OrderDetailList from "./Components/Order/orderDetailList";
 import OrderList from "./Components/Order/orderList";
 import Signup from "./pages/Member/js/signup"
 import Mypage from "./pages/Member/js/mypage"
+import DiscountPolicy from "./pages/DiscountPolicy/js/discountPolicy"
 
 import Home from "./pages/Main/js/home"
 
@@ -142,6 +143,7 @@ function App() {
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
             <Route path="/mypage" element={<Mypage />}></Route>
+            <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
             </Routes>
           </div>
         </main>
