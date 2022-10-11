@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
 import ProductDetail from "./Components/product/ProductDetail"
@@ -6,13 +6,31 @@ import Login from "./pages/Member/js/login"
 import OrderDetailList from "./Components/Order/orderDetailList";
 import OrderList from "./Components/Order/orderList";
 import Signup from "./pages/Member/js/signup"
-import "./Components/Frame/css/header.css"
+import Mypage from "./pages/Member/js/mypage"
+
+import Home from "./pages/Main/js/home"
+
+import "./pages/Main/css/header.css"
+
 
 function App() {
   const [inputIdHomeInput, setInputHomeInput] = useState('');
-  const headers = {
-    'Content-Type' : 'application/json'
-}
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, [isLogin]);
+
+  const onLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('memberId');
+    setIsLogin(false);
+    alert("로그아웃 됐습니다.");
+  }
 
   const handleHomeInput = (e) => {
     setInputHomeInput(e.target.value);
@@ -20,14 +38,6 @@ function App() {
 
   const onClicktotalSearch = () => {
 
-  }
-
-  const onClickMypage = () => {
-
-  }
-
-  const onClickCart = () => {
-    
   }
   
   return (
@@ -37,17 +47,28 @@ function App() {
         <header className="header">
 
           <div className="headerTop">
-            <ul className="headerTopUl">
-                <li className="header-item">
-                  <Link className="header-item-link" to="/">입점신청</Link>
-                </li>
-                <li className="header-item">
-                  <Link className="header-item-link" to="/signup">회원가입</Link>
-                </li>
-                <li className="header-item">
-                  <Link className="header-item-link" to="/login">로그인</Link>
-                </li>
-            </ul>
+              {isLogin ?
+                <ul className="headerTopUl">
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/">입점신청</Link>
+                  </li>
+                  <li className="header-item">
+                    <Link className="header-item-link" onClick={onLogout} to="/">로그아웃</Link>
+                  </li>
+                </ul>
+                :
+                <ul className="headerTopUl">
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/">입점신청</Link>
+                  </li>
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/signup">회원가입</Link>
+                  </li>
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/login">로그인</Link>
+                  </li>
+                </ul>
+              }
           </div>
 
           <div className="headerCenter">
@@ -62,8 +83,8 @@ function App() {
               </div>
             </div>
             <div className="headerCenter-mypageCart">
-              <Link to="/">
-                <img className="headerCenter-mypageCart-home" alt="home" src="img/top/headerCenter-mypageCart-home.png" />
+              <Link to="/mypage">
+                <img className="headerCenter-mypageCart-home" alt="mypage" src="img/top/headerCenter-mypageCart-home.png" />
               </Link>
               <Link to="/">
                 <img className="headerCenter-mypageCart-cart" alt="cart" src="img/top/headerCenter-mypageCart-cart.png" />
@@ -120,8 +141,9 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
-          </Routes>
-        </div>
+            <Route path="/mypage" element={<Mypage />}></Route>
+            </Routes>
+          </div>
         </main>
       </BrowserRouter>
         
@@ -129,17 +151,6 @@ function App() {
       </footer>
     </div>
   );
-}
-
-function Home(){
-
-  return (
-    <div>
-      <div className="container text-center">
-          <h2></h2>
-      </div>
-    </div>
-  )
 }
 
 export default App;

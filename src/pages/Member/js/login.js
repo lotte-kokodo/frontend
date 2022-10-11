@@ -1,19 +1,35 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 import "../css/login.css";
 
 function Login() {
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputPw] = useState('');
-    
+    const [bCheked,setChecked] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
+    const history = useNavigate();
+
+    useEffect(() => {
+        if(cookies.rememberId !== undefined) {
+            setInputId(cookies.rememberId);
+            setChecked(true);
+        }
+    },[]);
+
     const handleInputId = (e) => {
         setInputId(e.target.value);
     }
 
     const handleInputPw = (e) => {
         setInputPw(e.target.value);
+    }
+
+    const checkHandler = () => {
+        setChecked(!bCheked)
     }
 
     const onClickLogin = () => {
@@ -31,11 +47,27 @@ function Login() {
             data : params
         })
         .then(function(response){
-            console.log(response);
-            console.log(response.headers.token);
-            alert("성공");
+            localStorage.setItem("memberId",response.headers.memberid);
+            localStorage.setItem("token",response.headers.token);
+
+            if(localStorage.getItem("token") !== null || localStorage.getItem("token") !== ""){
+                
+                if(bCheked){
+                    setCookie('rememberId', inputId, {maxAge: 2000});
+                } else{
+                    removeCookie('rememberId');
+                }
+
+                alert("로그인에 성공했습니다.");
+                history("/");
+                window.location.reload();
+            }else {
+                alert("로그인에 실패했습니다. 관리자에게 문의하세요.");
+            }
          })
          .catch(function(error){
+            alert("아이디와 비밀번호를 확인하세요.");
+            console.log(error);
          })
     }
 
@@ -52,17 +84,19 @@ function Login() {
                         </div> */}
                     </div>
                     <div className="card-body">
-                        <div className="input-group form-group">
-                            <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
-                            
-                        </div>
-                        <div className="input-group form-group">
-                            <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" />
-                        </div>
-                        <div className="form-check idCheck">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
-                            <label className="form-check-label" >아이디 저장</label>
-                        </div>
+                        <form method='post'>
+                            <div className="input-group form-group">
+                                <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
+                                
+                            </div>
+                            <div className="input-group form-group">
+                                <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" autoComplete="on" />
+                            </div>
+                            <div className="form-check idCheck">
+                                <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={bCheked} onChange={checkHandler}/>
+                                <label className="form-check-label" >아이디 저장</label>
+                            </div>
+                        </form>
                         <div className="login-group">
                             <div className="form-group">
                                 <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
