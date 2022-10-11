@@ -141,8 +141,9 @@ function App() {
             <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
             <Route path="/mypage" element={<Mypage />}></Route>
+            <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
+            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
             <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
             </Routes>
           </div>
