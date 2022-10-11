@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useState, useEffect} from "react";
-import {useLocation} from 'react-router-dom';
+import {NavLink,useLocation} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 
 import "../css/paging.css"
@@ -20,7 +20,7 @@ function Category() {
 
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
-    const [currentPosts, setCurrentPosts] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
 
     const Paging = ({page, count, setPage}) => {
         return (
@@ -114,12 +114,14 @@ function Category() {
                 <div className="category-product" >
                     <h3 className='category-product-title'> <span className='cateNum'>총 {categoryProduct.length}</span>개 상품이 있습니다.</h3>
                     <div className='product-list'>
-                        {
-                            categoryProduct.map( function(object, i){
+                        { currentPosts && categoryProduct.length  >0 ?
+                            currentPosts.map( function(object, i){
                                 return(
                                     <CategoryItem obj={object} key={i} cnt={i + 1} />
                                 )
                             })
+                            :
+                            <div> 상품이 없습니다.</div>
                         }
                     </div>
 
@@ -135,7 +137,7 @@ function CategoryItem(props) {
     const priceChange = props.obj.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     
     return(
-        <button className='product-div' onClick={"onHandlerNewImage" + props.cnt}>
+        <NavLink to={`/product/detail/:${props.obj.id}`} className='product-div'>
             <div className='product-thumbnail'>
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
@@ -145,7 +147,7 @@ function CategoryItem(props) {
                     {priceChange} 원
                 </div>
             </div>
-        </button>
+        </NavLink>
         
     )
 }

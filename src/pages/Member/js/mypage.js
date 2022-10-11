@@ -1,21 +1,22 @@
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
-import {useNavigate } from "react-router-dom";
+import {NavLink,useNavigate } from "react-router-dom";
 
 import '../css/mypage.css'
 
 function Mypage() {
     const [name,setName] = useState('');
+    const [reviewList,setReviewList] = useState([]);
     const history = useNavigate();
 
-    useEffect(() => {
+    const firstEnter = () => {
         if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
             alert("로그인 후 이용이 가능합니다.");
             history("/login");
         }else{
             fetchMypage();
         }
-    },[history]);
+    }
 
     const fetchMypage = async () => {
         await axios({
@@ -32,6 +33,39 @@ function Mypage() {
 
     const haldleMypage = () => {
         history("/mypageRead");
+    }
+
+    const clickReview = () => {
+        fetchReview();
+    }
+
+    const clickOrder = () => {
+        setReviewList([]);
+    }
+
+    const clickCoupon = () => {
+        setReviewList([]);
+    }
+
+    useEffect(() => {
+        firstEnter();
+    },[]);
+
+    const fetchReview = async () => {
+        await axios({
+            method: "get",
+            url: "http://localhost:9270/review/member",
+            headers: {
+                'memberId': localStorage.getItem('memberId')
+            }
+        }) 
+        .then(function(response){
+            console.log(response.data.result.data);
+            setReviewList(response.data.result.data);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
     }
 
     return(
@@ -59,15 +93,9 @@ function Mypage() {
 
                 <div className='mypage-top-right'>
                     <div className='mypage-top-right-coupon'>
-                        <button className='mypage-top-button'>
+                        <button className='mypage-top-button' onClick={clickCoupon}>
                             <div className='mypage-top-right-coupon-one'>나의 쿠폰 {'>'}</div>
                             <div className='mypage-top-right-coupon-two'>{'('}쿠폰 수{')'} 개</div>
-                        </button>
-                    </div>
-                    <div className='mypage-top-right-inquire'>
-                        <button className='mypage-top-button'>
-                            <div className='mypage-top-right-inquire-one'>문의 내역 {'>'}</div>
-                            <div className='mypage-top-right-inquire-two'>{'('}문의 수{')'} 개</div>
                         </button>
                     </div>
                 </div>
@@ -75,17 +103,48 @@ function Mypage() {
 
             <div className="mypage-nav">
                 <ul className='mypage-nav-ul'>
-                    <button><li>주문 내역</li></button>
-                    <button><li>리뷰 내역</li></button>
+                    <button onClick={clickOrder}><li>주문 내역</li></button>
+                    <button onClick={clickReview}><li>리뷰 내역</li></button>
                 </ul>
             </div>
 
             <div className="mypage-main">
                 {/* 각자 데이터 뿌려주기 구현*/}
+                    { 
+                        reviewList.map( function(object, i){
+                            return(
+                                <ReviewListItem obj={object} key={i} cnt={i + 1} />
+                            )
+                        })
+                    } 
             </div>
         </div>
     )
 
+}
+
+function ReviewListItem(props) {
+    
+    return(
+        <NavLink to={`/product/detail/${props.obj.memberId}`} className='product-div'>
+            <div className='product-thumbnail'>
+                <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
+            </div>
+            <div className='product-displayName'>
+                <strong>{props.obj.displayName}</strong>
+                <div className='mypage-review'>
+                    <div>
+                        {props.obj.createdDate} 
+                    </div>
+                    <div>
+                        <span>평점 <img className='myreviews-stars' alt="star" src="img/mypage/star.png" /></span> 
+                        <span>{props.obj.rating}</span>
+                    </div>
+                </div>
+            </div>
+        </NavLink>
+        
+    )
 }
 
 export default Mypage;

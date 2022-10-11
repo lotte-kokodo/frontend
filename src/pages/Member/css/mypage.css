@@ -64,13 +64,8 @@
 
 .mypage-top-right-coupon{
     width: 100px;
-    margin-right: 100px;
-    float: left;
-}
-
-.mypage-top-right-inquire{
-    width: 100px;
-    float: left;
+    margin-left: 110px;
+    text-align: center;
 }
 
 .mypage-top-right-coupon-two{
@@ -111,4 +106,18 @@
     color: #fb7d98;
     background-color: #ffffff;
     border-color: #fb7d98;
+}
+
+.mypage-review{
+    margin-top: 30px;
+}
+
+.mypage-review div:nth-child(1){
+    float: left;
+    margin-right: 80px;
+}
+
+.myreviews-stars{
+    width:15px;
+    height:15px;
 }

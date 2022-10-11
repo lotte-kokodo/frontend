@@ -131,6 +131,12 @@
     margin-right: 30px;
 }
 
+.product-div:hover{
+    color: #fb7d98;
+    background-color: #ffffff;
+    border-color: #fb7d98;
+}
+
 .product-thumbnail-img{
     width: 220px;
     height: 220px;
@@ -147,3 +153,4 @@
 .product-price{
     margin-top:20px;
 }
+

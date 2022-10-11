@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from "react"
 import axios from 'axios';
-import {useNavigate } from "react-router-dom";
+import {NavLink,useNavigate } from "react-router-dom";
 
 import "../css/main.css"
 
@@ -194,7 +194,7 @@ function Home() {
 
                 <div className="banner_images" ref={slideRef}>
                     <img className="banner_img" alt="banner"
-                    src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220930/IMG1664vvP519738618.jpg"/>
+                    src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20221011/IMG1665uVR463652254.jpg"/>
                     <img className="banner_img" alt="banner"
                     src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220902/IMG1662TWQ094834801.jpg"/>
                     <img className="banner_img" alt="banner"
@@ -291,7 +291,7 @@ function NewItem(props) {
     const priceChange = props.obj.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     
     return(
-        <button className='product-div' onClick={"onHandlerNewImage" + props.cnt}>
+        <NavLink to={`/product/detail/:${props.obj.id}`} className='product-div'>
             <div className='product-thumbnail'>
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
@@ -301,7 +301,7 @@ function NewItem(props) {
                     {priceChange} 원
                 </div>
             </div>
-        </button>
+        </NavLink>
         
     )
 }
@@ -310,7 +310,7 @@ function SaleItem(props) {
     const priceChange = props.obj.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     return(
-        <button className='product-div' onClick={"onHandlerSaleImage" + props.cnt}>
+        <NavLink to={`/product/detail/:${props.obj.id}`} className='product-div'>
             <div className='product-thumbnail'>
                 <img className='product-thumbnail-img' alt='sale-product' src={props.obj.thumbnail} />
             </div>
@@ -320,7 +320,7 @@ function SaleItem(props) {
                     {priceChange} 원
                 </div>
             </div>
-        </button>
+        </NavLink>
         
     )
 }
@@ -329,7 +329,7 @@ function MdItem(props) {
     const priceChange = props.obj.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     return(
-        <button className='product-div' onClick={"onHandlerMdImage" + props.cnt}>
+        <NavLink to={`/product/detail/:${props.obj.id}`} className='product-div'>
             <div className='product-thumbnail'>
                 <img className='product-thumbnail-img' alt='md-product' src={props.obj.thumbnail} />
             </div>
@@ -339,7 +339,7 @@ function MdItem(props) {
                     {priceChange} 원
                 </div>
             </div>
-        </button>
+        </NavLink>
         
     )
 }
