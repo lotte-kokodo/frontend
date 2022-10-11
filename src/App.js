@@ -3,6 +3,8 @@ import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
 import ProductDetail from "./Components/product/ProductDetail"
 import Login from "./pages/Member/js/login"
+import OrderDetailList from "./Components/Order/orderDetailList";
+import OrderList from "./Components/Order/orderList";
 import Signup from "./pages/Member/js/signup"
 import Mypage from "./pages/Member/js/mypage"
 
@@ -131,14 +133,15 @@ function App() {
         </nav>
 
         <main>
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/signup" element={<Signup />}></Route>
-              <Route path="/mypage" element={<Mypage />}></Route>
-              <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+        <div className="container">
+          <Routes>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/orderList" element={<OrderList />}></Route>
+            <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+            <Route path="/mypage" element={<Mypage />}></Route>
             </Routes>
           </div>
         </main>
