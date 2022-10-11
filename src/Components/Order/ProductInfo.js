@@ -9,18 +9,16 @@ function ProductInfo(props) {
 
 	const { auth, setAuth } = useContext(AuthContext);
 
-	const products = props.productInfo;
-	const productQtyMap = props.productQtyMap;
+	const [ productInfo, setProductInfo ] = useState(props.productInfo);
 
-	console.log(products);
-	console.log(productQtyMap);
+	console.log(productInfo);
 
 	return (
 		<>
 			{
-				products.map(function (product, idx) {
+				productInfo.map(function (productInfo, idx) {
 					return ( 
-						<ProductRow product={product} qty={2} key={idx} />
+						<ProductRow product={productInfo.product} qty={productInfo.qty} key={idx} />
 					)
 				})
 			}
@@ -47,7 +45,7 @@ function ProductRow(props) {
 					수량 <span>{qty}</span>
 				</div>
 				<div className="col-3">
-					<span>{product.qty}</span> 원
+					<span>{product.price*qty}</span> 원
 				</div>
 			</div>
 		</>

@@ -5,80 +5,63 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthProvider"
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductInfo from "./ProductInfo";
 import MemberInfo from "./MemberInfo";
 import DeliveryInfo from "./DeliveryInfo";
-import PaymentInfo from "./PaymentInfo";
 import "./order.css"
+import { HttpHeadersContext } from "../../Context/HttpHeadersProvider"
+
 
 function OrderSheet() {
 
 	const { auth, setAuth } = useContext(AuthContext);
 	const memberId = auth;
 
-	const [array, setArray] = useState([]);
-	const productQtyMap = new Map(array);
-	const [productIds, setProductIds] = useState([1, 3, 5, 7]);
+	const { headers, setHeaders } = useContext(HttpHeadersContext);
 
-	const [memberInfo, setMemberInfo] = useState({});
-	const [productInfo, setProductInfo] = useState({});	
+	const state = useLocation().state;
+	const cartIds = state.selectedCartIds;
+	const productIdQtyList = state.selectedProductIdQtyList;
+	const productIds = state.selectedProductIds;
+
+	let [memberInfo, setMemberInfo] = useState({});
+	let [productInfo, setProductInfo] = useState([]);
+
 
 	// /* 주문 상품 정보 (product-service 로 요청) */
 	const getOrderProducts = async () => {
-		await axios.get(`http://localhost:9270/product/orderProducts`, {params: {productIds: productIds.join(",")}})
-		.then((resp) => {
-			console.log("[OrderMemberInfo.js] getOrderProducts() success.");
-			console.log(resp);
 
-			setProductInfo(resp.data.result.data);
-
-		})
-		.catch((err) => {
-			console.log("[OrderMemberInfo.js] getOrderProducts() error.");
-			console.log(err);
-		})
-	}
-
-	/* 주문 사용자 정보 (member-service 로 요청) */
-	const getMemberInfo = async () => {
-
-		// await axios.get(`http://localhost:8080/member/${memberId}/orderInfo`)
-		await axios.get(`http://localhost:8080/member/1/orderInfo`)
+		await axios.get(`http://localhost:8001/order-payment-service/orders/${memberId}/orderSheet`, { params: { productIds: productIds.join(",") }, headers: headers })
 			.then((resp) => {
-				console.log("[OrderMemberInfo.js] getMemberInfo() success.");
+				console.log("[OrderSheet.js] getOrderProducts() success.");
 				console.log(resp);
 
-				setMemberInfo(resp.data.result.data);
+				const data = resp.data.result.data;
+
+				setProductInfo(
+					data.productInfos.map((product) => {
+						const qty = productIdQtyList.filter((el) => el.productId == product.id)[0].qty
+
+						// QTY 추가
+						return {
+							product: product,
+							qty: qty
+						}
+					})
+				);
+
+				setMemberInfo(data.memberInfo);
+
 			})
 			.catch((err) => {
-				console.log("[OrderMemberInfo.js] getMemberInfo() error.");
+				console.log("[OrderSheet.js] getOrderProducts() error.");
 				console.log(err);
-
-			});
-
-	}
-
-	/* 쿠폰 정보 (coupon-service 로 요청) */
-	/* memberId, productId 상품 개수만큼 요청, fix-rate coupon 각각 */
-	const getCouponInfo = async () => {
-
-		// await axios.get(`http://localhost:8080/`)
-		// .then((resp) => {
-		// 	console.log("[OrderMemberInfo.js] getMemberInfo() success.");
-		// 	console.log(resp.data);
-
-		// 	setOrderMemberInfo(resp.data.data);
-		// })
-		// .catch((err) => {
-		// 	console.log("[OrderMemberInfo.js] getMemberInfo() error.");
-		// 	console.log(err);
-
-		// });
-
+			})
 	}
 
 	useEffect(() => {
-		getMemberInfo();
+		// getMemberInfo();
 		getOrderProducts();
 	}, []);
 
@@ -89,9 +72,9 @@ function OrderSheet() {
 				<h3>상품정보</h3><hr />
 				{
 					productInfo && productInfo.length &&
-					<ProductInfo productInfo={productInfo} productQtyMap={productQtyMap}/>
+					<ProductInfo productInfo={productInfo} />
 				}
-				
+
 			</div>
 
 			<div>
@@ -100,13 +83,18 @@ function OrderSheet() {
 
 			<div>
 				<h3>배송정보</h3><hr />
+
+
 				<DeliveryInfo deliveryAddr={memberInfo.address} />
+
 			</div>
 
 			<div className="row">
 				<div className="col">
 					<h3>주문자 정보</h3><hr />
-					<MemberInfo memberInfo={memberInfo}/>
+
+					<MemberInfo memberInfo={memberInfo} />
+
 				</div>
 				<div className="col">
 					<h3>결제정보</h3><hr />
