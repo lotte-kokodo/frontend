@@ -1,17 +1,38 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
 import ProductDetail from "./pages/Product/productDetail"
 import ProductDetailNavBar from "./Components/product/ProductDetailNavBar"
 import Login from "./pages/Member/js/login"
+import OrderDetailList from "./Components/Order/orderDetailList";
+import OrderList from "./Components/Order/orderList";
 import Signup from "./pages/Member/js/signup"
-import "./Components/Frame/css/header.css"
+import Mypage from "./pages/Member/js/mypage"
+import DiscountPolicy from "./pages/DiscountPolicy/js/discountPolicy"
+
+import Home from "./pages/Main/js/home"
+
+import "./pages/Main/css/header.css"
+
 
 function App() {
   const [inputIdHomeInput, setInputHomeInput] = useState('');
-  const headers = {
-    'Content-Type' : 'application/json'
-}
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+    }
+  }, [isLogin]);
+
+  const onLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('memberId');
+    setIsLogin(false);
+    alert("로그아웃 됐습니다.");
+  }
 
   const handleHomeInput = (e) => {
     setInputHomeInput(e.target.value);
@@ -19,14 +40,6 @@ function App() {
 
   const onClicktotalSearch = () => {
 
-  }
-
-  const onClickMypage = () => {
-
-  }
-
-  const onClickCart = () => {
-    
   }
   
   return (
@@ -36,17 +49,28 @@ function App() {
         <header className="header">
 
           <div className="headerTop">
-            <ul className="headerTopUl">
-                <li className="header-item">
-                  <Link className="header-item-link" to="/">입점신청</Link>
-                </li>
-                <li className="header-item">
-                  <Link className="header-item-link" to="/signup">회원가입</Link>
-                </li>
-                <li className="header-item">
-                  <Link className="header-item-link" to="/login">로그인</Link>
-                </li>
-            </ul>
+              {isLogin ?
+                <ul className="headerTopUl">
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/">입점신청</Link>
+                  </li>
+                  <li className="header-item">
+                    <Link className="header-item-link" onClick={onLogout} to="/">로그아웃</Link>
+                  </li>
+                </ul>
+                :
+                <ul className="headerTopUl">
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/">입점신청</Link>
+                  </li>
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/signup">회원가입</Link>
+                  </li>
+                  <li className="header-item">
+                    <Link className="header-item-link" to="/login">로그인</Link>
+                  </li>
+                </ul>
+              }
           </div>
 
           <div className="headerCenter">
@@ -61,8 +85,12 @@ function App() {
               </div>
             </div>
             <div className="headerCenter-mypageCart">
+{/* <<<<<<< HEAD
               <Link to="/">
                 <img className="headerCenter-mypageCart-home" alt="home" src="/img/top/headerCenter-mypageCart-home.png" />
+======= */}
+              <Link to="/mypage">
+                <img className="headerCenter-mypageCart-home" alt="mypage" src="img/top/headerCenter-mypageCart-home.png" />
               </Link>
               <Link to="/">
                 <img className="headerCenter-mypageCart-cart" alt="cart" src="/img/top/headerCenter-mypageCart-cart.png" />
@@ -113,13 +141,22 @@ function App() {
         <main>
         <div className="container">
           <Routes>
-            <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/orderList" element={<OrderList />}></Route>
+            <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
+            <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
+{/* <<<<<<< HEAD
             <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
-            {/* <Route path="/product/detailNav/:productId" element={<ProductDetailNavBar />}></Route> */}
+            {/* <Route path="/product/detailNav/:productId" element={<ProductDetailNavBar />}></Route> 
           </Routes>
         </div>
+======= */}
+            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+            <Route path="/mypage" element={<Mypage />}></Route>
+            <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
+            </Routes>
+          </div>
         </main>
       </BrowserRouter>
         
@@ -128,7 +165,6 @@ function App() {
     </div>
   );
 }
-
 function Home(){
 
   return (
@@ -141,3 +177,6 @@ function Home(){
 }
 
 export default App;
+// =======
+// export default App;
+// >>>>>>> 32362a0926af79e4e03808905a32f6d6218e85fd
