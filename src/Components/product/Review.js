@@ -1,3 +1,4 @@
+import { Star } from "@mui/icons-material";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -11,6 +12,7 @@ export default function Review() {
 
     const [totalReview, setTotalReview ]=useState(0);
     const [reviewList, setReviewList ]=useState([]);
+  
 
     const saveReview = (s) =>{
 
@@ -31,6 +33,11 @@ export default function Review() {
         }
         fetchData();
     }
+
+    const test = (target) => {
+        alert(target);
+
+    };
 
 
     // 리뷰 갯수 & 평균 평점 조회 (Product)
@@ -98,10 +105,14 @@ export default function Review() {
             
         </div>
 
-        <div>
-            <textarea class="reviewContent"  style={{width: "80%", height:"100px", margin:"10px" }}></textarea>
-            <button onClick={saveReview()} style={{backgroundColor: "#FB7D98", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", color:"#fff", borderRadius: "10px"}}>리뷰 등록</button>
+        <div style={{padding: "10px"}}>
+
+                <textarea class="reviewContent"  style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
+                <button onClick={saveReview()} style={{backgroundColor: "#FB7D98", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
+                color:"#fff", borderRadius: "10px",verticalAlign: "top"}}>리뷰 등록</button>
         </div>
+
+
 
         <div>
         {

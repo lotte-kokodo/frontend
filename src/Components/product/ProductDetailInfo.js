@@ -29,16 +29,12 @@ export default function ProductDetail() {
         var total= salePrice*tmpNum;
         setTotalPrice(total);
 
-        console.log("plus "+tmpNum+" "+total);
-        
     } 
     const minusOrderNum = ()=>{
         var tmpNum = orderNum-1;
         setOrderNum(tmpNum);
         var total= salePrice*tmpNum;
         setTotalPrice(total);
-
-        console.log("minus "+tmpNum+" "+total);
         
     }
 
@@ -140,11 +136,12 @@ export default function ProductDetail() {
     }, [salePrice]);
 
     const fetchData = async () => {
-        await axios.get(`http://localhost:9011/rateDiscount/${productId}`)
+        await axios.get(`http://localhost:9011/rate-discount/${productId}`)
             .then(function (resp) {
-                setRatePolicy(resp.data.result.data);
-                setSalePrice(calcSalePercent(resp.data.result.data.rate));
-                setTotalPrice(calcSalePercent(resp.data.result.data.rate));
+                console.log(resp);
+                setRatePolicy(resp.data);
+                setSalePrice(calcSalePercent(resp.data.rate));
+                setTotalPrice(calcSalePercent(resp.data.rate));
             })
             .catch(function (error) {
                 console.log(error);
