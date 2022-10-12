@@ -134,22 +134,25 @@ function App() {
         </nav>
 
         <main>
-        <div className="container">
-          <Routes>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/orderList" element={<OrderList />}></Route>
-            <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/mypage" element={<Mypage />}></Route>
-            <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
-            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
-            <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
+          <div className="container">
+            <Routes>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/orderList" element={<OrderList />}></Route>
+              <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/signup" element={<Signup />}></Route>
+              <Route path="/mypage" element={<Mypage />}></Route>
+              <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+              <Route path="/makeDiscountPolicy" element={<MakeDiscountPolicy />}></Route>
+              <Route path="/discountPolicyReq" element={<DiscountPolicyReqList />}></Route>
+              <Route path="/discountPolicyList" element={<DiscountPolicyList />}></Route>
+              <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
+
             </Routes>
           </div>
         </main>
       </BrowserRouter>
-        
+
       <footer>
       </footer>
     </div>
