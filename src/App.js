@@ -56,16 +56,16 @@ function App() {
               <input type="text" className="headerCenter-mypageCart-home-input" name='input_id' value={inputIdHomeInput} onChange={handleHomeInput} />
               <div className="headerCenter-search-overlap">
                 <button onClick={onClicktotalSearch}>
-                  <img className="headerCenter-search-search" alt="search" src="img/top/headerCenter-search.png" />
+                  <img className="headerCenter-search-search" alt="search" src="/img/top/headerCenter-search.png" />
                 </button>
               </div>
             </div>
             <div className="headerCenter-mypageCart">
               <Link to="/">
-                <img className="headerCenter-mypageCart-home" alt="home" src="img/top/headerCenter-mypageCart-home.png" />
+                <img className="headerCenter-mypageCart-home" alt="home" src="/img/top/headerCenter-mypageCart-home.png" />
               </Link>
               <Link to="/">
-                <img className="headerCenter-mypageCart-cart" alt="cart" src="img/top/headerCenter-mypageCart-cart.png" />
+                <img className="headerCenter-mypageCart-cart" alt="cart" src="/img/top/headerCenter-mypageCart-cart.png" />
               </Link>
             </div>
           </div>
@@ -80,16 +80,16 @@ function App() {
               <button>
                 <div className="navContainer-category-overlap">
                   <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src="/img/top/navContainer-category-Line.png" />
                   </div>
                   <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src="/img/top/navContainer-category-Line.png" />
                   </div>
                   <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src="/img/top/navContainer-category-Line.png" />
                   </div>
                 </div>
-                <img className="navContainer-category-Rectangle" alt="nav-rec" src="img/top/navContainer-category-Rectangle.png" />
+                <img className="navContainer-category-Rectangle" alt="nav-rec" src="/img/top/navContainer-category-Rectangle.png" />
               </button>
             </div>
 

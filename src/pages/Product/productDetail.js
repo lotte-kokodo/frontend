@@ -6,6 +6,8 @@ import ProductDetailNavBar from '../../Components/product/ProductDetailNavBar';
 import ProductDetailInfo from '../../Components/product/ProductDetailInfo';
 import Review from '../../Components/product/Review';
 
+import "./productDetail.css";
+
 function ProductDetail() {
 
     let { productId } = useParams(null);
@@ -15,15 +17,12 @@ function ProductDetail() {
 
     return (
         <div>
+            <div id="productDetailInfo">
             <ProductDetailInfo></ProductDetailInfo>
-            <br/>
-            <br/>
+            </div>
+            <div id="productDetailNavBar">
             <ProductDetailNavBar></ProductDetailNavBar>
-            <br/>
-            <Review></Review>
-            <br/>
-
-            <br/>
+            </div>
         </div>
     )
 

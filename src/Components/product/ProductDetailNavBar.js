@@ -3,16 +3,26 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import "./productDetailNavBar.css";
+import Review from "./Review";
+import DetailImage from "./DetailImage";
 
-const st1 = { transitionDuration: "300ms" }
-const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
-const st3 = { transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
-const st4 = { width: "88px", marginRight: "10px" }
-
-
+// const st1 = { transitionDuration: "300ms" }
+// const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
+// const st3 = { transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
+// const st4 = { width: "88px", marginRight: "10px" }
 
 export default function ProductDetailNavBar() {
 
+    // let { productId } = useParams(null);
+
+    const [checked, setChecked]=useState(false);
+    const getDetailImage = () =>{
+        setChecked(false);
+    }
+
+    const getReviews = () => {
+        setChecked(true);
+    }
 
     return (
 
@@ -21,24 +31,25 @@ export default function ProductDetailNavBar() {
             <div className="scrollTab full">
                 <div className="scrollTabInner">
                     <ul className="scrollTabWrapper">
-                        <li data-object="tab_type=detailtab" className="targetTab customActive" data-ant-status="observed">
-                            <a>
-                                <strong>상세정보</strong>{/**/}
+                        <li className="targetTab" data-ant-status="observed">
+                            <a onClick={getDetailImage}>
+                                <strong>상세정보</strong>
                             </a>
                         </li>
-                        <li data-object="tab_type=reviewtab&count=181" className="targetTab" data-ant-status="observed">
-                            <a>
+                        <li className="targetTab" data-ant-status="observed">
+                            <a onClick={getReviews}>
                                 <strong>리뷰</strong>
-                                <span className="count">(181)</span>
                             </a>
                         </li>
-                        <li data-object="tab_type=qnatab&count=79" className="targetTab" data-ant-status="observed">
-                            <a>
-                                <strong>Q&amp;A</strong>
-                                <span className="count">(79)</span>
-                            </a>
-                        </li>
+                        
                     </ul>
+                </div>
+                <div class="reviewContainer">
+                    {
+                        checked==false? <DetailImage></DetailImage> : <Review></Review>
+                    }
+                    
+                    
                 </div>
             </div>
 
