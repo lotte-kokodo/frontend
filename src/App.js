@@ -146,13 +146,7 @@ function App() {
             <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-{/* <<<<<<< HEAD
             <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
-            {/* <Route path="/product/detailNav/:productId" element={<ProductDetailNavBar />}></Route> 
-          </Routes>
-        </div>
-======= */}
-            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
             <Route path="/mypage" element={<Mypage />}></Route>
             <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
             </Routes>
@@ -165,16 +159,16 @@ function App() {
     </div>
   );
 }
-function Home(){
+// function Home(){
 
-  return (
-    <div>
-      <div className="container text-center">
-          <h2></h2>
-      </div>
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       <div className="container text-center">
+//           <h2></h2>
+//       </div>
+//     </div>
+//   )
+// }
 
 export default App;
 // =======

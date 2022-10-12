@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 
-import "../css/discountPolicy.css";
+// import "../css/discountPolicy.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { mockComponent } from 'react-dom/test-utils';
 import moment, { min } from 'moment';
