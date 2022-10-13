@@ -6,7 +6,7 @@ import SellerNav from "./sellerNav"
 import SellerHome from "./sellerHome"
 
 import SellerProductRegister from "./sellerProductRegister"
-import CalculatePresent from "../../calculate/calculate"
+import CalculatePresent from "../../calculate/js/calculate"
 
 function Seller() {
     return(
