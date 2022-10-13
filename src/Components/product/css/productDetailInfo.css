@@ -1,0 +1,371 @@
+.productImg {
+    max-width: 100%;
+    vertical-align: top;
+}
+fieldset, img {
+    border: 0;
+}
+.goods-img-area .goods-badge {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+}
+.goods-info-area .brand-line + .goods-tit {
+    margin-top: 5px;
+}
+.goods-info-area .goods-tit {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 40px;
+    margin-bottom: 10px;
+}
+.rating-point-md {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 98px;
+    height: 18px;
+    background: url(//static.lotteon.com/p/product/assets/img/icon_star_full.svg)  repeat-x 0/20px 17px;
+}
+/* a {
+    background: transparent;
+    text-decoration: none;
+    color: inherit;
+} */
+.goods-top-wrap {
+    padding-top: 70px;
+}
+.goods-info-area .rating-div .score {
+    font-size: 13px;
+    color: #555;
+}
+.goods-info-area .rating-div .num {
+    font-size: 13px;
+    color: #999;
+}
+.goods-price .sale > strong {
+    font-size: 35px;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+}
+.goods-price .sale {
+    color: #FB7D98;
+    font-size: 20px;
+    font-weight: 700;
+}
+.goods-price > p {
+    display: inline-block;
+    margin-right: 4px;
+}
+.goods-price .price {
+    font-size: 20px;
+    color: #333;
+    font-weight: 700;
+}
+.goods-price .price > strong {
+    font-size: 35px;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+}
+.goods-price .origin > span {
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: line-through;
+}
+.goods-price {
+    margin-top: 18px;
+    position: relative;
+}
+.goods-top-wrap .goods-info-area {
+    float: right;
+    width: 560px;
+    padding-right: 0px;
+    padding-left: 100px;
+}
+.orange-mem-box .box-head {
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    background: #FAFAFA;
+    
+}
+/* a {
+    background: transparent;
+    text-decoration: none;
+    color: inherit;
+} */
+.text-primary {
+    color: #FB7D98 
+}
+.orange-mem-box .sale-desc {
+    border-top: 1px solid #eee;
+    padding: 15px 0;
+}
+.orange-mem-box .sale-desc li > span {
+    float: left;
+    line-height: 23px;
+    font-weight: 500;
+}
+.orange-mem-box .box-head .txt {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 20px;
+    color: #999;
+    font-size: 13px;
+}
+.orange-mem-box .box-head .txt .ico-arr-right {
+    margin-top: 2px;
+    vertical-align: top;
+}
+.orange-mem-box .sale-desc {
+    border-top: 1px solid #eee;
+    padding: 15px 0;
+}
+.orange-mem-box .sale-desc li {
+    overflow: hidden;
+    padding: 0 20px;
+}
+.text-primary {
+    color: #FB7D98;
+}
+.dl-table-group .dl-row {
+    display: table-row;
+}
+.dl-table-group .dl-row > dd {
+    display: table-cell;
+    position: relative;
+    vertical-align: top;
+    border-bottom: 1px solid #EDEDED;
+    padding: 17px 0;
+    color: #333;
+}
+.dl-table-group {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    margin-top: 17px;
+    border-top: 1px solid #EDEDED;
+}
+.dl-table-group .dl-row > dt {
+    display: table-cell;
+    vertical-align: top;
+    width: 100px;
+    border-bottom: 1px solid #EDEDED;
+    padding: 17px 0;
+    color: #666;
+}
+.option-select-area .total-area .price {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 50px;
+}
+.option-select-area .total-area .txt {
+    display: inline-block;
+    font-size: 16px;
+}
+.option-select-area {
+    padding-top: 15px;
+}
+.option-select-area .total-area .txt {
+    display: inline-block;
+    font-size: 16px;
+}
+.option-select-area .total-area {
+    text-align: right;
+    margin-top: 30px;
+}
+.goods-info-area .option-select-area .btn-area > [class*="btn-basic-"]:first-child {
+    margin: 0 3px 0 0;
+}
+.goods-info-area .option-select-area .btn-area > [class*="btn-basic-"] {
+    vertical-align: top;
+    flex-grow: 1;
+    -webkit-box-flex: 1;
+    width: 50%;
+    min-width: auto;
+}
+.goods-info-area .option-select-area .btn-area {
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: stretch;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-align-items: stretch;
+}
+.goods-info-area .option-select-area .btn-area > [class*="btn-basic-"] {
+    vertical-align: top;
+    flex-grow: 1;
+    -webkit-box-flex: 1;
+    width: 50%;
+    margin: 0 3px;
+    min-width: auto;
+}
+.option-select-area .total-area .price strong {
+    font-size: 34px;
+}
+.option-select-area .total-area .txt {
+    display: inline-block;
+    font-size: 16px;
+}
+.txt, .txt span {
+    word-break: break-all;
+}
+.frame-sm {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.btn-primary-line {
+    background: #fff;
+    color: #FB7D98;
+    border: 1px solid #FB7D98;
+}
+.goods-info-area .option-select-area .btn-area > [class*="btn-basic-"] {
+    vertical-align: top;
+    flex-grow: 1;
+    -webkit-box-flex: 1;
+    width: 50%;
+    min-width: auto;
+}
+.btn-basic-lg {
+    min-width: 215px;
+    height: 56px;
+    padding: 10px 25px 11px;
+}
+[class*="btn-basic-"], [class*="btn-option"] {
+    border-radius: 6px;
+}
+.btn-primary-ex {
+    background: #FB7D98;
+    color: #fff;
+    border: 1px solid #FB7D98;
+}
+
+.btn-basic-lg > span {
+    font-size: 18px;
+    line-height: 1.8;
+}
+.orange-mem-box .sale-desc li > em {
+    float: right;
+}
+.orange-mem-box .sale-desc li .number {
+    font-size: 20px;
+    font-weight: 700;
+}
+.spinnerBox {
+    width: 110px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 10px;
+}
+.spinnerBox .minus.disabled, .spinnerBox .plus.disabled {
+    opacity: .25;
+}
+.spinnerBox .minus {
+    overflow: hidden;
+    text-indent: -99999px;
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    background: url(//static.lotteon.com/p/product/assets/img/btn_minus.svg) no-repeat 50%;
+}
+.spinnerBox .number {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    line-height: 30px;
+    text-align: center;
+    width: 42px;
+    font-size: 13px;
+}
+.spinnerBox .plus {
+    overflow: hidden;
+    text-indent: -99999px;
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    background: url(//static.lotteon.com/p/product/assets/img/btn_plus.svg) no-repeat 50%;
+}
+.spinnerBox .number input {
+    padding: 0;
+    line-height: 30px;
+    height: 30px;
+    width: 100%;
+    border: 0;
+    text-align: center;
+}
+.spinner{
+    display: flex;
+    justify-content: space-between;
+}
+btn-basic-lg > span {
+    font-size: 18px;
+    line-height: 1.8;
+}
+[class*="btn-basic-"] > span, [class*="btn-option"] > span, [class*="btn-rud-"] > span {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.goods-top-wrap .goods-img-area {
+    float: left;
+    width: 480px;
+}
+.goods-img-area .goods-slide .goods-top li.swiper-slide-active {
+    z-index: 5;
+}
+.goods-img-area .goods-slide .goods-top li {
+    cursor: pointer;
+}
+.goods-top-wrap {
+    padding-top: 70px;
+}
+.frame-sm {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+div {
+    display: block;
+}
+.container {
+    margin: 20px auto;
+    height: 100%;
+    align-content: center;
+    display: block;
+}
+.swiper-wrapper{
+    list-style:none;
+}
+.orange-mem-box .box-head .txt .ico-arr-right {
+    margin-top: 2px;
+    vertical-align: top;
+}
+[class*="ico-arr-"] {
+    position: relative;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    transition: .2s;
+    -webkit-transition: .2s;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+}

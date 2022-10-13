@@ -5,13 +5,13 @@ import Header from './header'
 import Nav from './nav'
 import Home from "./home"
 
-import Login from "../../Member/js/login"
-import Signup from "../../Member/js/signup"
-import Mypage from "../../Member/js/mypage"
-import MypageRead from "../../Member/js/mypageRead"
+import Login from "../../member/js/login"
+import Signup from "../../member/js/signup"
+import Mypage from "../../member/js/mypage"
+import MypageRead from "../../member/js/mypageRead"
 
-import Category from '../../Product/js/category'
-import Search from "../../Product/js/search"
+import Category from '../../product/js/category'
+import Search from "../../product/js/search"
 
 
 import "../css/header.css"
@@ -28,13 +28,16 @@ function Client() {
                     <Routes>
                         <Route path="/" element={<Home />}></Route>
 
+                        {/* member */}
                         <Route path="/login" element={<Login />}></Route>
                         <Route path="/signup" element={<Signup />}></Route>
                         <Route path="/mypage" element={<Mypage />}></Route>
                         <Route path="/mypageRead" element={<MypageRead />}></Route>
 
+                        {/* main - category */}
                         <Route path='/search' element={<Search />}></Route>
                         <Route path="/category" element={<Category />}></Route>
+
                     </Routes>
                 </div>
             </main>

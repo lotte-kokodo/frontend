@@ -5,7 +5,7 @@ import Pagination from "react-js-pagination";
 
 import "../css/paging.css"
 import "../css/category.css"
-import "../../Main/css/main.css"
+import "../../main/css/main.css"
 
 
 function Category() {

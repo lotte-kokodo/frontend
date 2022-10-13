@@ -6,6 +6,7 @@ import SellerNav from "./sellerNav"
 import SellerHome from "./sellerHome"
 
 import SellerProductRegister from "./sellerProductRegister"
+import CalculatePresent from "../../calculate/calculate"
 
 function Seller() {
     return(
@@ -16,9 +17,11 @@ function Seller() {
 
             <main>
                 <Routes>
-                    <Route path="/seller" element={<SellerHome />}></Route>
-                    
+                    <Route path="/" element={<SellerHome />}></Route>
+
                     <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
+                    <Route path="/calculate" element={<CalculatePresent />}></Route>
+
                 </Routes>
             </main>
         </div>

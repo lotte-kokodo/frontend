@@ -4,7 +4,7 @@ import {NavLink,useLocation} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 
 import "../css/category.css"
-import "../../Main/css/main.css"
+import "../../main/css/main.css"
 
 function Search() {
     const location = useLocation();

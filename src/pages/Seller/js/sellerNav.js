@@ -70,7 +70,7 @@ function SellerNav() {
                 <strong className="seller-nav-title">정산</strong>
                 {isListHover2 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/">정산 현황</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/calculate">정산 현황</Link></div>
                     <div className="seller-hover-child"><Link to="/seller/">매출 내역</Link></div>
                 </div>
                 :

@@ -1,8 +1,8 @@
 import React from "react"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 
-import Seller from "./pages/Seller/js/seller"
-import Client from "./pages/Main/js/client"
+import Seller from "./pages/seller/js/seller"
+import Client from "./pages/main/js/client"
 
 function App() {
   
