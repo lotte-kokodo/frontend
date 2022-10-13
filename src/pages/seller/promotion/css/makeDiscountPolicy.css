@@ -1,0 +1,19 @@
+#makeDiscountPolicy {
+    text-align: center;
+}
+
+.find-product-component {
+    height: 70px;
+    display: flex;
+    
+}
+
+.find-product-component > * {
+    /* display: inline-block; */
+    text-align: center;
+    width:34%;
+}
+
+.find-product-component-title > * {
+    margin-top: 20px;
+}

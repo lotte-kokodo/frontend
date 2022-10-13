@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.strong{
+  font-size: 10px;
 }
 
 .App-logo {
