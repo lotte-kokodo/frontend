@@ -121,6 +121,7 @@ a {
 }
 
 .navContainer-category{
+    z-index: 300;
     position: relative;
     float: left;
 }
@@ -147,7 +148,7 @@ a {
     list-style-type: none;
     float: left;
     margin-left: 70px;
-    font-size: 30px;
+    font-size: 25px;
     padding: 0px;
     margin-top: 0px;
 }
@@ -156,4 +157,29 @@ a {
     color: #fb7d98;
     background-color: #ffffff;
     border-color: #fb7d98;
+}
+
+.navContainer-category-list{
+    background-color: #ffffff;
+    border: 2px solid #000000;
+}
+
+.navContainer-category-list-ul{
+    width: 120px;
+    height: 100%;
+    padding: 0px;
+}
+
+
+.navContainer-category-list-item{
+    width: 120px;
+    height: 100%;
+    list-style: none;
+    font-size: 12px;
+    text-align: center;
+    padding:10px 0;
+}
+
+.navContainer-category-list-item:hover{
+    background-color: #f0f0f0;
 }
