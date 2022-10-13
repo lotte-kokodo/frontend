@@ -32,6 +32,7 @@ export default function ProductDetail() {
     } 
     const minusOrderNum = ()=>{
         var tmpNum = orderNum-1;
+        if(tmpNum==0) return;
         setOrderNum(tmpNum);
         var total= salePrice*tmpNum;
         setTotalPrice(total);
@@ -63,8 +64,7 @@ export default function ProductDetail() {
 
         return tmp;
     }
-
-    const downloadCoupon = (couponList) =>{
+    const downloadCoupon = couponList =>{
         let couponIds =[];
 
         for(var coupon  of couponList){
@@ -72,17 +72,16 @@ export default function ProductDetail() {
         }
 
         // TODO: Member ID 같이 전송해야함
-        const fetchData = async () => {
+        const test = async () => {
             await axios.post(`http://localhost:9011/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
                 .then(function (resp) {
-
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
         }
 
-        fetchData(productId);
+        test(productId);
 
     }
     
@@ -150,7 +149,7 @@ export default function ProductDetail() {
 
     return (
 
-<div className="goods-top-wrap frame-sm">
+<div className="goods-top-wrap frame-sm">r
 <div className="goods-img-area">
     <div className="goods-slide">
         <div className="swiper-container goods-top swiper-container-fade swiper-container-initialized swiper-container-horizontal">
@@ -186,7 +185,7 @@ export default function ProductDetail() {
         <p className="origin"><span>{moneyComma(product.price)}</span>원</p>
     </div>
     <div className="orange-mem-box">
-        <a onClick={downloadCoupon(coupon)} href="#" className="box-head">
+        <a onClick={()=>{downloadCoupon(coupon)}} href="#" className="box-head">
             <i className="ico-bl-orgmem"></i><strong className="text-primary">주문 시 적용되는 혜택이 있어요</strong>
             <span className="txt">쿠폰 다운로드 <i className="ico-arr-right"></i></span>
         </a>
