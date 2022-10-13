@@ -28,13 +28,13 @@ function Client() {
                     <Routes>
                         <Route path="/" element={<Home />}></Route>
 
-                        {/* member */}
+                        {/* member - login, signup */}
                         <Route path="/login" element={<Login />}></Route>
                         <Route path="/signup" element={<Signup />}></Route>
                         <Route path="/mypage" element={<Mypage />}></Route>
                         <Route path="/mypageRead" element={<MypageRead />}></Route>
 
-                        {/* main - category */}
+                        {/* product - search, category */}
                         <Route path='/search' element={<Search />}></Route>
                         <Route path="/category" element={<Category />}></Route>
 
