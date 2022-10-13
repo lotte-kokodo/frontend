@@ -1,7 +1,9 @@
 .seller-nav-container{
     width: 200px;
-    height: 1000px;
+    height: 2000px;
     border: 3px solid #FB7D98;
+    float: left;
+    margin-right: 10px;
 }
 
 .seller-nav-total1{
@@ -15,7 +17,7 @@
     color: #fb7d98;
     background-color: #ffffff;
     border-color: #fb7d98;
-    margin-bottom: 150px;
+    margin-bottom: 160px;
 }
 
 .seller-nav-total2{
@@ -48,11 +50,16 @@
     margin-left:50px;
 }
 
-.seller-hover-child:hover{
+.seller-hover-child a:hover{
     color: #fb7d98;
     background-color: #ffffff;
     border-color: #fb7d98;
+    list-style: none;
+    text-decoration: none;
 }
 
-/* //성은 짱짱 */
-/* //성은 최고 */
+.seller-hover-child a{
+    color:#000000;
+    text-decoration: none;
+}
+

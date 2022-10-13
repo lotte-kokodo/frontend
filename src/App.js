@@ -19,6 +19,3 @@ function App() {
 }
 
 export default App;
-
-//성은 짱짱
-//성은 최고
