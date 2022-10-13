@@ -6,7 +6,6 @@ import SellerNav from "./sellerNav"
 import SellerHome from "./sellerHome"
 
 import SellerProductRegister from "./sellerProductRegister"
-import SellerProductTemplate from "./sellerProductTemplate"
 
 function Seller() {
     return(
@@ -20,7 +19,6 @@ function Seller() {
                     <Route path="/seller" element={<SellerHome />}></Route>
                     
                     <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
-                    <Route path="/sellerProductTemplate" element={<SellerProductTemplate />}></Route>
                 </Routes>
             </main>
         </div>

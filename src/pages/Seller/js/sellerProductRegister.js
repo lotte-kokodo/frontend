@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import "../css/sellerProductRegister.css"
 
+import highlight from '../../../src_assets/highlight.png'
+
 function SellerProductRegister() {
     // useRef를 이용해 input태그에 접근한다.
     const imageInput = useRef();
@@ -16,6 +18,7 @@ function SellerProductRegister() {
     const [formCategory, setFormCategory] = useState("");
     const [displayCategory, setDisplayCategory] = useState("");
     const [selectCategory, setSelectCategory] = useState("");
+    const [selectCategoryId, setSelectCategoryId] = useState("");
     
     const onClickFormCategory = (e) => {
         setFormCategory(e.target.value);
@@ -42,7 +45,7 @@ function SellerProductRegister() {
         })
         .then(function(response){
             setDisplayCategory(response.data.result.data[0].name);
-            console.log(response.data.result.data[0].name);
+            setSelectCategoryId(response.data.result.data[0].id);
         })
         .catch(function(error){
             console.log(error);
@@ -68,8 +71,6 @@ function SellerProductRegister() {
     // 대표 이미지 파일 저장
     const saveFileImage = (e) => {
         sestFileImage(URL.createObjectURL(e.target.files[0]));
-        console.log(e.target.files[0]);
-        console.log(fileImage);
     }
 
     // 대표 이미지 파일 삭제
@@ -179,16 +180,67 @@ function SellerProductRegister() {
     }
 
     // 미리보기 버튼
+    const[visible, setVisible] = useState(false);
+
+
     const onClickAlreadyProduct = () => {
-        
+        setVisible(true);
     }
 
-    // 상품 등록
+    // 상품 등록 axios
+    const fetchProduct = async (params) => {
+        await axios({
+            method: "post",
+            url: "http://localhost:9270/product/save",
+            data : params
+        })
+        .then(function(response){
+            if(response.data.result.data === "success") {
+                alert("상품 등록에 성공하셨습니다.");
+            }else{
+                alert("상품 등록에 실패하셨습니다.");
+            }
+         })
+         .catch(function(error){
+            alert("상품 등록에 실패하셨습니다.");
+            console.log(error);
+         })
+    }
+
+
+    // 상품 등록 
     const onClickRegisterProduct = () => {
-        if(templateCheck === true) {
+        const productParams = [fileImage,formDisplayName,selectCategoryId];
 
-        }else {
-
+        if(fileImage===null || fileImage==="") {
+            alert("대표 이미지를 등록하세요.");
+        }else if(formDisplayName===null || formDisplayName===""){
+            alert("노출 상품명을 입력하세요.");
+        }else if(selectCategory===null || selectCategory===""){
+            alert("카테고리를 입력하세요.");
+        }else{
+            if(templateCheck === true) {
+                if(fileImageTemplate.length !== 5) {
+                    alert("템플릿 이미지 5개 등록은 필수입니다.");
+                }else if(sellerTitle === null || sellerTitle === ""
+                        || sellerTitleDetail === null || sellerTitleDetail === ""
+                        || sellerTitleHighklight1 === null || sellerTitleHighklight1 === ""
+                        || sellerTitleHighklight2 === null || sellerTitleHighklight2 === ""
+                        || sellerProductName === null || sellerProductName === ""
+                        || sellerProductDeatil === null || sellerProductDeatil === ""){
+                    alert("글 등록 6개는 필수입니다.")
+                }else{
+                    fetchProduct(productParams);
+                    alert("템플릿 추천 등록 (product,template) axios 하세요.");
+                }
+            }else {
+                if(fileImageDetail.length <= 0 || fileImageDetail===null) {
+                    alert("이미지 디테일 사진은 필수입니다.");
+                }else{
+                    fetchProduct(productParams);
+                    alert("이미지 디테일 등록 (product,product_detail) axios 짜세요.");
+                }
+            }
         }
     }
 
@@ -359,22 +411,42 @@ function SellerProductRegister() {
                         <div className="seller-product-div7">
                             <div className="seller-template-write">
                                 <span>미리보기</span>
-
+                                {visible &&
                                 <div className="already-container">
-                                    <div className="already-title">제목</div>
-                                    <div className="already-titleDetail">제목 상세</div>
-                                    <div className="already-image1">이미지1</div>
-                                    <div className="already-highlight">
-                                        <div className="already-highlight1">강조문구1</div>
-                                        <div className="already-highlight2">강조문구2</div>
+                                    <div className="already-title">{sellerTitle}</div>
+                                    <div className="already-titleDetail">{sellerTitleDetail}</div>
+                                    <div className="already-image1">
+                                        <img className="seller-template-already-image1" src={fileImageTemplate[0]} alt="image1" />
                                     </div>
-                                    <div className="already-image2">이미지2</div>
-                                    <div className="already-productName">제품이름</div>
-                                    <div className="already-productDetail">제품상세</div>
-                                    <div className="already-image3">이미지3</div>
-                                    <div className="already-image4">이미지4</div>
-                                    <div className="already-image5">이미지5</div>
-                                </div>
+                                    <div className="already-highlight">
+                                        <div className="already-highlight1">
+                                            <span>
+                                                <img className="already-icon-highlight" alt="highlight" src={highlight}/>
+                                            </span>
+                                            &nbsp;{sellerTitleHighklight1}
+                                        </div>
+                                        <div className="already-highlight2">
+                                            <span>
+                                                <img className="already-icon-highlight" alt="highlight" src={highlight}/>
+                                            </span>
+                                            &nbsp;{sellerTitleHighklight2}
+                                        </div>
+                                    </div>
+                                    <div className="already-image2">
+                                        <img className="seller-template-already-image2" src={fileImageTemplate[1]} alt="image2" />
+                                    </div>
+                                    <div className="already-productName">{sellerProductName}</div>
+                                    <div className="already-productDetail">{sellerProductDeatil}</div>
+                                    <div className="already-image3">
+                                        <img className="seller-template-already-image3" src={fileImageTemplate[2]} alt="image2" />
+                                    </div>
+                                    <div className="already-image4">
+                                        <img className="seller-template-already-image4" src={fileImageTemplate[3]} alt="image2" />
+                                    </div>
+                                    <div className="already-image5">
+                                        <img className="seller-template-already-image5" src={fileImageTemplate[4]} alt="image2" />
+                                    </div>
+                                </div>}
                                 
                             </div>
                         </div>
