@@ -2,6 +2,9 @@ import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
+import profile from '../../../../src_assets/mypage/mypage-top-left-profile.png'
+import star from '../../../../src_assets/mypage/star.png'
+
 import '../css/mypage.css'
 
 function Mypage() {
@@ -74,7 +77,7 @@ function Mypage() {
                 <div className='mypage-top-left'>
                     <div className='mypage-top-left-profile'>
                         <button className='mypage-top-button'>
-                            <img className='mypage-top-left-profile-image' alt="profile" src="img/mypage/mypage-top-left-profile.png" />
+                            <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
                         </button>
                     </div>
                     <div className='mypage-top-left-writing'>
@@ -137,7 +140,7 @@ function ReviewListItem(props) {
                         {props.obj.createdDate} 
                     </div>
                     <div>
-                        <span>평점 <img className='myreviews-stars' alt="star" src="img/mypage/star.png" /></span> 
+                        <span>평점 <img className='myreviews-stars' alt="star" src={star} /></span> 
                         <span>{props.obj.rating}</span>
                     </div>
                 </div>

@@ -15,13 +15,13 @@ function Nav() {
                     <div className="navContainer-subject">
                         <ul className="navContainer-subject-ul">
                             <Link to="/">
-                            <li>베스트</li>
+                                <li>MD추천</li>
                             </Link>
                             <Link to="/">
-                            <li>특가</li>
+                                <li>타임세일</li>
                             </Link>
                             <Link to="/">
-                            <li>프로모션</li>
+                                <li>프로모션</li>
                             </Link>
                         </ul>
                     </div>

@@ -2,6 +2,11 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import line from '../../../../src_assets/top/navContainer-category-Line.png'
+import pinkRect from '../../../../src_assets/top/navContainer-category-Rectangle.png'
+import blackRect from '../../../../src_assets/top/header-hover-rectangle.png'
+
+
 const ImgHover = () => {
     const [isListHover, setIsListHover] = useState(false);
     const [categoryList,setCategoryList] = useState([]);
@@ -32,19 +37,19 @@ const ImgHover = () => {
             <div className='navContainer-category-shape'>
                 <div className="navContainer-category-overlap">
                     <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src={line} />
                     </div>
                     <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src={line} />
                     </div>
                     <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src={line} />
                     </div>
                 </div>
                 
                 <img
                     className="navContainer-category-Rectangle" alt="nav-rec"
-                    src={isListHover ? "img/top/header-hover-rectangle.png" : "img/top/navContainer-category-Rectangle.png"}
+                    src={isListHover ? blackRect : pinkRect}
                 />
             </div>
 

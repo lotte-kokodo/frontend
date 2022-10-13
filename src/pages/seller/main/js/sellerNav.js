@@ -3,10 +3,10 @@ import {Link} from "react-router-dom"
 
 import "../css/sellerNav.css"
 
-import product from '../../../../src_assets/product.png'
-import order from '../../../../src_assets/order.png'
-import calculation from '../../../../src_assets/calculation.png'
-import promotion from '../../../../src_assets/promotion.png'
+import product from '../../../../src_assets/seller/nav/product.png'
+import order from '../../../../src_assets/seller/nav/order.png'
+import calculation from '../../../../src_assets/seller/nav/calculation.png'
+import promotion from '../../../../src_assets/seller/nav/promotion.png'
 
 function SellerNav() {
     const [isListHover, setIsListHover] = useState(false);

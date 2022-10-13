@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import "../css/sellerProductRegister.css"
 
-import highlight from '../../../../src_assets/highlight.png'
+import highlight from '../../../../src_assets/seller/nav/highlight.png'
 
 function SellerProductRegister() {
     // useRef를 이용해 input태그에 접근한다.
@@ -195,7 +195,7 @@ function SellerProductRegister() {
             data : params
         })
         .then(function(response){
-            if(response.data.result.data === "success") {
+            if(response.data.success) {
                 alert("상품 등록에 성공하셨습니다.");
             }else{
                 alert("상품 등록에 실패하셨습니다.");
@@ -210,7 +210,7 @@ function SellerProductRegister() {
 
     // 상품 등록 
     const onClickRegisterProduct = () => {
-        const productParams = [fileImage,formDisplayName,selectCategoryId];
+        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"displayName":formDisplayName,"sellerId":1};
 
         if(fileImage===null || fileImage==="") {
             alert("대표 이미지를 등록하세요.");
