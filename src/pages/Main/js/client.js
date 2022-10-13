@@ -28,7 +28,7 @@ function Client() {
                     <Routes>
                         <Route path="/" element={<Home />}></Route>
 
-                        {/* member */}
+                        {/* member - login, signup */}
                         <Route path="/login" element={<Login />}></Route>
                         <Route path="/signup" element={<Signup />}></Route>
                         <Route path="/mypage" element={<Mypage />}></Route>
