@@ -3,15 +3,15 @@
  */
 
 // Provider
-import { ServerConfigContext } from "../../../Context/ServerConfigProvider"
-import { AuthContext } from "../../../Context/AuthProvider";
-import { HttpHeadersContext } from "../../../Context/HttpHeadersProvider";
+import { ServerConfigContext } from "../../../context/ServerConfigProvider"
+import { AuthContext } from "../../../context/AuthProvider";
+import { HttpHeadersContext } from "../../../context/HttpHeadersProvider";
 
 // Module
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import CartProductRow from "./CartProductRow";
-import { CheckCartContext } from "../Context/CheckCartProvider";
+import { CheckCartContext } from "../context/CheckCartProvider";
 
 
 const CartProductList = () => {
@@ -27,8 +27,6 @@ const CartProductList = () => {
 	const [cartIds, setCartIds] = useState([]);
 
 	const [checkCartIds, setCheckCartIds] = useState([]);
-	const [isAllChecked, setIsAllChecked] = useState(false);
-
 	useEffect(() => {
 		getCartProducts();
 	}, []);
@@ -50,23 +48,21 @@ const CartProductList = () => {
 				console.log("[error] (CartProductList) GET /order-payment-service/carts");
 				console.log(err);
 			});
-
 	}
 
 	/* '상품별' 체크박스 핸들러 */
 	const checkCartHandler = (id, isChecked) => {
 		if (isChecked) {
 			setCheckCartIds([...checkCartIds, id]);
-
 			carts.map((cart) => {
-				if (checkCartIds.includes(cart.id)) {
+				if (cart.id === id) {
 					setCheckCarts([...checkCarts, cart]);
+					return;
 				}
 			});
 		}
 		else if (!isChecked && checkCartIds.includes(id)) {
 			setCheckCartIds(checkCartIds.filter((el) => el !== id));
-
 			setCheckCarts(checkCarts.filter((cart) => cart.id !== id));
 		}
 	}
@@ -75,14 +71,10 @@ const CartProductList = () => {
 	const allCheckHandler = (isChecked) => {
 		if (isChecked) {
 			setCheckCartIds(cartIds);
-			setIsAllChecked(true);
-
 			setCheckCarts(carts);
 		}
 		else {
 			setCheckCartIds([]);
-			setIsAllChecked(false);
-
 			setCheckCarts([]);
 		}
 	}
@@ -91,7 +83,7 @@ const CartProductList = () => {
 		<>
 			<input type="checkbox" 
 					onChange={(event) => allCheckHandler(event.target.checked)}
-					checked={checkCartIds.length === cartIds.length ? true : false}
+					checked={cartIds.length === checkCartIds.length ? true : false}
 					/>
 
 			{
@@ -100,7 +92,8 @@ const CartProductList = () => {
 						<CartProductRow 
 							cart={cart} key={idx} 
 							handler={checkCartHandler}
-							isAllChecked={isAllChecked}/>
+							checkCartCnt={checkCartIds.length} 
+							allCartCnt={cartIds.length}/>
 					)
 				})
 			}

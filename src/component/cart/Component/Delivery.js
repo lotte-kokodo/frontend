@@ -3,8 +3,8 @@
  */
 
 // Provider
-import { ServerConfigContext } from "../../../Context/ServerConfigProvider"
-import { HttpHeadersContext } from "../../../Context/HttpHeadersProvider";
+import { ServerConfigContext } from "../../../context/ServerConfigProvider"
+import { HttpHeadersContext } from "../../../context/HttpHeadersProvider";
 
 // Module
 import axios from "axios";

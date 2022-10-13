@@ -6,7 +6,11 @@ export const CheckCartContext = createContext();
 const CheckCartProvider = ({ children }) => {
 
 	const [checkCarts, setCheckCarts] = useState([]);
-	const value = {checkCarts, setCheckCarts};
+	const [rateDiscountPolicy, setRateDiscountPolicy] = useState({}); // { productId: rate }
+	const [fixDiscountPolicy, setFixDiscountPolicy] = useState({}); // { sellerId: boolean } 무료배송정책 유무
+
+	const value = {checkCarts, setCheckCarts, rateDiscountPolicy, setRateDiscountPolicy, 
+					fixDiscountPolicy, setFixDiscountPolicy};
 
 	return (
 		<CheckCartContext.Provider value={value}>

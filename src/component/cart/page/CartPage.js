@@ -8,7 +8,7 @@ import CartProductList from "../Component/CartProductList"
 import Payment from "../Component/Payment"
 
 // Provider
-import CheckCartProvider from "../Context/CheckCartProvider";
+import CheckCartProvider from "../context/CheckCartProvider";
 
 
 const CartPage = () => {

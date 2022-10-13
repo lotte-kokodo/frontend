@@ -3,9 +3,9 @@
  */
 
 // Provider
-import { ServerConfigContext } from "../../Context/ServerConfigProvider"
-import { AuthContext } from "../../Context/AuthProvider";
-import { HttpHeadersContext } from "../../Context/HttpHeadersProvider";
+import { ServerConfigContext } from "../../context/ServerConfigProvider"
+import { AuthContext } from "../../context/AuthProvider";
+import { HttpHeadersContext } from "../../context/HttpHeadersProvider";
 
 // Module
 import axios from "axios";

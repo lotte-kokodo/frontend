@@ -2,17 +2,17 @@ import React, { useState } from "react"
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom"
 
 
-import AuthProvider from "./Context/AuthProvider"
+import AuthProvider from "./context/AuthProvider"
 
-import Login from "./pages/Member/js/login"
-import Signup from "./pages/Member/js/signup"
+import Login from "./pages/member/js/login"
+import Signup from "./pages/member/js/signup"
 
-import CartPage from "./Components/Cart/Page/CartPage"
-import OrderSheet from "./Components/Order/OrderSheet"
+import CartPage from "./component/cart/page/CartPage"
+import OrderSheet from "./component/order/OrderSheet"
 
-import "./Components/Frame/css/header.css"
-import HttpHeadersProvider from "./Context/HttpHeadersProvider"
-import ServerConfigProvider from "./Context/ServerConfigProvider"
+import "./component/frame/css/header.css"
+import HttpHeadersProvider from "./context/HttpHeadersProvider"
+import ServerConfigProvider from "./context/ServerConfigProvider"
 
 
 function App() {

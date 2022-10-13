@@ -14,7 +14,7 @@ import axios from "axios";
 import { useContext, useState } from "react"
 
 // Context
-import { HttpHeadersContext } from "../../../Context/HttpHeadersProvider";
+import { HttpHeadersContext } from "../../../context/HttpHeadersProvider";
 
 
 const CartProductRow = (props) => {
@@ -22,8 +22,6 @@ const CartProductRow = (props) => {
 	const { headers, setHeaders } = useContext(HttpHeadersContext);
 
 	const cart = props.cart;
-	const isAllChecked = props.isAllChecked;
-
 	const [qty, setQty] = useState(cart.qty);
 	const product = {
 		productId: cart.productId,
@@ -70,7 +68,11 @@ const CartProductRow = (props) => {
 		<>
 			<div className="row cart-product-row-div">
 				<div className="col-1">
-					<CheckBox cartId={cart.id} handler={props.handler} isAllChecked={isAllChecked}/>
+					<CheckBox cartId={cart.id} 
+							handler={props.handler} 
+							isAllChecked={props.isAllChecked} 
+							checkCartCnt={props.checkCartCnt}
+							allCartCnt={props.allCartCnt}/>
 				</div>
 				<div className="col-2">
 					<img className="product-img" src={cart.productThumbnail} alt={cart.productName} />

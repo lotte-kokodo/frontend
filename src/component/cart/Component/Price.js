@@ -3,8 +3,9 @@
  */
 
 // Provider
-import { HttpHeadersContext } from "../../../Context/HttpHeadersProvider";
-import { ServerConfigContext } from "../../../Context/ServerConfigProvider";
+import { HttpHeadersContext } from "../../../context/HttpHeadersProvider";
+import { ServerConfigContext } from "../../../context/ServerConfigProvider";
+import { CheckCartContext } from "../context/CheckCartProvider";
 
 // Module
 import axios from "axios";
@@ -18,16 +19,19 @@ const Price = (props) => {
 	const unitPrice = product.unitPrice;
 	const qty = product.qty;
 
-	const { url, setUrl } = useContext(ServerConfigContext);
-	const { headers, setHeaders } = useContext(HttpHeadersContext);
+	const { url } = useContext(ServerConfigContext);
+	const { headers } = useContext(HttpHeadersContext);
+	const { rateDiscountPolicy, setRateDiscountPolicy } = useContext(CheckCartContext);
+	const { fixDiscountPolicy, setFixDiscountPolicy } = useContext(CheckCartContext);
 
-	const [ totalPrice, setTotalPrice ] = useState(unitPrice*qty);
+	const totalPrice = unitPrice*qty;
 	const [ discountPrice, setDiscountPrice ] = useState(0);
 
 	const rateDiscountApi = url + "/promotion-service/rate-discount/" + productId;
 
 	useEffect(() => {
 		getRateDiscountPolicy();
+		// getFixDiscountPolicy();
 	}, []);
 
 	
@@ -48,6 +52,7 @@ const Price = (props) => {
 			if (data != null) {
 				console.log(productId);
 				setDiscountPrice(calcDiscountPrice(data.rate));
+				setRateDiscountPolicy(currentState => {return {...currentState, [productId]: data.rate }});
 			}
 		})
 		.catch((err) => {
@@ -57,7 +62,7 @@ const Price = (props) => {
 	}
 
 	// TODO
-	// sellerIds, 고정할인정책(무료배송) 유무 true, false
+	// req List (productId-sellerId), 고정할인정책(무료배송) 유무 return (true, false)
 	const getFixDiscountPolicy = async () => {
 
 		await axios.get()
