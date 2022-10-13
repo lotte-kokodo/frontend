@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import "./productDetailNavBar.css";
+import "../css/productDetailNavBar.css";
 import Review from "./Review";
 import DetailImage from "./DetailImage";
 

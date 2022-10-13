@@ -2,10 +2,11 @@ import React, { useState} from 'react';
 import {Link} from "react-router-dom"
 
 import "../css/sellerNav.css"
-import product from '../../../src_assets/product.png'
-import order from '../../../src_assets/order.png'
-import calculation from '../../../src_assets/calculation.png'
-import promotion from '../../../src_assets/promotion.png'
+
+import product from '../../../../src_assets/product.png'
+import order from '../../../../src_assets/order.png'
+import calculation from '../../../../src_assets/calculation.png'
+import promotion from '../../../../src_assets/promotion.png'
 
 function SellerNav() {
     const [isListHover, setIsListHover] = useState(false);
@@ -29,9 +30,9 @@ function SellerNav() {
                 {isListHover ?
                 <div className="seller-hover-parent">
                     <div className="seller-hover-child"><Link to="/seller/sellerProductRegister">상품 등록</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">상품 일괄 등록</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">상품 조회/수정</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">상품 알림</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">상품 일괄 등록 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/productSearch">상품 조회/수정</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/productNotice">상품 알림</Link></div>
                 </div>
                 :
                 <div></div>
@@ -49,10 +50,10 @@ function SellerNav() {
                 <strong className="seller-nav-title">주문/배송</strong>
                 {isListHover1 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/">배송 관리</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">반품 관리</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">교환 관리</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">주문 조회</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">배송 관리 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">반품 관리 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">교환 관리 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">주문 조회 - 추후</Link></div>
                 </div>
                 :
                 <div></div>
@@ -71,7 +72,7 @@ function SellerNav() {
                 {isListHover2 ?
                 <div className="seller-hover-parent">
                     <div className="seller-hover-child"><Link to="/seller/calculate">정산 현황</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">매출 내역</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">매출 내역 - 추후</Link></div>
                 </div>
                 :
                 <div></div>
@@ -89,8 +90,8 @@ function SellerNav() {
                 <strong className="seller-nav-title">프로모션</strong>
                 {isListHover3 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/">할인쿠폰 관리</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">할인상품 조회</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/discountPolicyManagement">할인쿠폰 관리</Link></div>
+                    <div className="seller-hover-child"><Link to="/seller/">할인상품 조회 - 추후</Link></div>
                 </div>
                 :
                 <div></div>

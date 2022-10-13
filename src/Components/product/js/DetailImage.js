@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import "./detailImage.css";
+import "../css/detailImage.css";
 
 export default function ProductDetail() {
 

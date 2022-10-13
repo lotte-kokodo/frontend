@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import "../css/sellerProductRegister.css"
 
-import highlight from '../../../src_assets/highlight.png'
+import highlight from '../../../../src_assets/highlight.png'
 
 function SellerProductRegister() {
     // useRef를 이용해 input태그에 접근한다.

@@ -9,7 +9,7 @@ import { pink } from '@mui/material/colors';
 import { Button } from '@mui/material';
 import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TablePagination, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
 
-import IssueList from './checkBoxComponent';
+import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({

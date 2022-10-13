@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom"
 
-import "./orderList.css";
+import "../css/orderList.css";
 
 function ChangeLocalDateTime(dateTime) {
     var resultDate = new Date("2022-09-12T12:00:00")//"YYYY-MM-DDTHH:mm:sszz"
