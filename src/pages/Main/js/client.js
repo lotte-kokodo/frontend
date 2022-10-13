@@ -34,7 +34,7 @@ function Client() {
                         <Route path="/mypage" element={<Mypage />}></Route>
                         <Route path="/mypageRead" element={<MypageRead />}></Route>
 
-                        {/* main - category */}
+                        {/* product - search, category */}
                         <Route path='/search' element={<Search />}></Route>
                         <Route path="/category" element={<Category />}></Route>
 
