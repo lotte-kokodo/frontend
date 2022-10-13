@@ -12,8 +12,10 @@ import MypageRead from "../../member/js/mypageRead"
 
 import Category from '../../product/js/category'
 import Search from "../../product/js/search"
+import ProductDetail from "../../product/js/productDetail"
 
 
+import GetOrderList from "../../order/js/orderList"
 import "../css/header.css"
 
 function Client() {
@@ -34,9 +36,13 @@ function Client() {
                         <Route path="/mypage" element={<Mypage />}></Route>
                         <Route path="/mypageRead" element={<MypageRead />}></Route>
 
-                        {/* product - search, category */}
+                        {/* product - search, category, detail */}
                         <Route path='/search' element={<Search />}></Route>
                         <Route path="/category" element={<Category />}></Route>
+                        <Route path="/productDetail" element={<ProductDetail />}></Route>
+
+                        {/* order - orderList */}
+                        <Route path="/orderList" element={<GetOrderList />}></Route>
 
                     </Routes>
                 </div>

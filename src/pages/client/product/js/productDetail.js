@@ -2,11 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import ProductDetailNavBar from '../../../Components/Product/ProductDetailNavBar';
-import ProductDetailInfo from '../../../Components/Product/ProductDetailInfo';
-import Review from '../../../Components/Product/Review';
+import ProductDetailNavBar from '../../../../components/product/js/ProductDetailNavBar';
+import ProductDetailInfo from '../../../../components/product/js/ProductDetailInfo';
 
-import "./productDetail.css";
+import "../css/productDetail.css";
 
 function ProductDetail() {
 

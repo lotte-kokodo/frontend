@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import "./Review.css";
+import "../css/review.css";
 
 
 export default function Review() {

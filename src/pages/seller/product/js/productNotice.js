@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import "./productNotice.css"
+import "../css/productNotice.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -68,7 +68,7 @@ function productTableRow(row) {
     return (
         <tr>
             {/*체크박스 컴포넌트 자리*/}
-            <th>{checkBoxPosition}</th>
+            {/* <th>{checkBoxPosition}</th> */}
             <th>{row.cnt}</th>
             <td>{row.obj.id}</td>
             <td>{row.obj.regPdName}</td>

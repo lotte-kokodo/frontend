@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import "./ProductSearch.css"
+import "../css/ProductSearch.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";

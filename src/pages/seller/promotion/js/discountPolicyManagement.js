@@ -1,6 +1,6 @@
 import * as React from 'react';
 import DiscountPolicyReqList from './discountPolicyReqList';
-import DiscountPolicyList from './discountPolicyList';
+import DiscountPolicyList from '../../../../components/promotion/js/discountPolicyList';
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
