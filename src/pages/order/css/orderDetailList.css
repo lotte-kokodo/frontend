@@ -1,0 +1,57 @@
+.content-detail {
+    display: flex;
+    position: relative;
+    margin: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+
+.image {
+    width: 120px;
+}
+
+.content-detail-image {
+    width: 20%;
+}
+
+.detail-values {
+    position: relative;
+    width: 50%;
+    margin-top: 2%;
+}
+
+.status {
+    width: 15%;
+    margin-top: 4%;
+}
+
+.refund-button-value {
+    width: 15%;
+    margin-top: 3%;
+}
+
+.values-bottom {
+    margin-top: 2%;
+    display: flex;
+}
+
+.price {
+    padding-right: 10px;
+    /* border-right: 1px solid black; */
+}
+
+.refund-button {
+    float: right;
+    background-color: white;
+    border: 3px solid #FB7D98;
+    border-radius: 20px;
+    width: 180px;
+    height: 50px;
+    color: #FB7D98;
+    font-size: 25px;
+    text-align: center;
+}
+
+.content-detail-name {
+    font-weight: bold;
+}
