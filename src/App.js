@@ -5,7 +5,6 @@ import Seller from "./pages/seller/main/js/seller"
 import Client from "./pages/client/main/js/client"
 
 function App() {
-  
   return (
     <div>
     
@@ -20,7 +19,6 @@ function App() {
         </Routes>
         
       </BrowserRouter>
-
     </div>
   );
 }
