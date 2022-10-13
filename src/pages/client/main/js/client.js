@@ -39,7 +39,7 @@ function Client() {
                         {/* product - search, category, detail */}
                         <Route path='/search' element={<Search />}></Route>
                         <Route path="/category" element={<Category />}></Route>
-                        <Route path="/productDetail" element={<ProductDetail />}></Route>
+                        <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
 
                         {/* order - orderList */}
                         <Route path="/orderList" element={<GetOrderList />}></Route>

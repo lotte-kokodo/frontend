@@ -96,7 +96,7 @@ function CategoryItem(props) {
     const priceChange = props.obj.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     
     return(
-        <NavLink to={`/product/detail/${props.obj.id}`} className='product-div'>
+        <NavLink to={`/productDetail/${props.obj.id}`} className='product-div'>
             <div className='product-thumbnail'>
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>

@@ -22,11 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-<<<<<<< HEAD
 # package
-package.json
-package-lock.json
-=======
+
 # IntelliJ
 .idea
->>>>>>> origin/dev
