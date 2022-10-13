@@ -7,11 +7,12 @@ import AuthProvider from "./Context/AuthProvider"
 import Login from "./pages/Member/js/login"
 import Signup from "./pages/Member/js/signup"
 
-import Cart from "./Components/Cart/Cart"
+import CartPage from "./Components/Cart/Page/CartPage"
 import OrderSheet from "./Components/Order/OrderSheet"
 
 import "./Components/Frame/css/header.css"
 import HttpHeadersProvider from "./Context/HttpHeadersProvider"
+import ServerConfigProvider from "./Context/ServerConfigProvider"
 
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
 
         <hr className="headerBottom-hr"></hr>
 
+        <ServerConfigProvider>
         <HttpHeadersProvider>
           <AuthProvider>
             <nav className="nav">
@@ -127,7 +129,7 @@ function App() {
                   <Route path="/login" element={<Login />}></Route>
                   <Route path="/signup" element={<Signup />}></Route>
 
-                  <Route path="/cart" element={<Cart />}></Route>
+                  <Route path="/cart" element={<CartPage />}></Route>
                   <Route path="/ordersheet" element={<OrderSheet />}></Route>
                 </Routes>
               </div>
@@ -135,6 +137,7 @@ function App() {
             </main>
           </AuthProvider>
         </HttpHeadersProvider>
+        </ServerConfigProvider>
       </BrowserRouter>
 
       <footer>
