@@ -10,7 +10,10 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
+          {/* Seller */}
           <Route path="/seller/*" element={<Seller />}></Route>
+
+          {/* Customer */}
           <Route path="/*" element={<Client />}></Route>
         </Routes>
       </BrowserRouter>
