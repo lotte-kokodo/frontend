@@ -8,7 +8,9 @@ function App() {
   
   return (
     <div>
+    
       <BrowserRouter>
+      
         <Routes>
           {/* Seller */}
           <Route path="/seller/*" element={<Seller />}></Route>
@@ -16,7 +18,9 @@ function App() {
           {/* Customer */}
           <Route path="/*" element={<Client />}></Route>
         </Routes>
+        
       </BrowserRouter>
+
     </div>
   );
 }
