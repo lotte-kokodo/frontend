@@ -3,7 +3,6 @@
  */
 
 import axios from "axios";
-import CartProductList from "./CartProductList";
 
  const SellerStore = () => {
 

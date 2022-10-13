@@ -2,9 +2,6 @@
  * 장바구니 상품 리스트
  */
 
-// Component
-import SellerStore from "./SellerStore"
-
 // Provider
 import { ServerConfigContext } from "../../../Context/ServerConfigProvider"
 import { AuthContext } from "../../../Context/AuthProvider";
@@ -14,6 +11,7 @@ import { HttpHeadersContext } from "../../../Context/HttpHeadersProvider";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react"
 import CartProductRow from "./CartProductRow";
+import { CheckCartContext } from "../Context/CheckCartProvider";
 
 
 const CartProductList = () => {
@@ -21,6 +19,7 @@ const CartProductList = () => {
 	const { url, setUrl } = useContext(ServerConfigContext);
 	const { memberId, setMemberId } = useContext(AuthContext);
 	const { headers, setHeaders } = useContext(HttpHeadersContext);
+	const { checkCarts, setCheckCarts } = useContext(CheckCartContext);
 
 	const api = url + "/order-payment-service/carts/" + memberId;
 
@@ -58,9 +57,17 @@ const CartProductList = () => {
 	const checkCartHandler = (id, isChecked) => {
 		if (isChecked) {
 			setCheckCartIds([...checkCartIds, id]);
+
+			carts.map((cart) => {
+				if (checkCartIds.includes(cart.id)) {
+					setCheckCarts([...checkCarts, cart]);
+				}
+			});
 		}
 		else if (!isChecked && checkCartIds.includes(id)) {
 			setCheckCartIds(checkCartIds.filter((el) => el !== id));
+
+			setCheckCarts(checkCarts.filter((cart) => cart.id !== id));
 		}
 	}
 
@@ -69,10 +76,14 @@ const CartProductList = () => {
 		if (isChecked) {
 			setCheckCartIds(cartIds);
 			setIsAllChecked(true);
+
+			setCheckCarts(carts);
 		}
 		else {
 			setCheckCartIds([]);
 			setIsAllChecked(false);
+
+			setCheckCarts([]);
 		}
 	}
 
