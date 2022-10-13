@@ -1,5 +1,5 @@
 /**
- * '장바구니' 컴포넌트 영역
+ * '장바구니' 컴포넌트 영역!
  */
 
 import React, { useEffect, useState, useContext, useCallback } from "react";
