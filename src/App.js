@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {BrowserRouter, Link, Routes, Route} from "react-router-dom"
 
-import ProductDetail from "./Components/product/ProductDetail"
+import ProductDetail from "./pages/Product/productDetail"
+import ProductDetailNavBar from "./Components/product/ProductDetailNavBar"
 import Login from "./pages/Member/js/login"
 import OrderDetailList from "./Components/Order/orderDetailList";
 import OrderList from "./Components/Order/orderList";
@@ -79,16 +80,20 @@ function App() {
               <input type="text" className="headerCenter-mypageCart-home-input" name='input_id' value={inputIdHomeInput} onChange={handleHomeInput} />
               <div className="headerCenter-search-overlap">
                 <button onClick={onClicktotalSearch}>
-                  <img className="headerCenter-search-search" alt="search" src="img/top/headerCenter-search.png" />
+                  <img className="headerCenter-search-search" alt="search" src="/img/top/headerCenter-search.png" />
                 </button>
               </div>
             </div>
             <div className="headerCenter-mypageCart">
+{/* <<<<<<< HEAD
+              <Link to="/">
+                <img className="headerCenter-mypageCart-home" alt="home" src="/img/top/headerCenter-mypageCart-home.png" />
+======= */}
               <Link to="/mypage">
                 <img className="headerCenter-mypageCart-home" alt="mypage" src="img/top/headerCenter-mypageCart-home.png" />
               </Link>
               <Link to="/">
-                <img className="headerCenter-mypageCart-cart" alt="cart" src="img/top/headerCenter-mypageCart-cart.png" />
+                <img className="headerCenter-mypageCart-cart" alt="cart" src="/img/top/headerCenter-mypageCart-cart.png" />
               </Link>
             </div>
           </div>
@@ -103,16 +108,16 @@ function App() {
               <button>
                 <div className="navContainer-category-overlap">
                   <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src="/img/top/navContainer-category-Line.png" />
                   </div>
                   <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src="/img/top/navContainer-category-Line.png" />
                   </div>
                   <div>
-                    <img className="headerCenter-category-line" alt="nav-line" src="img/top/navContainer-category-Line.png" />
+                    <img className="headerCenter-category-line" alt="nav-line" src="/img/top/navContainer-category-Line.png" />
                   </div>
                 </div>
-                <img className="navContainer-category-Rectangle" alt="nav-rec" src="img/top/navContainer-category-Rectangle.png" />
+                <img className="navContainer-category-Rectangle" alt="nav-rec" src="/img/top/navContainer-category-Rectangle.png" />
               </button>
             </div>
 
@@ -141,7 +146,7 @@ function App() {
             <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/product/detail/:productId" element={<ProductDetail />}></Route>
+            <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
             <Route path="/mypage" element={<Mypage />}></Route>
             <Route path="/discountPolicy" element={<DiscountPolicy />}></Route>
             </Routes>
@@ -154,5 +159,18 @@ function App() {
     </div>
   );
 }
+// function Home(){
+
+//   return (
+//     <div>
+//       <div className="container text-center">
+//           <h2></h2>
+//       </div>
+//     </div>
+//   )
+// }
 
 export default App;
+// =======
+// export default App;
+// >>>>>>> 32362a0926af79e4e03808905a32f6d6218e85fd
