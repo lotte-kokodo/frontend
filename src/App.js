@@ -14,7 +14,7 @@ function App() {
           {/* Seller */}
           <Route path="/seller/*" element={<Seller />}></Route>
 
-          {/* Customer */}
+          {/* Customers */}
           <Route path="/*" element={<Client />}></Route>
         </Routes>
         
