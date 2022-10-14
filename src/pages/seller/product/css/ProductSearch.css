@@ -61,7 +61,7 @@
     /*-ms-flex-align: center;*/
     /*align-items: center;*/
     /*height: 10%;*/
-    width: 90%;
+    width: 80%;
     padding: 1% 1% 1% 1%;
 
 /*    display: flex;*/
@@ -147,7 +147,7 @@
     -ms-flex-align: center;
     /*align-items: center;*/
     height: 10%;
-    width: 90%;
+    width: 80%;
     padding: 1% 1% 1% 1%;
 }
 
@@ -200,7 +200,7 @@
     /*-ms-flex-pack: justify;*/
     /*-ms-flex-align: center;*/
     height: 10%;
-    width: 90%;
+    width: 80%;
     padding: 1% 1% 1% 1%;
 }
 
@@ -288,4 +288,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .product-expect-money{
     margin: 0% 0% 0% 38%;
+}
+
+.product-search-table{
+    width: 80%;
 }
