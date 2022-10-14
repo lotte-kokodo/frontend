@@ -101,14 +101,14 @@ a {
 }
 
 .headerBottom-hr{
-    width:100000px;
+    width:100%;
     border-width: 3px;
     border-color: #fb7d98;
     margin: 0;
     padding: 0;
 }
 
-.nav {
+.nav{
     width: 1000px;
     height:100px;
     margin: 0 auto;

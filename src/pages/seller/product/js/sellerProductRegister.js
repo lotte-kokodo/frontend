@@ -4,12 +4,14 @@ import axios from 'axios';
 import "../css/sellerProductRegister.css"
 
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
+import { useParams } from "react-router-dom";
 
 function SellerProductRegister() {
     // useRef를 이용해 input태그에 접근한다.
     const imageInput = useRef();
     const imageDetailInput = useRef();
     const imageTemplateInput = useRef();
+    const params = useParams();
 
     // 노출 상품명
     const [formDisplayName, setFormDisplayName] = useState('');
@@ -210,7 +212,7 @@ function SellerProductRegister() {
 
     // 상품 등록 
     const onClickRegisterProduct = () => {
-        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"displayName":formDisplayName,"sellerId":1};
+        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"displayName":formDisplayName,"sellerId":params.sellerId};
 
         if(fileImage===null || fileImage==="") {
             alert("대표 이미지를 등록하세요.");
