@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from "react"
 import {Link, useNavigate} from "react-router-dom"
 
+import cart from '../../../../src_assets/top/headerCenter-mypageCart-cart.png'
+import home from '../../../../src_assets/top/headerCenter-mypageCart-home.png'
+import search from '../../../../src_assets/top/headerCenter-search.png'
+
 function Header() {
 
     const [inputIdHomeInput, setInputHomeInput] = useState('');
@@ -72,16 +76,16 @@ function Header() {
                         <input type="text" className="headerCenter-mypageCart-home-input" name='input_id' value={inputIdHomeInput} onChange={handleHomeInput} />
                         <div className="headerCenter-search-overlap">
                         <button onClick={onClicktotalSearch}>
-                            <img className="headerCenter-search-search" alt="search" src="img/top/headerCenter-search.png" />
+                            <img className="headerCenter-search-search" alt="search" src={search} />
                         </button>
                         </div>
                     </div>
                     <div className="headerCenter-mypageCart">
                         <Link to="/mypage">
-                          <img className="headerCenter-mypageCart-home" alt="mypage" src="img/top/headerCenter-mypageCart-home.png" />
+                          <img className="headerCenter-mypageCart-home" alt="mypage" src={home} />
                         </Link>
                         <Link to="/">
-                          <img className="headerCenter-mypageCart-cart" alt="cart" src="img/top/headerCenter-mypageCart-cart.png" />
+                          <img className="headerCenter-mypageCart-cart" alt="cart" src={cart} />
                         </Link>
                     </div>
                 </div>

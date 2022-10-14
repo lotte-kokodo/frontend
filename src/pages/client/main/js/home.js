@@ -2,6 +2,10 @@ import React, {useEffect, useState, useRef} from "react"
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
+import left from '../../../../src_assets/main/left.png'
+import right from '../../../../src_assets/main/right.png'
+import timer from '../../../../src_assets/main/timer.png'
+
 import "../css/main.css"
 
 function Home() {
@@ -156,9 +160,10 @@ function Home() {
     const fetchMd = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:9270/product/main/seller" 
+        url: "http://localhost:9270/product/main/seller"
         })
         .then(function(response){
+            console.log(response.data.result.data);
             setMdState(response.data.result.data);
         })
         .catch(function(error){
@@ -180,7 +185,7 @@ function Home() {
                     <button
                     onClick={handleBannerLeft}
                     >
-                        <img className="banner-button-left" alt="cart" src="img/main/left.png" />
+                        <img className="banner-button-left" alt="cart" src={left} />
                     </button>
                 </div>
 
@@ -188,7 +193,7 @@ function Home() {
                     <button
                     onClick={handleBannerRight}
                     > 
-                        <img className="banner-button-right" alt="cart" src="img/main/right.png" />
+                        <img className="banner-button-right" alt="cart" src={right} />
                     </button>
                 </div>
 
@@ -239,7 +244,7 @@ function Home() {
                     <div className="new-product" >
                         <h3 className='product-title'>이달의 신상품=☆</h3>
                         <div className='product-list'>
-                            {
+                            {newState &&
                                 newState.map( function(object, i){
                                     return(
                                         <NewItem obj={object} key={i} cnt={i + 1} />
@@ -252,12 +257,12 @@ function Home() {
                     <div className="sale-product" >
                         
                         <h3 className='product-title'>
-                            <img className='timer' alt='timer' src='img/main/timer.png' />
+                            <img className='timer' alt='timer' src={timer} />
                             지금 이순간 깜짝 타임세일!
                         </h3>
 
                         <div className='product-list'>
-                            {
+                            {saleState &&
                                 saleState.map( function(object, i){
                                     return(
                                         <SaleItem obj={object} key={i} cnt={i + 1} />
@@ -271,7 +276,7 @@ function Home() {
                     <div className="md-product" >
                         <h3 className='product-title'>MD's 추천 상품</h3>
                         <div className='product-list'>
-                            {
+                            {mdState &&
                                 mdState.map( function(object, i){
                                     return(
                                         <MdItem obj={object} key={i} cnt={i + 1} />
