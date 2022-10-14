@@ -1,6 +1,7 @@
 import * as React from 'react';
-import DiscountPolicyReqList from './discountPolicyReqList';
-import DiscountPolicyList from '../../../../components/promotion/js/discountPolicyList';
+import DiscountPolicyList from "../../../../components/promotion/js/discountPolicyList";
+import DiscountPolicyReqList from '../../../../components/promotion/js/discountPolicyReqList';
+// import DiscountPolicyList from '../../../../components/promotion/js/discountPolicyList';
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -62,9 +63,8 @@ const DiscountPolicyManagement = () => {
     return (
         <>
             <h3>할인 정책 관리</h3>
-            <ColorButton variant="contained" onClick={handleOpen} startIcon={<AddIcon />} sx={{ marginBottom: 12, marginTop: 3 }}>
-                할인 정책 만들기
-            </ColorButton>
+            <button onClick={() => {handleOpen()}} style={{backgroundColor: "#FB7D98", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center",
+                color:"#fff", borderRadius: "10px"}}>+ 할인 정책 만들기</button>
             <Modal
             open={open}
             onClose={handleClose}

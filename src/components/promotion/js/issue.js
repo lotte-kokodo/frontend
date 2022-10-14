@@ -52,7 +52,7 @@ const Issue = (props) => {
             <StyledTableCell>
                 <FormControlLabel
                     //handleChangePage이거 바꿔야 함
-                    control={<Checkbox checked={!bChecked} onChange={() => checkHandler()} />}
+                    control={<Checkbox checked={!bChecked} onChange={checkHandler} />}
                 />
             </StyledTableCell>
             <StyledTableCell align="center">{props.props.product_id}</StyledTableCell>

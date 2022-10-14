@@ -44,7 +44,7 @@ const rows = [
     createData('14783020', '기간 한정 할인', '2022-09-13-2022-09-14', '적용가능', '적용 10건:총 21건'),
 ];
 
-export default function DiscountPolicyManagement() {
+export default function DiscountPolicyList() {
     const [order, setOrder] = React.useState('desc');
     const [orderBy, setOrderBy] = React.useState('reqDate');
     const [selected, setSelected] = React.useState([]);
