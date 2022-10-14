@@ -19,7 +19,7 @@ import { HttpHeadersContext } from "../../../context/HttpHeadersProvider";
 
 const CartProductRow = (props) => {
 
-	const { headers, setHeaders } = useContext(HttpHeadersContext);
+	const { headers } = useContext(HttpHeadersContext);
 
 	const cart = props.cart;
 	const [qty, setQty] = useState(cart.qty);
@@ -35,16 +35,21 @@ const CartProductRow = (props) => {
 			qty: updatedQty
 		}
 
-		await axios.patch(`http://localhost:8001/order-payment-service/carts/${cart.id}/qty`, req, { headers: headers })
+		await axios.patch(`http://localhost:8001/order-payment-service/carts/${cart.id}/qty`, req, {headers: headers })
 			.then((resp) => {
-				console.log("[CartRow] increaseQty() success.");
+				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);
 
 
 				setQty(updatedQty);
 			})
 			.catch((err) => {
+				console.log("[Error](CartRow) updateQty().");
 				console.log(err);
+
+				const data = err.response.data;
+				alert(data.message);
+				setQty(data.result.qtyAvailable);
 			});
 
 	}

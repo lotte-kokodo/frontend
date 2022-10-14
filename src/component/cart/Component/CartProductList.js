@@ -81,10 +81,10 @@ const CartProductList = () => {
 
 	return (
 		<>
-			<input type="checkbox" 
+			<br/><br/><input type="checkbox" 
 					onChange={(event) => allCheckHandler(event.target.checked)}
 					checked={cartIds.length === checkCartIds.length ? true : false}
-					/>
+					/> &nbsp; &nbsp; 전체선택
 
 			{
 				carts.map(function (cart, idx) {
