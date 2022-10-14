@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import {Link} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 
 import "../css/sellerNav.css"
 
@@ -13,6 +13,7 @@ function SellerNav() {
     const [isListHover1, setIsListHover1] = useState(false);
     const [isListHover2, setIsListHover2] = useState(false);
     const [isListHover3, setIsListHover3] = useState(false);
+    const params = useParams();
 
 
     return(
@@ -29,10 +30,10 @@ function SellerNav() {
                 <strong className="seller-nav-title">상품 관리</strong>
                 {isListHover ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/sellerProductRegister">상품 등록</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">상품 일괄 등록 - 추후</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/productSearch">상품 조회/수정</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/productNotice">상품 알림</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/sellerProductRegister`}>상품 등록</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>상품 일괄 등록</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/productSearch`}>상품 조회/수정</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/productNotice`}>상품 알림</Link></div>
                 </div>
                 :
                 <div></div>
@@ -50,10 +51,10 @@ function SellerNav() {
                 <strong className="seller-nav-title">주문/배송</strong>
                 {isListHover1 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/">배송 관리 - 추후</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">반품 관리 - 추후</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">교환 관리 - 추후</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">주문 조회 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>배송 관리</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>반품 관리</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>교환 관리</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>주문 조회</Link></div>
                 </div>
                 :
                 <div></div>
@@ -71,8 +72,8 @@ function SellerNav() {
                 <strong className="seller-nav-title">정산</strong>
                 {isListHover2 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/calculate">정산 현황</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">매출 내역 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/calculate`}>정산 현황</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>매출 내역</Link></div>
                 </div>
                 :
                 <div></div>
@@ -90,8 +91,8 @@ function SellerNav() {
                 <strong className="seller-nav-title">프로모션</strong>
                 {isListHover3 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to="/seller/discountPolicyManagement">할인쿠폰 관리</Link></div>
-                    <div className="seller-hover-child"><Link to="/seller/">할인상품 조회 - 추후</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/discountPolicyManagement`}>할인쿠폰 관리</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>할인상품 조회</Link></div>
                 </div>
                 :
                 <div></div>

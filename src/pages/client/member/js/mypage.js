@@ -76,9 +76,9 @@ function Mypage() {
             <div className='mypageTop'>
                 <div className='mypage-top-left'>
                     <div className='mypage-top-left-profile'>
-                        <button className='mypage-top-button'>
+                        <div className='mypage-top-button'>
                             <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
-                        </button>
+                        </div>
                     </div>
                     <div className='mypage-top-left-writing'>
                         <div className='mypage-top-left-profile-ment'>

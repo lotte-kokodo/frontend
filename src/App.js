@@ -12,7 +12,7 @@ function App() {
       
         <Routes>
           {/* Seller */}
-          <Route path="/seller/*" element={<Seller />}></Route>
+          <Route path="/seller/:sellerId/*" element={<Seller />}></Route>
 
           {/* Customers */}
           <Route path="/*" element={<Client />}></Route>

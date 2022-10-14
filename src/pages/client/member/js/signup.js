@@ -69,7 +69,7 @@ function Signup(){
         }else if(inputAddr === null || inputAddr.trim() === "" || inputAddr.length > 10 || inputAddr.length === 11) {
             alert("주소를 자세히 입력해주세요.");
         }else {
-            const params = {"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "profileImageUrl":"https://ibb.co/4SFQqZn", "phoneNumber":inputPhone, "address":inputAddr, "grade":"ACE"};
+            const params = {"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "phoneNumber":inputPhone, "address":inputAddr, "grade":"ACE"};
             fetchSignUp(params)
         }
     };
