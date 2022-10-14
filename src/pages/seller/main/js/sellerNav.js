@@ -15,7 +15,6 @@ function SellerNav() {
     const [isListHover3, setIsListHover3] = useState(false);
     const params = useParams();
 
-
     return(
         <div className="seller-nav-container">
             <div 
