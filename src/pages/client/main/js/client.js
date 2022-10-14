@@ -11,6 +11,8 @@ import Mypage from "../../member/js/mypage"
 import MypageRead from "../../member/js/mypageRead"
 
 import Category from '../../product/js/category'
+import MdRecommendation from '../../product/js/mdRecomendation'
+import Sale from '../../product/js/sale'
 import Search from "../../product/js/search"
 import ProductDetail from "../../product/js/productDetail"
 
@@ -39,6 +41,9 @@ function Client() {
                         {/* product - search, category, detail */}
                         <Route path='/search' element={<Search />}></Route>
                         <Route path="/category" element={<Category />}></Route>
+
+                        <Route path="/mdRecommendation" element={<MdRecommendation />}></Route>
+                        <Route path="/sale" element={<Sale />}></Route>
                         <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
 
                         {/* order - orderList */}
