@@ -1,0 +1,53 @@
+/**
+ * '주문서' 컴포넌트 영역
+ */
+
+// Component
+import Delivery from "../../../../components/order/ordersheet/delivery";
+import OrderProductList from "../../../../components/order/ordersheet/orderProductList";
+import PaymentButton from "../../../../components/order/ordersheet/paymentButton"
+
+
+// Component
+import Coupon from "../../../../components/order/ordersheet/coupon";
+import Payment from "../../../../components/order/ordersheet/payment";
+import {useLocation} from "react-router-dom";
+
+function OrderSheet() {
+
+	const state = useLocation().state;
+	const cartIds = state.cartIds ? state.cartIds : [];
+	const productIds  = state.productIds;
+	const productQtyMap = state.productQtyMap;
+
+	return (
+			<>
+				{/*<CheckCartProvider>*/}
+				<div className="order-container">
+					<div className="row">
+						<Delivery />
+					</div>
+					<div className="row">
+						<OrderProductList
+								productIds={productIds}
+								productQtyMap={productQtyMap}/>
+					</div>
+					<div className="row">
+						<div className="col-9">
+							<Coupon />
+						</div>
+						<div className="col-3">
+							<Payment />
+							<PaymentButton
+									cartIds={cartIds}
+									productIds={productIds}
+									productQtyMap={productQtyMap}/>
+						</div>
+					</div>
+				</div>
+				{/*</CheckCartProvider>*/}
+			</>
+	);
+}
+
+export default OrderSheet
