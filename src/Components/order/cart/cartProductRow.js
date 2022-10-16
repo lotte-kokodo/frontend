@@ -11,11 +11,10 @@ import Price from "./price";
 
 // Module
 import axios from "axios";
-import { useContext, useState } from "react"
+import {useContext, useState} from "react"
 
 // Context
-import { AuthContext } from "../../../context/authProvider";
-
+import {AuthContext} from "../../../context/authProvider";
 
 const CartProductRow = (props) => {
 

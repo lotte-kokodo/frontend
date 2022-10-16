@@ -18,7 +18,6 @@ const Payment = () => {
 	const [payPrice, setPayPrice] = useState(999999999);
 
 	useEffect(() => {
-		print();
 		calcPaymentPrice();
 	}, [checkProducts.length]);
 
@@ -44,11 +43,6 @@ const Payment = () => {
 
 		// 배송비 추가
 		setPayPrice(tPrice-discPrice);
-	}
-
-	const print = () => {
-		console.log("cart/payment print");
-		console.log(checkProducts);
 	}
 
 	return (

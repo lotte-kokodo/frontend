@@ -2,11 +2,8 @@
  * '가격정보' 컴포넌트
  */
 
-// Provider
-import { OrderContext } from "../../../context/OrderProvider";
-
 // Module
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 
 const Price = (props) => {
@@ -22,10 +19,8 @@ const Price = (props) => {
 
 
   useEffect(() => {
-    console.log(product);
-    console.log(qty);
     calcDiscPrice();
-  }, []);
+  });
 
 
   const calcDiscPrice = () => {

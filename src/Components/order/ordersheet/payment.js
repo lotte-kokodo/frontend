@@ -3,12 +3,10 @@
  */
 
 // Context
-import { OrderContext } from "../../../context/OrderProvider";
-
+import {OrderContext} from "../../../context/OrderProvider";
 
 // Module
-import { useContext, useEffect, useState } from "react"
-
+import {useContext, useEffect, useState} from "react"
 
 const Payment = (props) => {
 
@@ -22,7 +20,6 @@ const Payment = (props) => {
 
 
   useEffect(() => {
-    print();
     calcPaymentPrice();
   }, [orderProducts]);
 
@@ -45,11 +42,6 @@ const Payment = (props) => {
     setDiscPrice(dPrice);
     setPaymentPrice(tPrice-dPrice);
     // TODO 배송비 계산
-  }
-
-  const print = () => {
-    console.log("*** payment");
-    console.log(orderProducts);
   }
 
   return (
