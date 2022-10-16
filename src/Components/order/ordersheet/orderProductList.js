@@ -9,13 +9,16 @@ import {useContext, useEffect, useState} from "react"
 // Provider
 import {OrderContext} from "../../../context/OrderProvider";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
+import {AuthContext} from "../../../context/authProvider";
+
+// Component
 import OrderProductRow from "./orderProductRow";
 
 
 const OrderProductList = (props) => {
 
   const { url } = useContext(ServerConfigContext);
-  const { rateDiscountPolicy, fixDiscountPolicy } = useContext(OrderContext);
+  const { headers, memberId } = useContext(AuthContext);
   const { setOrderProducts } = useContext(OrderContext);
 
   const productIds = props.productIds;
@@ -23,12 +26,12 @@ const OrderProductList = (props) => {
 
   const [ products, setProducts ] = useState([]);
 
-  const api = url + "/product-service/product/orderProducts";
+  const api = url + "/order-payment-service/orders/" + memberId + "/orderSheet";
 
   const getOrderProducts = async () => {
-    await axios.get(api, { params: { productIds: productIds.join(",") }})
+    await axios.get(api, { params: { productIds: productIds.join(",") }, headers: headers})
     .then((resp) => {
-      console.log("[success] (OrderProductList) GET /product-service/orderProducts");
+      console.log("[success] (OrderProductList) GET /order-payment-service/orderProducts");
       const data = resp.data.result.data;
 
       console.log(data);
@@ -43,7 +46,6 @@ const OrderProductList = (props) => {
 
   useEffect(() => {
     console.log("orderProductList ");
-    console.log(rateDiscountPolicy);
     getOrderProducts();
   }, [])
 
@@ -54,7 +56,10 @@ const OrderProductList = (props) => {
           {
             products.map((product, idx) => {
               return (
-                  <OrderProductRow product={product} qty={productQtyMap[product.id]} key={idx} />
+                  <OrderProductRow
+                      product={product}
+                      qty={productQtyMap[product.productId]}
+                      key={idx} />
               )
             })
           }

@@ -14,34 +14,28 @@ const Price = (props) => {
   const product = props.product;
   const qty = props.qty;
 
-  const productId = product.id;
-  const [ totalPrice, setTotalPrice ] = useState(product.price * qty);
+  const unitPrice = product.unitPrice;
+  const discRate = product.discRate;
 
-  const { rateDiscountPolicy } = useContext(OrderContext);
+  const totalPrice = unitPrice*qty;
+  const [ discPrice, setDiscPrice ] = useState(0);
+
 
   useEffect(() => {
-    console.log(rateDiscountPolicy);
     console.log(product);
     console.log(qty);
-    calcDiscountPrice();
+    calcDiscPrice();
   }, []);
 
 
-  const calcDiscountPrice = () => {
-    console.log("policy " + productId);
-
-    console.log("policy " + rateDiscountPolicy[productId]);
-    setTotalPrice(rateDiscountPolicy[productId] ?
-            Math.floor(totalPrice*((100-rateDiscountPolicy[productId])*0.01))
-            :
-            totalPrice
-    );
-
+  const calcDiscPrice = () => {
+    setDiscPrice(discRate !== 0 ?
+            Math.floor(totalPrice*(1-discRate*0.01)) : totalPrice);
   }
 
   return (
       <>
-        <span>{totalPrice}</span><br/><br/>
+        <span>{discPrice}</span><br/><br/>
       </>
   )
 

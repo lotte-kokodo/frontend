@@ -12,11 +12,11 @@ import { useContext, useEffect, useState } from "react"
 
 const Payment = (props) => {
 
-  const { orderProducts, rateDiscountPolicy } = useContext(OrderContext);
+  const { orderProducts } = useContext(OrderContext);
 
   const productQtyMap = props.productQtyMap;
   const [ totalPrice, setTotalPrice ] = useState(999999);
-  const [ discountPrice, setDiscountPrice ] = useState(0);
+  const [ discPrice, setDiscPrice ] = useState(0);
   const [ deliveryPrice, setDeliveryPrice ] = useState(999999);
   const [ paymentPrice, setPaymentPrice ] = useState(999999);
 
@@ -30,26 +30,26 @@ const Payment = (props) => {
   const calcPaymentPrice = () => {
     // 상품 총 금액 계산
     let tPrice = 0;
-    orderProducts.map((product) => tPrice += product.price*productQtyMap[product.id]);
+    orderProducts.map((product) => {
+      tPrice += product.unitPrice*productQtyMap[product.productId];
+    });
     setTotalPrice(tPrice);
 
     // 총 할인금액 계산
-    let discPrice = 0;
+    let dPrice = 0;
     orderProducts.map((product) => {
-      if (rateDiscountPolicy[product.id]) {
-        discPrice += Math.floor(product.price*productQtyMap[product.id] * (rateDiscountPolicy[product.id]*0.01));
-        console.log(product.price*productQtyMap[product.id] * (rateDiscountPolicy[product.id]*0.01));
+      if (product.discRate !== 0) {
+        dPrice += Math.floor(product.unitPrice*productQtyMap[product.productId] * (product.discRate*0.01));
       }
     });
-    setDiscountPrice(discPrice);
-    setPaymentPrice(tPrice-discPrice);
+    setDiscPrice(dPrice);
+    setPaymentPrice(tPrice-dPrice);
     // TODO 배송비 계산
   }
 
   const print = () => {
     console.log("*** payment");
     console.log(orderProducts);
-    console.log(rateDiscountPolicy);
   }
 
   return (
@@ -63,7 +63,7 @@ const Payment = (props) => {
           </tr>
           <tr>
             <td>상품할인금액</td>
-            <td>{discountPrice}</td>
+            <td>{discPrice}</td>
           </tr>
           <tr>
             <td>배송비</td>

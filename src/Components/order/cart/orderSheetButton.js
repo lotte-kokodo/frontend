@@ -13,13 +13,13 @@ const OrderSheetButton = () => {
   let cartIds = [];
   let productIds  = [];
   let productQtyMap = {};
-  const { checkCarts } = useContext(OrderContext);
+  const { checkProducts } = useContext(OrderContext);
 
   const createOrderProductInfo = () => {
-    checkCarts.map((cart) => {
-      cartIds.push(cart.id);
-      productIds.push(cart.productId);
-      productQtyMap[cart.productId] = cart.qty;
+    checkProducts.map((product) => {
+      cartIds.push(product.cartId);
+      productIds.push(product.productId);
+      productQtyMap[product.productId] = product.qty;
     });
     console.log(productQtyMap);
   }
