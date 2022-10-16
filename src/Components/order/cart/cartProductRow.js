@@ -3,7 +3,7 @@
  */
 
 // CSS
-import "../../../pages/client/cart/css/cart.css"
+import "../../../pages/client/order/css/order.css"
 
 // Component
 import CheckBox from "./checkBox";
@@ -67,7 +67,7 @@ const CartProductRow = (props) => {
 
 	return (
 		<>
-			<div className="row cart-product-row-div">
+			<div className="row">
 				<div className="col-1">
 					<CheckBox cartId={productId}
 							handler={props.handler} 
@@ -76,7 +76,7 @@ const CartProductRow = (props) => {
 							allCartCnt={props.allCartCnt}/>
 				</div>
 				<div className="col-2">
-					<img className="product-img" src={product.productThumbnail} alt={product.productName} />
+					<img className="order-product-img" src={product.productThumbnail} alt={product.productName} />
 				</div>
 				<div className="col-4">
 					<span>{product.productName}</span>

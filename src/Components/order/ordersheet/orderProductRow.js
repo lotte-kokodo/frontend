@@ -18,7 +18,7 @@ import {useEffect} from "react";
   return (
       <div className="row">
        <div className="col-2">
-        <img className="product-img" src={product.productThumbnail} alt={product.productName} />
+        <img className="order-product-img" src={product.productThumbnail} alt={product.productName} />
        </div>
        <div className="col-5">
         <span>{product.productName}</span>

@@ -42,6 +42,9 @@ const CartProductList = () => {
 				console.log(data);
 				setProducts(data);
 				setProductIds(data.map((product) => {return product.productId}));
+
+				// 장바구니 접속 초기화면 = 전체선택
+				allCheckHandler(true);
 			})
 			.catch((err) => {
 				console.log("[error] (CartProductList) GET /order-payment-service/carts");

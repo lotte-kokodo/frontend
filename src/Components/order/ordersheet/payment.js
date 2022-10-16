@@ -54,20 +54,20 @@ const Payment = (props) => {
 
   return (
       <>
-        <h5>결제예정금액</h5><br/>
+        <h3>결제예정금액</h3><hr/>
         <table>
           <tbody>
           <tr>
             <td>상품금액</td>
-            <td>{totalPrice}</td>
+            <td>{totalPrice} 원</td>
           </tr>
           <tr>
             <td>상품할인금액</td>
-            <td>{discPrice}</td>
+            <td>-{discPrice} 원</td>
           </tr>
           <tr>
             <td>배송비</td>
-            <td>{}</td>
+            <td>{} 원</td>
           </tr>
           </tbody>
         </table>

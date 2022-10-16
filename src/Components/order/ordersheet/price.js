@@ -35,7 +35,7 @@ const Price = (props) => {
 
   return (
       <>
-        <span>{discPrice}</span><br/><br/>
+        <span>{discPrice} 원</span><br/><br/>
       </>
   )
 

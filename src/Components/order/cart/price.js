@@ -2,15 +2,6 @@
  * '상품 가격' 컴포넌트
  */
 
-// Provider
-import { AuthContext } from "../../../context/authProvider";
-import { ServerConfigContext } from "../../../context/serverConfigProvider";
-import { OrderContext } from "../../../context/OrderProvider";
-
-// Module
-import axios from "axios";
-import { useContext, useEffect, useState } from "react"
-
 
 const Price = (props) => {
 

@@ -53,8 +53,7 @@ const Payment = () => {
 
 	return (
 		<>
-		<div><button onClick={print}>버튼</button></div>
-			<h5>결제예정금액</h5><br/>
+			<h3>결제예정금액</h3><br/>
 			<table>
 				<tbody>
 					<tr>

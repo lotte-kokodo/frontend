@@ -51,7 +51,7 @@ const OrderProductList = (props) => {
 
   return (
       <>
-        <h3>상품정보</h3><br/>
+        <h3>상품정보</h3>
         <hr/>
           {
             products.map((product, idx) => {

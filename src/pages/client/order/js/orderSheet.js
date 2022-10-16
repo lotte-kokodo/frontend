@@ -25,12 +25,16 @@ function OrderSheet() {
 				{/*<OrderProvider>*/}
 				<div className="order-container">
 					<div className="row">
-						<Delivery />
+						<div className="col">
+							<Delivery />
+						</div>
 					</div>
 					<div className="row">
-						<OrderProductList
-								productIds={productIds}
-								productQtyMap={productQtyMap}/>
+						<div className="col">
+							<OrderProductList
+									productIds={productIds}
+									productQtyMap={productQtyMap}/>
+						</div>
 					</div>
 					<div className="row">
 						<div className="col-9">

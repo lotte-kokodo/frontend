@@ -18,7 +18,7 @@ import ProductDetail from "../../product/js/productDetail"
 
 import GetOrderList from "../../order/js/orderList"
 import "../css/header.css"
-import Cart from "../../cart/js/cart";
+import Cart from "../../order/js/cart";
 import OrderSheet from "../../order/js/orderSheet";
 import AuthProvider from "../../../../context/authProvider";
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
