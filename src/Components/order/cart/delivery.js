@@ -3,8 +3,8 @@
  */
 
 // Provider
-import { ServerConfigContext } from "../../context/serverConfigProvider"
-import { AuthContext } from "../../context/authProvider";
+import { ServerConfigContext } from "../../../context/serverConfigProvider"
+import { AuthContext } from "../../../context/authProvider";
 
 // Module
 import axios from "axios";

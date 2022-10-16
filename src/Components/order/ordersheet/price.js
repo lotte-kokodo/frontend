@@ -3,7 +3,7 @@
  */
 
 // Provider
-import { CheckCartContext } from "../../../context/checkCartProvider";
+import { OrderContext } from "../../../context/OrderProvider";
 
 // Module
 import { useContext, useEffect, useState } from "react"
@@ -17,7 +17,7 @@ const Price = (props) => {
   const productId = product.id;
   const [ totalPrice, setTotalPrice ] = useState(product.price * qty);
 
-  const { rateDiscountPolicy } = useContext(CheckCartContext);
+  const { rateDiscountPolicy } = useContext(OrderContext);
 
   useEffect(() => {
     console.log(rateDiscountPolicy);

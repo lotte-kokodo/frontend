@@ -5,20 +5,18 @@
 // Module
 import axios from "axios";
 import {useContext, useEffect, useState} from "react"
-import {useLocation} from "react-router-dom";
 
 // Provider
-import {CheckCartContext} from "../../../context/checkCartProvider";
+import {OrderContext} from "../../../context/OrderProvider";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
-import AuthProvider, {AuthContext} from "../../../context/authProvider";
 import OrderProductRow from "./orderProductRow";
-
 
 
 const OrderProductList = (props) => {
 
   const { url } = useContext(ServerConfigContext);
-  const { rateDiscountPolicy, fixDiscountPolicy } = useContext(CheckCartContext);
+  const { rateDiscountPolicy, fixDiscountPolicy } = useContext(OrderContext);
+  const { setOrderProducts } = useContext(OrderContext);
 
   const productIds = props.productIds;
   const productQtyMap = props.productQtyMap;
@@ -35,6 +33,7 @@ const OrderProductList = (props) => {
 
       console.log(data);
       setProducts(data);
+      setOrderProducts(data);
     })
     .catch((err) => {
       console.log("[error] (OrderProductList) GET /product-service/orderProducts");

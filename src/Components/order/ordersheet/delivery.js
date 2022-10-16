@@ -25,8 +25,8 @@ const Delivery = () => {
 		getDeliveryInfo();
 	}, []);
 
-	const getDeliveryInfo = () => {
-		axios.get(api, {headers: headers})
+	const getDeliveryInfo = async () => {
+		await axios.get(api, {headers: headers})
 		.then((resp) => {
 			console.log("[SUCCESS] (Delivery) GET /member-service/member/orderInfo");
 			console.log(resp.data.result.data);

@@ -22,7 +22,7 @@ import Cart from "../../cart/js/cart";
 import OrderSheet from "../../order/js/orderSheet";
 import AuthProvider from "../../../../context/authProvider";
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
-import CheckCartProvider from "../../../../context/checkCartProvider";
+import OrderProvider from "../../../../context/OrderProvider";
 
 function Client() {
   return(
@@ -61,13 +61,13 @@ function Client() {
 
             <AuthProvider>
               <ServerConfigProvider>
-                <CheckCartProvider>
+                <OrderProvider>
                   <Routes>
                     {/* order - cart, orderSheet */}
                     <Route path="/cart" element={<Cart />}></Route>
                     <Route path="/ordersheet" element={<OrderSheet />}></Route>
                   </Routes>
-                </CheckCartProvider>
+                </OrderProvider>
               </ServerConfigProvider>
             </AuthProvider>
 

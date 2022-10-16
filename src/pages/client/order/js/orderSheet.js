@@ -9,7 +9,7 @@ import PaymentButton from "../../../../components/order/ordersheet/paymentButton
 
 
 // Component
-import Coupon from "../../../../components/order/ordersheet/coupon";
+import CouponList from "../../../../components/order/ordersheet/couponList";
 import Payment from "../../../../components/order/ordersheet/payment";
 import {useLocation} from "react-router-dom";
 
@@ -22,7 +22,7 @@ function OrderSheet() {
 
 	return (
 			<>
-				{/*<CheckCartProvider>*/}
+				{/*<OrderProvider>*/}
 				<div className="order-container">
 					<div className="row">
 						<Delivery />
@@ -34,10 +34,11 @@ function OrderSheet() {
 					</div>
 					<div className="row">
 						<div className="col-9">
-							<Coupon />
+							<CouponList productIds={productIds}/>
 						</div>
 						<div className="col-3">
-							<Payment />
+							<Payment
+									productQtyMap={productQtyMap}/>
 							<PaymentButton
 									cartIds={cartIds}
 									productIds={productIds}
@@ -45,7 +46,7 @@ function OrderSheet() {
 						</div>
 					</div>
 				</div>
-				{/*</CheckCartProvider>*/}
+				{/*</OrderProvider>*/}
 			</>
 	);
 }

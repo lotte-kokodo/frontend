@@ -3,20 +3,18 @@
  */
 
 // Component
-import Delivery from "../../../../components/cart/delivery"
-import CartProductList from "../../../../components/cart/cartProductList"
-import Payment from "../../../../components/cart/payment"
+import Delivery from "../../../../components/order/cart/delivery"
+import CartProductList from "../../../../components/order/cart/cartProductList"
+import Payment from "../../../../components/order/cart/payment"
 
 // Provider
-import CheckCartProvider from "../../../../context/checkCartProvider";
-import OrderSheetButton from "../../../../components/cart/orderSheetButton";
+import OrderSheetButton from "../../../../components/order/cart/orderSheetButton";
 
 
 const Cart = () => {
 
 	return (
 		<>
-			{/*<CheckCartProvider>*/}
 				<div className="order-container">
 					<div className="row">
 						<div className="col-9">
@@ -29,7 +27,6 @@ const Cart = () => {
 						</div>
 					</div>
 				</div>
-			{/*</CheckCartProvider>*/}
 		</>
 	);
 

@@ -3,9 +3,9 @@
  */
 
 // Provider
-import { ServerConfigContext } from "../../context/serverConfigProvider"
-import { AuthContext } from "../../context/authProvider";
-import { CheckCartContext } from "../../context/checkCartProvider";
+import { ServerConfigContext } from "../../../context/serverConfigProvider"
+import { AuthContext } from "../../../context/authProvider";
+import { OrderContext } from "../../../context/OrderProvider";
 
 // Module
 import axios from "axios";
@@ -19,12 +19,12 @@ const CartProductList = () => {
 
 	const { url } = useContext(ServerConfigContext);
 	const { headers, memberId } = useContext(AuthContext);
-	const { checkCarts, setCheckCarts, checkCartIds, setCheckCartIds } = useContext(CheckCartContext);
+	const { checkProducts, setCheckProducts, checkProductIds, setCheckProductIds } = useContext(OrderContext);
 
 	const api = url + "/order-payment-service/carts/" + memberId;
 
-	const [carts, setCarts] = useState([]);
-	const [cartIds, setCartIds] = useState([]);
+	const [products, setProducts] = useState([]);
+	const [productIds, setProductIds] = useState([]);
 
 	useEffect(() => {
 		getCartProducts();
@@ -40,8 +40,8 @@ const CartProductList = () => {
 				const data = resp.data.result.data;
 
 				console.log(data);
-				setCarts(data);
-				setCartIds(data.map((cart) => {return cart.id}));
+				setProducts(data);
+				setProductIds(data.map((product) => {return product.productId}));
 			})
 			.catch((err) => {
 				console.log("[error] (CartProductList) GET /order-payment-service/carts");
@@ -52,28 +52,28 @@ const CartProductList = () => {
 	/* '상품별' 체크박스 핸들러 */
 	const checkCartHandler = (id, isChecked) => {
 		if (isChecked) {
-			setCheckCartIds([...checkCartIds, id]);
-			carts.map((cart) => {
-				if (cart.id === id) {
-					setCheckCarts([...checkCarts, cart]);
+			setCheckProductIds([...checkProductIds, id]);
+			products.map((product) => {
+				if (product.productId === id) {
+					setCheckProducts([...checkProducts, product]);
 				}
 			});
 		}
-		else if (!isChecked && checkCartIds.includes(id)) {
-			setCheckCartIds(checkCartIds.filter((el) => el !== id));
-			setCheckCarts(checkCarts.filter((cart) => cart.id !== id));
+		else if (!isChecked && checkProductIds.includes(id)) {
+			setCheckProductIds(checkProductIds.filter((el) => el !== id));
+			setCheckProducts(checkProducts.filter((product) => product.productId !== id));
 		}
 	}
 
 	/* '전체상품' 체크박스 핸들러 */
 	const allCheckHandler = (isChecked) => {
 		if (isChecked) {
-			setCheckCartIds(cartIds);
-			setCheckCarts(carts);
+			setCheckProductIds(productIds);
+			setCheckProducts(products);
 		}
 		else {
-			setCheckCartIds([]);
-			setCheckCarts([]);
+			setCheckProductIds([]);
+			setCheckProducts([]);
 		}
 	}
 
@@ -81,17 +81,17 @@ const CartProductList = () => {
 		<>
 			<br/><br/><input type="checkbox" 
 					onChange={(event) => allCheckHandler(event.target.checked)}
-					checked={cartIds.length === checkCartIds.length}
+					checked={productIds.length === checkProductIds.length}
 					/> &nbsp; &nbsp; 전체선택
 
 			{
-				carts.map(function (cart, idx) {
+				products.map(function (product, idx) {
 					return (
 						<CartProductRow 
-							cart={cart} key={idx} 
+							product={product} key={idx}
 							handler={checkCartHandler}
-							checkCartCnt={checkCartIds.length} 
-							allCartCnt={cartIds.length}/>
+							checkCartCnt={checkProducts.length}
+							allCartCnt={productIds.length}/>
 					)
 				})
 			}

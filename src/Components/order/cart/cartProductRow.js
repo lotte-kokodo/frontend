@@ -3,7 +3,7 @@
  */
 
 // CSS
-import "../../pages/client/cart/css/cart.css"
+import "../../../pages/client/cart/css/cart.css"
 
 // Component
 import CheckBox from "./checkBox";
@@ -14,20 +14,16 @@ import axios from "axios";
 import { useContext, useState } from "react"
 
 // Context
-import { AuthContext } from "../../context/authProvider";
+import { AuthContext } from "../../../context/authProvider";
 
 
 const CartProductRow = (props) => {
 
 	const { headers } = useContext(AuthContext);
 
-	const cart = props.cart;
-	const [qty, setQty] = useState(cart.qty);
-	const product = {
-		productId: cart.productId,
-		unitPrice: cart.unitPrice,
-		qty: qty
-	}
+	const product = props.product;
+	const productId = product.productId;
+	const [qty, setQty] = useState(product.qty);
 
 	const updateQty = async (updatedQty) => {
 
@@ -35,7 +31,7 @@ const CartProductRow = (props) => {
 			qty: updatedQty
 		}
 
-		await axios.patch(`http://localhost:8001/order-payment-service/carts/${cart.id}/qty`, req, {headers: headers })
+		await axios.patch(`http://localhost:8001/order-payment-service/carts/${productId}/qty`, req, {headers: headers })
 			.then((resp) => {
 				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);
@@ -73,17 +69,17 @@ const CartProductRow = (props) => {
 		<>
 			<div className="row cart-product-row-div">
 				<div className="col-1">
-					<CheckBox cartId={cart.id} 
+					<CheckBox cartId={productId}
 							handler={props.handler} 
 							isAllChecked={props.isAllChecked} 
 							checkCartCnt={props.checkCartCnt}
 							allCartCnt={props.allCartCnt}/>
 				</div>
 				<div className="col-2">
-					<img className="product-img" src={cart.productThumbnail} alt={cart.productName} />
+					<img className="product-img" src={product.productThumbnail} alt={product.productName} />
 				</div>
 				<div className="col-4">
-					<span>{cart.productName}</span>
+					<span>{product.productName}</span>
 				</div>
 				<div className="col-2">
 					<button onClick={decreaseQty}>-</button> &nbsp;
