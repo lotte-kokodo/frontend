@@ -50,19 +50,31 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 
+
 function MakeDiscountPolicy() {
     const [discountPolicyName, setDiscountPolicyName] = useState('');
-    const regDate = moment().format('YYYY:MM:DDTHH:mm:ss');
-    const [startDate, setStartDate] = useState(new Date(), 'yyyy:mm:dd');
-    const [endDate, setEndDate] = useState(new Date(), 'yyyy:mm:dd');
-
-    const [rate, setRate] = useState(0);
-    const [rateMinPrice, setRateMinPrice] = useState(0);
+    const [checkedItems, setCheckedItems] = useState(new Set());
+    const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
+    // const [startDate, setStartDate] = useState(new Date(), 'yyyy:mm:dd');
+    // const [endDate, setEndDate] = useState(new Date(), 'yyyy:mm:dd');
+    const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
+    const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
 
     const [radioCheck, setRadioCheck] = useState('');
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [productList, setProductList] = React.useState([]);
+
+    const [productId, setProductId] = useState();
+    const [rateMinPrice, setRateMinPrice] = useState();
+    const [ratePercent, setRatePercent] = useState();
+    const [fixMinPrice, setFixMinPrice] = useState();
+    const [fixWon, setFixWon] = useState();
+
+    const handleClickRadio = (e) => {
+        setRadioCheck(e.target.value);
+    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -77,17 +89,14 @@ function MakeDiscountPolicy() {
         return { product_id, category_id, display_name, price, stock, deadline, delivery_fee, create_date };
     }
 
-    const rows = [
-        createData('1', '1', '잇메이트 프로틴 어묵 스테이크 혼합 100g', '21,900', '100', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00'),
-        createData('2', '1', '네이처엠 현미밥 150g', '18,900', '200', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00'),
-        createData('3', '1', '네이처엠 현미밥 200g', '20,900', '150', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00'),
-        createData('4', '1', '신선애 IQF 생 닭안심살 1kg', '7,500', '130', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00'),
-        createData('5', '1', '맛있닭 소스 통 닭가슴살 혼합 100g', '19,900', '120', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00'),
-        createData('6', '1', '잇메이트 더블 덮밥 현미베지볶음밥 + 쭈꾸미 & 새우 220g', '22,200', '110', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00'),
-    ];
+    const checkedItemHandler = (idList) => {
+        setCheckedItems(idList);
+        console.log(checkedItems);
+    };
 
-    const makePolicy = (e) => {
-        e.preventDefault();
+    const makePolicy = () => {
+        console.log(radioCheck);
+        // e.preventDefault();
         if (radioCheck === 'fix') {
             makeFixPolicy();
         }
@@ -97,12 +106,14 @@ function MakeDiscountPolicy() {
     }
 
     const makeRatePolicy = async () => {
+        let sDate = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + "T" + startDate.getHours() + ":" + startDate.getMinutes() + ":" + startDate.getSeconds();
+        let eDate = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + "T" + endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
         let ratePolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: startDate,
-            endDate: endDate,
-            rate: rate,
+            startDate: sDate,
+            endDate: eDate,
+            rate: ratePercent,
             minPrice: rateMinPrice,
             productId: 1
             // 추후 체크박스로 갖고오기
@@ -122,10 +133,23 @@ function MakeDiscountPolicy() {
     }
 
     const makeFixPolicy = async () => {
+        let sDate = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + "T" + startDate.getHours() + ":" + startDate.getMinutes() + ":" + startDate.getSeconds();
+        let eDate = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + "T" + endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
+        let fixPolicyDto = {
+            name: discountPolicyName,
+            regDate: regDate,
+            startDate: sDate,
+            endDate: eDate,
+            rate: ratePercent,
+            minPrice: rateMinPrice,
+            productId: 1
+            // 추후 체크박스로 갖고오기
+        }
+        console.log(fixPolicyDto);
         await axios({
             method: "post",
             url: "http://localhost:9011/fix-discount/save",
-            // data: params
+            data: fixPolicyDto
         })
             .then(function (resp) {
                 alert(resp.value);
@@ -141,15 +165,15 @@ function MakeDiscountPolicy() {
         return Math.ceil(result);
     }
 
-    function FetchProduct() {
-        const fetchProduct = (productId) => {
+    const FetchProduct = () => {
+        const fetchProduct = () => {
             axios({
                 method: "get",
-                url: "http://localhost:8080/product/아이디적어",
+                url: "http://localhost:9270/product/productId/" + productId,
                 // data: params
             })
                 .then(function (resp) {
-                    alert(resp);
+                    setProductList(resp.data.result.data);
                 })
                 .catch(function (error) {
                     alert(error);
@@ -157,13 +181,7 @@ function MakeDiscountPolicy() {
 
         }
         fetchProduct();
-
-        return (
-            <tr>
-                <td></td>
-            </tr>
-        )
-    }
+        }
 
     return (
         <div id="makeDiscountPolicy">
@@ -181,7 +199,7 @@ function MakeDiscountPolicy() {
                                             <StyledTableRow>
                                                 {/* align="center" */}
                                                 <StyledTableCell align="center" >정책명</StyledTableCell>
-                                                <StyledTableCell colSpan={3}><TextField id="standard-basic" label="Standard" variant="standard" /></StyledTableCell>
+                                                <StyledTableCell colSpan={3}><input type="input" value={discountPolicyName} onChange={(e) => {setDiscountPolicyName(e.target.value)}}></input></StyledTableCell>
 
                                             </StyledTableRow>
                                             <StyledTableRow>
@@ -224,21 +242,21 @@ function MakeDiscountPolicy() {
                                                 </StyledTableCell>
 
                                                 <StyledTableCell>
-                                                    <FormControlLabel value="정률" control={<Radio />} label="정률" />
+                                                    <FormControlLabel value="rate" control={<Radio />} label="정률" onChange={(e) => {handleClickRadio(e)}}/>
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
-                                                    <TextField id="standard-basic" label="Standard" variant="standard" />원 이상 구매시 <TextField id="standard-basic" label="Standard" variant="standard" />% 할인
+                                                    <input type="input" value={rateMinPrice} onChange={(e) => setRateMinPrice(e.target.value)}></input>원 이상 구매시 <input type="input" value={ratePercent} onChange={(e) => setRatePercent(e.target.value)}></input>% 할인
                                                 </StyledTableCell>
                                             </StyledTableRow>
                                             <StyledTableRow>
 
                                                 <StyledTableCell>
-                                                    <FormControlLabel value="정액" control={<Radio />} label="정액" />
+                                                    <FormControlLabel value="fix" control={<Radio />} label="정액"  onChange={(e) => {handleClickRadio(e)}}/>
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
-                                                    <TextField id="standard-basic" label="Standard" variant="standard" />원 이상 구매시 <TextField id="standard-basic" label="Standard" variant="standard" />원 할인
+                                                    <input type="input" value={fixMinPrice} onChange={(e) => setFixMinPrice(e.target.value)}></input>원 이상 구매시 <input type="input" value={fixWon} onChange={(e) => setFixWon(e.target.value)}></input>원 할인
                                                 </StyledTableCell>
                                             </StyledTableRow>
 
@@ -246,26 +264,26 @@ function MakeDiscountPolicy() {
                                     </Table>
                                 </RadioGroup>
                             </FormControl>
-                            {/* <TextField id="standard-basic" label="Standard" variant="standard" /> <button type='button'> 상품 조회</button> */}
                             <div>
                                 <h2>정책 적용 상품 찾기</h2>
                             </div>
                             <div className='find-product-component'>
                                 <div className='find-product-component-title'>
                                     <div>
-                                        상품 ID로 추가
+                                        상품 ID로 찾기
                                     </div>
                                 </div>
                                 <div>
                                     <div>
-                                        <TextField id="standard-basic" label="Standard" variant="standard" />
+                                        <input type="input" value={productId} onChange={(e) => setProductId(e.target.value)}></input>
                                     </div>
                                 </div>
                                 <div>
                                     <div>
-                                        <ColorButton variant="contained" onClick={FetchProduct} sx={{ marginTop: 1 }}>
-                                            조회
-                                        </ColorButton>
+                                        <button onClick={()=> {FetchProduct()}} style={{
+                                            backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                                            color: "#fff", borderRadius: "10px"
+                                        }}>조회</button>
                                     </div>
                                 </div>
                             </div>
@@ -287,14 +305,14 @@ function MakeDiscountPolicy() {
                                 </TableHead>
                                 <TableBody>
                                     {/* 데이터 props에 넣기 */}
-                                    <IssueList props={{ page, rowsPerPage }}></IssueList>
+                                    <IssueList props={{ productList, page, rowsPerPage }} propFunction={checkedItemHandler} ></IssueList>
                                 </TableBody>
                             </Table>
                         </TableContainer>
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={rows.length}
+                            count={productList.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
@@ -304,9 +322,10 @@ function MakeDiscountPolicy() {
                 </Box>
             </div>
 
-            <ColorButton variant="contained" onClick={makePolicy}sx={{ marginTop: 1 }}>
-                등록
-            </ColorButton>
+            <button onClick={() => {makePolicy()}} style={{
+                backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                color: "#fff", borderRadius: "10px"
+            }}>등록</button>
         </div>
     )
 }

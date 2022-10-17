@@ -14,10 +14,10 @@ function Nav() {
 
                     <div className="navContainer-subject">
                         <ul className="navContainer-subject-ul">
-                            <Link to="/">
+                            <Link to="/mdRecommendation">
                                 <li>MD추천</li>
                             </Link>
-                            <Link to="/">
+                            <Link to="/sale">
                                 <li>타임세일</li>
                             </Link>
                             <Link to="/">
