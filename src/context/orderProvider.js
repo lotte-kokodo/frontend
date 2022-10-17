@@ -8,11 +8,13 @@ const OrderProvider = ({ children }) => {
 	const [checkProducts, setCheckProducts] = useState([]);
 	const [checkProductIds, setCheckProductIds] = useState([]);
 	const [orderProducts, setOrderProducts] = useState([]);
+	const [checkCoupons, setCheckCoupons] = useState([]);
 	const [checkCouponIds, setCheckCouponIds] = useState([]);
 
 	const value = {checkProducts, setCheckProducts,
 								checkProductIds, setCheckProductIds,
 								orderProducts, setOrderProducts,
+								checkCoupons, setCheckCoupons,
 								checkCouponIds, setCheckCouponIds};
 
 	return (

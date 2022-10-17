@@ -11,10 +11,6 @@ import {useEffect} from "react";
   const product = props.product;
   const qty = props.qty;
 
-  useEffect(() => {
-    console.log("row " + product);
-    console.log("qty " + qty);
-  })
   return (
       <div className="row">
        <div className="col-2">

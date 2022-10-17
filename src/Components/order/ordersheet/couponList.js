@@ -68,14 +68,8 @@ const CouponList = (props) => {
     })
   }
 
-  const print = () => {
-    console.log(fixCoupons);
-    console.log(rateCoupons);
-  }
-
   return (
       <>
-        <button onClick={print}>버튼</button>
         <h3>쿠폰정보</h3>
         <hr/>
         {

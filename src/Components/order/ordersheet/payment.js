@@ -10,7 +10,7 @@ import {useContext, useEffect, useState} from "react"
 
 const Payment = (props) => {
 
-  const { orderProducts } = useContext(OrderContext);
+  const { orderProducts, checkCoupons } = useContext(OrderContext);
 
   const productQtyMap = props.productQtyMap;
   const [ totalPrice, setTotalPrice ] = useState(999999);
@@ -18,11 +18,9 @@ const Payment = (props) => {
   const [ deliveryPrice, setDeliveryPrice ] = useState(999999);
   const [ paymentPrice, setPaymentPrice ] = useState(999999);
 
-
   useEffect(() => {
     calcPaymentPrice();
-  }, [orderProducts]);
-
+  }, [orderProducts, checkCoupons.length]);
 
   const calcPaymentPrice = () => {
     // 상품 총 금액 계산
@@ -38,10 +36,19 @@ const Payment = (props) => {
       if (product.discRate !== 0) {
         dPrice += Math.floor(product.unitPrice*productQtyMap[product.productId] * (product.discRate*0.01));
       }
+
+      // 비율 할인 쿠폰이 적용 됐다면
+      const coupon = checkCoupons[product.productId];
+      if (coupon && coupon.rate) {
+        dPrice += Math.floor(product.unitPrice*productQtyMap[product.productId] * (coupon.rate*0.01));
+      }
     });
     setDiscPrice(dPrice);
+
     setPaymentPrice(tPrice-dPrice);
+
     // TODO 배송비 계산
+
   }
 
   return (
