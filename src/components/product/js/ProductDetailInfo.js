@@ -82,23 +82,52 @@ export default function ProductDetail() {
         }
 
         test(productId);
-
     }
-    
+
+    const recentProduct = (item) => {
+        let watchId = localStorage.getItem("watchId");
+        let watchImage = localStorage.getItem("watchImage");
+
+        if(watchId == null) {
+            watchId = [];
+            watchImage = [];
+        } else{
+            watchId = JSON.parse(watchId);
+            watchImage = JSON.parse(watchImage);
+        }
+
+        watchId.unshift(item.id);
+        watchImage.unshift(item.thumbnail);
+
+        watchId = new Set(watchId);
+        watchImage = new Set(watchImage);
+
+        watchId = [...watchId];
+        watchImage = [...watchImage];
+
+        if (watchId.length == 4) {
+            watchId.pop();
+            watchImage.pop();
+        }
+        
+        localStorage.setItem("watchId",JSON.stringify(watchId));
+        localStorage.setItem("watchImage",JSON.stringify(watchImage));
+    }
+
     // product 정보 조회 (Product)
     useEffect(() => {
         const fetchData = async () => {
             await axios.get(`http://localhost:9270/product/detail/${productId}`)
                 .then(function (resp) {
                     setProduct(resp.data.result.data);
-
+                    recentProduct(resp.data.result.data);
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
         }
         fetchData(productId);
-    }, []);
+    }, [productId]);
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
         const fetchData = async () => {
