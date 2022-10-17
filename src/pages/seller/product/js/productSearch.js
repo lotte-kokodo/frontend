@@ -29,7 +29,7 @@ export default function ProductSearch() {
 
     // button axios
     const searchContent = async () => {
-        history(`/product/present/${params.id}`)
+        // history(`/product/present/${params.id}`)
         await axios.post(`http://localhost:8080/product/${params.id}/productList`,{
             // "sellerId" : 1,
             // "startDate" : tmpStartDate + "T"+"00:00:00",
@@ -55,7 +55,7 @@ export default function ProductSearch() {
         setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
     }
 
-    //유저 아이드, 날짜를 전달해줘야 한다.
+    // 유저 아이드, 날짜를 전달해줘야 한다.
     useEffect( () => {
         getExpecStartDy()
         getExpectEndDay()

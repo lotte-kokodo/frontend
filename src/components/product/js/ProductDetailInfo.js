@@ -73,7 +73,7 @@ export default function ProductDetail() {
 
         // TODO: Member ID 같이 전송해야함
         const test = async () => {
-            await axios.post(`http://localhost:9011/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
+            await axios.post(`http://localhost:8001/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
                 .then(function (resp) {
                 })
                 .catch(function (error) {
@@ -117,7 +117,7 @@ export default function ProductDetail() {
     // product 정보 조회 (Product)
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:9270/product/detail/${productId}`)
+            await axios.get(`http://localhost:8001/product-service/product/detail/${productId}`)
                 .then(function (resp) {
                     setProduct(resp.data.result.data);
                     recentProduct(resp.data.result.data);
@@ -131,7 +131,7 @@ export default function ProductDetail() {
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:9270/review/total/${productId}`)
+            await axios.get(`http://localhost:8001/product-service/review/total/${productId}`)
                 .then(function (resp) {
                     console.log(resp);
                     setTotalReview(resp.data.result.data);
@@ -147,7 +147,7 @@ export default function ProductDetail() {
     // 쿠폰 조회 (Promotion)
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:9011/rateCoupon/${productId}`)
+            await axios.get(`http://localhost:8001/promotion-service/rateCoupon/${productId}`)
                 .then(function (resp) {
                     setCoupon(resp.data.result.data)
                 })
@@ -164,12 +164,11 @@ export default function ProductDetail() {
     }, [salePrice]);
 
     const fetchData = async () => {
-        await axios.get(`http://localhost:9011/rate-discount/${productId}`)
+        await axios.get(`http://localhost:8001/promotion-service/rate-discount/${productId}`)
             .then(function (resp) {
-                console.log(resp);
-                setRatePolicy(resp.data);
-                setSalePrice(calcSalePercent(resp.data.rate));
-                setTotalPrice(calcSalePercent(resp.data.rate));
+                setRatePolicy(resp.data.result.data);
+                setSalePrice(calcSalePercent(resp.data.result.data.rate));
+                setTotalPrice(calcSalePercent(resp.data.result.data.rate));
             })
             .catch(function (error) {
                 console.log(error);
