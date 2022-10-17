@@ -75,7 +75,7 @@ export default function Review() {
     return (
         <div>
 
-            <div className="tabContents"><div data-v-a49b620e id="reviewMain" className="productReviewWrap">{/**/}
+            <div className="tabContents"><div data-v-a49b620e id="reviewMain" className="productReviewWrap" style={{width:"1100px"}}>{/**/}
                 <div data-v-2d2cca6e data-v-a49b620e className="reviewPanel groupProd summaryExists">
                     <div data-v-12dc8e2a data-v-2d2cca6e className="optionWrap stockOnly block hasImage stockOnly">{/**/}
                     <div data-v-12dc8e2a><div data-v-12dc8e2a className="selectResult">

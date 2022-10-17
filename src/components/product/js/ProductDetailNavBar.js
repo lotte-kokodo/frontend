@@ -44,13 +44,13 @@ export default function ProductDetailNavBar() {
                         
                     </ul>
                 </div>
-                <div class="reviewContainer">
+                {/* <div class="reviewContainer"> */}
                     {
                         checked==false? <DetailImage></DetailImage> : <Review></Review>
                     }
                     
                     
-                </div>
+                {/* </div> */}
             </div>
 
         </div>

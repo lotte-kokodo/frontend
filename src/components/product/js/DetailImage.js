@@ -31,7 +31,7 @@ useEffect(() => {
             {
             detailImages.map( function(object, i){ 
                     return (
-                        <img class="detail-image" src={object.image}></img>
+                        <img class="detail-image" src={object.image} style={{verticalAlign:"middle"}}></img>
                     )
                 })
             }

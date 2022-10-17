@@ -15,7 +15,7 @@
     z-index: 100;
 }
 .scrollTab.full {
-    padding: 0 310px;
+    padding: 0 550px;
 }
 .scrollTab {
     padding: 0 84px;
@@ -28,6 +28,8 @@
 .scrollTabInner {
     -webkit-box-pack: center;
     justify-content: center;
+    width: 1100px;
+    margin: 0 auto;
 }
 .scrollTab ul {
     width: 50%;
