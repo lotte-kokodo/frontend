@@ -1,7 +1,6 @@
 import * as React from 'react';
-import DiscountPolicyList from "../../../../components/promotion/js/discountPolicyList";
-import DiscountPolicyReqList from '../../../../components/promotion/js/discountPolicyReqList';
-// import DiscountPolicyList from '../../../../components/promotion/js/discountPolicyList';
+import FixDiscountPolicyList from "../../../../components/promotion/js/fixDiscountPolicyList";
+import RateDiscountPolicyList from '../../../../components/promotion/js/rateDiscountPolicyList';
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -82,14 +81,14 @@ const DiscountPolicyManagement = () => {
 
             <Box sx={{ width: '100%' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="nav tabs example" sx={{ marginBottom: 7 }}>
-                    <LinkTab label="정책 목록" href="couponlist"></LinkTab>
-                    <LinkTab label="요청 목록" href="couponreq"></LinkTab>
+                    <LinkTab label="고정 정책 목록" href="fispolicy"></LinkTab>
+                    <LinkTab label="비율 정책 목록" href="ratepolicy"></LinkTab>
                 </Tabs>
                 <TabPanel value={value} index={0}>
-                    <DiscountPolicyReqList />
+                    <FixDiscountPolicyList />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <DiscountPolicyList />
+                    <RateDiscountPolicyList />
                 </TabPanel>
             </Box>
         </>

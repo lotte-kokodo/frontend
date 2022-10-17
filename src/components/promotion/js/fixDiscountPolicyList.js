@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -35,21 +36,37 @@ function createData(couponId, couponName, expirationDate, status, quantity) {
     return { couponId, couponName, expirationDate, status, quantity };
 }
 
-const rows = [
-    createData('14717750', '첫 구매 할인', '2022-09-13-2022-09-14', '적용가능', '적용 10건:총 21건'),
-    createData('14771512', 'vip 고객 할인', '2022-09-11-2022-09-12', '기간만료', '적용 10건:총 21건'),
-    createData('14783035', '기간 한정 할인', '2022-09-13-2022-09-14', '적용가능', '적용 10건:총 21건'),
-    createData('14783026', '한글날 기념 할인', '2022-09-13-2022-09-14', '적용가능', '적용 10건:총 21건'),
-    createData('14783024', '이벤트 할인', '2022-09-13-2022-09-14', '적용가능', '적용 10건:총 21건'),
-    createData('14783020', '기간 한정 할인', '2022-09-13-2022-09-14', '적용가능', '적용 10건:총 21건'),
-];
-
-export default function DiscountPolicyList() {
+export default function RateDiscountPolicyList() {
     const [order, setOrder] = React.useState('desc');
     const [orderBy, setOrderBy] = React.useState('reqDate');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rows, setRows] = useState([]);
+    const [sellerId, setSellerId] = useState(1);
+
+    const fetchRowDiscountPolicyList = async() => {
+        //sellerId 확인 필요
+        
+        await axios.get("http://localhost:8080/fix-discount/seller/1", {   
+        // params: {
+        //     sellerId: sellerId
+        // }
+        })
+            .then(function (resp) {
+                for(var i=0;i<resp.data.result.data.length;i++) {
+                    setRows(resp.data.result.data);
+                }
+            })
+            .catch(function (error) {
+                alert(error);
+            })
+    }
+
+    useEffect(() => {
+        setSellerId(1);
+		fetchRowDiscountPolicyList();
+	}, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -69,27 +86,33 @@ export default function DiscountPolicyList() {
     return (
         <Box sx={{ width: '100%' }}>
             <Paper>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{ width: '85%' }}>
                     <Table sx={{ minWidth: 700 }} aria-label="customized table">
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell>정책ID</StyledTableCell>
+                                <StyledTableCell>고정정책ID</StyledTableCell>
+                                <StyledTableCell align="center">상품ID</StyledTableCell>
                                 <StyledTableCell align="center">정책명</StyledTableCell>
-                                <StyledTableCell align="center">유효기간</StyledTableCell>
-                                <StyledTableCell align="center">상태</StyledTableCell>
-                                <StyledTableCell align="center">수량</StyledTableCell>
+                                <StyledTableCell align="center">생성일시</StyledTableCell>
+                                <StyledTableCell align="center">시작일시</StyledTableCell>
+                                <StyledTableCell align="center">종료일시</StyledTableCell>
+                                <StyledTableCell align="center">최소금액</StyledTableCell>
+                                <StyledTableCell align="center">할인금액</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                                 <StyledTableRow key={row.couponId}>
                                     <StyledTableCell component="th" scope="row">
-                                        {row.couponId}
+                                        {row.fixDiscountPolicyId}
                                     </StyledTableCell>
-                                    <StyledTableCell align="center">{row.couponName}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.expirationDate}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.status}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.quantity}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.productId}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.name}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.regDate}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.startDate}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.endDate}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.minPrice}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.price}</StyledTableCell>
                                 </StyledTableRow>
                             ))}
                         </TableBody>
