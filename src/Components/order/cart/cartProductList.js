@@ -5,7 +5,7 @@
 // Provider
 import { ServerConfigContext } from "../../../context/serverConfigProvider"
 import { AuthContext } from "../../../context/authProvider";
-import { OrderContext } from "../../../context/OrderProvider";
+import { OrderContext } from "../../../context/orderProvider";
 
 // Module
 import axios from "axios";

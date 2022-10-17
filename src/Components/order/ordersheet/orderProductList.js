@@ -7,7 +7,7 @@ import axios from "axios";
 import {useContext, useEffect, useState} from "react"
 
 // Provider
-import {OrderContext} from "../../../context/OrderProvider";
+import {OrderContext} from "../../../context/orderProvider";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
 import {AuthContext} from "../../../context/authProvider";
 

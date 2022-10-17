@@ -4,6 +4,10 @@
 }
 
 .order-product-img {
-	width: 8em;
-	height: 8em;
+	width: 7em;
+	height: 7em;
+}
+
+.order-product-row-div {
+	margin-top: 50px;
 }

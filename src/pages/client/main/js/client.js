@@ -22,7 +22,7 @@ import Cart from "../../order/js/cart";
 import OrderSheet from "../../order/js/orderSheet";
 import AuthProvider from "../../../../context/authProvider";
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
-import OrderProvider from "../../../../context/OrderProvider";
+import OrderProvider from "../../../../context/orderProvider";
 
 function Client() {
   return(

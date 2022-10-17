@@ -50,9 +50,9 @@ import { useContext, useEffect, useState } from "react"
 				<div className="col-6">
 					{ deliveryInfo.address }
 				</div>
-				<div className="col-3">
-					베송지 설정 <i className="fas fa-chevron-right"></i>
-				</div>
+				{/*<div className="col-3">*/}
+				{/*	베송지 설정 <i className="fas fa-chevron-right"></i>*/}
+				{/*</div>*/}
 			</div>
 		</>
 	)

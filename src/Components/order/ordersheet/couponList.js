@@ -13,40 +13,86 @@ const CouponList = (props) => {
   const { url } = useContext(ServerConfigContext);
   const { headers } = useContext(AuthContext);
 
-  const [coupons, setCoupons] = useState([]);
+  const productIds = props.productIds;
 
-  const api = url + "/promotion-service/..";
+  const [fixCoupons, setFixCoupons] = useState([]);
+  const [rateCoupons, setRateCoupons] = useState([]);
 
   useEffect(() => {
-    // TODO: 쿠폰 리스트 요청
-    // getCoupons();
+    getFixCoupons();
+    getRateCoupons();
   }, []);
 
-  const getCoupons = async () => {
-    await axios.get(api, {headers: headers})
+  const getFixCoupons = async () => {
+    const api = url + "/promotion-service/userCoupon/fixCoupon/list";
+
+    await axios.get(api, {params: {productIdList: productIds.join(",")}, headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (Delivery) GET /member-service/member/orderInfo");
+      console.log("[SUCCESS] (Delivery) GET /promotion-service/userCoupon/fixCoupon/list");
+      console.log(resp);
       console.log(resp.data.result.data);
 
-      setCoupons(resp.data.result.data);
+      const data = resp.data.result.data;
+      data.map((dto) => {
+        const coupons = dto["fixCouponList"];
+        coupons.map((coupon) => {
+          setFixCoupons([...fixCoupons, coupon])
+        })
+      })
     })
     .catch((err) => {
-      console.log("[ERROR] (Delivery) GET /member-service/member/orderInfo");
+      console.log("[ERROR] (Delivery) GET /promotion-service/userCoupon/fixCoupon/list");
       console.log(err);
     })
   }
 
+  const getRateCoupons = async () => {
+    const api = url + "/promotion-service/userCoupon/rateCoupon/list";
+
+    await axios.get(api, {params: {productIdList: productIds.join(",")}, headers: headers})
+    .then((resp) => {
+      console.log("[SUCCESS] (Delivery) GET /promotion-service/userCoupon/rateCoupon/list");
+      console.log(resp.data.result.data);
+
+      const data = resp.data.result.data;
+      data.map((dto) => {
+        const coupons = dto["rateCouponList"];
+        coupons.map((coupon) => {
+          setRateCoupons([...rateCoupons, coupon])
+        })
+      })
+    })
+    .catch((err) => {
+      console.log("[ERROR] (Delivery) GET /promotion-service/userCoupon/rateCoupon/list");
+      console.log(err);
+    })
+  }
+
+  const print = () => {
+    console.log(fixCoupons);
+    console.log(rateCoupons);
+  }
+
   return (
       <>
+        <button onClick={print}>버튼</button>
         <h3>쿠폰정보</h3>
         <hr/>
         {
-          coupons.map((coupon, idx) => {
-            return (
-                <CouponRow coupon={coupon} key={idx} />
-          )
+          fixCoupons.map((coupon, idx) => {
+              return (
+                  <CouponRow coupon={coupon} key={idx} />
+              )
           })
         }
+        {
+          rateCoupons.map((coupon, idx) => {
+            return (
+                <CouponRow coupon={coupon} key={idx} />
+            )
+          })
+        }
+
       </>
   );
 }

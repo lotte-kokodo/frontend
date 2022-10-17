@@ -3,7 +3,7 @@
  */
 
 // Context
-import {OrderContext} from "../../../context/OrderProvider";
+import {OrderContext} from "../../../context/orderProvider";
 
 // Module
 import {useContext, useEffect, useState} from "react"

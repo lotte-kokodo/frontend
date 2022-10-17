@@ -66,7 +66,7 @@ const CartProductRow = (props) => {
 
 	return (
 		<>
-			<div className="row">
+			<div className="row order-product-row-div">
 				<div className="col-1">
 					<CheckBox cartId={productId}
 							handler={props.handler} 
