@@ -90,11 +90,9 @@ function MakeDiscountPolicy() {
 
     const checkedItemHandler = (idList) => {
         setCheckedItems(idList);
-        console.log(checkedItems);
     };
 
     const makePolicy = () => {
-        console.log(radioCheck);
         // e.preventDefault();
         if (radioCheck === 'fix') {
             makeFixPolicy();
@@ -115,7 +113,6 @@ function MakeDiscountPolicy() {
             productId: Number(Array.from(checkedItems)[0]),
             sellerId: sellerId
         }
-        console.log(ratePolicyDto);
         await axios({
             method: "post",
             url: "http://localhost:8080/rate-discount/save",
@@ -143,7 +140,6 @@ function MakeDiscountPolicy() {
             productId: Number(Array.from(checkedItems)[0]),
             sellerId: sellerId
         }
-        console.log(fixPolicyDto);
         await axios({
             method: "post",
             url: "http://localhost:8080/fix-discount/save",
