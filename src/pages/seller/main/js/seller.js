@@ -12,6 +12,7 @@ import ProductSearch from "../../product/js/productSearch"
 import CalculatePresent from "../../calculate/js/calculate"
 
 import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagement"
+import CouponManagement from "../../promotion/js/couponManagement"
 
 function Seller() {
     return(
@@ -34,6 +35,7 @@ function Seller() {
 
                     {/* Seller Promotion */}
                     <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
+                    <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
 
                 </Routes>
             </main>

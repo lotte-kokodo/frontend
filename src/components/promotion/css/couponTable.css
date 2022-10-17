@@ -1,0 +1,57 @@
+.couponTable{
+    width: 80%;
+    border: 1px solid black;
+    /* margin: 30px; */
+    /* margin-left: 240px; */
+}
+.couponTable th{
+    background-color: #E2E2E2;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+.couponTable td{
+    border: 1px solid black;
+    padding: 15px;
+    text-align: center;
+}
+.coupon-nav li{
+    width: 100px;
+    display: inline;
+    border: 1px solid #FB7D98;
+    padding: 15px 30px;
+}
+.coupon-nav{
+    padding: 20px 0;
+}
+
+.visible-scrollbar, .invisible-scrollbar, .mostly-customized-scrollbar {
+    display: block;
+    width: 45em;
+    overflow: auto;
+    height: 25em;
+  }
+
+  .coupon-product-image{
+    width: 100px;
+    height: 100px;
+  }
+
+  .product-table{
+    width: 80%;
+    border: 1px solid black;
+    width: 95%;
+    height: 90%;
+  }
+
+  .product-table th{
+    background-color: #E2E2E2;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+.product-table td{
+    border: 1px solid black;
+    padding: 15px;
+    text-align: center;
+}
