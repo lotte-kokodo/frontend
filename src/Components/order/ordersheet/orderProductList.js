@@ -35,7 +35,7 @@ const OrderProductList = (props) => {
       const data = resp.data.result.data;
 
       console.log(data);
-      setProducts(data);
+      setProducts(Object.values(data));
       setOrderProducts(data);
     })
     .catch((err) => {

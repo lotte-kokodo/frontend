@@ -38,7 +38,9 @@ function OrderSheet() {
 					</div>
 					<div className="row">
 						<div className="col-9">
-							<CouponList productIds={productIds}/>
+							<CouponList
+									productIds={productIds}
+									productQtyMap={productQtyMap}/>
 						</div>
 						<div className="col-3">
 							<Payment

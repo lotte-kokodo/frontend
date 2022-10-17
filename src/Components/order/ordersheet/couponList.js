@@ -14,6 +14,7 @@ const CouponList = (props) => {
   const { headers } = useContext(AuthContext);
 
   const productIds = props.productIds;
+  const productQtyMap = props.productQtyMap;
 
   const [fixCoupons, setFixCoupons] = useState([]);
   const [rateCoupons, setRateCoupons] = useState([]);
@@ -33,12 +34,7 @@ const CouponList = (props) => {
       console.log(resp.data.result.data);
 
       const data = resp.data.result.data;
-      data.map((dto) => {
-        const coupons = dto["fixCouponList"];
-        coupons.map((coupon) => {
-          setFixCoupons([...fixCoupons, coupon])
-        })
-      })
+      setFixCoupons(data);
     })
     .catch((err) => {
       console.log("[ERROR] (Delivery) GET /promotion-service/userCoupon/fixCoupon/list");
@@ -55,12 +51,7 @@ const CouponList = (props) => {
       console.log(resp.data.result.data);
 
       const data = resp.data.result.data;
-      data.map((dto) => {
-        const coupons = dto["rateCouponList"];
-        coupons.map((coupon) => {
-          setRateCoupons([...rateCoupons, coupon])
-        })
-      })
+      setRateCoupons(data);
     })
     .catch((err) => {
       console.log("[ERROR] (Delivery) GET /promotion-service/userCoupon/rateCoupon/list");
@@ -68,25 +59,48 @@ const CouponList = (props) => {
     })
   }
 
+  const print = () => {
+    console.log(rateCoupons);
+    console.log(fixCoupons);
+  }
+
   return (
       <>
         <h3>쿠폰정보</h3>
-        <hr/>
-        {
-          fixCoupons.map((coupon, idx) => {
-              return (
-                  <CouponRow coupon={coupon} key={idx} />
-              )
-          })
-        }
+        <hr/><button onClick={print}>버튼</button>
         {
           rateCoupons.map((coupon, idx) => {
-            return (
-                <CouponRow coupon={coupon} key={idx} />
-            )
+
+            {
+              return (
+                  coupon.rateCouponList.map((c) =>
+                      <CouponRow productId={coupon.productId}
+                                 coupon={c}
+                                 productQtyMap={productQtyMap}
+                                 key={idx} />
+                  )
+              )
+            }
+
           })
         }
 
+        {
+          fixCoupons.map((coupon, idx) => {
+
+            {
+              return (
+                  coupon.fixCouponList.map((c) =>
+                      <CouponRow productId={coupon.productId}
+                                 coupon={c}
+                                 productQtyMap={productQtyMap}
+                                 key={idx} />
+                  )
+              )
+            }
+
+          })
+        }
       </>
   );
 }

@@ -20,27 +20,29 @@ const Payment = (props) => {
 
   useEffect(() => {
     calcPaymentPrice();
-  }, [orderProducts, checkCoupons.length]);
+  }, [orderProducts.length, checkCoupons.length]);
 
   const calcPaymentPrice = () => {
     // 상품 총 금액 계산
     let tPrice = 0;
-    orderProducts.map((product) => {
+    Object.values(orderProducts).map((product) => {
       tPrice += product.unitPrice*productQtyMap[product.productId];
     });
     setTotalPrice(tPrice);
 
     // 총 할인금액 계산
     let dPrice = 0;
-    orderProducts.map((product) => {
+    Object.values(orderProducts).map((product) => {
+      const productTotalPrice = product.unitPrice*productQtyMap[product.productId];
+
       if (product.discRate !== 0) {
-        dPrice += Math.floor(product.unitPrice*productQtyMap[product.productId] * (product.discRate*0.01));
+        dPrice += Math.floor(productTotalPrice * (product.discRate*0.01));
       }
 
-      // 비율 할인 쿠폰이 적용 됐다면
+      // 사용자가 비율 할인쿠폰을 선택했다면
       const coupon = checkCoupons[product.productId];
-      if (coupon && coupon.rate) {
-        dPrice += Math.floor(product.unitPrice*productQtyMap[product.productId] * (coupon.rate*0.01));
+      if (coupon && coupon.rate && productTotalPrice >= coupon.minPrice) {
+        dPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
       }
     });
     setDiscPrice(dPrice);
