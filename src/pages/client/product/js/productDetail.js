@@ -4,6 +4,7 @@ import ProductDetailNavBar from '../../../../components/product/js/ProductDetail
 import ProductDetailInfo from '../../../../components/product/js/ProductDetailInfo';
 
 import "../css/productDetail.css";
+import { WidthNormalTwoTone } from "@mui/icons-material";
 
 function ProductDetail() {
 

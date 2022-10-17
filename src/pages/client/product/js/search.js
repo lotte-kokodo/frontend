@@ -94,7 +94,7 @@ function Search() {
 
 function CategoryItem(props) {
     const priceChange = props.obj.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    
+
     return(
         <NavLink to={`/productDetail/${props.obj.id}`} className='product-div'>
             <div className='product-thumbnail'>
