@@ -42,9 +42,9 @@ export default function CalculatePresent() {
     }
 
     const searchContent = async () => {
-        history(`/seller/calculate/${params.id}`)
-        await axios.post(`http://localhost:8001/calculate-service/calculate/${params.id}/calculateList`,{
-            "sellerId" : params.id,
+        history(`/seller/${params.sellerId}/calculate`)
+        await axios.post(`http://localhost:8001/calculate-service/calculate/${params.sellerId}/calculateList`,{
+            "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"00:00:00",
             "provideStatus": provideStatus,
@@ -59,7 +59,7 @@ export default function CalculatePresent() {
     }
 
     const getDay = async() =>{
-        await axios.get(`http://localhost:8080/calculate/${params.id}/expectDay`)
+        await axios.get(`http://localhost:8001/calculate-service/calculate/expectDay`)
             .then(function (resp){
                 setCalculateExpectDay(dateParseToSimple(resp))
             }).catch(function (error){
@@ -68,7 +68,7 @@ export default function CalculatePresent() {
     }
 
     const getMoney = async() =>{
-        await axios.get(`http://localhost:8080/calculate/1/expectMoney`)
+        await axios.get(`http://localhost:8001/calculate-service/calculate/${params.sellerId}/expectMoney`)
             .then(function (resp){
                 setCalculateExpectMoney(moneyComma(resp.data.result.data));
             }).catch(function (error){

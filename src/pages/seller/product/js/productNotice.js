@@ -36,7 +36,7 @@ export default function ProductNotice() {
             <div>
                 <div className="product-title-box">상품 알림</div>
             </div>
-            <table className="table">
+            <table className="table product-notice-table">
                 <thead>
                 <tr>
                     <th>선택</th>
