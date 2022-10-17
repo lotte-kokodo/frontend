@@ -1,5 +1,5 @@
 import React from "react"
-import {Routes, Route} from "react-router-dom"
+import {Routes, Route, useParams} from "react-router-dom"
 
 import SellerHeader from "./sellerHeader"
 import SellerNav from "./sellerNav"
@@ -14,6 +14,8 @@ import CalculatePresent from "../../calculate/js/calculate"
 import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagement"
 
 function Seller() {
+    const params = useParams();
+
     return(
         <div>
             <SellerHeader />

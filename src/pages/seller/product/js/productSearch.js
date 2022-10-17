@@ -105,7 +105,7 @@ export default function ProductSearch() {
             <div className="product-bottom-result-box">
                 <div className="product-search-result-box">상품목록</div>
             </div>
-            <table className="table">
+            <table className="table product-search-table">
                 <thead>
                 <tr>
                     <th>선택</th>

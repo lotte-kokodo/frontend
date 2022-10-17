@@ -42,9 +42,9 @@ export default function CalculatePresent() {
     }
 
     const searchContent = async () => {
-        history(`/calculate/present/${params.id}`)
-        await axios.post(`http://localhost:8080/calculate/${params.id}/calculateList`,{
-            "sellerId" : 1,
+        history(`/seller/calculate/${params.id}`)
+        await axios.post(`http://localhost:8001/calculate-service/calculate/${params.id}/calculateList`,{
+            "sellerId" : params.id,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"00:00:00",
             "provideStatus": provideStatus,
@@ -180,7 +180,7 @@ export default function CalculatePresent() {
                 <div className="calculate-search-result-box">검색 결과</div>
                 <div className="calculate-search-result-cnt-box"> (총 {resultCnt}건)</div>
             </div>
-            <table className="table">
+            <table className="table calculate-table">
                 <thead>
                 <tr>
                     <th>정산일</th>
