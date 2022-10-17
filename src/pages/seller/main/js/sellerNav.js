@@ -90,8 +90,9 @@ function SellerNav() {
                 <strong className="seller-nav-title">프로모션</strong>
                 {isListHover3 ?
                 <div className="seller-hover-parent">
-                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/discountPolicyManagement`}>할인쿠폰 관리</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/discountPolicyManagement`}>할인정책 관리</Link></div>
                     <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}`}>할인상품 조회</Link></div>
+                    <div className="seller-hover-child"><Link to={`/seller/${params.sellerId}/promotion/coupon`}>할인 쿠폰 관리</Link></div>
                 </div>
                 :
                 <div></div>
