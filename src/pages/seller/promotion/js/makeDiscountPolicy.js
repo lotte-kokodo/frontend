@@ -55,10 +55,9 @@ function MakeDiscountPolicy() {
     const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
-    // const [startDate, setStartDate] = useState(new Date(), 'yyyy:mm:dd');
-    // const [endDate, setEndDate] = useState(new Date(), 'yyyy:mm:dd');
     const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
+    const sellerId = Number(1);
 
     const [radioCheck, setRadioCheck] = useState('');
 
@@ -106,26 +105,27 @@ function MakeDiscountPolicy() {
     }
 
     const makeRatePolicy = async () => {
-        let sDate = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + "T" + startDate.getHours() + ":" + startDate.getMinutes() + ":" + startDate.getSeconds();
-        let eDate = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + "T" + endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
         let ratePolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: sDate,
-            endDate: eDate,
-            rate: ratePercent,
-            minPrice: rateMinPrice,
-            productId: 1
-            // 추후 체크박스로 갖고오기
+            startDate: moment(startDate).format('YYYY-MM-DDThh:mm:ss'),
+            endDate: moment(endDate).format('YYYY-MM-DDThh:mm:ss'),
+            rate: Number(ratePercent),
+            minPrice: Number(rateMinPrice),
+            productId: Number(Array.from(checkedItems)[0]),
+            sellerId: sellerId
         }
         console.log(ratePolicyDto);
         await axios({
             method: "post",
-            url: "http://localhost:9011/rate-discount/save",
+            url: "http://localhost:8080/rate-discount/save",
             data: ratePolicyDto
         })
             .then(function (resp) {
-                alert(resp.value);
+                if(resp.request.status == 200) {
+                alert('등록완료!')
+                window.location.reload();
+                }
             })
             .catch(function (error) {
                 alert(error.value);
@@ -133,29 +133,30 @@ function MakeDiscountPolicy() {
     }
 
     const makeFixPolicy = async () => {
-        let sDate = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + "T" + startDate.getHours() + ":" + startDate.getMinutes() + ":" + startDate.getSeconds();
-        let eDate = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + "T" + endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
         let fixPolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: sDate,
-            endDate: eDate,
-            rate: ratePercent,
-            minPrice: rateMinPrice,
-            productId: 1
-            // 추후 체크박스로 갖고오기
+            startDate: moment(startDate).format('YYYY-MM-DDThh:mm:ss'),
+            endDate: moment(endDate).format('YYYY-MM-DDThh:mm:ss'),
+            price: Number(fixWon),
+            minPrice: Number(fixMinPrice),
+            productId: Number(Array.from(checkedItems)[0]),
+            sellerId: sellerId
         }
         console.log(fixPolicyDto);
         await axios({
             method: "post",
-            url: "http://localhost:9011/fix-discount/save",
+            url: "http://localhost:8080/fix-discount/save",
             data: fixPolicyDto
         })
             .then(function (resp) {
-                alert(resp.value);
+                if(resp.request.status == 200) {
+                    alert('등록완료!')
+                    window.location.reload();
+                }
             })
             .catch(function (error) {
-                alert(error.value);
+                console.log(error);
             })
     }
 
@@ -169,7 +170,7 @@ function MakeDiscountPolicy() {
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: "http://localhost:9270/product/productId/" + productId,
+                url: "http://localhost:9270/product/detail/" + productId,
                 // data: params
             })
                 .then(function (resp) {
@@ -294,7 +295,6 @@ function MakeDiscountPolicy() {
                                         <StyledTableCell>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">상품ID</StyledTableCell>
-                                        <StyledTableCell align="center">카테고리ID</StyledTableCell>
                                         <StyledTableCell align="center">상품명</StyledTableCell>
                                         <StyledTableCell align="center">가격</StyledTableCell>
                                         <StyledTableCell align="center">재고량</StyledTableCell>
