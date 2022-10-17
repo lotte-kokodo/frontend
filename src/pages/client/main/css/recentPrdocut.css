@@ -1,0 +1,26 @@
+.watch-item{
+    width:120px;
+    height: auto;
+    display: flex;
+    border-radius: 5px;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    top:10;
+    background-color: #ffffff;
+    z-index: 2;
+    margin-right: 50px;
+    padding: 10px;
+    border:2px solid #f0f0f0;
+}
+
+.watch-title{
+    text-align: center;
+    margin: 5px auto;
+}
+
+.watch-item img{
+    max-width: 100%;
+    margin: 10px auto;
+    height: auto;
+}
