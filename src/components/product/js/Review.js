@@ -17,7 +17,7 @@ export default function Review() {
     const saveReview = (s) =>{
 
         const fetchData = async () => {
-            await axios.post(`http://localhost:9270/review`,null
+            await axios.post(`http://localhost:8001/product-service/review`,null
             ,{
                 productId: {productId},
                 content: {s},
@@ -43,7 +43,7 @@ export default function Review() {
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:9270/review/total/${productId}`)
+            await axios.get(`http://localhost:8001/product-service/review/total/${productId}`)
                 .then(function (resp) {
                     setTotalReview(resp.data.result.data);
 
@@ -58,7 +58,7 @@ export default function Review() {
     // 리뷰 조회
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:9270/review/${productId}`)
+            await axios.get(`http://localhost:8001/product-service/review/${productId}`)
                 .then(function (resp) {
                     console.log(resp);
                     setReviewList(resp.data.result.data);
