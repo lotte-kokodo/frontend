@@ -50,7 +50,7 @@ function Sale() {
     const fetchSalePro = async (seq) => {
         await axios({
             method: "get",
-            url: "http://localhost:9270/product/main/sale/all/" + seq
+            url: "http://localhost:8001/product-service/product/main/sale/all/" + seq
         })
         .then(function(response){
             setSaleProduct(response.data.result.data);
