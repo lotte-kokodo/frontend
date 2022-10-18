@@ -43,7 +43,7 @@ function Login() {
     const fetchLogin = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8080/login",
+            url: "http://localhost:8001/user-service/login",
             data : params
         })
         .then(function(response){

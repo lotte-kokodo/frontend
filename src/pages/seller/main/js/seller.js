@@ -12,7 +12,7 @@ import ProductSearch from "../../product/js/productSearch"
 import CalculatePresent from "../../calculate/js/calculate"
 
 import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagement"
-import CouponManagement from "../../promotion/js/couponManagement"
+import CouponManagement from "../../promotion/js/CouponManagement"
 
 function Seller() {
     const params = useParams();

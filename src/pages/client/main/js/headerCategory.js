@@ -14,7 +14,7 @@ const ImgHover = () => {
     const fetchCategory = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:9270/category/all"
+        url: "http://localhost:8001/product-service/category/all"
         })
         .then(function(response){
             setCategoryList(response.data.result.data);

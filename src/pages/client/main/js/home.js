@@ -133,7 +133,7 @@ function Home() {
     const fetchNew = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:9270/product/main/new"
+        url: "http://localhost:8001/product-service/product/main/new"
         })
         .then(function(response){
             setNewState(response.data.result.data);
@@ -146,7 +146,7 @@ function Home() {
     const fetchSale = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:9270/product/main/sale"
+        url: "http://localhost:8001/product-service/product/main/sale"
         })
         .then(function(response){
             setSaleState(response.data.result.data);
@@ -160,7 +160,7 @@ function Home() {
     const fetchMd = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:9270/product/main/seller"
+        url: "http://localhost:8001/product-service/product/main/seller"
         })
         .then(function(response){
             console.log(response.data.result.data);
