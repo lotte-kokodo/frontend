@@ -8,18 +8,58 @@ import { OrderContext } from "../../../context/orderProvider";
 
 // Module
 import { useContext, useEffect, useState } from "react"
+import axios from "axios";
+import {AuthContext} from "../../../context/authProvider";
+import {ServerConfigContext} from "../../../context/serverConfigProvider";
 
 
 const Payment = () => {
 
 	const { checkProducts } = useContext(OrderContext);
+	const { url } = useContext(ServerConfigContext);
+	const { headers } = useContext(AuthContext);
+
+	const [sellerFixPolicy, setSellerFixPolicy] = useState({});
 	const [totalPrice, setTotalPrice] = useState(999999999);
 	const [discPrice, setDiscPrice] = useState(0);
+	const [delPrice, setDelPrice] = useState(999999999);
 	const [payPrice, setPayPrice] = useState(999999999);
 
 	useEffect(() => {
+		getFixDiscountPolicy();
 		calcPaymentPrice();
 	}, [checkProducts.length]);
+
+	// 배송비 정책
+	const getFixDiscountPolicy = async () => {
+
+		const api = url + "/promotion-service/fix-discount/status";
+		let productIds = [];
+		let sellerIds = [];
+		checkProducts.map((product) => {
+			productIds.push(product.productId);
+			sellerIds.push(product.sellerId);
+		});
+
+		const params = {
+			productIdList: productIds.join(","),
+			sellerIdList : sellerIds.join(",")
+		}
+
+		await axios.get(api, {params: params, headers: headers})
+		.then((resp) => {
+			console.log("[SUCCESS] (Payment) GET /promotion-service/fix-discount/status");
+
+			const data = resp.data.result.data;
+			console.log(data);
+
+			setSellerFixPolicy(data);
+		})
+		.catch((err) => {
+			console.log("[ERROR] (Payment) GET /promotion-service/fix-discount/status");
+			console.log(err);
+		});
+	}
 
 
 	const calcPaymentPrice = () => {
@@ -36,13 +76,24 @@ const Payment = () => {
 			}
 		});
 		setDiscPrice(discPrice);
-		// TODO 배송비 계산
-		// 중복되지 않는 판매자가 총 몇명? - 판매자 아이디 리스트
-		// 배송 적용할 수 있는 판매자 아이디 리스트를 PromotionService 로 부터 받아 ?
-		// 판매자 수 x 3000(배송비)
 
-		// 배송비 추가
-		setPayPrice(tPrice-discPrice);
+		// 배송비 계산
+		const sellers = [];
+		checkProducts.map((product) => {
+			if (!sellers.includes(product.sellerId)) {
+				sellers.push(product.sellerId);
+			}
+		});
+
+		let delPrice = 0;
+		sellers.map((sellerId) => {
+			if (!sellerFixPolicy[sellerId]) {
+				delPrice += 3000;
+			}
+		});
+		setDelPrice(delPrice);
+
+		setPayPrice(tPrice-discPrice-delPrice);
 	}
 
 	return (
@@ -60,7 +111,7 @@ const Payment = () => {
 					</tr>
 					<tr>
 						<td>배송비</td>
-						<td>{}</td>
+						<td>{delPrice} 원</td>
 					</tr>
 				</tbody>
 			</table>

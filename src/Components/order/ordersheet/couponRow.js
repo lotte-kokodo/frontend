@@ -55,11 +55,6 @@ const CouponRow = (props) => {
     )
   }
 
-  const print = () => {
-    console.log(checkCoupons);
-    console.log(checkCouponIds);
-  }
-
   return (
       <>
         <div className="row" onClick={checkHandler}>

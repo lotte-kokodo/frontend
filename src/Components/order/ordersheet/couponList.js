@@ -59,15 +59,10 @@ const CouponList = (props) => {
     })
   }
 
-  const print = () => {
-    console.log(rateCoupons);
-    console.log(fixCoupons);
-  }
-
   return (
       <>
         <h3>쿠폰정보</h3>
-        <hr/><button onClick={print}>버튼</button>
+        <hr/>
         {
           rateCoupons.map((coupon, idx) => {
 

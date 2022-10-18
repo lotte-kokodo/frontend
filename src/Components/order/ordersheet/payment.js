@@ -6,21 +6,61 @@
 import {OrderContext} from "../../../context/orderProvider";
 
 // Module
+import axios from "axios";
 import {useContext, useEffect, useState} from "react"
+import {AuthContext} from "../../../context/authProvider";
+import {ServerConfigContext} from "../../../context/serverConfigProvider";
+
 
 const Payment = (props) => {
 
   const { orderProducts, checkCoupons } = useContext(OrderContext);
+  const { url } = useContext(ServerConfigContext);
+  const { headers } = useContext(AuthContext);
 
   const productQtyMap = props.productQtyMap;
+
+  const [sellerFixPolicy, setSellerFixPolicy] = useState({});
   const [ totalPrice, setTotalPrice ] = useState(999999);
   const [ discPrice, setDiscPrice ] = useState(0);
-  const [ deliveryPrice, setDeliveryPrice ] = useState(999999);
-  const [ paymentPrice, setPaymentPrice ] = useState(999999);
+  const [ delPrice, setDelPrice ] = useState(999999);
+  const [ payPrice, setPayPrice ] = useState(999999);
 
   useEffect(() => {
+    getFixDiscountPolicy();
     calcPaymentPrice();
   }, [orderProducts.length, checkCoupons.length]);
+
+  // 배송비 정책 조회
+  const getFixDiscountPolicy = async () => {
+
+    const api = url + "/promotion-service/fix-discount/status";
+    let productIds = [];
+    let sellerIds = [];
+    Object.values(orderProducts).map((product) => {
+      productIds.push(product.productId);
+      sellerIds.push(product.sellerId);
+    });
+
+    const params = {
+      productIdList: productIds.join(","),
+      sellerIdList : sellerIds.join(",")
+    }
+
+    await axios.get(api, {params: params, headers: headers})
+    .then((resp) => {
+      console.log("[SUCCESS] (Payment) GET /promotion-service/fix-discount/status");
+
+      const data = resp.data.result.data;
+      console.log(data);
+
+      setSellerFixPolicy(data);
+    })
+    .catch((err) => {
+      console.log("[ERROR] (Payment) GET /promotion-service/fix-discount/status");
+      console.log(err);
+    });
+  }
 
   const calcPaymentPrice = () => {
     // 상품 총 금액 계산
@@ -31,26 +71,39 @@ const Payment = (props) => {
     setTotalPrice(tPrice);
 
     // 총 할인금액 계산
-    let dPrice = 0;
+    let discPrice = 0;
     Object.values(orderProducts).map((product) => {
       const productTotalPrice = product.unitPrice*productQtyMap[product.productId];
 
       if (product.discRate !== 0) {
-        dPrice += Math.floor(productTotalPrice * (product.discRate*0.01));
+        discPrice += Math.floor(productTotalPrice * (product.discRate*0.01));
       }
 
       // 사용자가 비율 할인쿠폰을 선택했다면
       const coupon = checkCoupons[product.productId];
       if (coupon && coupon.rate && productTotalPrice >= coupon.minPrice) {
-        dPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
+        discPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
       }
     });
-    setDiscPrice(dPrice);
+    setDiscPrice(discPrice);
 
-    setPaymentPrice(tPrice-dPrice);
+    // 배송비 계산
+    const sellers = [];
+    Object.values(orderProducts).map((product) => {
+      if (!sellers.includes(product.sellerId)) {
+        sellers.push(product.sellerId);
+      }
+    });
 
-    // TODO 배송비 계산
+    let delPrice = 0;
+    sellers.map((sellerId) => {
+      if (!sellerFixPolicy[sellerId]) {
+        delPrice += 3000;
+      }
+    });
+    setDelPrice(delPrice);
 
+    setPayPrice(tPrice-discPrice-delPrice);
   }
 
   return (
@@ -68,13 +121,13 @@ const Payment = (props) => {
           </tr>
           <tr>
             <td>배송비</td>
-            <td>{} 원</td>
+            <td>{delPrice} 원</td>
           </tr>
           </tbody>
         </table>
         <hr/>
         <div>
-          <span>{paymentPrice} 원</span>
+          <span>{payPrice} 원</span>
         </div>
       </>
   )
