@@ -24,7 +24,7 @@ function Mypage() {
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/user-service/member/myPage/" + localStorage.getItem("memberId")
+            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
             setName(response.data.result.data.loginId);

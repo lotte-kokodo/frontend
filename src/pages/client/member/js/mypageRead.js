@@ -65,7 +65,7 @@ function MypageRead(){
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/user-service/member/myPage/" + localStorage.getItem("memberId")
+            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
             setInputId(response.data.result.data.loginId);
@@ -85,7 +85,7 @@ function MypageRead(){
     const fetchUpdateMypage = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/user-service/member/myPage",
+            url: "http://localhost:8001/member-service/member/myPage",
             data : params
         })
         .then(function(response){

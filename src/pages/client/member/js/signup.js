@@ -77,7 +77,7 @@ function Signup(){
     const fetchCheckId = async (id) => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/user-service/member/signup/" + id
+            url: "http://localhost:8001/member-service/member/signup/" + id
         })
         .then((response) => {
             if(response.data.result.data === "success") {
@@ -95,7 +95,7 @@ function Signup(){
     const fetchSignUp = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/user-service/member/signup",
+            url: "http://localhost:8001/member-service/member/signup",
             data : params
         })
         .then(function(response){
