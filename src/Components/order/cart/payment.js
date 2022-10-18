@@ -3,64 +3,23 @@
  */
 
 // Context
-import { OrderContext } from "../../../context/orderProvider";
-
+import {OrderContext} from "../../../context/orderProvider";
 
 // Module
-import { useContext, useEffect, useState } from "react"
-import axios from "axios";
-import {AuthContext} from "../../../context/authProvider";
-import {ServerConfigContext} from "../../../context/serverConfigProvider";
-
+import {useContext, useEffect, useState} from "react"
 
 const Payment = () => {
 
-	const { checkProducts } = useContext(OrderContext);
-	const { url } = useContext(ServerConfigContext);
-	const { headers } = useContext(AuthContext);
+	const { checkProducts, fixDiscountPolicy } = useContext(OrderContext);
 
-	const [sellerFixPolicy, setSellerFixPolicy] = useState({});
 	const [totalPrice, setTotalPrice] = useState(999999999);
 	const [discPrice, setDiscPrice] = useState(0);
 	const [delPrice, setDelPrice] = useState(999999999);
 	const [payPrice, setPayPrice] = useState(999999999);
 
 	useEffect(() => {
-		getFixDiscountPolicy();
 		calcPaymentPrice();
 	}, [checkProducts.length]);
-
-	// 배송비 정책
-	const getFixDiscountPolicy = async () => {
-
-		const api = url + "/promotion-service/fix-discount/status";
-		let productIds = [];
-		let sellerIds = [];
-		checkProducts.map((product) => {
-			productIds.push(product.productId);
-			sellerIds.push(product.sellerId);
-		});
-
-		const params = {
-			productIdList: productIds.join(","),
-			sellerIdList : sellerIds.join(",")
-		}
-
-		await axios.get(api, {params: params, headers: headers})
-		.then((resp) => {
-			console.log("[SUCCESS] (Payment) GET /promotion-service/fix-discount/status");
-
-			const data = resp.data.result.data;
-			console.log(data);
-
-			setSellerFixPolicy(data);
-		})
-		.catch((err) => {
-			console.log("[ERROR] (Payment) GET /promotion-service/fix-discount/status");
-			console.log(err);
-		});
-	}
-
 
 	const calcPaymentPrice = () => {
 		// 상품 총 금액 계산
@@ -84,10 +43,15 @@ const Payment = () => {
 				sellers.push(product.sellerId);
 			}
 		});
+		console.log("sellers");
+		console.log(sellers);
+		console.log(fixDiscountPolicy);
 
 		let delPrice = 0;
 		sellers.map((sellerId) => {
-			if (!sellerFixPolicy[sellerId]) {
+			if (!fixDiscountPolicy[sellerId]) {
+				console.log(fixDiscountPolicy);
+				console.log("sellerFixPolicy[" + sellerId + "] = " + fixDiscountPolicy[sellerId]);
 				delPrice += 3000;
 			}
 		});

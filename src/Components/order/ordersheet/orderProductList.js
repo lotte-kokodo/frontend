@@ -19,7 +19,7 @@ const OrderProductList = (props) => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers, memberId } = useContext(AuthContext);
-  const { setOrderProducts } = useContext(OrderContext);
+  const { setOrderProductMap } = useContext(OrderContext);
 
   const productIds = props.productIds;
   const productQtyMap = props.productQtyMap;
@@ -27,6 +27,10 @@ const OrderProductList = (props) => {
   const [ products, setProducts ] = useState([]);
 
   const api = url + "/order-payment-service/orders/" + memberId + "/orderSheet";
+
+  useEffect(() => {
+    getOrderProducts();
+  }, []);
 
   const getOrderProducts = async () => {
     await axios.get(api, { params: { productIds: productIds.join(",") }, headers: headers})
@@ -36,18 +40,13 @@ const OrderProductList = (props) => {
 
       console.log(data);
       setProducts(Object.values(data));
-      setOrderProducts(data);
+      setOrderProductMap(data);
     })
     .catch((err) => {
       console.log("[error] (OrderProductList) GET /product-service/orderProducts");
       console.log(err);
     });
   }
-
-  useEffect(() => {
-    console.log("orderProductList ");
-    getOrderProducts();
-  }, [])
 
   return (
       <>

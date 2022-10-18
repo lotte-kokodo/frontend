@@ -37,7 +37,7 @@ function createData(product_id, category_id, display_name, price, stock, deadlin
     return { product_id, category_id, display_name, price, stock, deadline, delivery_fee, create_date };
 }
 
-const row = createData('1', '1', '잇메이트 프로틴 어묵 스테이크 혼합 100g', '21,900', '100', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00');
+// const row = createData('1', '1', '잇메이트 프로틴 어묵 스테이크 혼합 100g', '21,900', '100', '2022-10-30T00:00:00', '3000', '2022-10-25T00:00:00');
 
 const Issue = (props) => {
     const [bChecked, setChecked] = useState(true);
@@ -56,7 +56,6 @@ const Issue = (props) => {
                 />
             </StyledTableCell>
             <StyledTableCell align="center">{props.props.product_id}</StyledTableCell>
-            <StyledTableCell align="center">{props.props.category_id}</StyledTableCell>
             <StyledTableCell align="center">{props.props.display_name}</StyledTableCell>
             <StyledTableCell align="center">{props.props.price}</StyledTableCell>
             <StyledTableCell align="center">{props.props.stock}</StyledTableCell>

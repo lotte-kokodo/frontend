@@ -19,7 +19,8 @@ const CartProductList = () => {
 
 	const { url } = useContext(ServerConfigContext);
 	const { headers, memberId } = useContext(AuthContext);
-	const { checkProducts, setCheckProducts, checkProductIds, setCheckProductIds } = useContext(OrderContext);
+	const { checkProducts, setCheckProducts, checkProductIds, setCheckProductIds,
+					setFixDiscountPolicy } = useContext(OrderContext);
 
 	const api = url + "/order-payment-service/carts/" + memberId;
 
@@ -29,6 +30,10 @@ const CartProductList = () => {
 	useEffect(() => {
 		getCartProducts();
 	}, []);
+
+	useEffect(() => {
+		getFixDiscountPolicy();
+	}, [products.length]);
 
 	const getCartProducts = async () => {
 		// OrderService (Cart) 요청
@@ -50,6 +55,37 @@ const CartProductList = () => {
 				console.log("[error] (CartProductList) GET /order-payment-service/carts");
 				console.log(err);
 			});
+	}
+
+	// 배송비 정책
+	const getFixDiscountPolicy = async () => {
+
+		const api = url + "/promotion-service/fix-discount/status";
+		let productIds = [];
+		let sellerIds = [];
+		products.map((product) => {
+			productIds.push(product.productId);
+			sellerIds.push(product.sellerId);
+		});
+
+		const params = {
+			productIdList: productIds.join(","),
+			sellerIdList : sellerIds.join(",")
+		}
+
+		await axios.get(api, {params: params, headers: headers})
+		.then((resp) => {
+			console.log("[SUCCESS] (Payment) GET /promotion-service/fix-discount/status");
+
+			const data = resp.data.result.data;
+			console.log(data);
+
+			setFixDiscountPolicy(data);
+		})
+		.catch((err) => {
+			console.log("[ERROR] (Payment) GET /promotion-service/fix-discount/status");
+			console.log(err);
+		});
 	}
 
 	/* '상품별' 체크박스 핸들러 */

@@ -7,15 +7,17 @@ const OrderProvider = ({ children }) => {
 
 	const [checkProducts, setCheckProducts] = useState([]);
 	const [checkProductIds, setCheckProductIds] = useState([]);
-	const [orderProducts, setOrderProducts] = useState([]);
+	const [orderProductMap, setOrderProductMap] = useState([]);
 	const [checkCoupons, setCheckCoupons] = useState([]);
 	const [checkCouponIds, setCheckCouponIds] = useState([]);
+	const [fixDiscountPolicy, setFixDiscountPolicy] = useState({});
 
 	const value = {checkProducts, setCheckProducts,
 								checkProductIds, setCheckProductIds,
-								orderProducts, setOrderProducts,
+								orderProductMap, setOrderProductMap,
 								checkCoupons, setCheckCoupons,
-								checkCouponIds, setCheckCouponIds};
+								checkCouponIds, setCheckCouponIds,
+								fixDiscountPolicy, setFixDiscountPolicy};
 
 	return (
 		<OrderContext.Provider value={value}>

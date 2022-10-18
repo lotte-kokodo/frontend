@@ -6,73 +6,35 @@
 import {OrderContext} from "../../../context/orderProvider";
 
 // Module
-import axios from "axios";
 import {useContext, useEffect, useState} from "react"
-import {AuthContext} from "../../../context/authProvider";
-import {ServerConfigContext} from "../../../context/serverConfigProvider";
-
 
 const Payment = (props) => {
 
-  const { orderProducts, checkCoupons } = useContext(OrderContext);
-  const { url } = useContext(ServerConfigContext);
-  const { headers } = useContext(AuthContext);
+  const { orderProductMap, checkCoupons, fixDiscountPolicy } = useContext(OrderContext);
 
   const productQtyMap = props.productQtyMap;
 
-  const [sellerFixPolicy, setSellerFixPolicy] = useState({});
   const [ totalPrice, setTotalPrice ] = useState(999999);
   const [ discPrice, setDiscPrice ] = useState(0);
   const [ delPrice, setDelPrice ] = useState(999999);
   const [ payPrice, setPayPrice ] = useState(999999);
 
   useEffect(() => {
-    getFixDiscountPolicy();
     calcPaymentPrice();
-  }, [orderProducts.length, checkCoupons.length]);
-
-  // 배송비 정책 조회
-  const getFixDiscountPolicy = async () => {
-
-    const api = url + "/promotion-service/fix-discount/status";
-    let productIds = [];
-    let sellerIds = [];
-    Object.values(orderProducts).map((product) => {
-      productIds.push(product.productId);
-      sellerIds.push(product.sellerId);
-    });
-
-    const params = {
-      productIdList: productIds.join(","),
-      sellerIdList : sellerIds.join(",")
-    }
-
-    await axios.get(api, {params: params, headers: headers})
-    .then((resp) => {
-      console.log("[SUCCESS] (Payment) GET /promotion-service/fix-discount/status");
-
-      const data = resp.data.result.data;
-      console.log(data);
-
-      setSellerFixPolicy(data);
-    })
-    .catch((err) => {
-      console.log("[ERROR] (Payment) GET /promotion-service/fix-discount/status");
-      console.log(err);
-    });
-  }
+  }, [orderProductMap.length, checkCoupons.length]);
 
   const calcPaymentPrice = () => {
+    console.log("calcPrice");
     // 상품 총 금액 계산
     let tPrice = 0;
-    Object.values(orderProducts).map((product) => {
+    Object.values(orderProductMap).map((product) => {
       tPrice += product.unitPrice*productQtyMap[product.productId];
     });
     setTotalPrice(tPrice);
 
     // 총 할인금액 계산
     let discPrice = 0;
-    Object.values(orderProducts).map((product) => {
+    Object.values(orderProductMap).map((product) => {
       const productTotalPrice = product.unitPrice*productQtyMap[product.productId];
 
       if (product.discRate !== 0) {
@@ -89,7 +51,7 @@ const Payment = (props) => {
 
     // 배송비 계산
     const sellers = [];
-    Object.values(orderProducts).map((product) => {
+    Object.values(orderProductMap).map((product) => {
       if (!sellers.includes(product.sellerId)) {
         sellers.push(product.sellerId);
       }
@@ -97,7 +59,7 @@ const Payment = (props) => {
 
     let delPrice = 0;
     sellers.map((sellerId) => {
-      if (!sellerFixPolicy[sellerId]) {
+      if (!fixDiscountPolicy[sellerId]) {
         delPrice += 3000;
       }
     });

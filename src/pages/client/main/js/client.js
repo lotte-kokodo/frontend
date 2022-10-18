@@ -3,6 +3,7 @@ import {Route, Routes} from "react-router-dom"
 
 import Header from './header'
 import Nav from './nav'
+import RecentProduct from './recentPrdocut'
 import Home from "./home"
 
 import Login from "../../member/js/login"
@@ -25,11 +26,12 @@ import ServerConfigProvider from "../../../../context/serverConfigProvider";
 import OrderProvider from "../../../../context/orderProvider";
 
 function Client() {
-  return(
-      <div>
-        <Header />
-        <hr className="headerBottom-hr"></hr>
-        <Nav />
+    return(
+        <div>
+            <Header />
+            <hr className="headerBottom-hr"></hr>
+            <Nav />
+            <RecentProduct />
 
         <main>
           <div>

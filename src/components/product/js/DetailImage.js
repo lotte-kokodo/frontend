@@ -14,7 +14,7 @@ export default function ProductDetail() {
 // product 이미지 조회
 useEffect(() => {
     const fetchData = async () => {
-        await axios.get(`http://localhost:9270/productDetail/${productId}`)
+        await axios.get(`http://localhost:8001/product-service/productDetail/${productId}`)
             .then(function (resp) {
                 setDetailImages(resp.data.result.data);
 
@@ -31,7 +31,7 @@ useEffect(() => {
             {
             detailImages.map( function(object, i){ 
                     return (
-                        <img class="detail-image" src={object.image}></img>
+                        <img class="detail-image" src={object.image} style={{verticalAlign:"middle"}}></img>
                     )
                 })
             }

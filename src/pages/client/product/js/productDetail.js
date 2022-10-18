@@ -1,11 +1,10 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import ProductDetailNavBar from '../../../../components/product/js/ProductDetailNavBar';
 import ProductDetailInfo from '../../../../components/product/js/ProductDetailInfo';
 
 import "../css/productDetail.css";
+import { WidthNormalTwoTone } from "@mui/icons-material";
 
 function ProductDetail() {
 
