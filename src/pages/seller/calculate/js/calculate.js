@@ -42,7 +42,7 @@ export default function CalculatePresent() {
     }
 
     const searchContent = async () => {
-        history(`/seller/${params.sellerId}/calculate`)
+        history(`/seller/${params.sellerId}/calculateList`)
         await axios.post(`http://localhost:8001/calculate-service/calculate/${params.sellerId}/calculateList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
@@ -326,4 +326,3 @@ function monthDateParseToLocalDate(strLocalDate){
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
-
