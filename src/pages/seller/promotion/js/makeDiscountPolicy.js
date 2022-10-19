@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
@@ -41,17 +42,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[500],
-    '&:hover': {
-        backgroundColor: pink[700],
-    },
-}));
-
-
-
 function MakeDiscountPolicy() {
+    // const sellerId = useParams().sellerId;
+
     const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
@@ -115,13 +108,13 @@ function MakeDiscountPolicy() {
         }
         await axios({
             method: "post",
-            url: "http://localhost:8080/rate-discount/save",
+            url: "http://localhost:8001/promotion-service/rate-discount/save",
             data: ratePolicyDto
         })
             .then(function (resp) {
-                if(resp.request.status == 200) {
-                alert('등록완료!')
-                window.location.reload();
+                if (resp.request.status == 200) {
+                    alert('등록완료!')
+                    window.location.reload();
                 }
             })
             .catch(function (error) {
@@ -140,13 +133,14 @@ function MakeDiscountPolicy() {
             productId: Number(Array.from(checkedItems)[0]),
             sellerId: sellerId
         }
+        console.log(fixPolicyDto);
         await axios({
             method: "post",
-            url: "http://localhost:8080/fix-discount/save",
+            url: "http://localhost:8001/promotion-service/fix-discount/save",
             data: fixPolicyDto
         })
             .then(function (resp) {
-                if(resp.request.status == 200) {
+                if (resp.request.status == 200) {
                     alert('등록완료!')
                     window.location.reload();
                 }
@@ -163,10 +157,15 @@ function MakeDiscountPolicy() {
     }
 
     const FetchProduct = () => {
+
+        if (productId === undefined) {
+            alert('id를 입력해주세요!');
+            return;
+        }
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: "http://localhost:9270/product/detail/" + productId,
+                url: "http://localhost:8001/product-service/product/detail/" + productId,
                 // data: params
             })
                 .then(function (resp) {
@@ -177,8 +176,9 @@ function MakeDiscountPolicy() {
                 })
 
         }
+
         fetchProduct();
-        }
+    }
 
     return (
         <div id="makeDiscountPolicy">
@@ -196,7 +196,7 @@ function MakeDiscountPolicy() {
                                             <StyledTableRow>
                                                 {/* align="center" */}
                                                 <StyledTableCell align="center" >정책명</StyledTableCell>
-                                                <StyledTableCell colSpan={3}><input type="input" value={discountPolicyName} onChange={(e) => {setDiscountPolicyName(e.target.value)}}></input></StyledTableCell>
+                                                <StyledTableCell colSpan={3}><input type="input" value={discountPolicyName} onChange={(e) => { setDiscountPolicyName(e.target.value) }}></input></StyledTableCell>
 
                                             </StyledTableRow>
                                             <StyledTableRow>
@@ -239,7 +239,7 @@ function MakeDiscountPolicy() {
                                                 </StyledTableCell>
 
                                                 <StyledTableCell>
-                                                    <FormControlLabel value="rate" control={<Radio />} label="정률" onChange={(e) => {handleClickRadio(e)}}/>
+                                                    <FormControlLabel value="rate" control={<Radio />} label="정률" onChange={(e) => { handleClickRadio(e) }} />
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
@@ -249,7 +249,7 @@ function MakeDiscountPolicy() {
                                             <StyledTableRow>
 
                                                 <StyledTableCell>
-                                                    <FormControlLabel value="fix" control={<Radio />} label="정액"  onChange={(e) => {handleClickRadio(e)}}/>
+                                                    <FormControlLabel value="fix" control={<Radio />} label="정액" onChange={(e) => { handleClickRadio(e) }} />
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
@@ -277,7 +277,7 @@ function MakeDiscountPolicy() {
                                 </div>
                                 <div>
                                     <div>
-                                        <button onClick={()=> {FetchProduct()}} style={{
+                                        <button onClick={() => { FetchProduct() }} style={{
                                             backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
                                             color: "#fff", borderRadius: "10px"
                                         }}>조회</button>
@@ -318,7 +318,7 @@ function MakeDiscountPolicy() {
                 </Box>
             </div>
 
-            <button onClick={() => {makePolicy()}} style={{
+            <button onClick={() => { makePolicy() }} style={{
                 backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
                 color: "#fff", borderRadius: "10px"
             }}>등록</button>

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import FixDiscountPolicyList from "../../../../components/promotion/js/fixDiscountPolicyList";
 import RateDiscountPolicyList from '../../../../components/promotion/js/rateDiscountPolicyList';
 import AddIcon from '@mui/icons-material/Add';
@@ -50,8 +51,10 @@ const style = {
 };
 
 const DiscountPolicyManagement = () => {
-    const [value, setValue] = React.useState(0);
-    const [open, setOpen] = React.useState(false);
+    const sellerId = useParams().sellerId;
+
+    const [value, setValue] = useState(0);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 

@@ -44,7 +44,7 @@ export default function FixDiscountPolicyList() {
     const fetchRowDiscountPolicyList = async() => {
         //sellerId 확인 필요
         
-        await axios.get("http://localhost:8080/rate-discount/seller/1", {   
+        await axios.get("http://localhost:8001/promotion-service/rate-discount/seller/1", {   
         // params: {
         //     sellerId: sellerId
         // }

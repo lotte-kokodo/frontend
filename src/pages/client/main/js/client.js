@@ -19,6 +19,7 @@ import ProductDetail from "../../product/js/productDetail"
 
 
 import GetOrderList from "../../order/js/orderList"
+import GetOrderDetailList from "../../order/js/orderDetailList"
 import "../css/header.css"
 
 function Client() {
@@ -50,7 +51,7 @@ function Client() {
 
                         {/* order - orderList */}
                         <Route path="/orderList" element={<GetOrderList />}></Route>
-
+                        <Route path="/orderDetailList" element={<GetOrderDetailList />}></Route>
                     </Routes>
                 </div>
             </main>
