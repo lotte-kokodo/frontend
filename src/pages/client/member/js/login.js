@@ -86,11 +86,11 @@ function Login() {
                     <div className="card-body">
                         <form method='post'>
                             <div className="input-group form-group">
-                                <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
+                                <input type="text" className="form-control" name='input_login_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
                                 
                             </div>
                             <div className="input-group form-group">
-                                <input type="password" className="form-control" name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" autoComplete="on" />
+                                <input type="password" className="form-control" name='input_login_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" autoComplete="on" />
                             </div>
                             <div className="form-check idCheck">
                                 <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={bCheked} onChange={checkHandler}/>

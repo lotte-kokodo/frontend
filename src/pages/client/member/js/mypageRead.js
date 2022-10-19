@@ -113,37 +113,37 @@ function MypageRead(){
                     <div className="card-body">
                         <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
-                                <input type="text" className="form-control" name='input_id' value={inputId} readOnly/>
+                                <input type="text" className="form-control" name='input_update_id' value={inputId} readOnly/>
                         </div>
 
                         <div className="input-group form-group">
                                 <span className='inputText'>비밀번호  </span>
-                                <input type="password" className="form-control form-pw" name='input_pw' value={inputPw} onChange={handleInputPw} />  
+                                <input type="password" className="form-control form-pw" name='input_update_pw' value={inputPw} onChange={handleInputPw} />  
                         </div>
 
                         <div className="input-group form-group">
                                 <span className='inputText'>이름  </span>
-                                <input type="text" className="form-control form-name" name='input_name' value={inputName} onChange={handleInputName} />  
+                                <input type="text" className="form-control form-name" name='input_update_name' value={inputName} onChange={handleInputName} />  
                         </div>
 
                         <div className="input-group form-group">
                                 <span className='inputText'>이메일  </span>
-                                <input type="email" className="form-control form-email" name='input_email' value={inputEmail} onChange={handleInputEmail} />  
+                                <input type="email" className="form-control form-email" name='input_update_email' value={inputEmail} onChange={handleInputEmail} />  
                         </div>
 
                         <div className="input-group form-group">
                                 <span className='inputText'>생년월일  </span>
-                                <input type="text" className="form-control form-birth" name='input_birth' value={inputBirth} onChange={handleInputBirth} />  
+                                <input type="text" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />  
                         </div>
 
                         <div className="input-group form-group">
                                 <span className='inputText'>전화번호  </span>
-                                <input type="text" className="form-control form-phone" name='input_phone' value={inputPhone} onChange={handleInputPhone} />  
+                                <input type="text" className="form-control form-phone" name='input_update_phone' value={inputPhone} onChange={handleInputPhone} />  
                         </div>
 
                         <div className="input-group form-group">
                                 <span className='inputText'>주소  </span>
-                                <input type="text" className="form-control form-addr" name='input_addr' value={inputAddr} onChange={handleInputAddr} />  
+                                <input type="text" className="form-control form-addr" name='input_update_addr' value={inputAddr} onChange={handleInputAddr} />  
                         </div>
 
                         <div className="login-group">
