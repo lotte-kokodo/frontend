@@ -1,29 +1,24 @@
 import { WindowRounded } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import "../css/recentPrdocut.css";
+import {RecentProductContext} from "../../../../context/recentProductProvider";
 
 function RecentPrdocut() {
-    let [watchImg, setImg] = useState(localStorage.getItem("watchImage"));
-    let [watchList, setWatch] = useState([]);
+    const { watchList, watchImg } = useContext(RecentProductContext);
 
     useEffect(() => {
-        setImg(localStorage.getItem("watchImage"));
 
-        if(watchImg !== null) {
-            setWatch(JSON.parse(watchImg));
-        }
-
-    },[])
+    },[watchList]);
 
     return(
         <div className="watch-container">
             {watchList && watchList.length > 0 ? 
                 <div className="watch-item">
                     <div className="watch-title">최근 본 상품</div>
-                    {watchList && watchList.map(function(object, i){
+                    {watchList && watchList.map(function(id, i){
                         return(
-                            <Item obj={object} key={i} cnt={i + 1} />
+                            <Item watchImgSrc={watchImg[i]} watchId={id} key={i} />
                         )
                     })}
                 </div>
@@ -35,13 +30,13 @@ function RecentPrdocut() {
 }
 
 function Item(props){
-    let watchId = localStorage.getItem("watchId");
-    watchId = JSON.parse(watchId);
+    let watchImgSrc = props.watchImgSrc;
+    let watchId = props.watchId;
 
     return(
-        <NavLink to={`/productDetail/${watchId[props.cnt-1]}`}>
+        <NavLink to={`/productDetail/${watchId}`}>
             <div>
-                <img src = {props.obj} alt = {props.id}/>
+                <img src = {watchImgSrc} alt = {watchId}/>
             </div>
         </NavLink>
         
