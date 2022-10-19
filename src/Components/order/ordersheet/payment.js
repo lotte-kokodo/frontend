@@ -10,7 +10,7 @@ import {useContext, useEffect, useState} from "react"
 
 const Payment = (props) => {
 
-  const { orderProductMap, checkCoupons, fixDiscountPolicy } = useContext(OrderContext);
+  const { orderProductMap, checkRateCoupons, checkFixCoupons, fixDiscountPolicy } = useContext(OrderContext);
 
   const productQtyMap = props.productQtyMap;
 
@@ -21,7 +21,7 @@ const Payment = (props) => {
 
   useEffect(() => {
     calcPaymentPrice();
-  }, [orderProductMap.length, checkCoupons.length]);
+  }, [orderProductMap.length, checkRateCoupons.length, checkFixCoupons.length]);
 
   const calcPaymentPrice = () => {
     console.log("calcPrice");
@@ -41,11 +41,11 @@ const Payment = (props) => {
         discPrice += Math.floor(productTotalPrice * (product.discRate*0.01));
       }
 
-      // 사용자가 비율 할인쿠폰을 선택했다면
-      const coupon = checkCoupons[product.productId];
-      if (coupon && coupon.rate && productTotalPrice >= coupon.minPrice) {
-        discPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
-      }
+      checkRateCoupons.map((coupon) => {
+        if (coupon && coupon.rate && productTotalPrice >= coupon.minPrice) {
+          discPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
+        }
+      });
     });
     setDiscPrice(discPrice);
 
@@ -59,13 +59,13 @@ const Payment = (props) => {
 
     let delPrice = 0;
     sellers.map((sellerId) => {
-      if (!fixDiscountPolicy[sellerId]) {
+      if (!fixDiscountPolicy[sellerId] && !checkFixCoupons[sellerId]) {
         delPrice += 3000;
       }
     });
     setDelPrice(delPrice);
 
-    setPayPrice(tPrice-discPrice-delPrice);
+    setPayPrice(tPrice-discPrice+delPrice);
   }
 
   return (

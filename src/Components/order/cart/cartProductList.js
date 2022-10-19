@@ -89,7 +89,7 @@ const CartProductList = () => {
 	}
 
 	/* '상품별' 체크박스 핸들러 */
-	const checkCartHandler = (id, isChecked) => {
+	const checkProductHandler = (id, isChecked) => {
 		if (isChecked) {
 			setCheckProductIds([...checkProductIds, id]);
 			products.map((product) => {
@@ -105,7 +105,7 @@ const CartProductList = () => {
 	}
 
 	/* '전체상품' 체크박스 핸들러 */
-	const allCheckHandler = (isChecked) => {
+	const allProductCheckHandler = (isChecked) => {
 		if (isChecked) {
 			setCheckProductIds(productIds);
 			setCheckProducts(products);
@@ -116,21 +116,28 @@ const CartProductList = () => {
 		}
 	}
 
+	const print = () => {
+		console.log("cartProductList");
+		console.log(checkProducts);
+		console.log(checkProductIds);
+	}
+
 	return (
 		<>
+			<button className="btn btn-warn" onClick={print}>변수값 출력</button>
 			<br/><br/><input type="checkbox" 
-					onChange={(event) => allCheckHandler(event.target.checked)}
+					onChange={(event) => allProductCheckHandler(event.target.checked)}
 					checked={productIds.length === checkProductIds.length}
 					/> &nbsp; &nbsp; 전체선택
 
 			{
 				products.map(function (product, idx) {
 					return (
-						<CartProductRow 
+						<CartProductRow
 							product={product} key={idx}
-							handler={checkCartHandler}
-							checkCartCnt={checkProducts.length}
-							allCartCnt={productIds.length}/>
+							handler={checkProductHandler}
+							checkProductCnt={checkProducts.length}
+							allProductCnt={productIds.length}/>
 					)
 				})
 			}

@@ -10,7 +10,7 @@ import {useContext, useEffect, useState} from "react"
 
 const Payment = () => {
 
-	const { checkProducts, fixDiscountPolicy } = useContext(OrderContext);
+	const { checkProducts, fixDiscountPolicy, isQtyUpdated } = useContext(OrderContext);
 
 	const [totalPrice, setTotalPrice] = useState(999999999);
 	const [discPrice, setDiscPrice] = useState(0);
@@ -19,19 +19,19 @@ const Payment = () => {
 
 	useEffect(() => {
 		calcPaymentPrice();
-	}, [checkProducts.length]);
+	}, [checkProducts]);
 
 	const calcPaymentPrice = () => {
 		// 상품 총 금액 계산
 		let tPrice = 0;
-		checkProducts.map((product) => tPrice += product.totalPrice);
+		checkProducts.map((product) => tPrice += product.qty * product.unitPrice);
 		setTotalPrice(tPrice);
 
 		// 총 할인금액 계산
 		let discPrice = 0;
 		checkProducts.map((product) => {
 			if (product.discPrice !== 0) {
-				discPrice +=  product.discPrice;
+				discPrice +=  Math.floor(product.qty*product.unitPrice*(1-product.discRate*0.01));
 			}
 		});
 		setDiscPrice(discPrice);
@@ -57,7 +57,7 @@ const Payment = () => {
 		});
 		setDelPrice(delPrice);
 
-		setPayPrice(tPrice-discPrice-delPrice);
+		setPayPrice(tPrice-discPrice+delPrice);
 	}
 
 	return (

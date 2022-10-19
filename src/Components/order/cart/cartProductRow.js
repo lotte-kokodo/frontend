@@ -15,14 +15,16 @@ import {useContext, useState} from "react"
 
 // Context
 import {AuthContext} from "../../../context/authProvider";
+import {OrderContext} from "../../../context/orderProvider";
 
 const CartProductRow = (props) => {
 
 	const { headers } = useContext(AuthContext);
 
 	const product = props.product;
-	const productId = product.productId;
+	const cartId = product.cartId;
 	const [qty, setQty] = useState(product.qty);
+	const { checkProducts, setCheckProducts } = useContext(OrderContext);
 
 	const updateQty = async (updatedQty) => {
 
@@ -30,13 +32,13 @@ const CartProductRow = (props) => {
 			qty: updatedQty
 		}
 
-		await axios.patch(`http://localhost:8001/order-payment-service/carts/${productId}/qty`, req, {headers: headers })
+		await axios.patch(`http://localhost:8001/order-payment-service/carts/${cartId}/qty`, req, {headers: headers })
 			.then((resp) => {
 				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);
 
-
 				setQty(updatedQty);
+				updateProductQty(updatedQty);
 			})
 			.catch((err) => {
 				console.log("[Error](CartRow) updateQty().");
@@ -46,7 +48,17 @@ const CartProductRow = (props) => {
 				alert(data.message);
 				setQty(data.result.qtyAvailable);
 			});
+	}
 
+	const updateProductQty = (updatedQty) => {
+
+		setCheckProducts(
+				checkProducts.map((checkProduct) =>
+					checkProduct.productId === product.productId
+							? {...checkProduct, qty: updatedQty }
+							: checkProduct
+				)
+		)
 	}
 
 	const increaseQty = () => {
@@ -68,11 +80,11 @@ const CartProductRow = (props) => {
 		<>
 			<div className="row order-product-row-div">
 				<div className="col-1">
-					<CheckBox cartId={productId}
+					<CheckBox productId={product.productId}
 							handler={props.handler} 
 							isAllChecked={props.isAllChecked} 
-							checkCartCnt={props.checkCartCnt}
-							allCartCnt={props.allCartCnt}/>
+							checkProductCnt={props.checkProductCnt}
+							allProductCnt={props.allProductCnt}/>
 				</div>
 				<div className="col-2">
 					<img className="order-product-img" src={product.productThumbnail} alt={product.productName} />

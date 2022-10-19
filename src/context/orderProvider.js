@@ -9,6 +9,8 @@ const OrderProvider = ({ children }) => {
 	const [checkProductIds, setCheckProductIds] = useState([]);
 	const [orderProductMap, setOrderProductMap] = useState([]);
 	const [checkCoupons, setCheckCoupons] = useState([]);
+	const [checkRateCoupons, setCheckRateCoupons] = useState([]);
+	const [checkFixCoupons, setCheckFixCoupons] = useState([]);
 	const [checkCouponIds, setCheckCouponIds] = useState([]);
 	const [fixDiscountPolicy, setFixDiscountPolicy] = useState({});
 
@@ -16,6 +18,8 @@ const OrderProvider = ({ children }) => {
 								checkProductIds, setCheckProductIds,
 								orderProductMap, setOrderProductMap,
 								checkCoupons, setCheckCoupons,
+								checkRateCoupons, setCheckRateCoupons,
+								checkFixCoupons, setCheckFixCoupons,
 								checkCouponIds, setCheckCouponIds,
 								fixDiscountPolicy, setFixDiscountPolicy};
 

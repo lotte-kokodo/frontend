@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 
 import {AuthContext} from "../../../context/authProvider";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
+import {OrderContext} from "../../../context/orderProvider";
 
 const PaymentButton = (props) => {
 
@@ -18,6 +19,7 @@ const PaymentButton = (props) => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers, memberId } = useContext(AuthContext);
+  const { checkRateCoupons, checkFixCoupons, orderProductMap } = useContext(OrderContext);
 
   const navigate = useNavigate();
 
@@ -28,8 +30,10 @@ const PaymentButton = (props) => {
     const productId = productIds[0];
     const params = {
       productId: productId,
+      sellerId: orderProductMap[productId].sellerId,
       qty: productQtyMap[productId],
-      couponId: 1
+      rateCouponId: checkRateCoupons[0],
+      fixCouponId: checkFixCoupons[0]
     }
 
     await axios.post(api, null, { params: params, headers: headers })
@@ -51,9 +55,26 @@ const PaymentButton = (props) => {
   const orderCartProducts = async() => {
     let api = url + "/order-payment-service/orders/" + memberId + "/cart";
 
+    const productSellerMap = {};
+    productIds.map((productId) => {
+      productSellerMap[productId] = orderProductMap[productId].sellerId;
+    });
+
+    const rateCouponIds = [];
+    checkRateCoupons.map((coupon) => {
+      rateCouponIds.push(coupon.id);
+    });
+
+    const fixCouponIds = [];
+    checkFixCoupons.map((coupon) => {
+      fixCouponIds.push(coupon.id);
+    });
+
     const req = {
       cartIds: cartIds,
-      couponIds: [1, 2, 3] // TODO 주문 시 사용자가 선택한 쿠폰 아이디로 변경
+      productSellerMap: productSellerMap,
+      rateCouponIds: rateCouponIds,
+      fixCouponIds: fixCouponIds
     };
 
     await axios.post(api, req, {headers: headers})
