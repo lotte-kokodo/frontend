@@ -11,18 +11,28 @@ function ChangeLocalDateTime(dateTime) {
     return resultDate.toString();
 }
 
+var orderId = "";
+var userId = 0;
+var orders = [];
+
 function GetOrderList(order) {
-    const orderId = order.obj.orderId;
-    const userId = 1;
+    orderId = order.obj.obj.orderId;
+    userId = 1;
     return (
         <div className='content'>
-            <div className='order-date'>{ChangeLocalDateTime(order.obj.orderDate)}</div>
+            <div className='order-date'>{ChangeLocalDateTime(order.obj.obj.orderDate)}</div>
 
             <div className='content-value'>
                 <div className='content-name'>
-                    <div className='name'>{order.obj.name}</div>
+                    <div className='name'>{order.obj.obj.name}</div>
                     <div className='move-button'>
-                        <Link className='moveButton' to = {`/orderDetailList`}
+                        <Link className='moveButton' to = {{
+                            pathname: `/orderDetailList`,
+                            state: {
+                                memberId: userId,
+                                orderId: orderId
+                            }
+                        }}
                                     state = {{
                                         userId:userId,
                                         orderId:orderId
@@ -33,13 +43,13 @@ function GetOrderList(order) {
                 </div>
                 <div className='content-value-detail'>
                     <div className='content-thumbnail'>
-                        <img className='thumbnail' src={order.obj.thumbnail} />
+                        <img className='thumbnail' src={order.obj.obj.thumbnail} />
                     </div>
 
                     <div className='order-value'>
-                        <div className='order-id'>주문번호 {order.obj.orderId}</div>
+                        <div className='order-id'>주문번호 {order.obj.obj.orderId}</div>
                         <br></br>
-                        <div className='price'>결제금액 {order.obj.price}</div>
+                        <div className='price'>결제금액 {order.obj.obj.price}</div>
                     </div>
                     <div className='cancel-button'>
                         <button type='button' className='button'>주문취소</button>
@@ -50,39 +60,17 @@ function GetOrderList(order) {
     )
 }
 
-function OrderList() {
-    const [orders, setOrders] = useState([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            const memberId = 1;
-            await axios.get(`http://localhost:8080/orders/${memberId}`
-            )
-                .then(function (resp) {
-                    setOrders(resp.data.result.data);
-                })
-                .catch(function (err) {
-                    alert(err);
-                });
-        }
 
-        fetchData();
-    }, []);
+
+const OrderList = (object) => {
+    console.log("object 결과값");
+    console.log(object);
+    orders = object;
 
     return (
-        <div className='main'>
-            <h1>전체 주문 내역</h1>
-            <br />
-            <div className="contents">
-                {
-                    orders.map(function (object) {
-                        return (
-                            <GetOrderList obj={object} />
-                        )
-                    })
-                }
-            </div>
+        <div className="contents">
+            <GetOrderList obj={object} />
         </div>
-
     )
 }
 

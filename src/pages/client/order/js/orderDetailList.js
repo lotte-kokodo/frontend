@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from "react-router-dom"
 
-import "./orderDetailList.css";
+import '../css/orderDetailList.css';
 
 function changeOrderStatus(orderStatus) {
     let result;
@@ -29,12 +29,11 @@ function OrderDetailList() {
     const orderId = state.state.orderId;
 
     useEffect(() => {
-        console.log(state);
-
+        
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(`http://127.0.0.1:8080/orders/${userId}/${orderId}`
+            await axios.get(`http://127.0.0.1:61564/orders/${userId}/${orderId}`
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);
@@ -96,11 +95,7 @@ function OrderDetailList() {
                         )
                     })
                 }
-                <Link className='moveButton' to={`/orderList`}
-                    state={{
-                        userId: userId
-                    }
-                    }
+                <Link className='moveButton' to={`/mypage`}
                 >뒤로가기</Link>
             </div>
         </div>
