@@ -18,6 +18,7 @@ import Search from "../../product/js/search"
 import ProductDetail from "../../product/js/productDetail"
 
 import GetOrderList from "../../order/js/orderList"
+import GetOrderDetailList from "../../order/js/orderDetailList"
 import "../css/header.css"
 import Cart from "../../order/js/cart";
 import OrderSheet from "../../order/js/orderSheet";

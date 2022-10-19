@@ -4,6 +4,7 @@ import "../css/saleList.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import moment from "moment";
 
 export default function SaleList() {
 
@@ -13,7 +14,7 @@ export default function SaleList() {
     const params = useParams();
 
     let history = useNavigate();
-    const [saleListList, setSaleList] = useState([]);
+    const [saleList, setSaleList] = useState([]);
     const [searchCondition, setSearchCondition] = useState("");
 
     const [tmpStartDate, setTmpStartDate] = useState("");
@@ -60,11 +61,13 @@ export default function SaleList() {
     }
 
     const fetchTodayAddOne = () =>{
-        setTmpEndDate(addOneDay(tmpEndDate));
+        const day = addDay(tmpEndDate, 1)
+        setTmpEndDate(moment(day).format('YYYY-MM-DD'));
     }
 
     const fetchTodayAddTwo = () =>{
-        setTmpEndDate(addTwoDay(tmpEndDate));
+        const day = addDay(tmpEndDate, 2)
+        setTmpEndDate(moment(day).format('YYYY-MM-DD'));
     }
 
     const fetchToday = () =>{
@@ -94,6 +97,7 @@ export default function SaleList() {
                         <input type="button" className="saleList-criteria-button1" value="오늘" onClick={fetchToday}/>
                         <input type="button" className="saleList-criteria-button1" value="+1" onClick={fetchTodayAddOne}/>
                         <input type="button" className="saleList-criteria-button2" value="+2" onClick={fetchTodayAddTwo}/>
+
                     </div>
                     <div className="saleList-provide-status-border">
                         <div className="saleList-title-provide-status-box">조회조건</div>
@@ -125,35 +129,84 @@ export default function SaleList() {
                     <th>정산대상액(A-B=C)</th>
                     <th>전담택배비(D)</th>
                     <th>판매자서비스이용료(E)</th>
-                    <th>지급액</th>
+                    <th>패널티</th>
                     <th>상세다운로드</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 {
-                    saleListList.map(function (saleListRow, i) {
+                    saleList.map(function (saleListRow, i) {
                         return (
-                            <saleListTableRow obj={saleListRow} key={i} cnt={i + 1}/>
+                            <SaleListTableRow obj={saleListRow} key={i} cnt={i + 1}/>
                         )
                     })
                 }
                 </tbody>
             </table>
+            {/*<div className="calculate-detail-condition-list">*/}
+            {/*    <StickyHeadTable/>*/}
+            {/*</div>*/}
         </div>
     );
 }
 
-function saleListTableRow(row) {
+function SaleListTableRow(row) {
     return (
-        <tr>
-            <th> {row} </th>
-            <td>{row.obj.type}</td>
-            <td>{row.obj.supportRate}</td>
-            <td>{row.obj.provideStatus}</td>
-            <td className="searchResultMoneyRow">{row.obj.finalPaymentCost}</td>
-            <td>tmp</td>
-        </tr>
+            <tr>
+                <td>
+                    {row.obj.sellerId}
+                </td>
+                <td>
+                    {row.obj.calculateType}
+                </td>
+                <td>
+                    <div>판매액</div>
+                    <div>배송료</div>
+                    <div>합계</div>
+                </td>
+                <td>
+                    {/*판매액*/}
+                    <div>{row.obj.finalPaymentCost}</div>
+                    {/*배송료*/}
+                    <div>{0}</div>
+                    {/*합계*/}
+                    <div>{row.obj.finalPaymentCost + 0}</div>
+                </td>
+                {/*판매수수료*/}
+                <td>
+                    <div>{row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
+                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc}</div>
+                    <div>0</div>
+                    <div>{row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
+                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc + 0}</div>
+                </td>
+                {/*정산대상액*/}
+                <td>
+                    <div>
+                    {row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
+                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc -
+                    row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
+                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc + 0}
+                    </div>
+                </td>
+                {/*전담택배비*/}
+                <td>
+                    0
+                </td>
+                {/*판매자서비스이용료*/}
+                <td>
+                    0
+                </td>
+                {/*패널티*/}
+                <td>
+                    0
+                </td>
+                {/*상세 다운로드*/}
+                <td>
+                    상세다운로드
+                </td>
+            </tr>
     )
 }
 
@@ -175,17 +228,12 @@ function moneyComma(num){
     return str;
 }
 
-function dateParseToSimple(date){
-    let day = date.data.result.data;
-    let idx = day.indexOf('T');
-    return day.substring(0,idx);
+function addDay(strLocalDate, num){
+    const date = new Date(strLocalDate);
+    date.setDate(date.getDate() + num)
+    return date;
 }
 
-function dateParseToSimple2(date){
-    let day = date.obj.date
-    let idx = day.indexOf('T');
-    return day.substring(0,idx);
-}
 
 function parseToLocalDate(strLocalDate){
     const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
@@ -206,34 +254,6 @@ function parseToLocalDate(strLocalDate){
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
-
-function addOneDay(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getDate() + 1;
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
-}
-
-function addTwoDay(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getDate() + 2;
-
-    if(strYear < 10){
-        strYear ="000" + date.getFullYear();
-    }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
-    }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
-    }
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
-}
-
 
 function weekDateParseToLocalDate(strLocalDate){
     const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));

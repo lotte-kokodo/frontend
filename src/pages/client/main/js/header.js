@@ -73,7 +73,7 @@ function Header() {
                     <div className="headerCenter-logo">
                         <Link to="/">KOKODO</Link></div>
                     <div className="headerCenter-search">
-                        <input type="text" className="headerCenter-mypageCart-home-input" name='input_id' value={inputIdHomeInput} onChange={handleHomeInput} />
+                        <input type="text" className="headerCenter-mypageCart-home-input" name='input_search' value={inputIdHomeInput} onChange={handleHomeInput} />
                         <div className="headerCenter-search-overlap">
                         <button onClick={onClicktotalSearch}>
                             <img className="headerCenter-search-search" alt="search" src={search} />

@@ -116,9 +116,9 @@ export default function Review() {
 
         <div>
         {
-            reviewList.map( function(object, i){ 
+            reviewList.map( function(object){ 
                     return (
-                        <div data-v-05ce94ee data-v-a49b620e className="reviewList">
+                        <div key={object} data-v-05ce94ee data-v-a49b620e className="reviewList">
                         <div data-v-05ce94ee className="uswersAndMoremenu">
                             <div data-v-05ce94ee className="users">
                                 <a data-v-05ce94ee href="/p/review/reviewerHome/reviewerHomePage?mbNo=10008574604">
