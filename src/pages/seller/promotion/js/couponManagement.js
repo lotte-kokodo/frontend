@@ -3,8 +3,6 @@ import {useState, useEffect} from "react";
 import * as React from 'react';
 import SellerTitle from '../../../../components/seller/sellerTitle';
 import CouponTable from '../../../../components/promotion/js/couponTable';
-import DiscountPolicyList from "../../../../components/promotion/js/discountPolicyList";
-import DiscountPolicyReqList from '../../../../components/promotion/js/discountPolicyReqList';
 
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
