@@ -1,19 +1,19 @@
+import { WindowRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../css/recentPrdocut.css";
 
 function RecentPrdocut() {
-    const [watchList, setWatch] = useState([]);
+    let [watchImg, setImg] = useState(localStorage.getItem("watchImage"));
+    let [watchList, setWatch] = useState([]);
 
     useEffect(() => {
-        let watchImg = localStorage.getItem("watchImage");
+        setImg(localStorage.getItem("watchImage"));
 
-        if(watchList==null) {
-            watchList = [];
-        }else{
-            watchImg = JSON.parse(watchImg);
-            setWatch(watchImg);
+        if(watchImg !== null) {
+            setWatch(JSON.parse(watchImg));
         }
+
     },[])
 
     return(
@@ -37,9 +37,9 @@ function RecentPrdocut() {
 function Item(props){
     let watchId = localStorage.getItem("watchId");
     watchId = JSON.parse(watchId);
-    const test = () => {console(props.cnt)};
+
     return(
-        <NavLink to={`/productDetail/${watchId[props.cnt-1]}`} onClick={test}>
+        <NavLink to={`/productDetail/${watchId[props.cnt-1]}`}>
             <div>
                 <img src = {props.obj} alt = {props.id}/>
             </div>
