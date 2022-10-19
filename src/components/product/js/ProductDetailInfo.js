@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import "../css/productDetailInfo.css";
+import {AuthContext} from "../../../context/authProvider";
+import {RecentProductContext} from "../../../context/recentProductProvider";
 
 const st1 = { transitionDuration: "300ms" }
 const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
@@ -15,6 +17,9 @@ export default function ProductDetail() {
 
     let { productId } = useParams(null);
 
+    const { headers, memberId } = useContext(AuthContext);
+    const { setImg, setWatch } = useContext(RecentProductContext);
+
     const [product, setProduct] = useState("");
     const [orderNum, setOrderNum ] = useState(1);
     const [salePrice, setSalePrice ] = useState(0);
@@ -22,6 +27,9 @@ export default function ProductDetail() {
     const [totalReview, setTotalReview ]=useState(0);
     const [ coupon, setCoupon ] =useState('');
     const [ratePolicy, setRatePolicy] =useState('');
+
+    // productId[key]: qty[value]
+    let productQtyMap = {};
 
     const plusOrderNum = ()=>{
         var tmpNum = orderNum+1;
@@ -113,15 +121,19 @@ export default function ProductDetail() {
             watchId.pop();
             watchImage.pop();
         }
-        
-        localStorage.setItem("watchId",JSON.stringify(watchId));
+
+
+        localStorage.setItem("watchId", JSON.stringify(watchId));
         localStorage.setItem("watchImage",JSON.stringify(watchImage));
 
+        setWatch(watchId)
+        setImg(watchImage);
     }
 
     // product 정보 조회 (Product)
     useEffect(() => {
         console.log("product/detail");
+
         const fetchData = async () => {
             await axios.get(`http://localhost:8001/product-service/product/detail/${productId}`)
                 .then(function (resp) {
@@ -133,7 +145,7 @@ export default function ProductDetail() {
                 })
         }
         fetchData(productId);
-    }, [product]);
+    }, []);
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
         console.log("review/total");
@@ -167,8 +179,9 @@ export default function ProductDetail() {
     }, []);
 
     // 할인 정책 정보
-    useEffect(() => {  
-        console.log("promotion-service/rate-discount");    
+
+    useEffect(() => {
+        console.log("promotion-service/rate-discount");
         fetchData();
     }, [salePrice,product]);
 
@@ -183,6 +196,30 @@ export default function ProductDetail() {
                 console.log(error);
             })
     };
+
+    /* 장바구니 생성 API */
+    const addCart = async () => {
+
+        await axios.post(`http://localhost:8001/order-payment-service/carts/${memberId}`, null,
+            {params: {productId: productId, qty: orderNum}, headers: headers})
+        .then((resp) => {
+            console.log("[SUCCESS] (ProductDetailInfo) POST /order-payment-service/carts/");
+            console.log(resp.data.result.data);
+
+            alert(resp.data.result.data.msg);
+        })
+        .catch((err) => {
+            console.log("[ERROR] (ProductDetailInfo) POST /order-payment-service/carts/");
+            console.log(err);
+        });
+
+    }
+
+    /* 주문서 API 요청을 위한 데이터 사전처리 */
+    const makeOrderSheetData = () => {
+        productQtyMap[productId] = orderNum;
+    }
+
 
     return (
         
@@ -262,14 +299,18 @@ export default function ProductDetail() {
             </div>
            
             <div className="btn-area">
-                <button type="button" className="btn-basic-lg  btn-primary-line btnCartAdd" data-type="01">
+                <button onClick={addCart} type="button" className="btn-basic-lg  btn-primary-line btnCartAdd" data-type="01">
                     <span>장바구니</span>
                 </button>
 
 
-                <a href="#" className="btn-basic-lg btn-primary-ex btnCartAdd" data-type="00">
-                    <span>바로구매<Link to="/ordersheet" state={[ { productId: {productId}, qty: {orderNum} } ]}></Link></span>
-                </a>
+                <Link to="/ordersheet" onClick={makeOrderSheetData}
+                      state={{ productIds: [productId], productQtyMap: productQtyMap }}>
+                <button className="btn-basic-lg btn-primary-ex btnCartAdd" data-type="00">
+                    <span>바로구매</span>
+                </button>
+                </Link>
+
             </div>
         </div>
 

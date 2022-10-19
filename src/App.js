@@ -1,3 +1,4 @@
+
 import React from "react"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 
@@ -17,7 +18,6 @@ function App() {
           {/* Customers */}
           <Route path="/*" element={<Client />}></Route>
         </Routes>
-        
       </BrowserRouter>
     </div>
   );

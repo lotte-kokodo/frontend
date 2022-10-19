@@ -40,18 +40,18 @@ function Home() {
 
     useEffect(() => {
         const timeoutId = setTimeout(
-          () => 
+          () =>
           setSlideState(slideState => {
             if(slideState < MAX_SLIDES) {
                 return setSlideState(slideState + 1);
             } else {
                 return setSlideState(0);
             }
-          }), 3000  
+          }), 3000
         );
         return () => clearTimeout(timeoutId);
     });
-    
+
     // 카테고리
     const category1 = () => {
         history('/category', {
@@ -192,7 +192,7 @@ function Home() {
                 <div className="banner_buttonsRight">
                     <button
                     onClick={handleBannerRight}
-                    > 
+                    >
                         <img className="banner-button-right" alt="cart" src={right} />
                     </button>
                 </div>

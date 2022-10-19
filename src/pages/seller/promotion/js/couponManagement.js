@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+
 import * as React from 'react';
 import SellerTitle from '../../../../components/seller/sellerTitle';
 import CouponTable from '../../../../components/promotion/js/couponTable';
@@ -18,6 +19,7 @@ import MakeCoupon from "./makeCoupon";
 import "../css/couponManagement.css"
 
 function CouponManagement() {
+
 
     const [value, setValue] = React.useState(0);
     const [open, setOpen] = React.useState(false);

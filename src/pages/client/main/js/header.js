@@ -84,7 +84,7 @@ function Header() {
                         <Link to="/mypage">
                           <img className="headerCenter-mypageCart-home" alt="mypage" src={home} />
                         </Link>
-                        <Link to="/">
+                        <Link to="/cart">
                           <img className="headerCenter-mypageCart-cart" alt="cart" src={cart} />
                         </Link>
                     </div>

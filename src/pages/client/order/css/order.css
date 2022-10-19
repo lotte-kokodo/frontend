@@ -1,0 +1,13 @@
+.order-container {
+	width: 1000px;
+	margin: 50px auto;
+}
+
+.order-product-img {
+	width: 7em;
+	height: 7em;
+}
+
+.order-product-row-div {
+	margin-top: 50px;
+}

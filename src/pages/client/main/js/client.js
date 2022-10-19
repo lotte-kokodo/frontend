@@ -1,5 +1,5 @@
 import React from "react"
-import {Routes, Route} from "react-router-dom"
+import {Route, Routes} from "react-router-dom"
 
 import Header from './header'
 import Nav from './nav'
@@ -17,49 +17,74 @@ import Sale from '../../product/js/sale'
 import Search from "../../product/js/search"
 import ProductDetail from "../../product/js/productDetail"
 
-
 import GetOrderList from "../../order/js/orderList"
 import GetOrderDetailList from "../../order/js/orderDetailList"
 import "../css/header.css"
+import Cart from "../../order/js/cart";
+import OrderSheet from "../../order/js/orderSheet";
+import AuthProvider from "../../../../context/authProvider";
+import ServerConfigProvider from "../../../../context/serverConfigProvider";
+import OrderProvider from "../../../../context/orderProvider";
+import RecentProductProvider from "../../../../context/recentProductProvider";
 
 function Client() {
-    return(
-        <div>
-            <Header />
-            <hr className="headerBottom-hr"></hr>
-            <Nav />
-            <RecentProduct />
+  return(
+      <div>
+        <Header />
+        <hr className="headerBottom-hr"></hr>
+        <Nav />
 
-            <main>
-                <div>
+        <RecentProductProvider>
+          <main>
+            <div>
+              <RecentProduct />
+
+              <AuthProvider>
+                <ServerConfigProvider>
+                  <Routes>
+                    <Route path="/" element={<Home />}></Route>
+
+                    {/* member - login, signup */}
+                    <Route path="/login" element={<Login />}></Route>
+                    <Route path="/signup" element={<Signup />}></Route>
+                    <Route path="/mypage" element={<Mypage />}></Route>
+                    <Route path="/mypageRead" element={<MypageRead />}></Route>
+
+                    {/* product - search, category, detail */}
+                    <Route path='/search' element={<Search />}></Route>
+                    <Route path="/category" element={<Category />}></Route>
+
+                    <Route path="/mdRecommendation" element={<MdRecommendation />}></Route>
+                    <Route path="/sale" element={<Sale />}></Route>
+                    <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
+
+                    {/* order - orderList */}
+                    <Route path="/orderList" element={<GetOrderList />}></Route>
+
+                  </Routes>
+                </ServerConfigProvider>
+              </AuthProvider>
+
+              <AuthProvider>
+                <ServerConfigProvider>
+                  <OrderProvider>
                     <Routes>
-                        <Route path="/" element={<Home />}></Route>
-
-                        {/* member - login, signup */}
-                        <Route path="/login" element={<Login />}></Route>
-                        <Route path="/signup" element={<Signup />}></Route>
-                        <Route path="/mypage" element={<Mypage />}></Route>
-                        <Route path="/mypageRead" element={<MypageRead />}></Route>
-
-                        {/* product - search, category, detail */}
-                        <Route path='/search' element={<Search />}></Route>
-                        <Route path="/category" element={<Category />}></Route>
-
-                        <Route path="/mdRecommendation" element={<MdRecommendation />}></Route>
-                        <Route path="/sale" element={<Sale />}></Route>
-                        <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
-
-                        {/* order - orderList */}
-                        <Route path="/orderList" element={<GetOrderList />}></Route>
-                        <Route path="/orderDetailList" element={<GetOrderDetailList />}></Route>
+                      {/* order - cart, orderSheet */}
+                      <Route path="/cart" element={<Cart />}></Route>
+                      <Route path="/ordersheet" element={<OrderSheet />}></Route>
                     </Routes>
-                </div>
-            </main>
+                  </OrderProvider>
+                </ServerConfigProvider>
+              </AuthProvider>
 
-            <footer>
-            </footer>
-        </div>
-    )
+            </div>
+          </main>
+        </RecentProductProvider>
+
+        <footer>
+        </footer>
+      </div>
+  )
 }
 
 export default Client;
