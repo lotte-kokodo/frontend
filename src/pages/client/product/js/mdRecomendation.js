@@ -51,7 +51,7 @@ function MdRecommendation() {
     const fetchMdPro = async (num) => {
         await axios({
             method: "get",
-            url: "http://localhost:9270/product/main/seller/all/" + num
+            url: "http://localhost:8001/product-service/product/main/seller/all/" + num
         })
         .then(function(response){
             setMdProduct(response.data.result.data);

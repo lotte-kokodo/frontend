@@ -116,6 +116,7 @@ export default function ProductDetail() {
         
         localStorage.setItem("watchId",JSON.stringify(watchId));
         localStorage.setItem("watchImage",JSON.stringify(watchImage));
+
     }
 
     // product 정보 조회 (Product)
@@ -132,7 +133,7 @@ export default function ProductDetail() {
                 })
         }
         fetchData(productId);
-    }, [productId]);
+    }, [product]);
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
         console.log("review/total");
@@ -184,6 +185,7 @@ export default function ProductDetail() {
     };
 
     return (
+        
 
 <div className="goods-top-wrap frame-sm">r
 <div className="goods-img-area">

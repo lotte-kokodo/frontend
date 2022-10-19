@@ -4,12 +4,14 @@ import {NavLink,useNavigate } from "react-router-dom";
 
 import profile from '../../../../src_assets/mypage/mypage-top-left-profile.png'
 import star from '../../../../src_assets/mypage/star.png'
+import OrderList from '../../order/js/orderList'
 
 import '../css/mypage.css'
 
 function Mypage() {
     const [name,setName] = useState('');
     const [reviewList,setReviewList] = useState([]);
+    const [orderList, setOrderList] = useState([]);
     const history = useNavigate();
 
     const firstEnter = () => {
@@ -24,7 +26,7 @@ function Mypage() {
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8080/member/myPage/" + localStorage.getItem("memberId")
+            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
             setName(response.data.result.data.loginId);
@@ -43,7 +45,8 @@ function Mypage() {
     }
 
     const clickOrder = () => {
-        setReviewList([]);
+        fetchOrder();
+        // setReviewList([]);
     }
 
     const clickCoupon = () => {
@@ -52,6 +55,8 @@ function Mypage() {
 
     useEffect(() => {
         firstEnter();
+        fetchOrder();
+        fetchReview();
     },[]);
 
     const fetchReview = async () => {
@@ -65,6 +70,25 @@ function Mypage() {
         .then(function(response){
             console.log(response.data.result.data);
             setReviewList(response.data.result.data);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    }
+
+    const fetchOrder = async() => {
+        const id = localStorage.getItem("memberId");
+
+        console.log(id);
+        await axios({
+            method: "get",
+            url: `http://localhost:8001/order-payment-service/orders/${id}`
+        }) 
+        .then(function(response){
+            console.log("결과값!");
+            console.log(response);
+
+            setOrderList(response.data.result.data);
         })
         .catch(function(error){
             console.log(error);
@@ -106,13 +130,20 @@ function Mypage() {
 
             <div className="mypage-nav">
                 <ul className='mypage-nav-ul'>
-                    <button onClick={clickOrder}><li>주문 내역</li></button>
-                    <button onClick={clickReview}><li>리뷰 내역</li></button>
+                    <button onClick={() => {clickOrder()}}><li>주문 내역</li></button>
+                    <button onClick={() => {clickReview()}}><li>리뷰 내역</li></button>
                 </ul>
             </div>
-
+            
             <div className="mypage-main">
                 {/* 각자 데이터 뿌려주기 구현*/}
+                    {
+                        orderList.map( function(object) {
+                            return (
+                                <OrderList obj={object} />
+                            )
+                        })
+                    }
                     { 
                         reviewList.map( function(object, i){
                             return(

@@ -54,7 +54,7 @@ function Category() {
     const fetchCatePro = async (seq) => {
         await axios({
             method: "get",
-            url: "http://localhost:9270/product/categoryId/" + seq
+            url: "http://localhost:8001/product-service/product/categoryId/" + seq
         })
         .then(function(response){
             setCategoryProduct(response.data.result.data);
@@ -79,7 +79,7 @@ function Category() {
     const fetchSorting = async (num) => {
         await axios({
             method: "get",
-            url: "http://localhost:9270/product/categoryId/" + seq + "/" + num
+            url: "http://localhost:8001/product-service/product/categoryId/" + seq + "/" + num
         })
         .then(function(response){
             setCategoryProduct(response.data.result.data);

@@ -2,7 +2,7 @@
     font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
-.calculate-title-box{
+.saleList-title-box{
     font-size: 1.5em;
     /*margin-block-start: 0.83em;*/
     /*margin-block-end: 0.83em;*/
@@ -19,7 +19,7 @@
     /*margin-bottom: -1px;*/
     /*border-spacing: 16px 0;*/
 }
-.calculate-header-box{
+.saleList-header-box{
     display: flex;
     flex-direction: row;
     font-weight: bold;
@@ -41,7 +41,7 @@
 }
 
 /*검색조건*/
-.calculate-title-search-condition-box{
+.saleList-title-search-condition-box{
     font-size: 1.3em;
     font-weight: bold;
     padding: 1%;
@@ -49,7 +49,7 @@
     background-color: #fff;
 }
 
-.calculate-search-criteria-box{
+.saleList-search-criteria-box{
     display: flex;
     flex-direction: row;
 
@@ -67,7 +67,7 @@
 }
 
 /*기준일*/
-.calculate-criteria-day-box{
+.saleList-criteria-day-box{
     width: 120px;
     /*border: 1px solid pink;*/
     font-weight: bold;
@@ -78,22 +78,22 @@
     padding: 0% 1%;
 }
 
-.calculate-criteria-button1{
+.saleList-criteria-button1{
     margin: 0% 0% 0% 1%;
 }
 
-.calculate-criteria-button2{
+.saleList-criteria-button2{
     margin: 0% 0% 0% 0.5%;
 }
 
 
-.calculate-criteria-unit{
+.saleList-criteria-unit{
     display: flex;
     width: 2000px;
     /*border: solid 1px blue;*/
 }
 /*정산일*/
-.calculate-day-box{
+.saleList-day-box{
     font-size: 1em;
     float: left;
     margin-bottom: -64px;
@@ -103,7 +103,7 @@
 }
 
 /*달력*/
-.calculate-calender-box{
+.saleList-calender-box{
     font-size: 1em;
     margin: 0% 0% 0% 3%;
 }
@@ -111,11 +111,9 @@
 .fasdfa{
     display: flex;
 }
-.calculate-provide-status-border{
+.saleList-provide-status-border{
     display: flex;
     flex-direction: row;
-    border: 1px solid gray;
-    border-top-width: 0;
     margin-right: auto;
     margin-left: auto;
     background-color: #fff;
@@ -128,7 +126,7 @@
 }
 
 /*지급상태*/
-.calculate-title-provide-status-box{
+.saleList-title-provide-status-box{
     font-weight: bold;
     font-size: 1em;
     box-sizing: border-box;
@@ -138,13 +136,13 @@
 }
 
 /*radiobox*/
-.calculate-provide-state-radio-box{
+.saleList-provide-state-radio-box{
     display: flex;
     /*border: solid 1px gray;*/
     width: 500px;
 }
 
-.calculate-calculate-type-box{
+.saleList-saleList-type-box{
     font-weight: bold;
     font-size: 1em;
     box-sizing: border-box;
@@ -155,15 +153,15 @@
     padding: 0% 1%;
 }
 
-.calculate-radio-unit{
+.saleList-radio-unit{
     margin: 0% 0% 0% 1%;
 }
 
-.calculate-radio-unit2{
+.saleList-radio-unit2{
     margin: 0% 0% 0% 1%;
 }
 
-.calculate-type-common-box{
+.saleList-type-common-box{
     display: flex;
     flex-direction: row;
 
@@ -183,7 +181,7 @@
 }
 
 /*detailcontion*/
-.calculate-condition-detail-box{
+.saleList-condition-detail-box{
     font-weight: bold;
     font-size: 1em;
     /*box-sizing: border-box;*/
@@ -194,7 +192,7 @@
 }
 
 /*search button*/
-.calculate-button{
+.saleList-button{
     margin:auto;
     display:block;
     border: 1px #fb7d98 solid;
@@ -207,10 +205,11 @@
     line-height: 20px;
     text-align: center;
     border-radius: 9px;
+    margin: 0% 0% 0% 50%;
 }
 
 /*search result*/
-.calculate-search-result-box{
+.saleList-search-result-box{
     font-size: 1.3em;
     font-weight: bold;
     padding: 1%;
@@ -219,24 +218,24 @@
 }
 
 
-.calculate-type-typelist{
+.saleList-type-typelist{
     margin: 0% 0% 0% 10%;
 }
-.calculate-type-box{
+.saleList-type-box{
     display: flex;
     flex-direction: row;
 }
 
-.calculate-detail-condition-list{
+.saleList-detail-condition-list{
     display: flex;
 }
-.calculate-search-detail-box{
+.saleList-search-detail-box{
     display: flex;
     flex-direction: row;
 
     padding: 0% 0% 0% 40%;
 }
-.calculate-condition-detail-input{
+.saleList-condition-detail-input{
     margin: 0% 0% 0% 5%;
 }
 
@@ -249,23 +248,23 @@ input[type="number"]::-webkit-inner-spin-button {
     opacity: 1;
 }
 
-.calculate-table{
+.saleList-table{
     width: 80%;
-    margin: 0% 0% 0% 5%;
+    margin: 0% 0% 0% 16.5%;
 }
 
-.calculate-bottom-result-box{
+.saleList-bottom-result-box{
     display: flex;
 }
-.calculate-search-result-cnt-box{
+.saleList-search-result-cnt-box{
     font-size: 0.9em;
     padding: 1.8% 0% 0% 0%;
     background-color: #fff;
 }
 
-.calculate-expect-day{
+.saleList-expect-day{
     margin: 0% 0% 0% 2%;
 }
-.calculate-expect-money{
+.saleList-expect-money{
     margin: 0% 0% 0% 38%;
 }

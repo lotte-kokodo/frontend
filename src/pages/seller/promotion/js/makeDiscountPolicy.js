@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
@@ -41,24 +42,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[500],
-    '&:hover': {
-        backgroundColor: pink[700],
-    },
-}));
-
-
-
 function MakeDiscountPolicy() {
+    // const sellerId = useParams().sellerId;
+
     const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
-    // const [startDate, setStartDate] = useState(new Date(), 'yyyy:mm:dd');
-    // const [endDate, setEndDate] = useState(new Date(), 'yyyy:mm:dd');
     const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
+    const sellerId = Number(1);
 
     const [radioCheck, setRadioCheck] = useState('');
 
@@ -91,11 +83,9 @@ function MakeDiscountPolicy() {
 
     const checkedItemHandler = (idList) => {
         setCheckedItems(idList);
-        console.log(checkedItems);
     };
 
     const makePolicy = () => {
-        console.log(radioCheck);
         // e.preventDefault();
         if (radioCheck === 'fix') {
             makeFixPolicy();
@@ -106,26 +96,26 @@ function MakeDiscountPolicy() {
     }
 
     const makeRatePolicy = async () => {
-        let sDate = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + "T" + startDate.getHours() + ":" + startDate.getMinutes() + ":" + startDate.getSeconds();
-        let eDate = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + "T" + endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
         let ratePolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: sDate,
-            endDate: eDate,
-            rate: ratePercent,
-            minPrice: rateMinPrice,
-            productId: 1
-            // 추후 체크박스로 갖고오기
+            startDate: moment(startDate).format('YYYY-MM-DDThh:mm:ss'),
+            endDate: moment(endDate).format('YYYY-MM-DDThh:mm:ss'),
+            rate: Number(ratePercent),
+            minPrice: Number(rateMinPrice),
+            productId: Number(Array.from(checkedItems)[0]),
+            sellerId: sellerId
         }
-        console.log(ratePolicyDto);
         await axios({
             method: "post",
-            url: "http://localhost:9011/rate-discount/save",
+            url: "http://localhost:8001/promotion-service/rate-discount/save",
             data: ratePolicyDto
         })
             .then(function (resp) {
-                alert(resp.value);
+                if (resp.request.status == 200) {
+                    alert('등록완료!')
+                    window.location.reload();
+                }
             })
             .catch(function (error) {
                 alert(error.value);
@@ -133,29 +123,30 @@ function MakeDiscountPolicy() {
     }
 
     const makeFixPolicy = async () => {
-        let sDate = startDate.getFullYear() + "-" + startDate.getMonth() + "-" + startDate.getDate() + "T" + startDate.getHours() + ":" + startDate.getMinutes() + ":" + startDate.getSeconds();
-        let eDate = endDate.getFullYear() + "-" + endDate.getMonth() + "-" + endDate.getDate() + "T" + endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
         let fixPolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: sDate,
-            endDate: eDate,
-            rate: ratePercent,
-            minPrice: rateMinPrice,
-            productId: 1
-            // 추후 체크박스로 갖고오기
+            startDate: moment(startDate).format('YYYY-MM-DDThh:mm:ss'),
+            endDate: moment(endDate).format('YYYY-MM-DDThh:mm:ss'),
+            price: Number(fixWon),
+            minPrice: Number(fixMinPrice),
+            productId: Number(Array.from(checkedItems)[0]),
+            sellerId: sellerId
         }
         console.log(fixPolicyDto);
         await axios({
             method: "post",
-            url: "http://localhost:9011/fix-discount/save",
+            url: "http://localhost:8001/promotion-service/fix-discount/save",
             data: fixPolicyDto
         })
             .then(function (resp) {
-                alert(resp.value);
+                if (resp.request.status == 200) {
+                    alert('등록완료!')
+                    window.location.reload();
+                }
             })
             .catch(function (error) {
-                alert(error.value);
+                console.log(error);
             })
     }
 
@@ -166,10 +157,15 @@ function MakeDiscountPolicy() {
     }
 
     const FetchProduct = () => {
+
+        if (productId === undefined) {
+            alert('id를 입력해주세요!');
+            return;
+        }
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: "http://localhost:9270/product/productId/" + productId,
+                url: "http://localhost:8001/product-service/product/detail/" + productId,
                 // data: params
             })
                 .then(function (resp) {
@@ -180,8 +176,9 @@ function MakeDiscountPolicy() {
                 })
 
         }
+
         fetchProduct();
-        }
+    }
 
     return (
         <div id="makeDiscountPolicy">
@@ -199,7 +196,7 @@ function MakeDiscountPolicy() {
                                             <StyledTableRow>
                                                 {/* align="center" */}
                                                 <StyledTableCell align="center" >정책명</StyledTableCell>
-                                                <StyledTableCell colSpan={3}><input type="input" value={discountPolicyName} onChange={(e) => {setDiscountPolicyName(e.target.value)}}></input></StyledTableCell>
+                                                <StyledTableCell colSpan={3}><input type="input" value={discountPolicyName} onChange={(e) => { setDiscountPolicyName(e.target.value) }}></input></StyledTableCell>
 
                                             </StyledTableRow>
                                             <StyledTableRow>
@@ -242,7 +239,7 @@ function MakeDiscountPolicy() {
                                                 </StyledTableCell>
 
                                                 <StyledTableCell>
-                                                    <FormControlLabel value="rate" control={<Radio />} label="정률" onChange={(e) => {handleClickRadio(e)}}/>
+                                                    <FormControlLabel value="rate" control={<Radio />} label="정률" onChange={(e) => { handleClickRadio(e) }} />
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
@@ -252,7 +249,7 @@ function MakeDiscountPolicy() {
                                             <StyledTableRow>
 
                                                 <StyledTableCell>
-                                                    <FormControlLabel value="fix" control={<Radio />} label="정액"  onChange={(e) => {handleClickRadio(e)}}/>
+                                                    <FormControlLabel value="fix" control={<Radio />} label="정액" onChange={(e) => { handleClickRadio(e) }} />
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
@@ -280,7 +277,7 @@ function MakeDiscountPolicy() {
                                 </div>
                                 <div>
                                     <div>
-                                        <button onClick={()=> {FetchProduct()}} style={{
+                                        <button onClick={() => { FetchProduct() }} style={{
                                             backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
                                             color: "#fff", borderRadius: "10px"
                                         }}>조회</button>
@@ -294,7 +291,6 @@ function MakeDiscountPolicy() {
                                         <StyledTableCell>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">상품ID</StyledTableCell>
-                                        <StyledTableCell align="center">카테고리ID</StyledTableCell>
                                         <StyledTableCell align="center">상품명</StyledTableCell>
                                         <StyledTableCell align="center">가격</StyledTableCell>
                                         <StyledTableCell align="center">재고량</StyledTableCell>
@@ -322,7 +318,7 @@ function MakeDiscountPolicy() {
                 </Box>
             </div>
 
-            <button onClick={() => {makePolicy()}} style={{
+            <button onClick={() => { makePolicy() }} style={{
                 backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
                 color: "#fff", borderRadius: "10px"
             }}>등록</button>
