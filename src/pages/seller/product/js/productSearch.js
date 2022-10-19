@@ -11,7 +11,7 @@ export default function ProductSearch() {
 
     let history = useNavigate();
     const [productList, setProductList] = useState([]);
-    const [pdStatus, setPdStatus] = useState("ALL");
+    const [pdStatus, setPdStatus] = useState(0);
     const [productType, setProductType] = useState("ALL");
 
     const [productName, setProductName] = useState("");
@@ -30,14 +30,13 @@ export default function ProductSearch() {
     // button axios
     const searchContent = async () => {
         // history(`/product/present/${params.id}`)
-        await axios.post(`http://localhost:8080/product/${params.id}/productList`,{
-            // "sellerId" : 1,
-            // "startDate" : tmpStartDate + "T"+"00:00:00",
-            // "endDate" : tmpEndDate +  "T"+"00:00:00",
-            // "pdChange": pdChange,
-            // "productType": productType,
-            // "id": productNamed
-        }).then(function (resp) {
+
+        let sdate = tmpStartDate+" 00:00";
+        let edate= tmpEndDate+" 00:00";
+        await axios.get(`http://localhost:8001/product-service/product?sellerId=1&startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}`
+        ).then(function (resp) {
+            setProductList(resp.data.result.data);
+
         }).catch(function (error) {
             console.log(error);
         })
@@ -78,10 +77,10 @@ export default function ProductSearch() {
                 <div className="product-provide-status-border">
                     <div className="product-title-provide-status-box">상품상태</div>
                     <input name="prvidesuccess" className="product-radio-unit" type="radio"/>
-                    <div className="product-radio-unit2" value="">전체</div>
-                    <input name="prvidesuccess" id='test' className="product-radio-unit" value="PROVIDE_SUCCESS" type="radio" onClick={pdChange}/>
+                    <div className="product-radio-unit2" value="0" onClick={()=>setPdStatus(0)}>전체</div>
+                    <input name="prvidesuccess" id='test' className="product-radio-unit" value="1" type="radio" onClick={()=>setPdStatus(1)}/>
                     <div name="prvidesuccess" className="product-radio-unit2" >판매중</div>
-                    <input name="prvidesuccess" className="product-radio-unit" value="PROVIDE_SCHEDULE" type="radio" onClick={pdChange}/>
+                    <input name="prvidesuccess" className="product-radio-unit" value="2" type="radio" onClick={()=>setPdStatus(2)}/>
                     <div className="product-radio-unit2" value="PROVIDE_SCHEDULE">품절</div>
                 </div>
             </div>
@@ -108,19 +107,27 @@ export default function ProductSearch() {
             <table className="table product-search-table">
                 <thead>
                 <tr>
-                    <th>선택</th>
-                    <th>등록상품ID</th>
-                    <th>등록상품명</th>
-                    <th>광고 기한</th>
-                    <th>남은 재고량</th>
+                    <th>-</th>
+                    <th>등록 상품명</th>
+                    <th>카테고리</th>
+                    <th>가격</th>
+                    <th>재고</th>
+                    
                 </tr>
                 </thead>
 
                 <tbody>
                 {
-                    productList.map(function (productRow, i) {
+                    productList.map(function (obj, i) {
                         return (
-                            <productTableRow obj={productRow} key={i} cnt={i + 1}/>
+                            <tr>
+                                <th><img src={obj.thumbnail} style={{width:"100px", height:"100px"}}/></th>
+                                <td>{obj.displayName}</td>
+                                <td>{obj.categoryName}</td>
+                                <td>{obj.price}</td>
+                                <td>{obj.stock}</td>
+                            </tr>
+                            // <productTableRow obj={productRow} key={i} cnt={i + 1}/>
                         )
                     })
                 }
@@ -133,11 +140,11 @@ export default function ProductSearch() {
 function productTableRow(row) {
     return (
         <tr>
-            <th>{row.cnt}</th>
-            <td>{row.obj.id}</td>
-            <td>{row.obj.regPdName}</td>
-            <td>{row.obj.adDuration}</td>
-            <td>{row.obj.remainStock}</td>
+            {/* <th><img src={row.thumbnail}/></th> */}
+            {/* <td>{row.displayName}</td> */}
+            {/* <td>{row.categoryName}</td> */}
+            {/* <td>{row.price}</td> */}
+            <td>{row.obj.stock}</td>
         </tr>
     )
 }
