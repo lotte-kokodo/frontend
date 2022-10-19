@@ -1,4 +1,5 @@
 import React, {useRef, useState} from "react"
+import DatePicker from "react-datepicker";
 import axios from 'axios';
 
 import "../css/sellerProductRegister.css"
@@ -15,6 +16,9 @@ function SellerProductRegister() {
 
     // 노출 상품명
     const [formDisplayName, setFormDisplayName] = useState('');
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
+    const [deadline, setDeadline] = useState(new Date());
 
     // 카테고리 찾기, 삭제 버튼
     const [formCategory, setFormCategory] = useState("");
@@ -43,7 +47,7 @@ function SellerProductRegister() {
     const fetchCategorySearch = async (categorySearch) => {
         await axios({
             method: "get",
-            url: "http://localhost:9270/category/categoryName/" + categorySearch
+            url: "http://localhost:8001/product-service/category/categoryName/" + categorySearch
         })
         .then(function(response){
             setDisplayCategory(response.data.result.data[0].name);
@@ -148,6 +152,14 @@ function SellerProductRegister() {
         setFormDisplayName(e.target.value);
     };
 
+    const onClickPrice = (e) => {
+        setPrice(e.target.value);
+    };
+
+    const onClickStock = (e) => {
+        setStock(e.target.value);
+    };
+
     const onHandlersellerTitle = (e) => {
         setSellerTitle(e.target.value);
     };
@@ -193,7 +205,7 @@ function SellerProductRegister() {
     const fetchProduct = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:9270/product/save",
+            url: "http://localhost:8001/product-service/product/save",
             data : params
         })
         .then(function(response){
@@ -212,12 +224,18 @@ function SellerProductRegister() {
 
     // 상품 등록 
     const onClickRegisterProduct = () => {
-        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"displayName":formDisplayName,"sellerId":params.sellerId};
+        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"price":price,"stock":stock,"deadline":deadline,"displayName":formDisplayName,"sellerId":params.sellerId};
 
         if(fileImage===null || fileImage==="") {
             alert("대표 이미지를 등록하세요.");
         }else if(formDisplayName===null || formDisplayName===""){
             alert("노출 상품명을 입력하세요.");
+        }else if(price===null || price===""){
+            alert("가격을 입력하세요.");
+        }else if(stock===null || stock===""){
+            alert("재고를 입력하세요.");
+        }else if(deadline===null || deadline===""){
+            alert("유통기한을 입력하세요.");
         }else if(selectCategory===null || selectCategory===""){
             alert("카테고리를 입력하세요.");
         }else{
@@ -282,6 +300,23 @@ function SellerProductRegister() {
                     </div>
                     <div>
                         <input type="text" className="form-control form-displayName" name='form-displayName' value={formDisplayName} onChange={onClickFormDisplayName} />  
+                    </div>
+                    <div>
+                        <h5>가격 및 재고</h5>
+                    </div>
+                    <div>
+                        <input type="text" className="form-control form-price" name='price' value={price} onChange={onClickPrice} />  
+                        <input type="number" className="form-control form-stock" name='stock' value={stock} onChange={onClickStock} />  
+                    </div>
+                    <div>
+                        <h5>유통기한</h5>
+                    </div>
+                    <div>
+                        <DatePicker dateFormat="yyyy/MM/dd" 
+                            className="form-control form-displayName"
+                            selected={deadline} 
+                            onChange={date => setDeadline(date)} 
+                        />
                     </div>
                 </div>
 
@@ -412,7 +447,7 @@ function SellerProductRegister() {
 
                         <div className="seller-product-div7">
                             <div className="seller-template-write">
-                                <span>미리보기</span>
+                                <span className="already-seing">미리보기</span>
                                 {visible &&
                                 <div className="already-container">
                                     <div className="already-title">{sellerTitle}</div>

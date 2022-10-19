@@ -17,7 +17,7 @@ function Search() {
     const fetchSearch = async (word) => {
         await axios({
           method: "get",
-          url: "http://localhost:9270/product/totalSearch/" + word
+          url: "http://localhost:8001/product-service/product/totalSearch/" + word
         })
         .then(function(response){
           setSearchProduct(response.data.result.data);

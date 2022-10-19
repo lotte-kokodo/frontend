@@ -10,9 +10,10 @@ import ProductNotice from "../../product/js/productNotice"
 import ProductSearch from "../../product/js/productSearch"
 
 import CalculatePresent from "../../calculate/js/calculate"
+import SaleList from "../../calculate/js/saleList"
 
 import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagement"
-import CouponManagement from "../../promotion/js/couponManagement"
+import CouponManagement from "../../promotion/js/CouponManagement"
 
 function Seller() {
     const params = useParams();
@@ -33,7 +34,8 @@ function Seller() {
                     <Route path="/productSearch" element={<ProductSearch />}></Route>
 
                     {/* Seller Calculate */}
-                    <Route path="/calculate" element={<CalculatePresent />}></Route>
+                    <Route path="/calculateList" element={<CalculatePresent />}></Route>
+                    <Route path="/saleList" element={<SaleList />}></Route>
 
                     {/* Seller Promotion */}
                     <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>

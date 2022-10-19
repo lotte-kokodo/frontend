@@ -95,8 +95,8 @@ function Signup() {
     const fetchSignUp = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8081/member-service/member/signup",
-            data: params
+            url: "http://localhost:8001/member-service/member/signup",
+            data : params
         })
             .then(function (response) {
                 if (response.data.result.data === "success") {

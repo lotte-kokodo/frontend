@@ -283,6 +283,12 @@ input[type="number"]::-webkit-inner-spin-button {
     background-color: #fff;
 }
 
+.product-notice-table{
+    width: 80%;
+    margin: 0% 0% 0% 16.5%;
+}
+
+
 .product-expect-day{
     margin: 0% 0% 0% 2%;
 }
