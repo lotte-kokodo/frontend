@@ -43,14 +43,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MakeDiscountPolicy() {
-    const sellerId = useParams().sellerId;
+    // const sellerId = useParams().sellerId;
 
     const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
     const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
-    // const sellerId = Number(1);
+    const sellerId = Number(1);
 
     const [radioCheck, setRadioCheck] = useState('');
 
@@ -133,6 +133,7 @@ function MakeDiscountPolicy() {
             productId: Number(Array.from(checkedItems)[0]),
             sellerId: sellerId
         }
+        console.log(fixPolicyDto);
         await axios({
             method: "post",
             url: "http://localhost:8001/promotion-service/fix-discount/save",
@@ -164,7 +165,7 @@ function MakeDiscountPolicy() {
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: "http://localhost:8001/promotion-service/product/detail/" + productId,
+                url: "http://localhost:8001/product-service/product/detail/" + productId,
                 // data: params
             })
                 .then(function (resp) {

@@ -33,7 +33,7 @@ function OrderDetailList() {
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(`http://127.0.0.1:61564/orders/${userId}/${orderId}`
+            await axios.get(`http://localhost:8001/order-payment-service/orders/${userId}/${orderId}`
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);
@@ -47,7 +47,7 @@ function OrderDetailList() {
 
     // 환불을 위한 API확인 필요
     const setRefundOrderDetail = async () => {
-        await axios.get(`http://127.0.0.1:8080/orders/`)
+        await axios.get(`http://localhost:8001/order-payment-service/orders/`)
             .then(function (resp) {
 
             })
