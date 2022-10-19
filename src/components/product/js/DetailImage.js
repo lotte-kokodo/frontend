@@ -29,9 +29,9 @@ useEffect(() => {
     return (
         <div>
             {
-            detailImages.map( function(object, i){ 
+            detailImages.map( function(object,i){ 
                     return (
-                        <img class="detail-image" src={object.image} style={{verticalAlign:"middle"}}></img>
+                        <img key={i} className="detail-image" src={object.image} style={{verticalAlign:"middle"}}></img>
                     )
                 })
             }
