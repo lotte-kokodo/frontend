@@ -3,15 +3,9 @@ import {useState, useEffect} from "react";
 import * as React from 'react';
 import SellerTitle from '../../../../components/seller/sellerTitle';
 import CouponTable from '../../../../components/promotion/js/couponTable';
-import DiscountPolicyList from "../../../../components/promotion/js/discountPolicyList";
-import DiscountPolicyReqList from '../../../../components/promotion/js/discountPolicyReqList';
 
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Fade from '@mui/material/Fade';
 
 import MakeCoupon from "./makeCoupon";
