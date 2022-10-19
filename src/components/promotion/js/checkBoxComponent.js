@@ -42,19 +42,22 @@ var rows = [];
 
 function setRows(data) {
     rows = [];
-    data.map(row => {
-        var rowData = createData(row.id, row.categoryId, row.displayName, row.price, row.stock, row.deadline, row.deliveryFee, '2022-10-25T00:00:00');
-        rows.push(rowData);
-    })
-    // if(data != undefined) {
-        // rows = [];
-        // var rowData = createData(data.id, data.categoryId, data.displayName, data.price, data.stock, data.deadline, data.deliveryFee, '2022-10-25T00:00:00');
-        // rows.push(rowData);    
-    // }
+    // data.map(row => {
+    //     var rowData = createData(row.id, row.categoryId, row.displayName, row.price, row.stock, row.deadline, row.deliveryFee, '2022-10-25T00:00:00');
+    //     rows.push(rowData);
+    // })
+    var rowData = createData(data.id, data.categoryId, data.displayName, data.price, data.stock, data.deadline, data.deliveryFee, '2022-10-25T00:00:00');
+    rows.push(rowData);
 }
 
 const IssueList = (props) => {
     const [checkedItems, setCheckedItems] = useState(new Set());
+
+    if(props.props.productList == undefined) {
+        return <StyledTableRow>
+
+        </StyledTableRow>
+    }
 
     const checkedItemHandler = (id, isChecked) => {
         if (isChecked) {
@@ -69,14 +72,13 @@ const IssueList = (props) => {
     };
     console.log("check");
     console.log(props.props.productList);
-
+    
     setRows(props.props.productList);
 
     return (
         rows.slice(props.props.page * props.props.rowsPerPage, props.props.page * props.props.rowsPerPage + props.props.rowsPerPage).map((row) => (
-            // rows.map((row) => (
             <StyledTableRow >
-                <Issue props={row} propFunction={checkedItemHandler} />{/*props={row} */}
+                <Issue props={row} propFunction={checkedItemHandler} />
             </StyledTableRow>
         ))
     );
