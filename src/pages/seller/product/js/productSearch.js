@@ -19,6 +19,8 @@ export default function ProductSearch() {
     const [tmpStartDate, setTmpStartDate] = useState("");
     const [tmpEndDate, setTmpEndDate] = useState("");
 
+    const parmas = useParams();
+
 
     const pdChange = (e) => {setPdStatus(e.target.value);};
     const changeProductName = (e) => {setProductName(e.target.value);}
@@ -33,9 +35,9 @@ export default function ProductSearch() {
 
         let sdate = tmpStartDate+" 00:00";
         let edate= tmpEndDate+" 00:00";
-        await axios.get(`http://localhost:8001/product-service/product?sellerId=1&startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}`
+        await axios.get(`http://localhost:8001/seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${parmas.sellerId}`
         ).then(function (resp) {
-            setProductList(resp.data.result.data);
+            setProductList(resp.data);
 
         }).catch(function (error) {
             console.log(error);
@@ -117,7 +119,7 @@ export default function ProductSearch() {
                 </thead>
 
                 <tbody>
-                {
+                {productList &&
                     productList.map(function (obj, i) {
                         return (
                             <tr>
