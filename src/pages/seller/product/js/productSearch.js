@@ -33,7 +33,7 @@ export default function ProductSearch() {
 
         let sdate = tmpStartDate+" 00:00";
         let edate= tmpEndDate+" 00:00";
-        await axios.get(`http://localhost:8001/product-service/product?sellerId=1&startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}`
+        await axios.get(`http://localhost:8001/seller-service/product?sellerId=1&startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}`
         ).then(function (resp) {
             setProductList(resp.data.result.data);
 
