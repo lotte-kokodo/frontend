@@ -1,11 +1,9 @@
 import React from "react"
 import axios from "axios"
 import "../css/saleList.css"
-import CalculateTable from "./../../../../components/calculate/testTable"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import StickyHeadTable from "./../../../../components/calculate/testTable";
 import moment from "moment";
 
 export default function SaleList() {
