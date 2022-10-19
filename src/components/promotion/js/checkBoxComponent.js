@@ -41,11 +41,16 @@ function createData(product_id, category_id, display_name, price, stock, deadlin
 var rows = [];
 
 function setRows(data) {
-    if(data != undefined) {
-        rows = [];
-        var rowData = createData(data.id, data.categoryId, data.displayName, data.price, data.stock, data.deadline, data.deliveryFee, '2022-10-25T00:00:00');
-        rows.push(rowData);    
-    }
+    rows = [];
+    data.map(row => {
+        var rowData = createData(row.id, row.categoryId, row.displayName, row.price, row.stock, row.deadline, row.deliveryFee, '2022-10-25T00:00:00');
+        rows.push(rowData);
+    })
+    // if(data != undefined) {
+        // rows = [];
+        // var rowData = createData(data.id, data.categoryId, data.displayName, data.price, data.stock, data.deadline, data.deliveryFee, '2022-10-25T00:00:00');
+        // rows.push(rowData);    
+    // }
 }
 
 const IssueList = (props) => {
@@ -62,6 +67,8 @@ const IssueList = (props) => {
             props.propFunction(checkedItems);
         }
     };
+    console.log("check");
+    console.log(props.props.productList);
 
     setRows(props.props.productList);
 

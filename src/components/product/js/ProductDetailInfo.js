@@ -64,6 +64,10 @@ export default function ProductDetail() {
 
         return tmp;
     }
+
+    const changeOrderNum = (e)=>{
+        setOrderNum(e.target.value);
+    }
     const downloadCoupon = couponList =>{
         let couponIds =[];
 
@@ -117,6 +121,7 @@ export default function ProductDetail() {
 
     // product 정보 조회 (Product)
     useEffect(() => {
+        console.log("product/detail");
         const fetchData = async () => {
             await axios.get(`http://localhost:8001/product-service/product/detail/${productId}`)
                 .then(function (resp) {
@@ -131,6 +136,7 @@ export default function ProductDetail() {
     }, [product]);
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
+        console.log("review/total");
         const fetchData = async () => {
             await axios.get(`http://localhost:8001/product-service/review/total/${productId}`)
                 .then(function (resp) {
@@ -147,6 +153,7 @@ export default function ProductDetail() {
 
     // 쿠폰 조회 (Promotion)
     useEffect(() => {
+        console.log("rateCoupon");
         const fetchData = async () => {
             await axios.get(`http://localhost:8001/promotion-service/rateCoupon/${productId}`)
                 .then(function (resp) {
@@ -160,9 +167,10 @@ export default function ProductDetail() {
     }, []);
 
     // 할인 정책 정보
-    useEffect(() => {      
+    useEffect(() => {  
+        console.log("promotion-service/rate-discount");    
         fetchData();
-    }, [salePrice]);
+    }, [salePrice,product]);
 
     const fetchData = async () => {
         await axios.get(`http://localhost:8001/promotion-service/rate-discount/${productId}`)
@@ -185,9 +193,8 @@ export default function ProductDetail() {
         <div className="swiper-container goods-top swiper-container-fade swiper-container-initialized swiper-container-horizontal">
             <ul className="swiper-wrapper" style={st1}>
                 <li className="swiper-slide swiper-slide-prev" style={st2}>
-                    <img class="productImg" data-src={product.thumbnail} style={{ height:'500px'}} 
-                        alt="[맛있닭] 명실상부 No.1 닭가슴살 스테이크 &amp; 추가 증정" className="lozad"
-                        src={product.thumbnail} data-loaded="true" />
+                    <img  data-src={product.thumbnail} style={{ height:'500px'}} 
+                        alt="[맛있닭] 명실상부 No.1 닭가슴살 스테이크 &amp; 추가 증정" className="lozad" src={product.thumbnail} data-loaded="true" />
                     <div className="goods-badge">
                         <img src="https://file.rankingdak.com/image/RANK/PRODUCT/ICONTHUMB/20220406/IMG1649RCM228742248.png" alt="" />
                     </div>
@@ -240,7 +247,7 @@ export default function ProductDetail() {
                     <div className="spinnerBox">
                         <button className="minus disabled" onClick={minusOrderNum}>  </button>
                         <div className="number">
-                            <input id="text" min="1" max={product.stock} value={orderNum}/>
+                            <input id="text" min="1" max={product.stock} value={orderNum} onChange={changeOrderNum}/>
                         </div>
                         <button className="plus" onClick={plusOrderNum}></button>
                     </div>
