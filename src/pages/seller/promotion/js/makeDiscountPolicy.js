@@ -157,7 +157,8 @@ function MakeDiscountPolicy() {
     }
 
     const FetchProduct = () => {
-
+        console.log("프로덕트 아이디");
+        console.log(productId);
         if (productId === undefined) {
             alert('id를 입력해주세요!');
             return;
