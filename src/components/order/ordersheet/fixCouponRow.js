@@ -22,7 +22,7 @@ const FixCouponRow = (props) => {
 
   return (
       <>
-        <div className="row" onClick={checkHandler}>
+        <div className="row card" onClick={checkHandler}>
           <div className="col-12">
               <span>{coupon.price}원 할인</span>
           </div>
