@@ -62,7 +62,7 @@ function Mypage() {
     const fetchReview = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:9270/review/member",
+            url: "http://localhost:8001/product-service/review/member",
             headers: {
                 'memberId': localStorage.getItem('memberId')
             }
