@@ -30,7 +30,7 @@ const RateCouponRow = (props) => {
 
   return (
       <>
-        <div className="row" onClick={checkHandler}>
+        <div className="row card" onClick={checkHandler}>
           <div className="col-12">
             <span>{coupon.rate}% 할인</span>
           </div>

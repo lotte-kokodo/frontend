@@ -32,7 +32,7 @@ const CartProductRow = (props) => {
 			qty: updatedQty
 		}
 
-		await axios.patch(`http://localhost:8001/order-payment-service/carts/${cartId}/qty`, req, {headers: headers })
+		await axios.post(`http://localhost:8001/order-payment-service/carts/${cartId}/qty`, req, {headers: headers })
 			.then((resp) => {
 				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);
