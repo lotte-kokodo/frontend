@@ -31,7 +31,7 @@ const Payment = () => {
 		let discPrice = 0;
 		checkProducts.map((product) => {
 			if (product.discPrice !== 0) {
-				discPrice +=  Math.floor(product.qty*product.unitPrice*(1-product.discRate*0.01));
+				discPrice +=  Math.floor(product.qty*product.unitPrice*(product.discRate*0.01));
 			}
 		});
 		setDiscPrice(discPrice);

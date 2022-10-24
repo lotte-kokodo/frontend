@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
@@ -7,12 +7,14 @@ import star from '../../../../src_assets/mypage/star.png'
 import OrderList from '../../order/js/orderList'
 
 import '../css/mypage.css'
+import {AuthContext} from "../../../../context/authProvider";
 
 function Mypage() {
     const [name,setName] = useState('');
     const [reviewList,setReviewList] = useState([]);
     const [orderList, setOrderList] = useState([]);
     const history = useNavigate();
+    const {headers} = useContext(AuthContext);
 
     const firstEnter = () => {
         if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
@@ -42,10 +44,12 @@ function Mypage() {
 
     const clickReview = () => {
         fetchReview();
+        setOrderList([]);
     }
 
     const clickOrder = () => {
         fetchOrder();
+        setReviewList([]);
         // setReviewList([]);
     }
 
@@ -55,8 +59,8 @@ function Mypage() {
 
     useEffect(() => {
         firstEnter();
-        fetchOrder();
-        fetchReview();
+        // fetchOrder();
+        // fetchReview();
     },[]);
 
     const fetchReview = async () => {
@@ -82,7 +86,8 @@ function Mypage() {
         console.log(id);
         await axios({
             method: "get",
-            url: `http://localhost:8001/order-payment-service/orders/${id}`
+            url: `http://localhost:8001/order-payment-service/orders/${id}`,
+            headers: headers
         }) 
         .then(function(response){
             console.log("결과값!");

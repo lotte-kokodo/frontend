@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import { styled, withStyles } from '@mui/material/styles';
 import { TableRow, TableCell, tableCellClasses, tableRowClasses } from '@mui/material';
-
 import Issue from './issue';
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.root}`]: {
         height: "30px",
@@ -19,7 +17,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontSize: 14,
     },
 }));
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
         height: "30px",
@@ -33,32 +30,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
-
 function createData(product_id, category_id, display_name, price, stock, deadline, delivery_fee, create_date) {
     return { product_id, category_id, display_name, price, stock, deadline, delivery_fee, create_date };
 }
-
 var rows = [];
-
 function setRows(data) {
     rows = [];
-    // data.map(row => {
-    //     var rowData = createData(row.id, row.categoryId, row.displayName, row.price, row.stock, row.deadline, row.deliveryFee, '2022-10-25T00:00:00');
-    //     rows.push(rowData);
-    // })
-    var rowData = createData(data.id, data.categoryId, data.displayName, data.price, data.stock, data.deadline, data.deliveryFee, '2022-10-25T00:00:00');
-    rows.push(rowData);
+    data.map(row => {
+        var rowData = createData(row.id, row.categoryId, row.displayName, row.price, row.stock, row.deadline, row.deliveryFee, '2022-10-25T00:00:00');
+        rows.push(rowData);
+    })
+    // if(data != undefined) {
+    // rows = [];
+    // var rowData = createData(data.id, data.categoryId, data.displayName, data.price, data.stock, data.deadline, data.deliveryFee, '2022-10-25T00:00:00');
+    // rows.push(rowData);
+    // }
 }
-
 const IssueList = (props) => {
     const [checkedItems, setCheckedItems] = useState(new Set());
-
-    if(props.props.productList == undefined) {
-        return <StyledTableRow>
-
-        </StyledTableRow>
-    }
-
     const checkedItemHandler = (id, isChecked) => {
         if (isChecked) {
             checkedItems.add(id);
@@ -72,17 +61,14 @@ const IssueList = (props) => {
     };
     console.log("check");
     console.log(props.props.productList);
-    
     setRows(props.props.productList);
-
     return (
         rows.slice(props.props.page * props.props.rowsPerPage, props.props.page * props.props.rowsPerPage + props.props.rowsPerPage).map((row) => (
+            // rows.map((row) => (
             <StyledTableRow >
-                <Issue props={row} propFunction={checkedItemHandler} />
+                <Issue props={row} propFunction={checkedItemHandler} />{/*props={row} */}
             </StyledTableRow>
         ))
     );
 };
-
-
 export default IssueList;

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import ProductDetailNavBar from '../../../../components/product/js/ProductDetailNavBar';
-import ProductDetailInfo from '../../../../components/product/js/ProductDetailInfo';
+import ProductDetailNavBar from '../../../../components/product/js/productDetailNavBar';
+import ProductDetailInfo from '../../../../components/product/js/productDetailInfo';
 
 import "../css/productDetail.css";
 import {useEffect} from "react";

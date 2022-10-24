@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import "../css/productDetailNavBar.css";
-import Review from "./Review";
-import DetailImage from "./DetailImage";
+import Review from "./review";
+import DetailImage from "./detailImage";
 
 // const st1 = { transitionDuration: "300ms" }
 // const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }

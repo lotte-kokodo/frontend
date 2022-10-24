@@ -30,15 +30,17 @@ const RateCouponRow = (props) => {
 
   return (
       <>
-        <div className="row card" onClick={checkHandler}>
-          <div className="col-12">
-            <span>{coupon.rate}% 할인</span>
-          </div>
-          <div className="col-12">
-            <span>{coupon.name}</span>
-          </div>
-          <div className="col-12">
-            최소주문금액 <span>{coupon.minPrice}</span>원
+        <div className="card coupon-card-div">
+          <div className="row" onClick={checkHandler}>
+            <div className="col-12">
+              <span>{coupon.rate}% 할인</span>
+            </div>
+            <div className="col-12">
+              <span>{coupon.name}</span>
+            </div>
+            <div className="col-12">
+              최소주문금액 <span>{coupon.minPrice}</span>원
+            </div>
           </div>
         </div><br/><br/>
       </>
