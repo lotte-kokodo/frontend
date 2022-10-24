@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link, useLocation } from "react-router-dom"
 
 import '../css/orderDetailList.css';
+import {AuthContext} from "../../../../context/authProvider";
 
 function changeOrderStatus(orderStatus) {
     let result;
@@ -24,6 +25,7 @@ function changeOrderStatus(orderStatus) {
 
 function OrderDetailList() {
     const [orderDetails, setOrderDetails] = useState([]);
+    const {headers} = useContext(AuthContext);
     const state = useLocation();
     const userId = state.state.userId;
     const orderId = state.state.orderId;
@@ -33,7 +35,7 @@ function OrderDetailList() {
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(`http://localhost:8001/order-payment-service/orders/${userId}/${orderId}`
+            await axios.get(`http://localhost:8001/order-payment-service/orders/${userId}/${orderId}`, {headers: headers}
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);

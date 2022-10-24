@@ -26,6 +26,7 @@ import AuthProvider from "../../../../context/authProvider";
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
 import OrderProvider from "../../../../context/orderProvider";
 import RecentProductProvider from "../../../../context/recentProductProvider";
+import OrderDetailList from "../../order/js/orderDetailList";
 
 function Client() {
   return(
@@ -60,6 +61,7 @@ function Client() {
 
                     {/* order - orderList */}
                     <Route path="/orderList" element={<GetOrderList />}></Route>
+                    <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
 
                   </Routes>
                 </ServerConfigProvider>

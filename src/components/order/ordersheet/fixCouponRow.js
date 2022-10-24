@@ -1,6 +1,5 @@
-
-import { useContext, useState } from "react"
-import { OrderContext } from "../../../context/orderProvider";
+import {useContext, useState} from "react"
+import {OrderContext} from "../../../context/orderProvider";
 
 const FixCouponRow = (props) => {
 
@@ -22,14 +21,16 @@ const FixCouponRow = (props) => {
 
   return (
       <>
-        <div className="row card" onClick={checkHandler}>
-          <div className="col-12">
+        <div className="card coupon-card-div">
+          <div className="row" onClick={checkHandler}>
+            <div className="col-12">
               <span>{coupon.price}원 할인</span>
-          </div>
-          <div className="col-12">
-            <span>{coupon.name}</span>
-          </div>
-        </div><br/><br/>
+            </div>
+            <div className="col-12">
+              <span>{coupon.name}</span>
+            </div>
+          </div><br/><br/>
+        </div>
       </>
   )
 

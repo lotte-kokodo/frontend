@@ -87,6 +87,7 @@ export default function ProductDetail() {
         const test = async () => {
             await axios.post(`http://localhost:8001/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
                 .then(function (resp) {
+                    alert("쿠폰 다운로드 성공");
                 })
                 .catch(function (error) {
                     console.log(error);

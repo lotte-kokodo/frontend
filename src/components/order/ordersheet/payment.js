@@ -21,7 +21,7 @@ const Payment = (props) => {
 
   useEffect(() => {
     calcPaymentPrice();
-  }, [orderProductMap.length, checkRateCoupons.length, checkFixCoupons.length]);
+  }, [orderProductMap, checkRateCoupons.length, checkFixCoupons.length]);
 
   const calcPaymentPrice = () => {
     console.log("calcPrice");

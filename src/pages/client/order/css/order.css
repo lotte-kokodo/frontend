@@ -11,3 +11,12 @@
 .order-product-row-div {
 	margin-top: 50px;
 }
+
+.coupon-card-div {
+	height: 120px;
+	padding: 10px;
+}
+
+.coupon-card-div:active {
+	color: #fb7d98;
+}

@@ -32,8 +32,8 @@ const PaymentButton = (props) => {
       productId: productId,
       sellerId: orderProductMap[productId].sellerId,
       qty: productQtyMap[productId],
-      rateCouponId: checkRateCoupons[0],
-      fixCouponId: checkFixCoupons[0]
+      rateCouponId: checkRateCoupons.length !== 0 ? checkRateCoupons[0].id : null,
+      fixCouponId: checkFixCoupons.length !== 0 ? checkFixCoupons[0].id : null
     }
 
     await axios.post(api, null, { params: params, headers: headers })

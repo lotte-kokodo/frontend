@@ -26,13 +26,7 @@ function GetOrderList(order) {
                 <div className='content-name'>
                     <div className='name'>{order.obj.obj.name}</div>
                     <div className='move-button'>
-                        <Link className='moveButton' to = {{
-                            pathname: `/orderDetailList`,
-                            state: {
-                                memberId: userId,
-                                orderId: orderId
-                            }
-                        }}
+                        <Link className='moveButton' to = "/orderDetailList"
                                     state = {{
                                         userId:userId,
                                         orderId:orderId
