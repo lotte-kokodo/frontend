@@ -1,0 +1,131 @@
+.calculate-modal-bottom-long-line{
+    color: gray;
+}
+
+.calculate-modal-flex{
+    display: flex;
+}
+
+.calculate-modal-left-margin{
+    margin: 0% 0% 0% 5%;
+}
+
+.calculate-modal-provide-background{
+    background-color:rgba(0, 0, 0, 0.1);/*까만색(0,0,0) 80% 불투명도*/
+    border-radius: 9px;
+
+    margin: 0% 0% 0% 4%;
+    width: 300px;
+    height: 260px;
+}
+
+.calculate-modale-category-font{
+    font-weight: bold;
+}
+
+.calculate-modal-right-font-margin{
+    margin: 0% 0% 0% 5%;
+    float: right;
+    display: inline-block;
+}
+.calculate-modal-right-bottom-font-margin{
+    margin: 243% 0% 0% 0%;
+    /*border: 1px solid black;*/
+}
+
+.calculate-model-left-inner-font1{
+    margin: 0% 0% 0% 9%;
+}
+
+.calculate-model-left-inner-font2{
+    margin: 0% 0% 0% 4%;
+}
+
+.calculate-model-left-inner-font3{
+    margin: 0% 0% 0% 9%;
+}
+
+.calculate-model-left-inner-font4{
+    margin: 0% 0% 0% 4%;
+}
+.calculate-model-left-inner-font5{
+    margin: 0% 0% 0% 4%;
+}
+.calculate-model-left-inner-font6{
+    margin: 0% 0% 0% 4%;
+}
+
+.calculate-model-left-layout{
+    width: 500px;
+    height: 300px;
+    /*border: 1px black solid;*/
+    margin: 0% 0% 0% 5%;
+}
+
+.calculate-modal-left-font{
+    margin: 3% 0% 0% 6%;
+    padding: 3% 0% 0% 0%;
+}
+.calculate-modal-right-layout{
+    /*margin: 0% 0% 0% 50%;*/
+    width: 500px;
+    height: 350px;
+    /*border: 1px black solid;*/
+    margin: 0% 0% 0% 0%;
+}
+
+.calculate-modal-right-text-layout{
+    margin: 0% 0% 0% 10%;
+    width: 350px;
+    /*border: 1px black solid;*/
+}
+.calculate-modal-right-font{
+    margin: 5% 0% 0% 0%;
+}
+
+.calculate-modal-right-innerfont1{
+    margin: 0% 0% 0% 28%;
+}
+
+.calculate-modal-right-innerfont2{
+    margin: 0% 0% 0% 28%;
+}
+
+.calculate-modal-right-innerfont3{
+    margin: 0% 0% 0% 9.5%;
+}
+
+.calculate-modal-right-innerfont4{
+    margin: 0% 0% 0% 27%;
+}
+
+.calculate-modal-right-innerfont5{
+    margin: 0% 0% 0% 31.5%;
+}
+.calculate-modal-right-innerFont6{
+    margin: 0% 0% 0% 10.5%;
+}
+
+.calculate-modal-right-innerFont7{
+    margin: 0% 0% 0% 42%;
+}
+
+.calculate-modal-right-innerfont8{
+    margin: 0% 0% 0% 24%;
+}
+
+.calculate-modal-right-innerfont9{
+    margin: 0% 0% 0% 46%;
+}
+
+.calculate-modal-sum-margin{
+    margin: 5% 0% 0% 0%;
+}
+
+.calculate-modal-bottom-line{
+    width: 40px;
+}
+
+.sum-layout {
+   /*border: 1px solid black;*/
+}

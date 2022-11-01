@@ -1,0 +1,1 @@
+export const MainPink = "#FB7D98";
