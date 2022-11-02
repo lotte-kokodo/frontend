@@ -66,7 +66,7 @@ function Signup() {
             alert("생일 예시 (950428)");
         } else if (inputPhone === null || inputPhone.trim() === "" || inputBirth.length === 10 || inputBirth.length === 11) {
             alert("핸드폰번호 예시 (011-xxx-xxxx) or (010-xxxx-xxxx)");
-        } else if (inputAddr === null || inputAddr.trim() === "" || inputAddr.length > 10 || inputAddr.length === 11) {
+        } else if (inputAddr === null || inputAddr.trim() === "" || inputAddr.length < 10 || inputAddr.length === 11) {
             alert("주소를 자세히 입력해주세요.");
         } else {
             const params = { "loginId": inputId, "name": inputName, "email": inputEmail, "password": inputPw, "birthday": inputBirth, "phoneNumber": inputPhone, "address": inputAddr, "grade": "ACE" };

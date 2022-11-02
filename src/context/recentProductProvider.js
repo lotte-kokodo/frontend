@@ -3,8 +3,8 @@ import { createContext, useState } from "react";
 export const RecentProductContext = createContext();
 
 const RecentProductProvider = ({ children }) => {
-  const [watchList, setWatch] = useState([]);
-  const [watchImg, setImg] = useState([]);
+  const [watchList, setWatch] = useState(JSON.parse(localStorage.getItem("watchId")));
+  const [watchImg, setImg] = useState(JSON.parse(localStorage.getItem("watchImage")));
 
   const value = { watchImg, setImg, watchList, setWatch };
 

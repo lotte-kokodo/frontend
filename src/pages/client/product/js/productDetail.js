@@ -4,7 +4,6 @@ import ProductDetailNavBar from '../../../../components/product/js/productDetail
 import ProductDetailInfo from '../../../../components/product/js/productDetailInfo';
 
 import "../css/productDetail.css";
-import {useEffect} from "react";
 
 function ProductDetail() {
     let { productId } = useParams(null);
