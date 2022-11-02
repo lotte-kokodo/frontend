@@ -73,10 +73,13 @@ function SellerProductRegister() {
 
     // 대표 이미지 url 저장해줄 state
     const [fileImage, sestFileImage] = useState("");
+    const formData = new FormData();
 
     // 대표 이미지 파일 저장
     const saveFileImage = (e) => {
         sestFileImage(URL.createObjectURL(e.target.files[0]));
+        formData.append("file", e.target.files[0]);
+        console.log(formData.get("file"));
     }
 
     // 대표 이미지 파일 삭제
@@ -202,11 +205,14 @@ function SellerProductRegister() {
     }
 
     // 상품 등록 axios
-    const fetchProduct = async (params) => {
+    const fetchProduct = async (param) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/product-service/product/save",
-            data : params
+            url: "http://localhost:8001/seller-service/product",
+            data : param,
+            headers : {
+                "Content-Type": "multipart/form-data"
+            }
         })
         .then(function(response){
             if(response.data.success) {
@@ -224,7 +230,10 @@ function SellerProductRegister() {
 
     // 상품 등록 
     const onClickRegisterProduct = () => {
-        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"price":price,"stock":stock,"deadline":deadline,"displayName":formDisplayName,"sellerId":params.sellerId};
+        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"price":price,"stock":stock,"deadline":deadline,"displayName":formDisplayName,"sellerId":params.sellerId,"deliveryFee":3000};
+        formData.append("data", new Blob([JSON.stringify(productParams)], {
+            type: "application/json"
+        }));
 
         if(fileImage===null || fileImage==="") {
             alert("대표 이미지를 등록하세요.");
@@ -250,15 +259,15 @@ function SellerProductRegister() {
                         || sellerProductDeatil === null || sellerProductDeatil === ""){
                     alert("글 등록 6개는 필수입니다.")
                 }else{
-                    fetchProduct(productParams);
-                    alert("템플릿 추천 등록 (product,template) axios 하세요.");
+                    fetchProduct(formData);
+                    alert("이미지 디테일 등록 axios 하세요.");
                 }
             }else {
                 if(fileImageDetail.length <= 0 || fileImageDetail===null) {
                     alert("이미지 디테일 사진은 필수입니다.");
                 }else{
-                    fetchProduct(productParams);
-                    alert("이미지 디테일 등록 (product,product_detail) axios 짜세요.");
+                    fetchProduct(formData);
+                    alert("템플릿 추천 등록 axios 하세요.");
                 }
             }
         }
