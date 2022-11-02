@@ -123,7 +123,6 @@ export default function ProductDetail() {
             watchImage.pop();
         }
 
-
         localStorage.setItem("watchId", JSON.stringify(watchId));
         localStorage.setItem("watchImage",JSON.stringify(watchImage));
 

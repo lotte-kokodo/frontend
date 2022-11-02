@@ -1,5 +1,4 @@
-import { WindowRounded } from "@mui/icons-material";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import { NavLink } from "react-router-dom";
 import "../css/recentPrdocut.css";
 import {RecentProductContext} from "../../../../context/recentProductProvider";
@@ -34,12 +33,11 @@ function Item(props){
     let watchId = props.watchId;
 
     return(
-        <NavLink to={`/productDetail/${watchId}`}>
+        <NavLink to={`/productDetail/${watchId}`} onClick="reload">
             <div>
                 <img src = {watchImgSrc} alt = {watchId}/>
             </div>
         </NavLink>
-        
     )
 }
 
