@@ -8,6 +8,7 @@ import OrderList from '../../order/js/orderList'
 
 import '../css/mypage.css'
 import {AuthContext} from "../../../../context/authProvider";
+import CouponModal from '../../../../components/mypage/js/couponModal';
 
 function Mypage() {
     const [name,setName] = useState('');
@@ -15,6 +16,8 @@ function Mypage() {
     const [orderList, setOrderList] = useState([]);
     const history = useNavigate();
     const {headers} = useContext(AuthContext);
+    const [couponFlag, setCouponFlag] = useState(false);
+    const [couponCount, setCouponCount] = useState(0);
 
     const firstEnter = () => {
         if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
@@ -57,8 +60,18 @@ function Mypage() {
         setReviewList([]);
     }
 
+    const openCouponModal = ()=>{
+        setCouponFlag(true);
+        console.log(couponFlag);
+    }
+
+    const closeCouponModal = ()=>{
+        setCouponFlag(false);
+    }
+
     useEffect(() => {
         firstEnter();
+        fetchCouponCount();
         // fetchOrder();
         // fetchReview();
     },[]);
@@ -100,6 +113,26 @@ function Mypage() {
         })
     }
 
+    const fetchCouponCount = async() => {
+        const id = localStorage.getItem("memberId");
+
+        await axios({
+            method: "get",
+            url: "http://localhost:8001/promotion-service/userCoupon/count",
+            headers: {
+                'memberId': localStorage.getItem('memberId')
+            }
+        }) 
+        .then(function(response){
+            console.log(response);
+            setCouponCount(response.data.result.data);
+
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    }
+
     return(
         <div className='mypage'>
             <div className='mypageTop'>
@@ -125,9 +158,9 @@ function Mypage() {
 
                 <div className='mypage-top-right'>
                     <div className='mypage-top-right-coupon'>
-                        <button className='mypage-top-button' onClick={clickCoupon}>
+                        <button className='mypage-top-button' onClick={openCouponModal}>
                             <div className='mypage-top-right-coupon-one'>나의 쿠폰 {'>'}</div>
-                            <div className='mypage-top-right-coupon-two'>{'('}쿠폰 수{')'} 개</div>
+                            <div className='mypage-top-right-coupon-two'>{couponCount} 개</div>
                         </button>
                     </div>
                 </div>
@@ -157,6 +190,8 @@ function Mypage() {
                         })
                     } 
             </div>
+
+            {couponFlag && <CouponModal onModalDisplay={closeCouponModal}></CouponModal>}
         </div>
     )
 

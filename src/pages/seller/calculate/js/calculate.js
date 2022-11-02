@@ -4,12 +4,22 @@ import "../css/calculate.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import CalculateTableRow from "../../../../components/calculate/js/calculateTableRow"
+import {dateParseToSimple, moneyComma, parseToLocalDate, weekDateParseToLocalDate, monthDateParseToLocalDate} from "../../../../common/calculate/function"
+import MakeCoupon from "../../promotion/js/makeCoupon";
+import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
+import {Modal} from "@mui/material";
+import CalculatePreviewModal from "../../../../components/calculate/js/calculatePreviewModal";
 
 export default function CalculatePresent() {
 
     const params = useParams();
 
     let history = useNavigate();
+    const [choiceCalculate, setChoiceCalculate] = useState("");
+    const [modalFlag, setModalFlag] = useState(false);
+
     const [calculateList, setCalculateList] = useState([]);
     const [provideStatus, setProvideStatus] = useState("ALL");
     const [calculateType, setCalculateType] = useState("MAIN_CALCULATE");
@@ -46,12 +56,13 @@ export default function CalculatePresent() {
         await axios.post(`http://localhost:8001/calculate-service/calculate/${params.sellerId}/calculateList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
-            "endDate" : tmpEndDate +  "T"+"00:00:00",
+            "endDate" : tmpEndDate +  "T"+"12:59:59",
             "provideStatus": provideStatus,
             "calculateType": calculateType,
             "id": calculateId
         }).then(function (resp) {
             setCalculateList(resp.data.result.data)
+            console.log(resp)
             searchResultCnt(resp);
         }).catch(function (error) {
             console.log(error);
@@ -80,9 +91,10 @@ export default function CalculatePresent() {
         let today = new Date();
         today.setMonth(today.getMonth() + 1);
         setTmpEndDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
+        console.log(tmpEndDate);
     }
 
-    const getExpecStartDy = async() =>{
+    const getExpectStartDy = async() =>{
         let today = new Date();
         today.setMonth(today.getMonth() + 1);
         setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
@@ -101,10 +113,22 @@ export default function CalculatePresent() {
     useEffect( () => {
         getDay();
         getMoney();
-        getExpecStartDy()
+        getExpectStartDy()
         getExpectEndDay()
     }, []);
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 1100,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+    
     return (
         <div className="body">
             <div>
@@ -189,6 +213,7 @@ export default function CalculatePresent() {
                     <th>지급상태</th>
                     <th>최종지급액</th>
                     <th>주문상세내역</th>
+                    {/*<th></th>*/}
                 </tr>
                 </thead>
 
@@ -196,133 +221,24 @@ export default function CalculatePresent() {
                 {
                     calculateList.map(function (calculateRow, i) {
                         return (
-                            <CalculateTableRow obj={calculateRow} key={i} cnt={i + 1}/>
+                            <CalculateTableRow obj={calculateRow} key={i} cnt={i + 1} setModalFlag={setModalFlag} flag={modalFlag} calculateId={calculateRow.calculateId} setChoiceCalculate={setChoiceCalculate}/>
                         )
                     })
                 }
                 </tbody>
+                {/*{modalClose && <CalculatePreviewModal={couponName} onModalDisplay={closeProductModal} couponFlag={listFlag}></CalculatePreviewModal>}*/}
             </table>
+
+            <div>
+                <Modal open={modalFlag} onClose={() => setModalFlag(!modalFlag)} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+                    <Fade in={modalFlag}>
+                        <Box sx={style}>
+                            <CalculatePreviewModal sellerId={params.sellerId} calculateId={choiceCalculate}>
+                            </CalculatePreviewModal>
+                        </Box>
+                    </Fade>
+                </Modal>
+            </div>
         </div>
     );
-}
-
-function CalculateTableRow(row) {
-    return (
-        <tr>
-            <th> {dateParseToSimple2(row)}</th>
-            <td>{provideTypeToValue(row.obj.type)}</td>
-            <td>{row.obj.supportRate}</td>
-            <td>{provideStatusToValue(row.obj.provideStatus)}</td>
-            <td className="searchResultMoneyRow">{moneyComma(row.obj.finalPaymentCost)}</td>
-            <td>tmp</td>
-        </tr>
-    )
-}
-
-function provideTypeToValue(str){
-    let ret;
-    if(str === "MAIN_CALCULATE") ret = "주 정산"
-    else if(str === "FINAL_AMOUNT_CALCULATE") ret = "최종액 정산"
-    return ret;
-}
-
-function provideStatusToValue(str){
-    let ret;
-    if(str === "PROVIDE_SUCCESS") ret = "지급확정"
-    else if(str === "PROVIDE_SCHEDULE") ret = "지급예정"
-    else if(str === "PROVIDE_POSTPONE") ret = "지급보류"
-    return ret;
-}
-
-
-function moneyComma(num){
-    let len, point, str;
-
-    num = num + "";
-    point = num.length % 3 ;
-    len = num.length;
-
-    str = num.substring(0, point);
-    while (point < len) {
-        if (str !== "") str += ",";
-        str += num.substring(point, point + 3);
-        //,를 포함해서 idx 3을 추가해줌
-        point += 3;
-    }
-
-    return str;
-}
-
-function dateParseToSimple(date){
-    let day = date.data.result.data;
-    let idx = day.indexOf('T');
-    return day.substring(0,idx);
-}
-
-function dateParseToSimple2(date){
-    let day = date.obj.date
-    let idx = day.indexOf('T');
-    return day.substring(0,idx);
-}
-
-function parseToLocalDate(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getDate();
-
-    if(strYear < 10){
-        strYear ="000" + date.getFullYear();
-    }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
-    }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
-    }
-
-    if(strMonth< 10){ strMonth = "0" + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
-}
-
-function weekDateParseToLocalDate(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-    date.setDate(date.getDate() - 5);
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getUTCDate();
-
-    if(strYear < 10){
-        strYear ="000" + date.getFullYear();
-    }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
-    }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
-    }
-
-    if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
-}
-
-function monthDateParseToLocalDate(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-    date.setDate(date.getDate() - 30);
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getUTCDate();
-
-    if(strYear < 10){
-        strYear ="000" + date.getFullYear();
-    }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
-    }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
-    }
-
-    if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
 }

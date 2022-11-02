@@ -4,6 +4,13 @@ import "../css/saleList.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import {
+    dateParseToSimple2,
+    moneyComma,
+    provideStatusToValue,
+    provideTypeToValue
+} from '../../../../common/calculate/function'
+
 import moment from "moment";
 
 export default function SaleList() {
@@ -42,7 +49,7 @@ export default function SaleList() {
         await axios.post(`http://localhost:8001/calculate-service/commission/saleList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
-            "endDate" : tmpEndDate +  "T"+"00:00:00",
+            "endDate" : tmpEndDate +  "T"+"12:59:59",
             "provideStatus": searchCondition
         }).then(function (resp) {
             setSaleList(resp.data.result.data)
@@ -158,7 +165,7 @@ function SaleListTableRow(row) {
                     {row.obj.sellerId}
                 </td>
                 <td>
-                    {row.obj.calculateType}
+                    {provideTypeToValue(row.obj.calculateType)}
                 </td>
                 <td>
                     <div>판매액</div>
@@ -167,27 +174,22 @@ function SaleListTableRow(row) {
                 </td>
                 <td>
                     {/*판매액*/}
-                    <div>{row.obj.finalPaymentCost}</div>
+                    <div>{moneyComma(row.obj.saleSum)}</div>
                     {/*배송료*/}
                     <div>{0}</div>
                     {/*합계*/}
-                    <div>{row.obj.finalPaymentCost + 0}</div>
+                    <div>{moneyComma(row.obj.sum)}</div>
                 </td>
                 {/*판매수수료*/}
                 <td>
-                    <div>{row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
-                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc}</div>
+                    <div>{moneyComma(row.obj.saleCommission)}</div>
                     <div>0</div>
-                    <div>{row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
-                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc + 0}</div>
+                    <div>{moneyComma(row.obj.saleCommission)}</div>
                 </td>
                 {/*정산대상액*/}
                 <td>
                     <div>
-                    {row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
-                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc -
-                    row.obj.basic + row.obj.salesPromotion + row.obj.firstPaymentDelivery +
-                        row.obj.deliverySupport + row.obj.discountSupport + row.obj.mediumCompanyCostRefund + row.obj.etc + 0}
+                        {moneyComma(row.obj.settlementMoney)}
                     </div>
                 </td>
                 {/*전담택배비*/}
@@ -210,24 +212,6 @@ function SaleListTableRow(row) {
     )
 }
 
-function moneyComma(num){
-    let len, point, str;
-
-    num = num + "";
-    point = num.length % 3 ;
-    len = num.length;
-
-    str = num.substring(0, point);
-    while (point < len) {
-        if (str !== "") str += ",";
-        str += num.substring(point, point + 3);
-        //,를 포함해서 idx 3을 추가해줌
-        point += 3;
-    }
-
-    return str;
-}
-
 function addDay(strLocalDate, num){
     const date = new Date(strLocalDate);
     date.setDate(date.getDate() + num)
@@ -242,15 +226,15 @@ function parseToLocalDate(strLocalDate){
     let strDate = date.getDate();
 
     if(strYear < 10){
-        strYear ="000" + date.getFullYear();
+        strYear ="000" + strYear;
     }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
+        strYear ="00" + strYear;
     }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
+        strYear = "0" + strYear;
     }
 
-    if(strMonth< 10){ strMonth = "0" + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
+    if(strMonth< 10){ strMonth = "0" + strMonth;}
+    if(strDate< 10){ strDate = "0" + strDate;}
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
@@ -263,37 +247,15 @@ function weekDateParseToLocalDate(strLocalDate){
     let strDate = date.getUTCDate();
 
     if(strYear < 10){
-        strYear ="000" + date.getFullYear();
+        strYear ="000" + strYear;
     }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
+        strYear ="00" + strYear;
     }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
+        strYear = "0" + strYear;
     }
 
-    if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
+    if(strMonth< 10){ strMonth = '0' + strMonth;}
+    if(strDate< 10){ strDate = "0" + strDate;}
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
-
-function monthDateParseToLocalDate(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-    date.setDate(date.getDate() - 30);
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getUTCDate();
-
-    if(strYear < 10){
-        strYear ="000" + date.getFullYear();
-    }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
-    }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
-    }
-
-    if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
-}
-

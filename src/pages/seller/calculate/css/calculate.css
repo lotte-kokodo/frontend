@@ -199,6 +199,7 @@
     display:block;
     border: 1px #fb7d98 solid;
     color: #FB7D98;
+
     background: white;
 
     width: 120px;
@@ -268,4 +269,13 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .calculate-expect-money{
     margin: 0% 0% 0% 38%;
+}
+
+.calculate-preview-button{
+    backgroundColor: #fff;
+    padding : 5px;
+    textAlign: center;
+    color: #FB7D98;
+    borderRadius: 5px;
+    border: 1px solid #FB7D98;
 }
