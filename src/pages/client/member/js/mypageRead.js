@@ -1,6 +1,7 @@
 import React, {useEffect ,useState} from 'react';
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
+import DaumPostcode from 'react-daum-postcode';
 
 import "../css/signup.css";
 
@@ -16,6 +17,27 @@ function MypageRead(){
     const [inputGrade, setInputGrade]= useState("");
     const [profileImageUrl, setInputProfileImageUrl]= useState("");
     const history = useNavigate();
+
+    /*daum address*/
+    const [openPostcode, setOpenPostcode] = useState(false);
+
+    /*daum handle*/
+    const handle = {
+        // 버튼 클릭 이벤트
+        clickButton: () => {
+            setOpenPostcode(current => !current);
+        },
+
+        // 주소 선택 이벤트
+        selectAddress: (data) => {
+            console.log(`
+                주소: ${data.address},
+                우편번호: ${data.zonecode}
+            `)
+            setOpenPostcode(false);
+            setInputAddr(data.address + " " + data.zonecode);
+        },
+    }
 
     useEffect(() => {
         fetchMypage();
@@ -36,26 +58,25 @@ function MypageRead(){
     const handleInputPhone = (e) => {
         setInputPhone(e.target.value);
     }
-    const handleInputAddr = (e) => {
-        setInputAddr(e.target.value);
-    }
 
-    const updateMypage = (e) => {
+    const updateMypage = () => {
         if(inputPw === null || inputPw.trim() === "" || inputPw.length < 6){
             alert('패스워드는 6자 이상이여야 합니다.');
-        }
-        else if(inputName === null || inputName.trim() === "" || inputName.length < 2){
+        } else if(inputName === null || inputName.trim() === "" || inputName.length < 2){
             alert('이름은 두글자 이상이여야 합니다.');
-        }
-        else if(inputEmail === null || inputEmail.trim() === "" || !inputEmail.includes('@') || inputEmail.length<3){
+        } else if (inputEmail === null || inputEmail.trim() === "" || !inputEmail.includes('@') || inputEmail.length < 3) {
             alert('이메일은 @ 포함하고 3글자 이상이여야 합니다');
-        }else if(inputBirth === null || inputBirth.trim() === "" || inputBirth.length !== 6){
-            alert("생일 예시 (950428)");
-        }else if(inputPhone === null || inputPhone.trim() === "" || inputBirth.length === 10 || inputBirth.length === 11) {
-            alert("핸드폰번호 예시 (011-xxx-xxxx) or (010-xxxx-xxxx)");
-        }else if(inputAddr === null || inputAddr.trim() === "" || inputAddr.length > 10 || inputAddr.length === 11) {
-            alert("주소를 자세히 입력해주세요.");
-        }else {
+        } else if (inputBirth === null || inputBirth.trim() === "") {
+            alert("생년월일을 입력하세요.");
+        } else if (inputPhone === null || inputPhone.trim() === "") {
+            alert("핸드폰번호 예시 010-xxxx-xxxx");
+        } else if (inputPhone === null || inputPhone.trim() === "") {
+            alert("핸드폰번호 예시 010-xxxx-xxxx");
+        } else if(!(inputPhone.substring(0,3) === "010" && inputPhone.length === 13)) {
+            alert("핸드폰번호 예시 010-xxxx-xxxx");
+        } else if (inputAddr === null || inputAddr.trim() === "") {
+            alert("주소를 입력하세요.");
+        } else {
             const params = {"id":id,"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "profileImageUrl":profileImageUrl, "phoneNumber":inputPhone, "address":inputAddr, "grade":inputGrade};
             fetchUpdateMypage(params)
         }
@@ -110,6 +131,16 @@ function MypageRead(){
                     <div className="card-header">
                         <h3>회원가입</h3>
                     </div>
+                    {openPostcode ?
+                        <div>
+                            {openPostcode && 
+                                <DaumPostcode 
+                                    onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                                    autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                                    defaultQuery='서초대로74길 33' // 팝업을 열때 기본적으로 입력되는 검색어 
+                                />}
+                        </div>
+                    :
                     <div className="card-body">
                         <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
@@ -143,7 +174,7 @@ function MypageRead(){
 
                         <div className="input-group form-group">
                                 <span className='inputText'>주소  </span>
-                                <input type="text" className="form-control form-addr" name='input_update_addr' value={inputAddr} onChange={handleInputAddr} />  
+                                <button className="form-control form-addr" name='input_addr' onClick={handle.clickButton} >{inputAddr}</button>
                         </div>
 
                         <div className="login-group">
@@ -152,6 +183,7 @@ function MypageRead(){
                             </div>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
         </div>
