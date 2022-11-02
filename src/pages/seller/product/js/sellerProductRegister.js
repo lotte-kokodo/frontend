@@ -5,14 +5,16 @@ import axios from 'axios';
 import "../css/sellerProductRegister.css"
 
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 
 function SellerProductRegister() {
+    const params = useParams();
+    const history = useNavigate();
+
     // useRef를 이용해 input태그에 접근한다.
     const imageInput = useRef();
     const imageDetailInput = useRef();
     const imageTemplateInput = useRef();
-    const params = useParams();
 
     // 노출 상품명
     const [formDisplayName, setFormDisplayName] = useState('');
@@ -77,15 +79,31 @@ function SellerProductRegister() {
 
     // 대표 이미지 파일 저장
     const saveFileImage = (e) => {
-        sestFileImage(URL.createObjectURL(e.target.files[0]));
-        formData.append("file", e.target.files[0]);
-        console.log(formData.get("file"));
-    }
-
-    // 대표 이미지 파일 삭제
-    const deleteFileImage = () => {
         URL.revokeObjectURL(fileImage);
         sestFileImage("");
+
+        sestFileImage(URL.createObjectURL(e.target.files[0]));
+        formData.append("data", e.target.files[0]);
+        fetchImage(formData);
+    }
+
+    // 대표 이미지 axios
+    const fetchImage = async (param) => {
+        await axios({
+            method: "post",
+            url: "http://localhost:8001/seller-service/product/upload",
+            data : param,
+            headers : {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        .then(function(response){
+                sestFileImage(response.data);
+            })
+            .catch(function(error){
+                alert("상품 등록에 실패하셨습니다.");
+                console.log(error);
+            })
     }
 
     // 대표 이미지 버튼클릭시 input 태그에 클릭이벤트를 걸어준다.
@@ -209,14 +227,12 @@ function SellerProductRegister() {
         await axios({
             method: "post",
             url: "http://localhost:8001/seller-service/product",
-            data : param,
-            headers : {
-                "Content-Type": "multipart/form-data"
-            }
+            data : param
         })
         .then(function(response){
             if(response.data.success) {
                 alert("상품 등록에 성공하셨습니다.");
+                history(`/seller/${params.sellerId}`);
             }else{
                 alert("상품 등록에 실패하셨습니다.");
             }
@@ -231,9 +247,6 @@ function SellerProductRegister() {
     // 상품 등록 
     const onClickRegisterProduct = () => {
         const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"price":price,"stock":stock,"deadline":deadline,"displayName":formDisplayName,"sellerId":params.sellerId,"deliveryFee":3000};
-        formData.append("data", new Blob([JSON.stringify(productParams)], {
-            type: "application/json"
-        }));
 
         if(fileImage===null || fileImage==="") {
             alert("대표 이미지를 등록하세요.");
@@ -259,14 +272,14 @@ function SellerProductRegister() {
                         || sellerProductDeatil === null || sellerProductDeatil === ""){
                     alert("글 등록 6개는 필수입니다.")
                 }else{
-                    fetchProduct(formData);
+                    fetchProduct(productParams);
                     alert("이미지 디테일 등록 axios 하세요.");
                 }
             }else {
                 if(fileImageDetail.length <= 0 || fileImageDetail===null) {
                     alert("이미지 디테일 사진은 필수입니다.");
                 }else{
-                    fetchProduct(formData);
+                    fetchProduct(productParams);
                     alert("템플릿 추천 등록 axios 하세요.");
                 }
             }
@@ -295,7 +308,6 @@ function SellerProductRegister() {
                                 className="fileimgAlready"
                                 alt="representImage"
                                 src={fileImage}
-                                onClick={() => deleteFileImage()}
                             />
                         )}
                     </span>
