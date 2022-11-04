@@ -14,6 +14,7 @@ function MdRecommendation() {
     const [count, setCount] = useState(0); //아이템 총 수
     const [currentpage, setCurrentpage] = useState(1); //현재페이지
     const [postPerPage] = useState(20); //페이지당 아이템 개수
+    const [num,setNum] = useState(1); // 정렬 flag
 
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
@@ -37,42 +38,48 @@ function MdRecommendation() {
       };
 
     useEffect(() => {
-        setCount(mdProduct.length);
+        setCount(count);
         setIndexOfLastPost(currentpage * postPerPage);
         setIndexOfFirstPost(indexOfLastPost - postPerPage);
-        setCurrentPosts(mdProduct.slice(indexOfFirstPost, indexOfLastPost));
+        setCurrentPosts(mdProduct);
     }, [currentpage, indexOfFirstPost, indexOfLastPost, mdProduct, postPerPage]);
       
 
     useEffect(() => {
-        fetchMdPro(0);
-    },[]);
+        fetchMdPro();
+    },[num,currentpage]);
 
-    const fetchMdPro = async (num) => {
+    /* 정렬 */
+    const sortingRecommendation = () => {
+        setNum(1);
+    }
+    
+    const sortingHighPrice = () => {
+        setNum(2);
+    }
+
+    const sortingLowPrice = () => {
+        setNum(3);
+    }
+
+    const sortingNewProduct = () => {
+        setNum(4);
+    }
+
+    const fetchMdPro = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/product/main/seller/all/" + num
+            url: "http://localhost:8001/product-service/product/main/seller/all/" + num + "/" + currentpage
         })
         .then(function(response){
-            setMdProduct(response.data.result.data);
-            setCount(response.data.result.data.length);
+            setMdProduct(response.data.result.data.productDtoList);
+            setCount(response.data.result.data.totalCount);
+            console.log(response.data.result.data);
         })
         .catch(function(error){
             console.log(error)
         })
     }
-
-    /* 정렬 */
-    const sortingRecommendation = () => {fetchMdPro(1);}
-    
-    const sortingHighPrice = () => {fetchMdPro(2);}
-
-    const sortingLowPrice = () => {fetchMdPro(3);}
-
-    const sortingNewProduct = () => {fetchMdPro(4);}
-
-    const sortingReview = () => {fetchMdPro(5);}
-
 
     return(
         <div>
@@ -89,7 +96,6 @@ function MdRecommendation() {
                             <button onClick={sortingHighPrice}><li>높은가격순</li></button>
                             <button onClick={sortingLowPrice}><li>낮은가격순</li></button>
                             <button onClick={sortingNewProduct}><li>신상품순</li></button>
-                            <button onClick={sortingReview}><li>리뷰많은순</li></button>
                         </ul>
                     </div>
                     <hr />
@@ -97,7 +103,7 @@ function MdRecommendation() {
 
 
                 <div className="category-product" >
-                    <h3 className='category-product-title'> <span className='cateNum'>총 {mdProduct.length}</span>개 상품이 있습니다.</h3>
+                    <h3 className='category-product-title'> <span className='cateNum'>총 {count}</span>개 상품이 있습니다.</h3>
                     <div className='product-list'>
                         { currentPosts && mdProduct.length  >0 ?
                             currentPosts.map( function(object, i){

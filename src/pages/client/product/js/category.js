@@ -17,10 +17,13 @@ function Category() {
     const [count, setCount] = useState(0); //아이템 총 수
     const [currentpage, setCurrentpage] = useState(1); //현재페이지
     const [postPerPage] = useState(20); //페이지당 아이템 개수
+    const [num,setNum] = useState(1); // 정렬 flag
 
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
     const [currentPosts, setCurrentPosts] = useState([]);
+
+    /* 페이징 */
 
     const Paging = ({page, count, setPage}) => {
         return (
@@ -40,49 +43,42 @@ function Category() {
       };
 
     useEffect(() => {
-        setCount(categoryProduct.length);
+        setCount(count);
         setIndexOfLastPost(currentpage * postPerPage);
         setIndexOfFirstPost(indexOfLastPost - postPerPage);
-        setCurrentPosts(categoryProduct.slice(indexOfFirstPost, indexOfLastPost));
+        setCurrentPosts(categoryProduct);
     }, [currentpage, indexOfFirstPost, indexOfLastPost, categoryProduct, postPerPage]);
       
 
     useEffect(() => {
-        fetchCatePro(seq);
-    },[seq]);
-
-    const fetchCatePro = async (seq) => {
-        await axios({
-            method: "get",
-            url: "http://localhost:8001/product-service/product/categoryId/" + seq
-        })
-        .then(function(response){
-            setCategoryProduct(response.data.result.data);
-            setCount(response.data.result.data.length);
-        })
-        .catch(function(error){
-            console.log(error)
-        })
-    }
+        fetchSorting();
+    },[seq,num,currentpage]);
 
     /* 정렬 */
-    const sortingRecommendation = () => {fetchSorting(1);}
+    const sortingRecommendation = () => {
+        setNum(1);
+    }
     
-    const sortingHighPrice = () => {fetchSorting(2);}
+    const sortingHighPrice = () => {
+        setNum(2);
+    }
 
-    const sortingLowPrice = () => {fetchSorting(3);}
+    const sortingLowPrice = () => {
+        setNum(3);
+    }
 
-    const sortingNewProduct = () => {fetchSorting(4);}
+    const sortingNewProduct = () => {
+        setNum(4);
+    }
 
-    const sortingReview = () => {fetchSorting(5);}
-
-    const fetchSorting = async (num) => {
+    const fetchSorting = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/product/categoryId/" + seq + "/" + num
+            url: "http://localhost:8001/product-service/product/categoryId/" + seq + "/" + num + "/" + currentpage
         })
         .then(function(response){
-            setCategoryProduct(response.data.result.data);
+            setCategoryProduct(response.data.result.data.productDtoList);
+            setCount(response.data.result.data.totalCount);
         })
         .catch(function(error){
             console.log(error);
@@ -104,7 +100,6 @@ function Category() {
                             <button onClick={sortingHighPrice}><li>높은가격순</li></button>
                             <button onClick={sortingLowPrice}><li>낮은가격순</li></button>
                             <button onClick={sortingNewProduct}><li>신상품순</li></button>
-                            <button onClick={sortingReview}><li>리뷰많은순</li></button>
                         </ul>
                     </div>
                     <hr />
@@ -112,7 +107,7 @@ function Category() {
 
 
                 <div className="category-product" >
-                    <h3 className='category-product-title'> <span className='cateNum'>총 {categoryProduct.length}</span>개 상품이 있습니다.</h3>
+                    <h3 className='category-product-title'> <span className='cateNum'>총 {count}</span>개 상품이 있습니다.</h3>
                     <div className='product-list'>
                         { currentPosts && categoryProduct.length  >0 ?
                             currentPosts.map( function(object, i){
