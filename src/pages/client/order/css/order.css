@@ -8,8 +8,9 @@
 	height: 7em;
 }
 
-.order-product-row-div {
-	margin-top: 50px;
+.order-product-row-div, .seller-name-row-div {
+	margin-top: 25px;
+	margin-bottom: 25px;
 }
 
 .coupon-card-div {

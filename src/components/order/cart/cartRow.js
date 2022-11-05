@@ -17,22 +17,23 @@ import {useContext, useState} from "react"
 import {AuthContext} from "../../../context/authProvider";
 import {OrderContext} from "../../../context/orderProvider";
 
-const CartProductRow = (props) => {
+const CartRow = (props) => {
 
-	const { headers } = useContext(AuthContext);
+	const { url, headers } = useContext(AuthContext);
 
-	const product = props.product;
-	const cartId = product.cartId;
-	const [qty, setQty] = useState(product.qty);
-	const { checkProducts, setCheckProducts } = useContext(OrderContext);
+	const cart = props.cart;
+	const cartId = cart.cartId;
+	const [qty, setQty] = useState(cart.qty);
+	const { checkCarts, setCheckCarts } = useContext(OrderContext);
 
 	const updateQty = async (updatedQty) => {
 
+		const api = url + "/order-service/carts/" + cartId + "/qty";
 		const req = {
 			qty: updatedQty
 		}
 
-		await axios.post(`http://localhost:8001/order-payment-service/carts/${cartId}/qty`, req, {headers: headers })
+		await axios.post(api, req, {headers: headers })
 			.then((resp) => {
 				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);
@@ -51,12 +52,11 @@ const CartProductRow = (props) => {
 	}
 
 	const updateProductQty = (updatedQty) => {
-
-		setCheckProducts(
-				checkProducts.map((checkProduct) =>
-					checkProduct.productId === product.productId
-							? {...checkProduct, qty: updatedQty }
-							: checkProduct
+		setCheckCarts(
+				checkCarts.map((checkCart) =>
+						checkCart.productId === cart.productId
+							? {...checkCart, qty: updatedQty }
+							: checkCart
 				)
 		)
 	}
@@ -78,19 +78,19 @@ const CartProductRow = (props) => {
 
 	return (
 		<>
-			<div className="row order-product-row-div">
+			<div className="row container-fluid order-product-row-div">
 				<div className="col-1">
-					<CheckBox productId={product.productId}
-							handler={props.handler} 
-							isAllChecked={props.isAllChecked} 
-							checkProductCnt={props.checkProductCnt}
-							allProductCnt={props.allProductCnt}/>
+					<CheckBox cartId={cart.cartId}
+										cart={cart}
+										handler={props.handler}
+										checkCartCnt={props.checkCartCnt}
+										sellerCartCnt={props.sellerCartCnt}/>
 				</div>
 				<div className="col-2">
-					<img className="order-product-img" src={product.productThumbnail} alt={product.productName} />
+					<img className="order-product-img" src={cart.productThumbnail} alt={cart.productName} />
 				</div>
 				<div className="col-4">
-					<span>{product.productName}</span>
+					<span>{cart.productName}</span>
 				</div>
 				<div className="col-2">
 					<button onClick={decreaseQty}>-</button> &nbsp;
@@ -98,7 +98,7 @@ const CartProductRow = (props) => {
 						<button onClick={increaseQty}>+</button> &nbsp;
 					</div>
 				<div className="col-3">
-					<Price product={product} />
+					<Price cart={cart} />
 				</div>
 			</div>
 		</>
@@ -106,4 +106,4 @@ const CartProductRow = (props) => {
 
 }
 
-export default CartProductRow;
+export default CartRow;
