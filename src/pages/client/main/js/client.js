@@ -26,13 +26,13 @@ import ServerConfigProvider from "../../../../context/serverConfigProvider";
 import OrderProvider from "../../../../context/orderProvider";
 import RecentProductProvider from "../../../../context/recentProductProvider";
 import OrderDetailList from "../../order/js/orderDetailList";
+import Footer from "./footer";
 
 function Client() {
   return(
       <div>
         <Header />
-        <hr className="headerBottom-hr"></hr>
-        <Nav />
+        {/* <Nav /> */}
 
         <RecentProductProvider>
           <main>
@@ -83,6 +83,7 @@ function Client() {
         </RecentProductProvider>
 
         <footer>
+          <Footer></Footer>
         </footer>
       </div>
   )

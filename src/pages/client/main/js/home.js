@@ -213,7 +213,7 @@ function Home() {
             </div>
 
             <div className='main-category-product'>
-                <div className='main-category'>
+                {/* <div className='main-category'>
                     <button className='main-category-div' onClick={category1}>
                         <img className='main-category-item' alt="신상품" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653WAC282333226.png"/>
                     </button>
@@ -238,7 +238,7 @@ function Home() {
                     <button className='main-category-div' onClick={category8}>
                         <img className='main-category-item' alt="소고기" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653GoW282835152.png"/>
                     </button>
-                </div>
+                </div> */}
 
                 <div className="main-product">
                     <div className="new-product" >
