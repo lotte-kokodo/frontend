@@ -49,10 +49,11 @@ function Login() {
             data : params
         })
         .then(function(response){
-            localStorage.setItem("memberId",response.headers.memberid);
-            localStorage.setItem("token",response.headers.token);
+            localStorage.setItem("memberId",response.data.memberId);
+            localStorage.setItem("accessToken",response.data.accessToken);
+            localStorage.setItem("refreshToken",response.data.refreshToken);
 
-            if(localStorage.getItem("token") !== null || localStorage.getItem("token") !== ""){
+            if(localStorage.getItem("accessToken") !== null || localStorage.getItem("accessToken") !== ""){
                 
                 if(bCheked){
                     setCookie('rememberId', inputId, {maxAge: 2000});

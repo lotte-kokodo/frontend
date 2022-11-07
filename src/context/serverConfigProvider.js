@@ -4,7 +4,7 @@ export const ServerConfigContext = createContext();
 
 const ServerConfigProvider = ({ children }) => {
 
-   const [url, setUrl] = useState("https://api.kokodo.shop"); // local api gateway
+   const [url, setUrl] = useState("http://localhost:8001"); // local api gateway
    //useState("http://localhost:8001"); // local api gateway
 
    const value = { url, setUrl };
