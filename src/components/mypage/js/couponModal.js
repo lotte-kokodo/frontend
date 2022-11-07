@@ -1,10 +1,12 @@
 import React from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { useState, useEffect} from "react";
 import '../css/couponModal.css';
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 export default function CouponModal(props) {
-
+    const { url } = useContext(ServerConfigContext);
     const [couponList, setCouponList] = useState([]);
 
     const convertDate = (day)=>{
@@ -25,7 +27,7 @@ export default function CouponModal(props) {
         console.log(localStorage.getItem('memberId'));
         await axios({
             method: "get",
-            url: "http://localhost:8001/promotion-service/userCoupon",
+            url: url + "/promotion-service/userCoupon",
             headers: {
                 'memberId': localStorage.getItem('memberId')
             }

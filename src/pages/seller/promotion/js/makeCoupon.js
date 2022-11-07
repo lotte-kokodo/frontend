@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
+import { useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
@@ -11,6 +12,8 @@ import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, Ta
 
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.root}`]: {
@@ -42,6 +45,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MakeCoupon() {
+    const { url } = useContext(ServerConfigContext);
     const [couponName, setCouponName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
@@ -113,7 +117,7 @@ function MakeCoupon() {
         }
         await axios({
             method: "post",
-            url: "http://localhost:8001/promotion-service/rateCoupon/save",
+            url: url + "promotion-service/rateCoupon/save",
             data: ratePolicyDto
         })
             .then(function (resp) {
@@ -140,7 +144,7 @@ function MakeCoupon() {
         }
         await axios({
             method: "post",
-            url: "http://localhost:8001/promotion-service/fixCoupon",
+            url: url + "promotion-service/fixCoupon",
             data: fixPolicyDto
         })
             .then(function (resp) {
@@ -169,7 +173,7 @@ function MakeCoupon() {
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: `http://localhost:8001/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&sellerId=3`
+                url: url + `product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&sellerId=3`
                 
                 // data: params
             })
@@ -185,7 +189,7 @@ function MakeCoupon() {
     }
     // 지원
     const productData= async () => {
-            await axios.get(`http://localhost:8001/product-service/product/seller/3`)
+            await axios.get(url + `product-service/product/seller/3`)
                 .then(function (resp) {
                     setProductList(resp.data.result.data);
                 })

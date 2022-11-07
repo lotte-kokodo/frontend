@@ -6,8 +6,12 @@ import "../css/sellerProductRegister.css"
 
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useParams,useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 function SellerProductRegister() {
+    const { url } = useContext(ServerConfigContext);
+
     const params = useParams();
     const history = useNavigate();
 
@@ -49,7 +53,7 @@ function SellerProductRegister() {
     const fetchCategorySearch = async (categorySearch) => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/category/categoryName/" + categorySearch
+            url: url + "/product-service/category/categoryName/" + categorySearch
         })
         .then(function(response){
             console.log(response);
@@ -93,6 +97,7 @@ function SellerProductRegister() {
         sestFileImage(URL.createObjectURL(e.target.files[0]));
         setThumbnail(e.target.files[0]);
     }
+
 
 
     // 대표 이미지 버튼클릭시 input 태그에 클릭이벤트를 걸어준다.
@@ -217,6 +222,7 @@ function SellerProductRegister() {
 
     // 상품 등록 axios
     const fetchProduct = async (param) => {
+
 
         console.log("tempalteCheck: "+templateCheck);
         const productParams = {

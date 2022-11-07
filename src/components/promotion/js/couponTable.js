@@ -2,12 +2,13 @@
 import "../css/couponTable.css";
 import React, { useCallback } from "react";
 import axios from "axios";
-import { useState, useEffect} from "react";
-
+import { useState, useEffect, useContext} from "react";
 import CouponProductModal from './couponProductModal';
 
+import {ServerConfigContext } from "../../../context/serverConfigProvider";
 
 export default function CouponTable() {
+    const { url } = useContext(ServerConfigContext);
     const [listFlag, setListFlag] = useState(false);
     const [couponList, setCouponList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
@@ -34,7 +35,7 @@ export default function CouponTable() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:8001/promotion-service/rateCoupon/seller?sellerId=1`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1`)
                 .then(function (resp) {
                     setCouponList(resp.data.result.data);
 
@@ -49,7 +50,7 @@ export default function CouponTable() {
     const getRateCoupon = ()=>{
         setListFlag(false);
         const fetchData = async () => {
-            await axios.get(`http://localhost:8001/promotion-service/rateCoupon/seller?sellerId=1`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1`)
                 .then(function (resp) {
                     setCouponList(resp.data.result.data);
 
@@ -64,7 +65,7 @@ export default function CouponTable() {
     const getFixCoupon = ()=>{
         setListFlag(true);
         const fetchData = async () => {
-            await axios.get(`http://localhost:8001/promotion-service/fixCoupon/seller?sellerId=1`)
+            await axios.get(url + `/promotion-service/fixCoupon/seller?sellerId=1`)
                 .then(function (resp) {
                     setCouponList(resp.data.result.data);
 
