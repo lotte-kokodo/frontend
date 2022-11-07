@@ -11,7 +11,6 @@ const ImgHover = () => {
     const { url } = useContext(ServerConfigContext);
     const [isListHover, setIsListHover] = useState(false);
     const [categoryList,setCategoryList] = useState([]);
-    const { url } = useContext(ServerConfigContext);
 
     const fetchCategory = async () => {
         await axios({
