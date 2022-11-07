@@ -1,17 +1,17 @@
-import React, { useState} from 'react';
-import { useContext } from "react";
+import React, {useContext ,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import line from '../../../../src_assets/top/navContainer-category-Line.png'
 import pinkRect from '../../../../src_assets/top/navContainer-category-Rectangle.png'
 import blackRect from '../../../../src_assets/top/header-hover-rectangle.png'
-import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 const ImgHover = () => {
     const { url } = useContext(ServerConfigContext);
     const [isListHover, setIsListHover] = useState(false);
     const [categoryList,setCategoryList] = useState([]);
+    const { url } = useContext(ServerConfigContext);
 
     const fetchCategory = async () => {
         await axios({

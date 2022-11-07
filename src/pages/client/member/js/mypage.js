@@ -9,6 +9,7 @@ import OrderList from '../../order/js/orderList'
 import '../css/mypage.css'
 import {AuthContext} from "../../../../context/authProvider";
 import CouponModal from '../../../../components/mypage/js/couponModal';
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 function Mypage() {
     const [name,setName] = useState('');
@@ -18,6 +19,7 @@ function Mypage() {
     const {headers} = useContext(AuthContext);
     const [couponFlag, setCouponFlag] = useState(false);
     const [couponCount, setCouponCount] = useState(0);
+    const { url } = useContext(ServerConfigContext);
 
     const firstEnter = () => {
         if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
@@ -31,7 +33,7 @@ function Mypage() {
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
+            url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
             setName(response.data.result.data.loginId);
@@ -79,7 +81,7 @@ function Mypage() {
     const fetchReview = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/member-service/member/mypage/review",
+            url: url + "/member-service/member/mypage/review",
             headers: {
                 'memberId': localStorage.getItem('memberId')
             }
@@ -99,7 +101,7 @@ function Mypage() {
         console.log(id);
         await axios({
             method: "get",
-            url: `http://localhost:8001/order-payment-service/orders/${id}`,
+            url: url + `/order-payment-service/orders/${id}`,
             headers: headers
         }) 
         .then(function(response){
@@ -118,7 +120,7 @@ function Mypage() {
 
         await axios({
             method: "get",
-            url: "http://localhost:8001/promotion-service/userCoupon/count",
+            url: url + "/promotion-service/userCoupon/count",
             headers: {
                 'memberId': localStorage.getItem('memberId')
             }

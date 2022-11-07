@@ -1,7 +1,8 @@
-import React, {useEffect ,useState} from 'react';
+import React, {useContext, useEffect ,useState} from 'react';
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
 import DaumPostcode from 'react-daum-postcode';
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/signup.css";
 
@@ -17,6 +18,7 @@ function MypageRead(){
     const [inputGrade, setInputGrade]= useState("");
     const [profileImageUrl, setInputProfileImageUrl]= useState("");
     const history = useNavigate();
+    const { url } = useContext(ServerConfigContext);
 
     /*daum address*/
     const [openPostcode, setOpenPostcode] = useState(false);
@@ -86,7 +88,7 @@ function MypageRead(){
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
+            url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
             setInputId(response.data.result.data.loginId);
@@ -106,7 +108,7 @@ function MypageRead(){
     const fetchUpdateMypage = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/member-service/member/myPage",
+            url: url + "/member-service/member/myPage",
             data : params
         })
         .then(function(response){
