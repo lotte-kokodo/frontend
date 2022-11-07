@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "../css/productDetailInfo.css";
 import {AuthContext} from "../../../context/authProvider";
 import {RecentProductContext} from "../../../context/recentProductProvider";
+import {ServerConfigContext} from "../../../context/serverConfigProvider";
 
 const st1 = { transitionDuration: "300ms" }
 const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
@@ -18,6 +19,7 @@ export default function ProductDetail() {
     let { productId } = useParams(null);
 
     const { headers, memberId } = useContext(AuthContext);
+    const { url } = useContext(ServerConfigContext);
     const { setImg, setWatch } = useContext(RecentProductContext);
 
     const [product, setProduct] = useState("");
@@ -200,8 +202,14 @@ export default function ProductDetail() {
     /* 장바구니 생성 API */
     const addCart = async () => {
 
-        await axios.post(`http://localhost:8001/order-service/carts/${memberId}`, null,
-            {params: {productId: productId, qty: orderNum}, headers: headers})
+        const api = url + "/order-service/carts";
+        const req = {
+            memberId: memberId,
+            productId: productId,
+            qty: orderNum
+        }
+
+        await axios.post(api, req,  { headers: headers })
         .then((resp) => {
             console.log(resp.data.result.data);
 
@@ -217,7 +225,6 @@ export default function ProductDetail() {
     const makeOrderSheetData = () => {
         productQtyMap[productId] = orderNum;
     }
-
 
     return (
         
