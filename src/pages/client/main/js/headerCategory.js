@@ -16,10 +16,10 @@ const ImgHover = () => {
     const fetchCategory = async () => {
         await axios({
         method: "get",
-        url: url + "product-service/category/all"
+        url: url + "/product-service/category/all"
         })
         .then(function(response){
-            setCategoryList(response.data.result.data);
+            setCategoryList(response.data.result.data); 
             console.log(response.data.result.data);
         })
         .catch(function(error){

@@ -17,7 +17,7 @@ export default function ProductNotice() {
     // button axios
     const searchContent = async () => {
         history(`/product/present/${params.id}`)
-        await axios.post(url + `product/${params.id}/productList`,{
+        await axios.post(url + `/product/${params.id}/productList`,{
             // "sellerId" : 1,
             // "startDate" : tmpStartDate + "T"+"00:00:00",
             // "endDate" : tmpEndDate +  "T"+"00:00:00",

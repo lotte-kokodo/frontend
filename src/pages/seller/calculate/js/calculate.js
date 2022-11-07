@@ -56,7 +56,7 @@ export default function CalculatePresent() {
 
     const searchContent = async () => {
         history(`/seller/${params.sellerId}/calculateList`)
-        await axios.post(url + `calculate-service/calculate/${params.sellerId}/calculateList`,{
+        await axios.post(url + `/calculate-service/calculate/${params.sellerId}/calculateList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",
@@ -73,7 +73,7 @@ export default function CalculatePresent() {
     }
 
     const getDay = async() =>{
-        await axios.get(url + `calculate-service/calculate/expectDay`)
+        await axios.get(url + `/calculate-service/calculate/expectDay`)
             .then(function (resp){
                 setCalculateExpectDay(dateParseToSimple(resp))
             }).catch(function (error){
@@ -82,7 +82,7 @@ export default function CalculatePresent() {
     }
 
     const getMoney = async() =>{
-        await axios.get(url + `calculate-service/calculate/${params.sellerId}/expectMoney`)
+        await axios.get(url + `/calculate-service/calculate/${params.sellerId}/expectMoney`)
             .then(function (resp){
                 setCalculateExpectMoney(moneyComma(resp.data.result.data));
             }).catch(function (error){

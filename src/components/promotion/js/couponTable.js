@@ -35,7 +35,7 @@ export default function CouponTable() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(url + `promotion-service/rateCoupon/seller?sellerId=1`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1`)
                 .then(function (resp) {
                     setCouponList(resp.data.result.data);
 
@@ -50,7 +50,7 @@ export default function CouponTable() {
     const getRateCoupon = ()=>{
         setListFlag(false);
         const fetchData = async () => {
-            await axios.get(url + `promotion-service/rateCoupon/seller?sellerId=1`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1`)
                 .then(function (resp) {
                     setCouponList(resp.data.result.data);
 
@@ -65,7 +65,7 @@ export default function CouponTable() {
     const getFixCoupon = ()=>{
         setListFlag(true);
         const fetchData = async () => {
-            await axios.get(url + `promotion-service/fixCoupon/seller?sellerId=1`)
+            await axios.get(url + `/promotion-service/fixCoupon/seller?sellerId=1`)
                 .then(function (resp) {
                     setCouponList(resp.data.result.data);
 

@@ -49,7 +49,7 @@ export default function SaleList() {
 
     const searchContent = async () => {
         history(`/seller/${params.sellerId}/saleList`)
-        await axios.post(url + `calculate-service/commission/saleList`,{
+        await axios.post(url + `/calculate-service/commission/saleList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",

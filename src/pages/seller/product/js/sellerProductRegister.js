@@ -53,7 +53,7 @@ function SellerProductRegister() {
     const fetchCategorySearch = async (categorySearch) => {
         await axios({
             method: "get",
-            url: url + "product-service/category/categoryName/" + categorySearch
+            url: url + "/product-service/category/categoryName/" + categorySearch
         })
         .then(function(response){
             setDisplayCategory(response.data.result.data[0].name);
@@ -95,7 +95,7 @@ function SellerProductRegister() {
     const fetchImage = async (param) => {
         await axios({
             method: "post",
-            url: url + "seller-service/product/upload",
+            url: url + "/seller-service/product/upload",
             data : param,
             headers : {
                 "Content-Type": "multipart/form-data"
@@ -230,7 +230,7 @@ function SellerProductRegister() {
     const fetchProduct = async (param) => {
         await axios({
             method: "post",
-            url: url + "seller-service/product",
+            url: url + "/seller-service/product",
             data : param
         })
         .then(function(response){

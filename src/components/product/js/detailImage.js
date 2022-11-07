@@ -16,7 +16,7 @@ export default function ProductDetail() {
 // product 이미지 조회
 useEffect(() => {
     const fetchData = async () => {
-        await axios.get(url + `product-service/productDetail/${productId}`)
+        await axios.get(url + `/product-service/productDetail/${productId}`)
             .then(function (resp) {
                 setDetailImages(resp.data.result.data);
 

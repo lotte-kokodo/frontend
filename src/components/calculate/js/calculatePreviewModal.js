@@ -28,7 +28,7 @@ export default function CalculatePreviewModal(props){
     // const [fee, setFee] = useState("");
 
     const getInitInfo = async () => {
-        await axios.get(url + `calculate-service/calculate/${props.sellerId}/calculateModal/${props.calculateId}`,{
+        await axios.get(url + `/calculate-service/calculate/${props.sellerId}/calculateModal/${props.calculateId}`,{
         }).then(function (resp) {
             setFinalPaymentCost(resp.data.result.data.finalPaymentCost)
             setProvideStatus(resp.data.result.data.provideStatus)

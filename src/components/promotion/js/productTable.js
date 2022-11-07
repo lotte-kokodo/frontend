@@ -15,7 +15,7 @@ export default function ProductTable(props) {
         console.log(props.couponFlag);
         
         const fetchRateCouponProduct = async () => {
-            await axios.get(url + `promotion-service/rateCoupon/${couponName}/product`)
+            await axios.get(url + `/promotion-service/rateCoupon/${couponName}/product`)
                 .then(function (resp) {
                     setProductList(resp.data.result.data);
 
@@ -26,7 +26,7 @@ export default function ProductTable(props) {
         }
 
         const fetchFixCouponProduct = async () => {
-            await axios.get(url + `promotion-service/fixCoupon/${couponName}/product`)
+            await axios.get(url + `/promotion-service/fixCoupon/${couponName}/product`)
                 .then(function (resp) {
                     console.log(resp.data.result.data);
                     setProductList(resp.data.result.data);

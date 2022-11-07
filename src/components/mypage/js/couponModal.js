@@ -27,7 +27,7 @@ export default function CouponModal(props) {
         console.log(localStorage.getItem('memberId'));
         await axios({
             method: "get",
-            url: url + "promotion-service/userCoupon",
+            url: url + "/promotion-service/userCoupon",
             headers: {
                 'memberId': localStorage.getItem('memberId')
             }

@@ -111,7 +111,7 @@ function MakeDiscountPolicy() {
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/rate-discount/save",
+            url: url + "/promotion-service/rate-discount/save",
             data: ratePolicyDto
         })
             .then(function (resp) {
@@ -139,7 +139,7 @@ function MakeDiscountPolicy() {
         console.log(fixPolicyDto);
         await axios({
             method: "post",
-            url: url + "promotion-service/fix-discount/save",
+            url: url + "/promotion-service/fix-discount/save",
             data: fixPolicyDto
         })
             .then(function (resp) {
@@ -169,7 +169,7 @@ function MakeDiscountPolicy() {
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: url + "product-service/product/detail/" + productId,
+                url: url + "/product-service/product/detail/" + productId,
                 // data: params
             })
                 .then(function (resp) {
