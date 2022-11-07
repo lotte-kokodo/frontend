@@ -1,16 +1,18 @@
-import React, {useEffect, useState, useRef} from "react"
+import React, {useContext, useEffect, useState, useRef} from "react"
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
 import left from '../../../../src_assets/main/left.png'
 import right from '../../../../src_assets/main/right.png'
 import timer from '../../../../src_assets/main/timer.png'
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/main.css"
 
 function Home() {
     // link용
     const history = useNavigate();
+    const { url } = useContext(ServerConfigContext);
 
     // 배너
     const [slideState, setSlideState] = useState(0);
@@ -133,7 +135,7 @@ function Home() {
     const fetchNew = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:8001/product-service/product/main/new"
+        url: url + "/product-service/product/main/new"
         })
         .then(function(response){
             setNewState(response.data.result.data);
@@ -146,7 +148,7 @@ function Home() {
     const fetchSale = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:8001/product-service/product/main/sale"
+        url: url + "/product-service/product/main/sale"
         })
         .then(function(response){
             setSaleState(response.data.result.data);
@@ -160,7 +162,7 @@ function Home() {
     const fetchMd = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:8001/product-service/product/main/seller"
+        url: url + "/product-service/product/main/seller"
         })
         .then(function(response){
             console.log(response.data.result.data);

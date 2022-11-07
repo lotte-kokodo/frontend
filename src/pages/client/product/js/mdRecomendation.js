@@ -1,11 +1,12 @@
 import axios from 'axios';
-import {useState, useEffect} from "react";
+import {useContext, useState, useEffect} from "react";
 import {NavLink} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 
 import "../css/paging.css"
 import "../css/category.css"
 import "../../main/css/main.css"
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 
 function MdRecommendation() {
@@ -19,6 +20,7 @@ function MdRecommendation() {
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
     const [currentPosts, setCurrentPosts] = useState([]);
+    const { url } = useContext(ServerConfigContext);
 
     const Paging = ({page, count, setPage}) => {
         return (
@@ -69,7 +71,7 @@ function MdRecommendation() {
     const fetchMdPro = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/product/main/seller/all/" + num + "/" + currentpage
+            url: url + "/product-service/product/main/seller/all/" + num + "/" + currentpage
         })
         .then(function(response){
             setMdProduct(response.data.result.data.productDtoList);

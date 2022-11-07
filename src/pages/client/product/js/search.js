@@ -1,11 +1,13 @@
 import axios from 'axios';
-import {useState, useEffect} from "react";
+import {useContext, useState, useEffect} from "react";
 import {NavLink,useLocation} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 
 import "../css/paging.css"
 import "../css/category.css"
 import "../../main/css/main.css"
+
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 function Search() {
     const location = useLocation();
@@ -20,6 +22,8 @@ function Search() {
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
     const [currentPosts, setCurrentPosts] = useState([]);
+
+    const { url } = useContext(ServerConfigContext);
 
     const Paging = ({page, count, setPage}) => {
         return (
@@ -70,7 +74,7 @@ function Search() {
     const fetchSearch = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/product/totalSearch/" + word + "/" + num + "/" + currentpage
+            url: url + "/product-service/product/totalSearch/" + word + "/" + num + "/" + currentpage
         })
         .then(function(response){
             setSearchProduct(response.data.result.data.productDtoList);

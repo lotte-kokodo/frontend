@@ -1,11 +1,13 @@
 import axios from 'axios';
-import {useState, useEffect} from "react";
+import {useContext, useState, useEffect} from "react";
 import {NavLink,useLocation} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 
 import "../css/paging.css"
 import "../css/category.css"
 import "../../main/css/main.css"
+
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 
 function Category() {
@@ -22,6 +24,7 @@ function Category() {
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
     const [currentPosts, setCurrentPosts] = useState([]);
+    const { url } = useContext(ServerConfigContext);
 
     /* 페이징 */
 
@@ -74,7 +77,7 @@ function Category() {
     const fetchSorting = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/product/categoryId/" + seq + "/" + num + "/" + currentpage
+            url: url + "/product-service/product/categoryId/" + seq + "/" + num + "/" + currentpage
         })
         .then(function(response){
             setCategoryProduct(response.data.result.data.productDtoList);
