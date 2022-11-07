@@ -21,9 +21,15 @@
     position: absolute;
     top: 170px;
     left: 0px;
-    background-color: #ffffff;
+    background-color: transparent;
 }
 
+.banner_buttonsLeft > button{
+    background-color: transparent;
+}
+.banner_buttonsRight > button{
+    background-color: transparent;
+}
 .banner_buttonsRight{
     width: 70px;
     height: 70px;
@@ -33,7 +39,7 @@
     position: absolute;
     top: 170px;
     right: 0px;
-    background-color: #ffffff;
+    background-color: transparent;
 }
 
 .banner-button-left{

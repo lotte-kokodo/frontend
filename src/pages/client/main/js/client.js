@@ -25,47 +25,52 @@ import AuthProvider from "../../../../context/authProvider";
 import OrderProvider from "../../../../context/orderProvider";
 import RecentProductProvider from "../../../../context/recentProductProvider";
 import OrderDetailList from "../../order/js/orderDetailList";
+import Footer from "./footer";
 
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
 
 function Client() {
   return(
       <div>
-        <ServerConfigProvider>
-          <Header />
-          <hr className="headerBottom-hr"></hr>
-          <Nav />
 
-          <RecentProductProvider>
-            <main>
-              <div>
-                <RecentProduct />
-                  <AuthProvider>
-                    <Routes>
-                      <Route path="/" element={<Home />}></Route>
+        <Header />
+        {/* <Nav /> */}
 
-                      {/* member - login, signup */}
-                      <Route path="/login" element={<Login />}></Route>
-                      <Route path="/signup" element={<Signup />}></Route>
-                      <Route path="/mypage" element={<Mypage />}></Route>s
-                      <Route path="/mypageRead" element={<MypageRead />}></Route>
+        <RecentProductProvider>
+          <main>
+            <div>
+              <RecentProduct />
 
-                      {/* product - search, category, detail */}
-                      <Route path='/search' element={<Search />}></Route>
-                      <Route path="/category" element={<Category />}></Route>
+              <AuthProvider>
+                <ServerConfigProvider>
+                  <Routes>
+                    <Route path="/" element={<Home />}></Route>
 
-                      <Route path="/mdRecommendation" element={<MdRecommendation />}></Route>
-                      <Route path="/sale" element={<Sale />}></Route>
-                      <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
+                    {/* member - login, signup */}
+                    <Route path="/login" element={<Login />}></Route>
+                    <Route path="/signup" element={<Signup />}></Route>
+                    <Route path="/mypage" element={<Mypage />}></Route>
+                    <Route path="/mypageRead" element={<MypageRead />}></Route>
 
-                      {/* order - orderList */}
-                      <Route path="/orderList" element={<GetOrderList />}></Route>
-                      <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
+                    {/* product - search, category, detail */}
+                    <Route path='/search' element={<Search />}></Route>
+                    <Route path="/category" element={<Category />}></Route>
 
-                    </Routes>
-                  </AuthProvider>
+                    <Route path="/mdRecommendation" element={<MdRecommendation />}></Route>
+                    <Route path="/sale" element={<Sale />}></Route>
+                    <Route path="/productDetail/:productId" element={<ProductDetail />}></Route>
 
-                <AuthProvider>
+                    {/* order - orderList */}
+                    <Route path="/orderList" element={<GetOrderList />}></Route>
+                    <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
+
+                  </Routes>
+                </ServerConfigProvider>
+              </AuthProvider>
+
+              <AuthProvider>
+                <ServerConfigProvider>
+
                   <OrderProvider>
                     <Routes>
                       {/* order - cart, orderSheet */}
@@ -79,9 +84,11 @@ function Client() {
             </main>
           </RecentProductProvider>
 
-          <footer>
-          </footer>
-        </ServerConfigProvider>
+
+        <footer>
+          <Footer></Footer>
+        </footer>
+
       </div>
   )
 }
