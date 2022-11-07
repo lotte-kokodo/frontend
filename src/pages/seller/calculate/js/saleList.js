@@ -10,10 +10,13 @@ import {
     provideStatusToValue,
     provideTypeToValue
 } from '../../../../common/calculate/function'
+import { useContext } from "react";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 import moment from "moment";
 
 export default function SaleList() {
+    const { url } = useContext(ServerConfigContext);
 
     let today = new Date();
     today.setMonth(today.getMonth() + 1);
@@ -46,7 +49,7 @@ export default function SaleList() {
 
     const searchContent = async () => {
         history(`/seller/${params.sellerId}/saleList`)
-        await axios.post(`http://localhost:8001/calculate-service/commission/saleList`,{
+        await axios.post(url + `/calculate-service/commission/saleList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",

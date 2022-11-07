@@ -8,6 +8,7 @@ import blackRect from '../../../../src_assets/top/header-hover-rectangle.png'
 import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 const ImgHover = () => {
+    const { url } = useContext(ServerConfigContext);
     const [isListHover, setIsListHover] = useState(false);
     const [categoryList,setCategoryList] = useState([]);
     const { url } = useContext(ServerConfigContext);
@@ -18,7 +19,7 @@ const ImgHover = () => {
         url: url + "/product-service/category/all"
         })
         .then(function(response){
-            setCategoryList(response.data.result.data);
+            setCategoryList(response.data.result.data); 
             console.log(response.data.result.data);
         })
         .catch(function(error){

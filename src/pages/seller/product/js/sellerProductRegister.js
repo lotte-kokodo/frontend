@@ -6,8 +6,12 @@ import "../css/sellerProductRegister.css"
 
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useParams,useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 function SellerProductRegister() {
+    const { url } = useContext(ServerConfigContext);
+
     const params = useParams();
     const history = useNavigate();
 
@@ -49,7 +53,7 @@ function SellerProductRegister() {
     const fetchCategorySearch = async (categorySearch) => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/category/categoryName/" + categorySearch
+            url: url + "/product-service/category/categoryName/" + categorySearch
         })
         .then(function(response){
             setDisplayCategory(response.data.result.data[0].name);
@@ -91,7 +95,7 @@ function SellerProductRegister() {
     const fetchImage = async (param) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/seller-service/product/upload",
+            url: url + "/seller-service/product/upload",
             data : param,
             headers : {
                 "Content-Type": "multipart/form-data"
@@ -226,7 +230,7 @@ function SellerProductRegister() {
     const fetchProduct = async (param) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/seller-service/product",
+            url: url + "/seller-service/product",
             data : param
         })
         .then(function(response){
