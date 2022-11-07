@@ -7,8 +7,6 @@ const FixDiscountPolicy = (props) => {
   const { DELIVERY_PRICE, replaceNumberComma, fixDiscountPolicyMap } = useContext(OrderContext);
 
   useEffect(() => {
-    console.log("***");
-
   }, [fixDiscountPolicyMap]);
 
   const discountDeliveryPrice = () => {

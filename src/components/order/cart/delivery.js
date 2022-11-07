@@ -28,9 +28,6 @@ import { useContext, useEffect, useState } from "react"
 		await axios.get(api, {headers: headers})
 		.then((resp) => {
 			const data = resp.data.result.data;
-	
-			console.log(data);
-			
 			setDeliveryInfo(data);
 		})
 		.catch((err) => {
