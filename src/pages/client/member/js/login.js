@@ -54,7 +54,7 @@ function Login() {
             localStorage.setItem("refreshToken",response.data.refreshToken);
 
             if(localStorage.getItem("accessToken") !== null || localStorage.getItem("accessToken") !== ""){
-                
+
                 if(bCheked){
                     setCookie('rememberId', inputId, {maxAge: 2000});
                 } else{
@@ -67,30 +67,31 @@ function Login() {
             }else {
                 alert("로그인에 실패했습니다. 관리자에게 문의하세요.");
             }
-         })
-         .catch(function(error){
+        })
+        .catch(function(error){
             alert("아이디와 비밀번호를 확인하세요.");
             console.log(error);
-         })
+        })
     }
 
     return(
         <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <div className="card">
-                    <div className="card-header">
-                        <h3>로그인</h3>
-                        {/* <div className="d-flex justify-content-end social_icon">
+                    {/*<div className="card-header">*/}
+                    {/* <div className="d-flex justify-content-end social_icon">
                             <span><i className="fab fa-facebook-square"></i></span>
                             <span><i className="fab fa-google-plus-square"></i></span>
                             <span><i className="fab fa-twitter-square"></i></span>
                         </div> */}
-                    </div>
+                    {/*</div>*/}
                     <div className="card-body">
+                        <h3>로그인</h3><br/>
+
                         <form method='post'>
                             <div className="input-group form-group">
                                 <input type="text" className="form-control" name='input_login_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
-                                
+
                             </div>
                             <div className="input-group form-group">
                                 <input type="password" className="form-control" name='input_login_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" autoComplete="on" />
@@ -105,18 +106,23 @@ function Login() {
                                 <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
                             </div>
                             <div className="form-group">
-                                <button className="btn float-right kakao" onClick={onClickKakao} >카카오로 시작하기 </button>
+                                <button className="btn float-right kakao" onClick={onClickKakao} >
+                                    <img className="login-logo-img" src="assets/login/kakao-login-logo.png"/>카카오로 시작하기 </button>
                             </div>
                             <div className="form-group">
-                                <button className="btn float-right naver" onClick={onClickNaver} >네이버로 시작하기 </button>                                
+                                <button className="btn float-right naver" onClick={onClickNaver}>
+                                    <img className="login-logo-img" src="assets/login/naver-login-logo.png"/>네이버로 시작하기 </button>
                             </div>
                         </div>
                     </div>
-                    <div className="card-footer">
-                        <div className="d-flex justify-content-center links">
-                            <Link to="/signup">회원가입</Link>
-                        </div>
+                    <div className="d-flex justify-content-center">
+                        <span className="login-signup-suggestion-span">아직 회원이 아니신가요?</span>
                     </div>
+                    <div className="d-flex justify-content-center links">
+                        <Link to="/signup"><button className="btn signup-btn">회원가입</button></Link>
+                    </div><br/>
+
+
                 </div>
             </div>
         </div>
