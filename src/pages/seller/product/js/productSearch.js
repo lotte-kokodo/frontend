@@ -4,8 +4,11 @@ import "../css/productSearch.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import { useContext } from "react";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 export default function ProductSearch() {
+    const { url } = useContext(ServerConfigContext);
 
     const params = useParams();
 
@@ -35,7 +38,7 @@ export default function ProductSearch() {
 
         let sdate = tmpStartDate+" 00:00";
         let edate= tmpEndDate+" 00:00";
-        await axios.get(`http://localhost:8001/seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${parmas.sellerId}`
+        await axios.get(url + `seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${parmas.sellerId}`
         ).then(function (resp) {
             setProductList(resp.data);
 

@@ -1,9 +1,12 @@
 import React from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { useState, useEffect} from "react";
 
-export default function ProductTable(props) {
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
+export default function ProductTable(props) {
+    const { url } = useContext(ServerConfigContext);
     const [couponName, setCouponName] =useState(props.name);
     const [productList, setProductList] = useState([]);
 
@@ -12,7 +15,7 @@ export default function ProductTable(props) {
         console.log(props.couponFlag);
         
         const fetchRateCouponProduct = async () => {
-            await axios.get(`http://localhost:8001/promotion-service/rateCoupon/${couponName}/product`)
+            await axios.get(url + `promotion-service/rateCoupon/${couponName}/product`)
                 .then(function (resp) {
                     setProductList(resp.data.result.data);
 
@@ -23,7 +26,7 @@ export default function ProductTable(props) {
         }
 
         const fetchFixCouponProduct = async () => {
-            await axios.get(`http://localhost:8001/promotion-service/fixCoupon/${couponName}/product`)
+            await axios.get(url + `promotion-service/fixCoupon/${couponName}/product`)
                 .then(function (resp) {
                     console.log(resp.data.result.data);
                     setProductList(resp.data.result.data);

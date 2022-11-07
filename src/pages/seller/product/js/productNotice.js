@@ -1,12 +1,14 @@
 import React from "react"
+import { useContext } from "react";
 import axios from "axios"
 import "../css/productNotice.css"
 
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 export default function ProductNotice() {
-
+    const { url } = useContext(ServerConfigContext);
     const params = useParams();
 
     let history = useNavigate();
@@ -15,7 +17,7 @@ export default function ProductNotice() {
     // button axios
     const searchContent = async () => {
         history(`/product/present/${params.id}`)
-        await axios.post(`http://localhost:8080/product/${params.id}/productList`,{
+        await axios.post(url + `product/${params.id}/productList`,{
             // "sellerId" : 1,
             // "startDate" : tmpStartDate + "T"+"00:00:00",
             // "endDate" : tmpEndDate +  "T"+"00:00:00",
