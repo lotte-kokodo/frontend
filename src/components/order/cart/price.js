@@ -1,18 +1,17 @@
 /**
  * '상품 가격' 컴포넌트
  */
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {OrderContext} from "../../../context/orderProvider";
 
 const Price = (props) => {
 
 	const cart = props.cart;
 	const productId = cart.productId;
-	const totalPrice = cart.totalPrice;
+	const totalPrice = cart.qty * cart.unitPrice;
 
 	const { rateDiscountPolicyMap, replaceNumberComma } = useContext(OrderContext);
 	const discountRate = rateDiscountPolicyMap[productId] ? rateDiscountPolicyMap[productId].rate : undefined;
-
 
 	const discProduct = () => {
 		const discPrice = Math.floor(totalPrice*(1-0.01*discountRate));

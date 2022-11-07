@@ -16,9 +16,9 @@ import {useLocation} from "react-router-dom";
 function OrderSheet() {
 
 	const state = useLocation().state;
-	const cartIds = state.cartIds ? state.cartIds : [];
-	const productIds  = state.productIds;
-	const productQtyMap = state.productQtyMap;
+	const cartIds = state && state.cartIds ? state.cartIds : [];
+	const productIds  = state && state.productIds;
+	const productQtyMap = state && state.productQtyMap;
 
 	return (
 			<>

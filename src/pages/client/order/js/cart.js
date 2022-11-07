@@ -7,7 +7,7 @@ import Delivery from "../../../../components/order/cart/delivery"
 import Payment from "../../../../components/order/cart/payment"
 
 // Provider
-import OrderSheetButton from "../../../../components/order/cart/orderSheetButton";
+import OrderButton from "../../../../components/order/cart/orderButton";
 import SellerList from "../../../../components/order/cart/sellerList";
 
 
@@ -23,7 +23,7 @@ const Cart = () => {
 						</div>
 						<div className="col-3">
 							<Payment /> {/* 결제정보 */}
-							<OrderSheetButton />
+							<OrderButton />
 						</div>
 					</div>
 				</div>

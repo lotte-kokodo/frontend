@@ -10,7 +10,7 @@ import {useContext, useEffect, useState} from "react"
 
 const Payment = (props) => {
 
-  const { orderProductMap, checkRateCoupons, checkFixCoupons, fixDiscountPolicy } = useContext(OrderContext);
+  const { orderProductMap, checkRateCoupons, checkFixCoupons, rateDiscountPolicyMap, fixDiscountPolicyMap, replaceNumberComma } = useContext(OrderContext);
 
   const productQtyMap = props.productQtyMap;
 
@@ -20,25 +20,27 @@ const Payment = (props) => {
   const [ payPrice, setPayPrice ] = useState(999999);
 
   useEffect(() => {
-    calcPaymentPrice();
-  }, [orderProductMap, checkRateCoupons.length, checkFixCoupons.length]);
+    if (orderProductMap && rateDiscountPolicyMap && fixDiscountPolicyMap && checkRateCoupons && checkFixCoupons) {
+      calcPaymentPrice();
+    }
+  }, [orderProductMap, rateDiscountPolicyMap, fixDiscountPolicyMap, checkRateCoupons, checkFixCoupons]);
 
   const calcPaymentPrice = () => {
-    console.log("calcPrice");
     // 상품 총 금액 계산
     let tPrice = 0;
     Object.values(orderProductMap).map((product) => {
-      tPrice += product.unitPrice*productQtyMap[product.productId];
+      tPrice += product.price*productQtyMap[product.id];
     });
     setTotalPrice(tPrice);
 
     // 총 할인금액 계산
     let discPrice = 0;
     Object.values(orderProductMap).map((product) => {
-      const productTotalPrice = product.unitPrice*productQtyMap[product.productId];
+      const productTotalPrice = product.price * productQtyMap[product.id];
 
-      if (product.discRate !== 0) {
-        discPrice += Math.floor(productTotalPrice * (product.discRate*0.01));
+      let rateDiscountPolicy = rateDiscountPolicyMap[product.id];
+      if (rateDiscountPolicy) {
+        discPrice += Math.floor(productTotalPrice * (rateDiscountPolicy.rate*0.01));
       }
 
       checkRateCoupons.map((coupon) => {
@@ -59,7 +61,7 @@ const Payment = (props) => {
 
     let delPrice = 0;
     sellers.map((sellerId) => {
-      if (!fixDiscountPolicy[sellerId] && !checkFixCoupons[sellerId]) {
+      if (!fixDiscountPolicyMap[sellerId] && !checkFixCoupons[sellerId]) {
         delPrice += 3000;
       }
     });
@@ -75,21 +77,21 @@ const Payment = (props) => {
           <tbody>
           <tr>
             <td>상품금액</td>
-            <td>{totalPrice} 원</td>
+            <td>{replaceNumberComma(totalPrice)} 원</td>
           </tr>
           <tr>
             <td>상품할인금액</td>
-            <td>-{discPrice} 원</td>
+            <td>-{replaceNumberComma(discPrice)} 원</td>
           </tr>
           <tr>
             <td>배송비</td>
-            <td>{delPrice} 원</td>
+            <td>{replaceNumberComma(delPrice)} 원</td>
           </tr>
           </tbody>
         </table>
         <hr/>
         <div>
-          <span>{payPrice} 원</span>
+          <span>{replaceNumberComma(payPrice)} 원</span>
         </div>
       </>
   )

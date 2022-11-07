@@ -6,22 +6,23 @@ import {OrderContext} from "../../../context/orderProvider";
 
 // Provider
 
-const OrderSheetButton = () => {
+const OrderButton = () => {
 
-  // const [ productIds, setProductIds ] = useState([]);
-  // const [productQtyMap, setProductQtyMap] = useState([]);
   let cartIds = [];
   let productIds  = [];
   let productQtyMap = {};
-  const { checkProducts } = useContext(OrderContext);
+  const { checkCartMap, setRateDiscountPolicyMap, setFixDiscountPolicyMap } = useContext(OrderContext);
 
   const createOrderProductInfo = () => {
-    checkProducts.map((product) => {
-      cartIds.push(product.cartId);
-      productIds.push(product.productId);
-      productQtyMap[product.productId] = product.qty;
+    [...checkCartMap.keys()].map((sellerId) => {
+      checkCartMap.get(sellerId).map((cart) => {
+        cartIds.push(cart.cartId);
+        productIds.push(cart.productId);
+        productQtyMap[cart.productId] = cart.qty;
+      })
     });
-    console.log(productQtyMap);
+    setRateDiscountPolicyMap({});
+    setFixDiscountPolicyMap({});
   }
 
   return (
@@ -39,4 +40,4 @@ const OrderSheetButton = () => {
   )
 }
 
-export default OrderSheetButton;
+export default OrderButton;

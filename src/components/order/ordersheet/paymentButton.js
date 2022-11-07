@@ -19,16 +19,17 @@ const PaymentButton = (props) => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers, memberId } = useContext(AuthContext);
-  const { checkRateCoupons, checkFixCoupons, orderProductMap } = useContext(OrderContext);
+  const { orderProductMap, checkRateCoupons, checkFixCoupons } = useContext(OrderContext);
 
   const navigate = useNavigate();
 
   const orderSingleProduct = async () => {
 
-    let api = url + "/order-payment-service/orders/" + memberId + "/single-product";
+    let api = url + "/order-service/orders/single-product";
 
     const productId = productIds[0];
     const params = {
+      memberId: memberId,
       productId: productId,
       sellerId: orderProductMap[productId].sellerId,
       qty: productQtyMap[productId],
@@ -38,14 +39,12 @@ const PaymentButton = (props) => {
 
     await axios.post(api, null, { params: params, headers: headers })
     .then((resp) => {
-      console.log("[SUCCESS] (PaymentButton) POST /order-payment-service/orders/single-product");
       console.log(resp.data.result.data);
 
       alert(resp.data.result.data.msg);
       navigate(`/`); // TODO 주문상세로 이동
     })
     .catch((err) => {
-      console.log("[ERROR] (PaymentButton) POST /order-payment-service/orders/single-product");
       console.log(err);
 
     });
@@ -53,11 +52,11 @@ const PaymentButton = (props) => {
   }
 
   const orderCartProducts = async() => {
-    let api = url + "/order-payment-service/orders/" + memberId + "/cart";
+    let api = url + "/order-service/orders/cart";
 
     const productSellerMap = {};
-    productIds.map((productId) => {
-      productSellerMap[productId] = orderProductMap[productId].sellerId;
+    Object.values(orderProductMap).map((product) => {
+      productSellerMap[product.id] = product.sellerId;
     });
 
     const rateCouponIds = [];
@@ -71,6 +70,7 @@ const PaymentButton = (props) => {
     });
 
     const req = {
+      memberId: memberId,
       cartIds: cartIds,
       productSellerMap: productSellerMap,
       rateCouponIds: rateCouponIds,
@@ -79,14 +79,12 @@ const PaymentButton = (props) => {
 
     await axios.post(api, req, {headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (PaymentButton) POST /order-payment-service/orders/cart");
       console.log(resp.data.result.data);
 
       alert(resp.data.result.data.msg);
       navigate(`/`); // TODO 주문상세로 이동
     })
     .catch((err) => {
-      console.log("[ERROR] (PaymentButton) POST /order-payment-service/orders/cart");
       console.log(err);
     });
   }

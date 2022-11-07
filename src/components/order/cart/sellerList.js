@@ -12,11 +12,10 @@ const SellerList = () => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers } = useContext(AuthContext);
-  const { checkCartMap, setCheckCartMap, setFixDiscountPolicyMap, setRateDiscountPolicyMap, setSellerNameMap } = useContext(OrderContext);
+  const { cartMap, setCartMap, checkCartMap, setCheckCartMap, setFixDiscountPolicyMap, setRateDiscountPolicyMap, setSellerNameMap, fixDiscountPolicy } = useContext(OrderContext);
 
   const api = url + "/order-service/carts";
 
-  const [cartMap, setCartMap] = useState([]);
   const [sellerIds, setSellerIds] = useState([]);
   const [carts, setCarts] = useState([]);
   const [cartProductIds, setCartProductIds] = useState([]);
@@ -32,23 +31,12 @@ const SellerList = () => {
     getRateDiscountPolicy();
     getFixDiscountPolicy();
     getSellerNames();
-
-    console.log(cartMap);
-    console.log(checkCartMap);
-    console.log(carts.length);
-    console.log(carts);
-    console.log(cartProductIds);
-    console.log(sellerIds);
-    console.log("temp a b");
-    console.log(a);
-    console.log(b);
-  }, [cartMap.length]);
+  }, [cartMap]);
 
   const getCarts = async () => {
     // OrderService (Cart) 요청
     axios.get(api, { headers: headers })
     .then((resp) => {
-      console.log("[success] (CartList) GET /order-service/carts");
       const data = resp.data.result.data;
       console.log(data); // 판매자아이디-상품리스트
 
@@ -57,8 +45,6 @@ const SellerList = () => {
       setSellerIds(Object.keys(data));
       Object.keys(data).map((sellerId) => {
         data[sellerId].map((cart) => {
-          console.log("Cart");
-          console.log(cart);
           setCartProductIds((prev) => [...prev, cart.productId]);
           setCarts((prev) => [...prev, cart]);
           setCheckCartMap((prev) => new Map(prev).set(sellerId, []));
@@ -67,12 +53,11 @@ const SellerList = () => {
       })
     })
     .catch((err) => {
-      console.log("[error] (CartList) GET /order-service/carts");
       console.log(err);
     });
   }
 
-  // 바율할인 정책
+  // 비율할인 정책
   const getRateDiscountPolicy = async () => {
 
     const api = url + "/promotion-service/rate-discount/list";
@@ -82,7 +67,6 @@ const SellerList = () => {
 
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (Payment) GET /promotion-service/rate-discount/list");
 
       const data = resp.data.result.data;
       console.log(data);
@@ -90,7 +74,6 @@ const SellerList = () => {
       setRateDiscountPolicyMap(data);
     })
     .catch((err) => {
-      console.log("[ERROR] (Payment) GET /promotion-service/rate-discount/list");
       console.log(err);
     });
   }
@@ -137,15 +120,12 @@ const SellerList = () => {
 
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (Payment) GET /seller-service/seller/names");
-
       const data = resp.data.result.data;
       console.log(data);
 
       setSellerNameMap(data);
     })
     .catch((err) => {
-      console.log("[ERROR] (Payment) GET /seller-service/seller/names");
       console.log(err);
     });
   }
@@ -176,8 +156,8 @@ const SellerList = () => {
 
   function print () {
     console.log("SellerList");
-    console.log(carts);
-    console.log(cartProductIds);
+    console.log(checkCartMap);
+    console.log(cartMap);
   }
 
   return (
@@ -194,9 +174,9 @@ const SellerList = () => {
 
             return (
                 <div className="row container-fluid">
-                  <SellerName sellerId={sellerId} sellerCartCnt={sellerCarts.length} key={idx}/>
+                  <SellerName sellerId={sellerId} sellerCartCnt={sellerCarts.length} />
                   <CartList carts={sellerCarts} sellerId={sellerId}/>
-                  <FixDiscountPolicy sellerId={sellerId }/>
+                  <FixDiscountPolicy sellerId={sellerId}/>
                 </div>
                 );
           })

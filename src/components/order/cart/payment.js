@@ -10,7 +10,7 @@ import {useContext, useEffect, useState} from "react"
 
 const Payment = () => {
 
-	const { checkCartMap, fixDiscountPolicyMap, rateDiscountPolicyMap,
+	const { cartMap, checkCartMap, fixDiscountPolicyMap, rateDiscountPolicyMap,
 				replaceNumberComma, DELIVERY_PRICE } = useContext(OrderContext)
 
 	const [totalPrice, setTotalPrice] = useState(999999999);
@@ -22,15 +22,15 @@ const Payment = () => {
 
 	useEffect(() => {
 		calcPaymentPrice();
-		console.log("결제")
-	}, [checkCartMap]);
+	}, [checkCartMap, cartMap]);
 
 	const calcPaymentPrice = () => {
+
 		// 상품 총 금액 계산
 		let tPrice = 0;
 		sellerIds.map((sellerId) => {
 			checkCartMap.get(sellerId).map((cart) => {
-				tPrice += cart.totalPrice;
+				tPrice += cart.unitPrice * cart.qty;
 			})
 		})
 		setTotalPrice(tPrice);
@@ -41,7 +41,7 @@ const Payment = () => {
 			checkCartMap.get(sellerId).map((cart) => {
 				const rateDiscountPolicy = rateDiscountPolicyMap[cart.productId];
 				if (rateDiscountPolicy) {
-					discPrice +=  Math.floor(cart.totalPrice*(0.01*rateDiscountPolicy.rate));
+					discPrice +=  Math.floor((cart.unitPrice * cart.qty)*(0.01*rateDiscountPolicy.rate));
 				}
 			})
 		})
@@ -50,7 +50,6 @@ const Payment = () => {
 		// 배송비 계산
 		let delPrice = 0;
 		sellerIds.map((sellerId) => {
-			console.log("del price sellerId: " + sellerId);
 			if (isSellersProductChecked(sellerId) && notAppliedFixDiscountPolicy(sellerId)) {
 				delPrice += DELIVERY_PRICE;
 			}

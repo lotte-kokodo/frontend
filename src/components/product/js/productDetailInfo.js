@@ -200,16 +200,14 @@ export default function ProductDetail() {
     /* 장바구니 생성 API */
     const addCart = async () => {
 
-        await axios.post(`http://localhost:8001/order-payment-service/carts/${memberId}`, null,
+        await axios.post(`http://localhost:8001/order-service/carts/${memberId}`, null,
             {params: {productId: productId, qty: orderNum}, headers: headers})
         .then((resp) => {
-            console.log("[SUCCESS] (ProductDetailInfo) POST /order-payment-service/carts/");
             console.log(resp.data.result.data);
 
             alert(resp.data.result.data.msg);
         })
         .catch((err) => {
-            console.log("[ERROR] (ProductDetailInfo) POST /order-payment-service/carts/");
             console.log(err);
         });
 

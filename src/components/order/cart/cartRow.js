@@ -16,33 +16,35 @@ import {useContext, useState} from "react"
 // Context
 import {AuthContext} from "../../../context/authProvider";
 import {OrderContext} from "../../../context/orderProvider";
+import {ServerConfigContext} from "../../../context/serverConfigProvider";
 
 const CartRow = (props) => {
 
-	const { url, headers } = useContext(AuthContext);
+	const { headers, memberId } = useContext(AuthContext);
+	const { url } = useContext(ServerConfigContext);
 
 	const cart = props.cart;
-	const cartId = cart.cartId;
+	const sellerId = props.sellerId;
 	const [qty, setQty] = useState(cart.qty);
-	const { checkCarts, setCheckCarts } = useContext(OrderContext);
+	const { checkCartMap, setCheckCartMap, cartMap } = useContext(OrderContext);
 
 	const updateQty = async (updatedQty) => {
 
-		const api = url + "/order-service/carts/" + cartId + "/qty";
+		const api = url + "/order-service/carts/qty";
 		const req = {
+			memberId: memberId,
+			cartId: cart.cartId,
 			qty: updatedQty
 		}
 
 		await axios.post(api, req, {headers: headers })
 			.then((resp) => {
-				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);
 
 				setQty(updatedQty);
 				updateProductQty(updatedQty);
 			})
 			.catch((err) => {
-				console.log("[Error](CartRow) updateQty().");
 				console.log(err);
 
 				const data = err.response.data;
@@ -52,13 +54,15 @@ const CartRow = (props) => {
 	}
 
 	const updateProductQty = (updatedQty) => {
-		setCheckCarts(
-				checkCarts.map((checkCart) =>
-						checkCart.productId === cart.productId
-							? {...checkCart, qty: updatedQty }
-							: checkCart
-				)
-		)
+		cartMap[sellerId].map((c) => {
+			if (c.cartId === cart.cartId) {
+				c.qty = updatedQty;
+			}
+		});
+
+		[...checkCartMap.keys()].map((sellerId) => {
+			setCheckCartMap((prev) => new Map(prev));
+		})
 	}
 
 	const increaseQty = () => {

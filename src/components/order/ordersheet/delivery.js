@@ -28,13 +28,9 @@ const Delivery = () => {
 	const getDeliveryInfo = async () => {
 		await axios.get(api, {headers: headers})
 		.then((resp) => {
-			console.log("[SUCCESS] (Delivery) GET /member-service/member/orderInfo");
-			console.log(resp.data.result.data);
-
 			setMember(resp.data.result.data);
 		})
 		.catch((err) => {
-			console.log("[ERROR] (Delivery) GET /member-service/member/orderInfo");
 			console.log(err);
 		})
 	}

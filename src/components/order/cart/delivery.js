@@ -27,7 +27,6 @@ import { useContext, useEffect, useState } from "react"
 
 		await axios.get(api, {headers: headers})
 		.then((resp) => {
-			console.log("[success] (Delivery) GET /member/deliveryInfo");
 			const data = resp.data.result.data;
 	
 			console.log(data);
@@ -35,7 +34,6 @@ import { useContext, useEffect, useState } from "react"
 			setDeliveryInfo(data);
 		})
 		.catch((err) => {
-			console.log("[error] (Delivery) GET /member/deliveryInfo");
 			console.log(err);
 		});
 

@@ -20,22 +20,12 @@ const CartList = (props) => {
 			checkCartMap.get(sellerId).push(cart);
 			let checkCarts = checkCartMap.get(sellerId);
 			setCheckCartMap((prev) => new Map([...prev, [sellerId, checkCarts]]));
-			// setCheckCarts([...checkCarts, cart]);
-			// setCheckCartMap(checkCartMap, checkCartMap[sellerId].push(cart));
 		}
 		else if (!isChecked && isIncludeCheckCarts(cart)) {
-			// setCheckCarts(checkCarts.filter((checkCart) => checkCart.cartId !== cart.cartId));
 			[...checkCartMap.keys()].map((sellerId) => {
-				console.log("before")
-				console.log(checkCartMap.get(sellerId));
 				let checkCarts = checkCartMap.get(sellerId).filter((checkCart) => checkCart.cartId !== cart.cartId);
-				console.log("after")
-				console.log(checkCarts);
 				setCheckCartMap((prev) => new Map(prev).set(sellerId, checkCarts));
 			})
-			// checkCartMap[sellerId] = [];
-			// setCheckCartMap(checkCartMap, checkCartMap[sellerId].clear);
-			// checkCartMap[sellerId] = [];
 		}
 	}
 
@@ -65,16 +55,9 @@ const CartList = (props) => {
 		}
 	}
 
-	const print = () => {
-		console.log("[CartList] variable list");
-		console.log(checkCartMap);
-		console.log(carts.length === (checkCartMap[sellerId] !== undefined && checkCartMap[sellerId].size))
-	}
-
 	return (
 		<>
 			<div className="row container-fluid">
-				<button className="btn-info" onClick={print}>변수값 출력</button>
 				<input type="checkbox"
 						onChange={(event) => allCartCheckHandler(event.target.checked)}
 						checked={carts.length === (checkCartMap.get(sellerId) !== undefined && checkCartMap.get(sellerId).length)}/> &nbsp; &nbsp; 전체선택
@@ -83,7 +66,7 @@ const CartList = (props) => {
 				carts.map(function (cart, idx) {
 					return (
 						<CartRow
-							cart={cart} key={idx}
+							cart={cart} sellerId={sellerId} key={idx}
 							handler={cartCheckHandler}
 							checkCartCnt={checkCartMap.get(sellerId).length}
 							sellerCartCnt={carts.length}/>

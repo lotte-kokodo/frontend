@@ -18,7 +18,7 @@ const RateCouponRow = (props) => {
     else { // false 상태에서 클릭하면 true 로 변경
       const couponProduct = orderProductMap[coupon.productId];
       // TODO 상품 중복 적용 불가능 처리
-      if (couponProduct.unitPrice*productQtyMap[coupon.productId] < coupon.minPrice) {
+      if (couponProduct.price *productQtyMap[coupon.productId] < coupon.minPrice) {
         alert("쿠폰 적용이 가능한 최소주문금액은 " + coupon.minPrice + "원 입니다.");
         return;
       }
