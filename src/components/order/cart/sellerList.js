@@ -38,8 +38,6 @@ const SellerList = () => {
     axios.get(api, { headers: headers })
     .then((resp) => {
       const data = resp.data.result.data;
-      console.log(data); // 판매자아이디-상품리스트
-
       setCartMap(data);
 
       setSellerIds(Object.keys(data));
@@ -69,8 +67,6 @@ const SellerList = () => {
     .then((resp) => {
 
       const data = resp.data.result.data;
-      console.log(data);
-
       setRateDiscountPolicyMap(data);
     })
     .catch((err) => {
@@ -99,15 +95,10 @@ const SellerList = () => {
 
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (Payment) GET /promotion-service/fix-discount/status");
-
       const data = resp.data.result.data;
-      console.log(data);
-
       setFixDiscountPolicyMap(data);
     })
     .catch((err) => {
-      console.log("[ERROR] (Payment) GET /promotion-service/fix-discount/status");
       console.log(err);
     });
   }
@@ -121,8 +112,6 @@ const SellerList = () => {
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
       const data = resp.data.result.data;
-      console.log(data);
-
       setSellerNameMap(data);
     })
     .catch((err) => {
@@ -149,21 +138,12 @@ const SellerList = () => {
     sellerIds.map((sellerId) => {
       checkCartCnt = checkCartCnt + checkCartMap.get(sellerId).length;
     })
-
-    console.log(checkCartCnt);
     return carts.length === checkCartCnt;
-  }
-
-  function print () {
-    console.log("SellerList");
-    console.log(checkCartMap);
-    console.log(cartMap);
   }
 
   return (
       <>
         <div className="row container-fluid">
-          <button className="btn-info" onClick={print}>변수값 출력</button>
           <input type="checkbox"
                  onChange={(event) => allSellerCheckHandler(event.target.checked)}
                  checked={isAllCartChecked()}/> &nbsp; &nbsp; 전체선택

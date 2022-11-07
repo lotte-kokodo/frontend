@@ -24,20 +24,22 @@ const OrderProductList = (props) => {
   const productIds = props.productIds;
   const productQtyMap = props.productQtyMap;
 
-  const api = url + "/product-service/product/orderSheet";
-
   useEffect(() => {
     getOrderProducts();
-    getRateDiscountPolicy();
-    getFixDiscountPolicy();
   }, []);
 
+  useEffect(() => {
+    getRateDiscountPolicy();
+    getFixDiscountPolicy();
+  }, [orderProductMap]);
+
   const getOrderProducts = async () => {
+    const api = url + "/product-service/product/orderSheet";
+
     await axios.get(api, { params: { productIds: productIds.join(",") }, headers: headers})
     .then((resp) => {
       const data = resp.data.result.data;
 
-      console.log(data);
       setOrderProductMap(data);
     })
     .catch((err) => {
@@ -57,8 +59,6 @@ const OrderProductList = (props) => {
     .then((resp) => {
 
       const data = resp.data.result.data;
-      console.log(data);
-
       setRateDiscountPolicyMap(data);
     })
     .catch((err) => {
@@ -86,8 +86,6 @@ const OrderProductList = (props) => {
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
       const data = resp.data.result.data;
-      console.log(data);
-
       setFixDiscountPolicyMap(data);
     })
     .catch((err) => {

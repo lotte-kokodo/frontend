@@ -39,8 +39,6 @@ const PaymentButton = (props) => {
 
     await axios.post(api, null, { params: params, headers: headers })
     .then((resp) => {
-      console.log(resp.data.result.data);
-
       alert(resp.data.result.data.msg);
       navigate(`/`); // TODO 주문상세로 이동
     })
@@ -79,8 +77,6 @@ const PaymentButton = (props) => {
 
     await axios.post(api, req, {headers: headers})
     .then((resp) => {
-      console.log(resp.data.result.data);
-
       alert(resp.data.result.data.msg);
       navigate(`/`); // TODO 주문상세로 이동
     })
