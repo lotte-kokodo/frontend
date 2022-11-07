@@ -32,7 +32,7 @@ import ServerConfigProvider from "../../../../context/serverConfigProvider";
 function Client() {
   return(
       <div>
-
+      <ServerConfigProvider>
         <Header />
         {/* <Nav /> */}
 
@@ -42,7 +42,6 @@ function Client() {
               <RecentProduct />
 
               <AuthProvider>
-                <ServerConfigProvider>
                   <Routes>
                     <Route path="/" element={<Home />}></Route>
 
@@ -65,11 +64,9 @@ function Client() {
                     <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
 
                   </Routes>
-                </ServerConfigProvider>
               </AuthProvider>
 
               <AuthProvider>
-                <ServerConfigProvider>
 
                   <OrderProvider>
                     <Routes>
@@ -85,10 +82,11 @@ function Client() {
           </RecentProductProvider>
 
 
+
         <footer>
           <Footer></Footer>
         </footer>
-
+      </ServerConfigProvider>
       </div>
   )
 }
