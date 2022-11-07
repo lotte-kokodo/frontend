@@ -43,11 +43,12 @@ const Payment = (props) => {
         discPrice += Math.floor(productTotalPrice * (rateDiscountPolicy.rate*0.01));
       }
 
-      // checkRateCoupons.map((coupon) => {
-      //   if (coupon && coupon.rate && productTotalPrice >= coupon.minPrice) {
-      //     discPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
-      //   }
-      // });
+      checkRateCoupons.map((coupon) => {
+        if (coupon && coupon.rate && productTotalPrice >= coupon.minPrice
+            && product.id === coupon.productId) {
+          discPrice += Math.floor(productTotalPrice * (coupon.rate*0.01));
+        }
+      });
     });
     setDiscountPrice(discPrice);
 

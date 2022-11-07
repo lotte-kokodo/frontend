@@ -8,14 +8,12 @@ const RateCouponRow = (props) => {
   const productQtyMap = props.productQtyMap;
 
   const [ isChecked, setChecked ] = useState(false);
-  const { orderProductMap, checkRateCoupons, setCheckRateCoupons, rateDiscountPolicyMap, setRateDiscountPolicyMap } = useContext(OrderContext);
+  const { orderProductMap, checkRateCoupons, setCheckRateCoupons } = useContext(OrderContext);
 
   const checkHandler = () => {
     if (isChecked) {
       setChecked(false);
       setCheckRateCoupons(checkRateCoupons.filter((el) => el.id !== coupon.id));
-
-      rateDiscountPolicyMap[coupon.productId].rate -= coupon.rate;
     }
     else { // false 상태에서 클릭하면 true 로 변경
       const couponProduct = orderProductMap[coupon.productId];
@@ -24,14 +22,6 @@ const RateCouponRow = (props) => {
         alert("쿠폰 적용이 가능한 최소주문금액은 " + coupon.minPrice + "원 입니다.");
         return;
       }
-
-      if (rateDiscountPolicyMap[coupon.productId]) {
-        rateDiscountPolicyMap[coupon.productId].rate += coupon.rate;
-      }
-      else {
-        rateDiscountPolicyMap[coupon.productId] = {rate: coupon.rate, productId: coupon.productId};
-      }
-
       setChecked(true);
       setCheckRateCoupons([...checkRateCoupons, coupon]);
     }
