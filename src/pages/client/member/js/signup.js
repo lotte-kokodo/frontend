@@ -97,7 +97,7 @@ function Signup() {
     const fetchCheckId = async (id) => {
         await axios({
             method: "get",
-            url: url + "/member-service/member/signup/" + id
+            url: "https://api.kokodo.shop/member-service/member/signup/" + id
         })
             .then((response) => {
                 if (response.data.result.data === "아이디 중복이 아닙니다.") {
