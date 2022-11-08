@@ -4,7 +4,6 @@ import {Routes, Route, useParams} from "react-router-dom"
 import SellerHeader from "./sellerHeader"
 import SellerNav from "./sellerNav"
 import SellerHome from "./sellerHome"
-
 import SellerProductRegister from "../../product/js/sellerProductRegister"
 import ProductNotice from "../../product/js/productNotice"
 import ProductSearch from "../../product/js/productSearch"
