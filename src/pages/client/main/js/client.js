@@ -7,6 +7,7 @@ import RecentProduct from './recentPrdocut'
 import Home from "./home"
 
 import Login from "../../member/js/login"
+import NaverLogin from "../../../../components/oauth/naverLogin"
 import Signup from "../../member/js/signup"
 import Mypage from "../../member/js/mypage"
 import MypageRead from "../../member/js/mypageRead"
@@ -50,6 +51,8 @@ function Client() {
                     <Route path="/signup" element={<Signup />}></Route>
                     <Route path="/mypage" element={<Mypage />}></Route>
                     <Route path="/mypageRead" element={<MypageRead />}></Route>
+
+                    <Route path="/login/naver" element={<NaverLogin />}></Route>
 
                     {/* product - search, category, detail */}
                     <Route path='/search' element={<Search />}></Route>

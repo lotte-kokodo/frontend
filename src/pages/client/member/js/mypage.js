@@ -22,7 +22,7 @@ function Mypage() {
     const { url } = useContext(ServerConfigContext);
 
     const firstEnter = () => {
-        if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
+        if(localStorage.getItem('accessToken') === null || localStorage.getItem('accessToken') === ""){
             alert("로그인 후 이용이 가능합니다.");
             history("/login");
         }else{
@@ -36,7 +36,7 @@ function Mypage() {
             url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
-            setName(response.data.result.data.loginId);
+            setName(response.data.result.data.name);
         })
         .catch(function(error){
             console.log(error)

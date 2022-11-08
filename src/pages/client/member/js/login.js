@@ -14,6 +14,8 @@ function Login() {
     const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
     const history = useNavigate();
     const { url } = useContext(ServerConfigContext);
+    const { naver } = window;
+
 
     useEffect(() => {
         if(cookies.rememberId !== undefined) {
@@ -39,13 +41,20 @@ function Login() {
         fetchLogin(params);
     }
 
-    const onClickKakao = () => {}
-    const onClickNaver = () => {}
+    const onClickKakao = () => {
+
+    }
+
+    const onClickNaver = () => {
+        const redirectUri = "http://localhost:9090/login/naver";
+        const naverOAuthApi = "https://nid.naver.com/oauth2.0/authorize?response_type=code&state=1234&client_id=Rjyho8H2B4sgRJf9JE1c&redirect_uri=" + redirectUri;
+        window.location.href = naverOAuthApi;
+    }
 
     const fetchLogin = async (params) => {
         await axios({
             method: "post",
-            url: url + "/member-service/login",
+            url: url + "/member-service/member/login",
             data : params
         })
         .then(function(response){
