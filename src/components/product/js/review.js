@@ -14,7 +14,6 @@ export default function Review() {
     const [totalReview, setTotalReview ]=useState(0);
     const [reviewList, setReviewList ]=useState([]);
   
-
     const saveReview = (s) =>{
 
         const fetchData = async () => {
@@ -59,7 +58,7 @@ export default function Review() {
     // 리뷰 조회
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(url + `/product-service/review/${productId}`)
+            await axios.get(url + `/product-service/review/${productId}?page=`+0)
                 .then(function (resp) {
                     console.log(resp);
                     setReviewList(resp.data.result.data);
@@ -109,7 +108,7 @@ export default function Review() {
         <div style={{padding: "10px"}}>
 
                 <textarea class="reviewContent"  style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
-                <button onClick={saveReview()} style={{backgroundColor: "#FB7D98", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
+                <button onClick={saveReview()} style={{backgroundColor: "#000", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
                 color:"#fff", borderRadius: "10px",verticalAlign: "top"}}>리뷰 등록</button>
         </div>
 
@@ -160,13 +159,13 @@ export default function Review() {
         
         
     
-    <div data-v-a49b620e className="paginationArea short">
+    {/* <div data-v-a49b620e className="paginationArea short">
         <div data-v-68fee7ac data-v-a49b620e className="v-popover tooltipPolicy">
             <div aria-describedby="popover_exscfhl3x4" className="trigger" style={{ display: 'inline-block' }}>
                 <button data-v-68fee7ac className="tooltip-target">리뷰 운영정책</button>
             </div> 
         </div>
-    </div>
+    </div> */}
 </div></div>
 
         </div>

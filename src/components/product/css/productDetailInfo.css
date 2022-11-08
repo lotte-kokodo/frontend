@@ -45,7 +45,7 @@ fieldset, img {
     color: #999;
 }
 .goods-price .sale > strong {
-    font-size: 35px;
+    font-size: 30px;
 }
 address, caption, cite, code, dfn, em, strong, th, var {
     font-style: normal;
@@ -97,11 +97,12 @@ address, caption, cite, code, dfn, em, strong, th, var {
     text-decoration: none;
     color: inherit;
 } */
-.text-primary {
-    color: #FB7D98 
+.product-info-coupon-primary {
+    color: #413f40;
+    text-decoration: none;
 }
 .orange-mem-box .sale-desc {
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgb(146, 144, 144);
     padding: 15px 0;
 }
 .orange-mem-box .sale-desc li > span {
@@ -129,9 +130,6 @@ address, caption, cite, code, dfn, em, strong, th, var {
 .orange-mem-box .sale-desc li {
     overflow: hidden;
     padding: 0 20px;
-}
-.text-primary {
-    color: #FB7D98;
 }
 .dl-table-group .dl-row {
     display: table-row;
@@ -224,8 +222,8 @@ address, caption, cite, code, dfn, em, strong, th, var {
 }
 .btn-primary-line {
     background: #fff;
-    color: #FB7D98;
-    border: 1px solid #FB7D98;
+    color: #000;
+    border: 1px solid #000;
 }
 .goods-info-area .option-select-area .btn-area > [class*="btn-basic-"] {
     vertical-align: top;
@@ -243,9 +241,9 @@ address, caption, cite, code, dfn, em, strong, th, var {
     border-radius: 6px;
 }
 .btn-primary-ex {
-    background: #FB7D98;
+    background: #000;
     color: #fff;
-    border: 1px solid #FB7D98;
+    border: 1px solid #000;
 }
 
 .btn-basic-lg > span {

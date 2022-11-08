@@ -102,8 +102,8 @@ a {
 
 .headerBottom-hr{
     width:100%;
-    border-width: 3px;
-    border-color: #fb7d98;
+    border-width: 2px;
+    border-color: #000;
     margin: 0;
     padding: 0;
 }
