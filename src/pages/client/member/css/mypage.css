@@ -3,7 +3,7 @@
     outline: 0;
     padding: 0;
     margin: 0;
-    background-color: #F0F0F0;
+    background-color: #f8f8f8;
 }
 
 .mypage{
@@ -15,7 +15,7 @@
 .mypageTop{
     width: 1000px;
     height: 170px;
-    background-color: #F0F0F0;
+    background-color: #f8f8f8;
     overflow: hidden;
 }
 
@@ -48,10 +48,10 @@
 
 
 .mypage-top-center{
-    font-size: 100px;
+    margin-top: 15px;
     margin-left: 40px;
-    width: 100px;
-
+    height: 80%;
+    border-right: 0.5px dotted rgb(201, 199, 199);
     float: left;
 }
 
@@ -85,7 +85,7 @@
 .mypage-nav-ul{
     list-style-type: none;
     margin-left: 300px;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .mypage-nav-ul li{
@@ -93,7 +93,7 @@
 }
 
 .mypage-nav-ul li:nth-child(1){
-    margin-right:80px;
+    margin-right:200px;
 }
 
 .mypage-nav-ul li:nth-child(1):hover{
