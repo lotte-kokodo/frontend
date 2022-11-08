@@ -20,6 +20,7 @@ function Seller() {
 
     return(
         <div>
+            <div></div>
             <SellerHeader />
             <hr className="headerBottom-hr"></hr>
             <SellerNav />
