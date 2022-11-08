@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from 'react-daum-postcode';
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/signup.css";
 
@@ -14,6 +15,8 @@ function Signup() {
     const [inputBirth, setInputBirth] = useState("");
     const [inputPhone, setInputPhone] = useState("");
     const [inputAddr, setInputAddr] = useState("");
+    const { url } = useContext(ServerConfigContext);
+    
 
     /*daum address*/
     const [openPostcode, setOpenPostcode] = useState(false);
@@ -94,10 +97,10 @@ function Signup() {
     const fetchCheckId = async (id) => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/member-service/member/signup/" + id
+            url: url + "/member-service/member/signup/" + id
         })
             .then((response) => {
-                if (response.data.result.data === "success") {
+                if (response.data.result.data === "아이디 중복이 아닙니다.") {
                     setIdCheck(true);
                     alert("해당 아이디는 사용 가능합니다.");
                 } else {
@@ -112,11 +115,11 @@ function Signup() {
     const fetchSignUp = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/member-service/member/signup",
+            url: url + "/member-service/member/signup",
             data : params
         })
             .then(function (response) {
-                if (response.data.result.data === "success") {
+                if (response.data.success) {
                     alert("회원 가입에 성공하셨습니다.");
                     history('/login');
                 } else {

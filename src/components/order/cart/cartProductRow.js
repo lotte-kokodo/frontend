@@ -17,8 +17,10 @@ import {useContext, useState} from "react"
 import {AuthContext} from "../../../context/authProvider";
 import {OrderContext} from "../../../context/orderProvider";
 
-const CartProductRow = (props) => {
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
+const CartProductRow = (props) => {
+	const { url } = useContext(ServerConfigContext);
 	const { headers } = useContext(AuthContext);
 
 	const product = props.product;
@@ -32,7 +34,7 @@ const CartProductRow = (props) => {
 			qty: updatedQty
 		}
 
-		await axios.post(`http://localhost:8001/order-payment-service/carts/${cartId}/qty`, req, {headers: headers })
+		await axios.post(url + `/order-payment-service/carts/${cartId}/qty`, req, {headers: headers })
 			.then((resp) => {
 				console.log("[Success](CartRow) updateQty().");
 				console.log(resp);

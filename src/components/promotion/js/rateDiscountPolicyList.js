@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useContext } from "react";
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -10,6 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TablePagination } from '@mui/material';
 import { Box } from '@mui/system';
+
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -33,6 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function FixDiscountPolicyList() {
+    const { url } = useContext(ServerConfigContext);
     const [order, setOrder] = React.useState('desc');
     const [orderBy, setOrderBy] = React.useState('reqDate');
     const [selected, setSelected] = React.useState([]);
@@ -44,7 +48,7 @@ export default function FixDiscountPolicyList() {
     const fetchRowDiscountPolicyList = async() => {
         //sellerId 확인 필요
         
-        await axios.get("http://localhost:8001/promotion-service/rate-discount/seller/1", {   
+        await axios.get(url + "/promotion-service/rate-discount/seller/1", {   
         // params: {
         //     sellerId: sellerId
         // }

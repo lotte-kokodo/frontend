@@ -15,12 +15,14 @@ import SaleList from "../../calculate/js/saleList"
 import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagement"
 import CouponManagement from '../../promotion/js/couponManagement'
 
+import ServerConfigProvider from "../../../../context/serverConfigProvider";
+
 function Seller() {
     const params = useParams();
 
     return(
         <div>
-            <div></div>
+            <ServerConfigProvider>
             <SellerHeader />
             <hr className="headerBottom-hr"></hr>
             <SellerNav />
@@ -28,6 +30,8 @@ function Seller() {
             <main>
                 <Routes>
                     <Route path="/" element={<SellerHome />}></Route>
+
+                        
 
                     {/* Seller Product */}
                     <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
@@ -41,9 +45,9 @@ function Seller() {
                     {/* Seller Promotion */}
                     <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
                     <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
-
                 </Routes>
             </main>
+            </ServerConfigProvider>
         </div>
     )
 }

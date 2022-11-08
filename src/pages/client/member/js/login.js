@@ -1,8 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/login.css";
 
@@ -12,6 +13,7 @@ function Login() {
     const [bCheked,setChecked] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
     const history = useNavigate();
+    const { url } = useContext(ServerConfigContext);
 
     useEffect(() => {
         if(cookies.rememberId !== undefined) {
@@ -43,7 +45,7 @@ function Login() {
     const fetchLogin = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/member-service/login",
+            url: url + "/member-service/login",
             data : params
         })
         .then(function(response){

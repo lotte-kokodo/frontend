@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom"
 
 import '../css/orderDetailList.css';
 import {AuthContext} from "../../../../context/authProvider";
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 function changeOrderStatus(orderStatus) {
     let result;
@@ -29,13 +30,14 @@ function OrderDetailList() {
     const state = useLocation();
     const userId = state.state.userId;
     const orderId = state.state.orderId;
+    const { url } = useContext(ServerConfigContext);
 
     useEffect(() => {
         
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(`http://localhost:8001/order-payment-service/orders/${userId}/${orderId}`, {headers: headers}
+            await axios.get(url + `/order-payment-service/orders/${userId}/${orderId}`, {headers: headers}
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);
@@ -49,7 +51,7 @@ function OrderDetailList() {
 
     // 환불을 위한 API확인 필요
     const setRefundOrderDetail = async () => {
-        await axios.get(`http://localhost:8001/order-payment-service/orders/`)
+        await axios.get(url + `/order-payment-service/orders/`)
             .then(function (resp) {
 
             })
