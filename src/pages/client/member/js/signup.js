@@ -119,7 +119,7 @@ function Signup() {
             data : params
         })
             .then(function (response) {
-                if (response.data.success) {
+                if (response.data === "success") {
                     alert("회원 가입에 성공하셨습니다.");
                     history('/login');
                 } else {
