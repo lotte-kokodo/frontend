@@ -10,17 +10,17 @@ import naverLogo from '../../../../src_assets/login/naver-login-logo.png'
 
 import "../css/login.css";
 
-function Login() {
+function SellerLogin() {
     const [inputId, setInputId] = useState('');
     const [inputPw, setInputPw] = useState('');
     const [bCheked,setChecked] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
-    const history = useNavigate();
+    const navigate = useNavigate();
     const { url } = useContext(ServerConfigContext);
 
     useEffect(() => {
-        if(cookies.rememberId !== undefined) {
-            setInputId(cookies.rememberId);
+        if(cookies.sellerRememberId !== undefined) {
+            setInputId(cookies.sellerRememberId);
             setChecked(true);
         }
     },[cookies.rememberId]);
@@ -42,45 +42,28 @@ function Login() {
         fetchLogin(params);
     }
 
-    const onClickKakao = () => {
-        const REST_API_KEY = "6eba566b2a92f612fb5cf08e93c15ac5";
-        const REDIRECT_URI = "http://localhost:9090/login/kakao"
-        const kakaoOAuthApi = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-        window.location.href = kakaoOAuthApi;
-    }
-
-    const onClickNaver = () => {
-        const CLIENT_ID = "Rjyho8H2B4sgRJf9JE1c"
-        const REDIRECT_URI = "http://localhost:9090/login/naver";
-        const naverOAuthApi = `https://nid.naver.com/oauth2.0/authorize?response_type=code&state=1234&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
-        window.location.href = naverOAuthApi;
-    }
-
     const fetchLogin = async (params) => {
         await axios({
             method: "post",
-            url: url + "/member-service/login",
+            url: url + "/seller-service/login",
             data : params
         })
         .then(function(response){
-            localStorage.setItem("memberId",response.data.memberId);
-            localStorage.setItem("accessToken",response.data.accessToken);
-            localStorage.setItem("refreshToken",response.data.refreshToken);
+            const data = response.data;
 
-            if(localStorage.getItem("accessToken") !== null || localStorage.getItem("accessToken") !== ""){
+            localStorage.setItem("sellerId", data.sellerId);
+            localStorage.setItem("sellerAccessToken", data.accessToken);
+            localStorage.setItem("sellerRefreshToken", data.refreshToken);
 
-                if(bCheked){
-                    setCookie('rememberId', inputId, {maxAge: 2000});
-                } else{
-                    removeCookie('rememberId');
-                }
-
-                alert("로그인에 성공했습니다.");
-                history("/");
-                window.location.reload();
-            }else {
-                alert("로그인에 실패했습니다. 관리자에게 문의하세요.");
+            if(bCheked){
+                setCookie('sellerRememberId', inputId, {maxAge: 2000});
+            } else{
+                removeCookie('sellerRememberId');
             }
+
+            alert("로그인 성공했습니다.");
+            navigate(`/seller/${data.sellerId}`);
+            window.location.reload();
         })
         .catch(function(error){
             alert("아이디와 비밀번호를 확인하세요.");
@@ -92,13 +75,6 @@ function Login() {
         <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <div className="card">
-                    {/*<div className="card-header">*/}
-                    {/* <div className="d-flex justify-content-end social_icon">
-                            <span><i className="fab fa-facebook-square"></i></span>
-                            <span><i className="fab fa-google-plus-square"></i></span>
-                            <span><i className="fab fa-twitter-square"></i></span>
-                        </div> */}
-                    {/*</div>*/}
                     <div className="card-body">
                         <h3>로그인</h3><br/>
 
@@ -119,14 +95,6 @@ function Login() {
                             <div className="form-group">
                                 <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
                             </div>
-                            <div className="form-group">
-                                <button className="btn float-right kakao" onClick={onClickKakao} >
-                                    <img className="login-logo-img" src={kakaoLogo}/>카카오로 시작하기 </button>
-                            </div>
-                            <div className="form-group">
-                                <button className="btn float-right naver" onClick={onClickNaver}>
-                                    <img className="login-logo-img" src={naverLogo}/>네이버로 시작하기 </button>
-                            </div>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center">
@@ -143,4 +111,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default SellerLogin;

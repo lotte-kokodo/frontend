@@ -15,40 +15,62 @@ import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagemen
 import CouponManagement from '../../promotion/js/couponManagement'
 
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
+import SellerLogin from "../../seller/js/sellerLogin";
 
 function Seller() {
-    const params = useParams();
+    const sellerId = localStorage.getItem("sellerId");
 
-    return(
-        <div>
-            <ServerConfigProvider>
+    const sellerLogin = () => {
+      return (
+          <>
+            <main>
+              <Routes>
+                <Route path="/" element={<SellerLogin />}></Route>
+              </Routes>
+            </main>
+          </>
+      );
+    }
+
+    const seller = () => {
+      return (
+          <>
             <SellerHeader />
             <hr className="headerBottom-hr"></hr>
             <SellerNav />
 
             <main>
-                <Routes>
-                    <Route path="/" element={<SellerHome />}></Route>
+              <Routes>
+                <Route path={`/${sellerId}`} element={<SellerHome />}></Route>
 
-                        
+                {/* Seller Product */}
+                <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
+                <Route path="/productNotice" element={<ProductNotice />}></Route>
+                <Route path="/productSearch" element={<ProductSearch />}></Route>
 
-                    {/* Seller Product */}
-                    <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
-                    <Route path="/productNotice" element={<ProductNotice />}></Route>
-                    <Route path="/productSearch" element={<ProductSearch />}></Route>
+                {/* Seller Calculate */}
+                <Route path="/calculateList" element={<CalculatePresent />}></Route>
+                <Route path="/saleList" element={<SaleList />}></Route>
 
-                    {/* Seller Calculate */}
-                    <Route path="/calculateList" element={<CalculatePresent />}></Route>
-                    <Route path="/saleList" element={<SaleList />}></Route>
-
-                    {/* Seller Promotion */}
-                    <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
-                    <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
-                </Routes>
+                {/* Seller Promotion */}
+                <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
+                <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
+              </Routes>
             </main>
+          </>
+      );
+    }
+
+    return(
+        <div>
+            <ServerConfigProvider>
+
+              {
+                sellerId ? seller() : sellerLogin()
+              }
             </ServerConfigProvider>
         </div>
-    )
+    );
 }
 
 export default Seller;
