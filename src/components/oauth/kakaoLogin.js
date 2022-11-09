@@ -4,21 +4,21 @@ import axios from "axios";
 import {ServerConfigContext} from "../../context/serverConfigProvider";
 import LoginLoading from "./loginLoading";
 
-const NaverLogin = () => {
+const KakaoLogin = () => {
 
   const location = useLocation();
   const { url } = useContext(ServerConfigContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    authenticateWithNaver();
+    authenticationWithKakao();
   }, []);
 
-  const authenticateWithNaver = async () => {
+  const authenticationWithKakao = async () => {
     console.log(location);
 
     // 네이버 사용자 정보제공 동의 후 결과로 얻은 Request Params 그대로 서버에 전달
-    const api = url + "/member-service/oauth/naver" + location.search;
+    const api = url + "/member-service/oauth/kakao" + location.search;
     await axios.get(api)
     .then((resp) => {
       alert("회원 인증 성공");
@@ -32,7 +32,7 @@ const NaverLogin = () => {
       window.location.reload();
     })
     .catch((err) => {
-      alert("회원 인증 실패")
+      alert("회원 인증 실패");
     });
   }
 
@@ -43,4 +43,4 @@ const NaverLogin = () => {
   );
 }
 
-export default NaverLogin;
+export default KakaoLogin;

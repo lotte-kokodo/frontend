@@ -8,6 +8,7 @@ import Home from "./home"
 
 import Login from "../../member/js/login"
 import NaverLogin from "../../../../components/oauth/naverLogin"
+import KakaoLogin from "../../../../components/oauth/kakaoLogin"
 import Signup from "../../member/js/signup"
 import Mypage from "../../member/js/mypage"
 import MypageRead from "../../member/js/mypageRead"
@@ -53,6 +54,7 @@ function Client() {
                     <Route path="/mypageRead" element={<MypageRead />}></Route>
 
                     <Route path="/login/naver" element={<NaverLogin />}></Route>
+                    <Route path="/login/kakao" element={<KakaoLogin />}></Route>
 
                     {/* product - search, category, detail */}
                     <Route path='/search' element={<Search />}></Route>

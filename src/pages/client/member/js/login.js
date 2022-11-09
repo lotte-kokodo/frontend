@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
+import kakaoLogo from '../../../../src_assets/login/kakao-login-logo.png'
+import naverLogo from '../../../../src_assets/login/naver-login-logo.png'
+
 import "../css/login.css";
 
 function Login() {
@@ -42,19 +45,23 @@ function Login() {
     }
 
     const onClickKakao = () => {
-
+        const REST_API_KEY = "6eba566b2a92f612fb5cf08e93c15ac5";
+        const REDIRECT_URI = "http://localhost:9090/login/kakao"
+        const kakaoOAuthApi = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+        window.location.href = kakaoOAuthApi;
     }
 
     const onClickNaver = () => {
-        const redirectUri = "http://localhost:9090/login/naver";
-        const naverOAuthApi = "https://nid.naver.com/oauth2.0/authorize?response_type=code&state=1234&client_id=Rjyho8H2B4sgRJf9JE1c&redirect_uri=" + redirectUri;
+        const CLIENT_ID = "Rjyho8H2B4sgRJf9JE1c"
+        const REDIRECT_URI = "http://localhost:9090/login/naver";
+        const naverOAuthApi = `https://nid.naver.com/oauth2.0/authorize?response_type=code&state=1234&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
         window.location.href = naverOAuthApi;
     }
 
     const fetchLogin = async (params) => {
         await axios({
             method: "post",
-            url: url + "/member-service/member/login",
+            url: url + "/member-service/login",
             data : params
         })
         .then(function(response){
@@ -116,11 +123,11 @@ function Login() {
                             </div>
                             <div className="form-group">
                                 <button className="btn float-right kakao" onClick={onClickKakao} >
-                                    <img className="login-logo-img" src="assets/login/kakao-login-logo.png"/>카카오로 시작하기 </button>
+                                    <img className="login-logo-img" src={kakaoLogo}/>카카오로 시작하기 </button>
                             </div>
                             <div className="form-group">
                                 <button className="btn float-right naver" onClick={onClickNaver}>
-                                    <img className="login-logo-img" src="assets/login/naver-login-logo.png"/>네이버로 시작하기 </button>
+                                    <img className="login-logo-img" src={naverLogo}/>네이버로 시작하기 </button>
                             </div>
                         </div>
                     </div>

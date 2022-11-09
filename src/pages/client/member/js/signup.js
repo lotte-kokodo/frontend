@@ -6,15 +6,15 @@ import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/signup.css";
 
-function Signup() {
+function Signup(props) {
     const [inputId, setInputId] = useState("");
     const [idCheck, setIdCheck] = useState(false);
     const [inputPw, setInputPw] = useState("");
-    const [inputName, setInputName] = useState("");
-    const [inputEmail, setInputEmail] = useState("");
-    const [inputBirth, setInputBirth] = useState("");
-    const [inputPhone, setInputPhone] = useState("");
-    const [inputAddr, setInputAddr] = useState("");
+    const [inputName, setInputName] = useState(props.name ? props.name : "");
+    const [inputEmail, setInputEmail] = useState(props.email ? props.email : "");
+    const [inputBirth, setInputBirth] = useState(props.birthday ? props.birthday : "");
+    const [inputPhone, setInputPhone] = useState(props.phone ? props.phone : "");
+    const [inputAddr, setInputAddr] = useState(props.address ? props.address : "");
     const { url } = useContext(ServerConfigContext);
     
 
