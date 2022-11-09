@@ -256,7 +256,7 @@ function SellerProductRegister() {
 
             await axios({
                 method: "post",
-                url: "http://localhost:8001/seller-service/product",
+                url: url + "/seller-service/product",
                 data : fd
             })
             .then(function(response){
@@ -295,7 +295,7 @@ function SellerProductRegister() {
 
             await axios({
                 method: "post",
-                url: "http://localhost:8001/seller-service/product/template",
+                url: url + "/seller-service/product/template",
                 data : fd
             })
             .then(function(response){

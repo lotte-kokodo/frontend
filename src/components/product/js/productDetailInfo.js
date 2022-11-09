@@ -201,7 +201,7 @@ export default function ProductDetail() {
     /* 장바구니 생성 API */
     const addCart = async () => {
 
-        await axios.post(url + `/order-payment-service/carts/${memberId}`, null,
+        await axios.post(url + `/order-service/carts/${memberId}`, null,
             {params: {productId: productId, qty: orderNum}, headers: headers})
         .then((resp) => {
             console.log("[SUCCESS] (ProductDetailInfo) POST /order-payment-service/carts/");
@@ -261,7 +261,7 @@ export default function ProductDetail() {
     </div>
     <div className="orange-mem-box">
         <a onClick={()=>{downloadCoupon(coupon)}} href="#" className="box-head">
-            <i className="ico-bl-orgmem"></i><strong className="text-primary">주문 시 적용되는 혜택이 있어요</strong>
+            <i className="ico-bl-orgmem"></i><strong className="product-info-coupon-primary">주문 시 적용되는 혜택이 있어요</strong>
             <span className="txt">쿠폰 다운로드 <i className="ico-arr-right"></i></span>
         </a>
         <ul className="sale-desc">

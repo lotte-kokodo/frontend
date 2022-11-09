@@ -160,15 +160,15 @@ function Header2() {
               <div className="search-bottom">
                 <div className="tit">
                   <h3>최근검색어</h3>
-                  <button type="button" className="text-guide-sm search-del-btn" onclick="fnAllDelKeyword(this)" style={{display: 'none'}}><span>전체삭제</span></button>
+                  <button type="button" className="text-guide-sm search-del-btn" onClick="fnAllDelKeyword(this)" style={{display: 'none'}}><span>전체삭제</span></button>
                 </div>
                 <div className="latest-search">
                   {/* 검색어 있을 경우 */}
                   <ul className="srch-list" id="rankSearchArea">
                     <li id="srhItem" style={{display: 'none'}}>
                       <div className="srch-keyword">
-                        <a href="javascript:;" className="txt" data-search-type="recent" onclick="fnBtnTopSearch(this)" />
-                        <button type="button" className="btn-x-xs del-body" title onclick="fnDelKeyword(this)"><i className="ico-x-grey2 del-body" /><span className="blind del-body">삭제</span></button>
+                        <a href="/" className="txt" data-search-type="recent" onClick="fnBtnTopSearch(this)" />
+                        <button type="button" className="btn-x-xs del-body" title onClick="fnDelKeyword(this)"><i className="ico-x-grey2 del-body" /><span className="blind del-body">삭제</span></button>
                       </div>
                     </li>
                   </ul>
@@ -233,7 +233,7 @@ function Header2() {
                 </li>
                 <li onClick={category7}>
                   <a>
-                    <span>음로·프로틴</span>
+                    <span>계란·콩</span>
                   </a>
                 </li><li onClick={category8}>
                   <a>

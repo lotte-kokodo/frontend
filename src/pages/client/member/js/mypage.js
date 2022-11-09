@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
-import profile from '../../../../src_assets/mypage/mypage-top-left-profile.png'
+import profile from '../../../../src_assets/seller/default_profile.png'
 import star from '../../../../src_assets/mypage/star.png'
 import OrderList from '../../order/js/orderList'
 
@@ -156,7 +156,7 @@ function Mypage() {
                     </div>
                 </div>
 
-                <div className='mypage-top-center'>|</div>
+                <div className='mypage-top-center'></div>
 
                 <div className='mypage-top-right'>
                     <div className='mypage-top-right-coupon'>
@@ -207,7 +207,7 @@ function ReviewListItem(props) {
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='mypage-review'>
                     <div>
                         {props.obj.createdDate} 

@@ -89,7 +89,7 @@ function Category() {
     }
 
     return(
-        <div>
+        <div style={{marginTop: "50px"}}>
             <div className='cateogryProduct'>
                 <div className='cateogryProduct-name'>
                     <h3>{name}</h3>
@@ -110,7 +110,7 @@ function Category() {
 
 
                 <div className="category-product" >
-                    <h3 className='category-product-title'> <span className='cateNum'>총 {count}</span>개 상품이 있습니다.</h3>
+                    <h3 className='category-product-title'> 총<span className='cateNum'> {count}</span>개 상품이 있습니다.</h3>
                     <div className='product-list'>
                         { currentPosts && categoryProduct.length  >0 ?
                             currentPosts.map( function(object, i){
@@ -142,7 +142,7 @@ function CategoryItem(props) {
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>
