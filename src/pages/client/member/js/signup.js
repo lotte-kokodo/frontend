@@ -100,7 +100,7 @@ function Signup() {
             url: url + "/member-service/member/signup/" + id
         })
             .then((response) => {
-                if (response.data.result.data === "아이디 중복이 아닙니다.") {
+                if (response.data.result.data === "success") {
                     setIdCheck(true);
                     alert("해당 아이디는 사용 가능합니다.");
                 } else {
