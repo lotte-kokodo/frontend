@@ -32,8 +32,7 @@
     "sass": "^1.55.0",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.3",
-    "web-vitals": "^2.1.4",
-    "proxy": "https://api.kokodo.shop"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "set PORT=9090 && react-scripts start",
