@@ -429,7 +429,7 @@ function SellerProductRegister() {
             </div>
                             
             <div className="seller-product-div4">
-                <div>
+                <div style={{marginBottom:"30px"}}>
                     <h5>상세설명</h5>
                 </div>
                 <div>
@@ -439,7 +439,7 @@ function SellerProductRegister() {
                 {templateCheck === false ?
 
                     <div className = "seller-detail">
-                        <div>
+                        <div style={{marginTop:"30px"}}>
                             <h5 className="template-title">디테일 이미지 등록</h5>
                         </div>
                         <div className="seller-product-div5">
