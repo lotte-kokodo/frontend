@@ -10,10 +10,16 @@ function AuthProvider({ children }) {
 		"memberId": `${localStorage.getItem("memberId")}`
 	});
 
+	const [sellerHeaders, setSellerHeaders] = useState({
+		"Authorization":`Bearer ${localStorage.getItem("sellerAccessToken")}`,
+		"sellerId": `${localStorage.getItem("sellerId")}`
+	});
+
 	// 회원 아이디 정보
 	const [memberId, setMemberId] = useState(localStorage.getItem("memberId"));
+	const [sellerId, setSellerId] = useState(localStorage.getItem("sellerId"));
 
-	const value = {headers, setHeaders, memberId, setMemberId};
+	const value = {headers, setHeaders, sellerHeaders, setSellerHeaders, memberId, setMemberId, sellerId, setSellerId};
 
 	return (
 		<AuthContext.Provider value = {value}>

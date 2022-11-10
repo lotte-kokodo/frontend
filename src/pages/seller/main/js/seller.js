@@ -16,6 +16,7 @@ import CouponManagement from '../../promotion/js/couponManagement'
 
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
 import SellerLogin from "../../seller/js/sellerLogin";
+import AuthProvider from "../../../../context/authProvider";
 
 function Seller() {
     const sellerId = localStorage.getItem("sellerId");
@@ -35,28 +36,32 @@ function Seller() {
     const seller = () => {
       return (
           <>
-            <SellerHeader />
-            <hr className="headerBottom-hr"></hr>
-            <SellerNav />
+            <ServerConfigProvider>
+              <AuthProvider>
+                <SellerHeader />
+                <hr className="headerBottom-hr"></hr>
+                <SellerNav />
 
-            <main>
-              <Routes>
-                <Route path={`/${sellerId}`} element={<SellerHome />}></Route>
+                <main>
+                  <Routes>
+                    <Route path={`/${sellerId}`} element={<SellerHome />}></Route>
 
-                {/* Seller Product */}
-                <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
-                <Route path="/productNotice" element={<ProductNotice />}></Route>
-                <Route path="/productSearch" element={<ProductSearch />}></Route>
+                    {/* Seller Product */}
+                    <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
+                    <Route path="/productNotice" element={<ProductNotice />}></Route>
+                    <Route path="/productSearch" element={<ProductSearch />}></Route>
 
-                {/* Seller Calculate */}
-                <Route path="/calculateList" element={<CalculatePresent />}></Route>
-                <Route path="/saleList" element={<SaleList />}></Route>
+                    {/* Seller Calculate */}
+                    <Route path="/calculateList" element={<CalculatePresent />}></Route>
+                    <Route path="/saleList" element={<SaleList />}></Route>
 
-                {/* Seller Promotion */}
-                <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
-                <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
-              </Routes>
-            </main>
+                    {/* Seller Promotion */}
+                    <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
+                    <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
+                  </Routes>
+                </main>
+                </AuthProvider>
+            </ServerConfigProvider>
           </>
       );
     }
