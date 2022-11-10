@@ -181,7 +181,7 @@ function MypageRead(){
 
                         <div className="login-group">
                             <div className="form-group">
-                                <button className="btn float-right login_btn" onClick={updateMypage}>회원수정 </button>
+                                <button className="btn float-right login_btn" onClick={updateMypage}>회원수정</button>
                             </div>
                         </div>
                     </div>
