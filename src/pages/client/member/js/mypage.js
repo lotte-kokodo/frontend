@@ -13,6 +13,7 @@ import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 function Mypage() {
     const [name,setName] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const [reviewList,setReviewList] = useState([]);
     const [orderList, setOrderList] = useState([]);
     const history = useNavigate();
@@ -36,7 +37,9 @@ function Mypage() {
             url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId")
         })
         .then(function(response){
-            setName(response.data.result.data.name);
+            const data = response.data.result.data;
+            setName(data.name);
+            setProfileImageUrl(data.profileImageUrl);
         })
         .catch(function(error){
             console.log(error)
@@ -141,7 +144,12 @@ function Mypage() {
                 <div className='mypage-top-left'>
                     <div className='mypage-top-left-profile'>
                         <div className='mypage-top-button'>
-                            <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
+                            {
+                                !profileImageUrl ?
+                                    <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
+                                :
+                                    <img className='mypage-top-left-profile-image mypage-profile-img' alt="profile" src={profileImageUrl} />
+                            }
                         </div>
                     </div>
                     <div className='mypage-top-left-writing'>

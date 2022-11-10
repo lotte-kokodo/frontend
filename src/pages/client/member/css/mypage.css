@@ -37,6 +37,10 @@
     height: 100px;
 }
 
+.mypage-profile-img {
+    border-radius: 50%;
+}
+
 .mypage-top-left-writing{
     margin-top: 10px;
     font-size: 20px;
