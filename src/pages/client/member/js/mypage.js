@@ -15,6 +15,7 @@ import Pagination from "react-js-pagination";
 
 function Mypage() {
     const [name,setName] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const [orderList, setOrderList] = useState([]);
     const history = useNavigate();
     const {headers} = useContext(AuthContext);
@@ -67,7 +68,8 @@ function Mypage() {
         await axios({
             method: "get",
             url: url + "/member-service/member/mypage/review/"
-            + localStorage.getItem('memberId') + "/" + currentpage
+            + localStorage.getItem('memberId') + "/" + currentpage,
+            headers: headers
         }) 
         .then(function(response){
             console.log(response.data.result.data);
@@ -81,7 +83,7 @@ function Mypage() {
 
 
     const firstEnter = () => {
-        if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
+        if(localStorage.getItem('accessToken') === null || localStorage.getItem('accessToken') === ""){
             alert("로그인 후 이용이 가능합니다.");
             history("/login");
         }else{
@@ -92,11 +94,13 @@ function Mypage() {
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId")
+            url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId"),
+            headers: headers
         })
         .then(function(response){
-            console.log(response);
-            setName(response.data.result.data.loginId);
+            const data = response.data.result.data;
+            setName(data.name);
+            setProfileImageUrl(data.profileImageUrl);
         })
         .catch(function(error){
             console.log(error)
@@ -162,9 +166,7 @@ function Mypage() {
         await axios({
             method: "get",
             url: url + "/promotion-service/userCoupon/count",
-            headers: {
-                'memberId': localStorage.getItem('memberId')
-            }
+            headers: headers
         }) 
         .then(function(response){
             console.log(response);
@@ -182,7 +184,12 @@ function Mypage() {
                 <div className='mypage-top-left'>
                     <div className='mypage-top-left-profile'>
                         <div className='mypage-top-button'>
-                            <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
+                            {
+                                !profileImageUrl ?
+                                    <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
+                                :
+                                    <img className='mypage-top-left-profile-image mypage-profile-img' alt="profile" src={profileImageUrl} />
+                            }
                         </div>
                     </div>
                     <div className='mypage-top-left-writing'>

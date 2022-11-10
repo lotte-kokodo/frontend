@@ -13,7 +13,7 @@ function Header2() {
     const history = useNavigate();
   
     useEffect(() => {
-      if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
+      if(localStorage.getItem('accessToken') === null || localStorage.getItem('accessToken') === ""){
         setIsLogin(false);
       } else {
         setIsLogin(true);
@@ -21,8 +21,9 @@ function Header2() {
     }, [isLogin]);
   
     const onLogout = () => {
-      localStorage.removeItem('token');
       localStorage.removeItem('memberId');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       setIsLogin(false);
       alert("로그아웃 됐습니다.");
     }

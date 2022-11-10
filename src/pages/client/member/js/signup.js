@@ -6,17 +6,17 @@ import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/signup.css";
 
-function Signup() {
+function Signup(props) {
     const [inputId, setInputId] = useState("");
     const [idCheck, setIdCheck] = useState(false);
     const [inputPw, setInputPw] = useState("");
-    const [inputName, setInputName] = useState("");
-    const [inputEmail, setInputEmail] = useState("");
-    const [inputBirth, setInputBirth] = useState("");
-    const [inputPhone, setInputPhone] = useState("");
-    const [inputAddr, setInputAddr] = useState("");
+    const [inputName, setInputName] = useState(props.name ? props.name : "");
+    const [inputEmail, setInputEmail] = useState(props.email ? props.email : "");
+    const [inputBirth, setInputBirth] = useState(props.birthday ? props.birthday : "");
+    const [inputPhone, setInputPhone] = useState(props.phone ? props.phone : "");
+    const [inputAddr, setInputAddr] = useState(props.address ? props.address : "");
     const { url } = useContext(ServerConfigContext);
-    
+
 
     /*daum address*/
     const [openPostcode, setOpenPostcode] = useState(false);
@@ -118,38 +118,36 @@ function Signup() {
             url: url + "/member-service/member/signup",
             data : params
         })
-            .then(function (response) {
-                if (response.data.success) {
-                    alert("회원 가입에 성공하셨습니다.");
-                    history('/login');
-                } else {
-                    alert("회원 가입에 실패하셨습니다.");
-                }
-            })
-            .catch(function (error) {
+        .then(function (response) {
+            if (response.data.success) {
+                alert("회원 가입에 성공하셨습니다.");
+                history('/login');
+            } else {
                 alert("회원 가입에 실패하셨습니다.");
-                console.log(error);
-            })
+            }
+        })
+        .catch(function (error) {
+            alert("회원 가입에 실패하셨습니다.");
+            console.log(error);
+        })
     }
 
     return (
         <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <div className="card">
-                    <div className="card-header">
-                        <h3>회원가입</h3>
-                    </div>
                     {openPostcode ?
                         <div>
-                            {openPostcode && 
-                                <DaumPostcode 
-                                    onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
-                                    autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                                    defaultQuery='서초대로74길 33' // 팝업을 열때 기본적으로 입력되는 검색어 
-                                />}
+                            {openPostcode &&
+                            <DaumPostcode
+                                onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                                autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                                defaultQuery='서초대로74길 33' // 팝업을 열때 기본적으로 입력되는 검색어
+                            />}
                         </div>
-                    :
+                        :
                         <div className="card-body">
+                            <h3>회원가입</h3><br/>
                             <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
                                 <input type="text" className="form-control" name='input_id' value={inputId} onChange={handleInputId} />
@@ -186,10 +184,8 @@ function Signup() {
                                 <button className="form-control form-addr" name='input_addr' onClick={handle.clickButton} >{inputAddr}</button>
                             </div>
 
-                            <div className="login-group">
-                                <div className="form-group">
-                                    <button className="btn float-right login_btn" onClick={signUpSuc}>회원가입하기 </button>
-                                </div>
+                            <div className="d-flex justify-content-center">
+                                <button className="btn float-right login_btn" onClick={signUpSuc}>회원가입하기 </button>
                             </div>
                         </div>
                     }
