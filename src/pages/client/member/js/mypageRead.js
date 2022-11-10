@@ -10,7 +10,6 @@ import {AuthContext} from "../../../../context/authProvider";
 function MypageRead(){
     const id = localStorage.getItem("memberId");
     const [inputId, setInputId] = useState("");
-    const [inputPw, setInputPw] = useState("");
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputBirth, setInputBirth] = useState("");
@@ -47,9 +46,6 @@ function MypageRead(){
         fetchMypage();
     },[]);
 
-    const handleInputPw = (e) => {
-        setInputPw(e.target.value);
-    }
     const handleInputName = (e) => {
         setInputName(e.target.value);
     }
@@ -64,24 +60,20 @@ function MypageRead(){
     }
 
     const updateMypage = () => {
-        if(inputPw === null || inputPw.trim() === "" || inputPw.length < 6){
-            alert('패스워드는 6자 이상이여야 합니다.');
-        } else if(inputName === null || inputName.trim() === "" || inputName.length < 2){
+        if(inputName === null || inputName.trim() === "" || inputName.length < 2){
             alert('이름은 두글자 이상이여야 합니다.');
         } else if (inputEmail === null || inputEmail.trim() === "" || !inputEmail.includes('@') || inputEmail.length < 3) {
             alert('이메일은 @ 포함하고 3글자 이상이여야 합니다');
         } else if (inputBirth === null || inputBirth.trim() === "") {
             alert("생년월일을 입력하세요.");
-        } else if (inputPhone === null || inputPhone.trim() === "") {
-            alert("핸드폰번호 예시 010-xxxx-xxxx");
-        } else if (inputPhone === null || inputPhone.trim() === "") {
+        } else if (!inputPhone || inputPhone.trim() === "") {
             alert("핸드폰번호 예시 010-xxxx-xxxx");
         } else if(!(inputPhone.substring(0,3) === "010" && inputPhone.length === 13)) {
             alert("핸드폰번호 예시 010-xxxx-xxxx");
-        } else if (inputAddr === null || inputAddr.trim() === "") {
+        } else if (!inputAddr || inputAddr.trim() === "") {
             alert("주소를 입력하세요.");
         } else {
-            const params = {"id":id,"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "profileImageUrl":profileImageUrl, "phoneNumber":inputPhone, "address":inputAddr, "grade":inputGrade};
+            const params = {"id":id,"loginId":inputId, "name":inputName, "email":inputEmail, "birthday":inputBirth, "profileImageUrl":profileImageUrl, "phoneNumber":inputPhone, "address":inputAddr, "grade":inputGrade};
             fetchUpdateMypage(params)
         }
     };
@@ -149,11 +141,6 @@ function MypageRead(){
                         <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
                                 <input type="text" className="form-control" name='input_update_id' value={inputId} readOnly/>
-                        </div>
-
-                        <div className="input-group form-group">
-                                <span className='inputText'>비밀번호  </span>
-                                <input type="password" className="form-control form-pw" name='input_update_pw' value={inputPw} onChange={handleInputPw} />  
                         </div>
 
                         <div className="input-group form-group">
