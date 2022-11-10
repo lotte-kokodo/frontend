@@ -99,17 +99,17 @@ function Signup(props) {
             method: "get",
             url: url + "/member-service/member/signup/" + id
         })
-        .then((response) => {
-            if (response.data.result.data === "아이디 중복이 아닙니다.") {
-                setIdCheck(true);
-                alert("해당 아이디는 사용 가능합니다.");
-            } else {
-                setIdCheck(false);
-                alert("해당 아아디는 중복입니다.");
-            }
-        })
-        .catch((error) => console.log(error))
-        .finally(() => { });
+            .then((response) => {
+                if (response.data.success) {
+                    setIdCheck(true);
+                    alert("해당 아이디는 사용 가능합니다.");
+                } else {
+                    setIdCheck(false);
+                    alert("해당 아아디는 중복입니다.");
+                }
+            })
+            .catch((error) => console.log(error))
+            .finally(() => { });
     }
 
     const fetchSignUp = async (params) => {
