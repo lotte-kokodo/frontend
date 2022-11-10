@@ -10,10 +10,13 @@ import {
     provideStatusToValue,
     provideTypeToValue
 } from '../../../../common/calculate/function'
+import { useContext } from "react";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 import moment from "moment";
 
 export default function SaleList() {
+    const { url } = useContext(ServerConfigContext);
 
     let today = new Date();
     today.setMonth(today.getMonth() + 1);
@@ -46,7 +49,7 @@ export default function SaleList() {
 
     const searchContent = async () => {
         history(`/seller/${params.sellerId}/saleList`)
-        await axios.post(`http://localhost:8001/calculate-service/commission/saleList`,{
+        await axios.post(url + `/calculate-service/commission/saleList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",
@@ -127,7 +130,7 @@ export default function SaleList() {
             </div>
             <table className="table saleList-table">
                 <thead>
-                <tr>
+                <tr className="text-center">
                     <th>상호(판매자코드)</th>
                     <th>정산유형</th>
                     <th>구분</th>
@@ -160,53 +163,50 @@ export default function SaleList() {
 
 function SaleListTableRow(row) {
     return (
-            <tr>
-                <td>
-                    {row.obj.sellerId}
+            <tr className="table-whole">
+                <td className="saleList-table-number py-0 pl-0 pr-0" >
+                    <div className="saleList-entire-cycle">{row.obj.sellerId}</div>
                 </td>
-                <td>
-                    {provideTypeToValue(row.obj.calculateType)}
+                <td className="saleList-table-calculateType py-0 pl-0 pr-0">
+                    <div className="saleList-entire-cycle"> {provideTypeToValue(row.obj.calculateType)} </div>
                 </td>
-                <td>
-                    <div>판매액</div>
-                    <div>배송료</div>
-                    <div>합계</div>
+                <td className="saleList-table-td pl-0 py-0 pr-0">
+                    <div className="saleList-inner-outLine">판매액</div>
+                    <div className="saleList-inner-outLine2">배송료</div>
+                    <div className="saleList-inner-outLine3">합계</div>
                 </td>
-                <td>
-                    {/*판매액*/}
-                    <div>{moneyComma(row.obj.saleSum)}</div>
-                    {/*배송료*/}
-                    <div>{0}</div>
-                    {/*합계*/}
-                    <div>{moneyComma(row.obj.sum)}</div>
+                <td className="saleList-table-saleMoney py-0 pl-0 pr-0">
+                    <div className="saleList-inner-outLine">{moneyComma(row.obj.saleSum)}</div>
+                    <div className="saleList-inner-outLine2">{0}</div>
+                    <div className="saleList-inner-outLine3">{moneyComma(row.obj.sum)}</div>
                 </td>
                 {/*판매수수료*/}
-                <td>
-                    <div>{moneyComma(row.obj.saleCommission)}</div>
-                    <div>0</div>
-                    <div>{moneyComma(row.obj.saleCommission)}</div>
+                <td className="saleList-table-saleCommission py-0 pl-0 pr-0">
+                    <div className="saleList-inner-outLine">{moneyComma(row.obj.saleCommission)}</div>
+                    <div className="saleList-inner-outLine2">0</div>
+                    <div className="saleList-inner-outLine3">{moneyComma(row.obj.saleCommission)}</div>
                 </td>
                 {/*정산대상액*/}
-                <td>
-                    <div>
+                <td className="saleList-table-calculateTarget py-0 pl-0 pr-0">
+                    <div className="saleList-entire-cycle">
                         {moneyComma(row.obj.settlementMoney)}
                     </div>
                 </td>
                 {/*전담택배비*/}
-                <td>
-                    0
+                <td className="saleList-table-deliveryCost py-0 pl-0 pr-0">
+                    <div className="saleList-entire-cycle">0</div>
                 </td>
                 {/*판매자서비스이용료*/}
-                <td>
-                    0
+                <td className="saleList-table-seller-service-cost py-0 pl-0 pr-0">
+                    <div className="saleList-entire-cycle">0</div>
                 </td>
                 {/*패널티*/}
-                <td>
-                    0
+                <td className="saleList-table-selle-panalty py-0 pl-0 pr-0">
+                    <div className="saleList-entire-cycle">0</div>
                 </td>
                 {/*상세 다운로드*/}
-                <td>
-                    상세다운로드
+                <td className="saleList-table-selle-down py-0 pl-0 pr-0">
+                    <div className="saleList-entire-cycle">상세 다운로드</div>
                 </td>
             </tr>
     )

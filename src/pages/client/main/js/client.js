@@ -7,6 +7,8 @@ import RecentProduct from './recentPrdocut'
 import Home from "./home"
 
 import Login from "../../member/js/login"
+import NaverLogin from "../../../../components/oauth/naverLogin"
+import KakaoLogin from "../../../../components/oauth/kakaoLogin"
 import Signup from "../../member/js/signup"
 import Mypage from "../../member/js/mypage"
 import MypageRead from "../../member/js/mypageRead"
@@ -22,17 +24,19 @@ import "../css/header.css"
 import Cart from "../../order/js/cart";
 import OrderSheet from "../../order/js/orderSheet";
 import AuthProvider from "../../../../context/authProvider";
-import ServerConfigProvider from "../../../../context/serverConfigProvider";
 import OrderProvider from "../../../../context/orderProvider";
 import RecentProductProvider from "../../../../context/recentProductProvider";
 import OrderDetailList from "../../order/js/orderDetailList";
+import Footer from "./footer";
+
+import ServerConfigProvider from "../../../../context/serverConfigProvider";
 
 function Client() {
   return(
       <div>
+      <ServerConfigProvider>
         <Header />
-        <hr className="headerBottom-hr"></hr>
-        <Nav />
+        {/* <Nav /> */}
 
         <RecentProductProvider>
           <main>
@@ -40,7 +44,6 @@ function Client() {
               <RecentProduct />
 
               <AuthProvider>
-                <ServerConfigProvider>
                   <Routes>
                     <Route path="/" element={<Home />}></Route>
 
@@ -49,6 +52,9 @@ function Client() {
                     <Route path="/signup" element={<Signup />}></Route>
                     <Route path="/mypage" element={<Mypage />}></Route>
                     <Route path="/mypageRead" element={<MypageRead />}></Route>
+
+                    <Route path="/login/naver" element={<NaverLogin />}></Route>
+                    <Route path="/login/kakao" element={<KakaoLogin />}></Route>
 
                     {/* product - search, category, detail */}
                     <Route path='/search' element={<Search />}></Route>
@@ -63,11 +69,10 @@ function Client() {
                     <Route path="/orderDetailList" element={<OrderDetailList />}></Route>
 
                   </Routes>
-                </ServerConfigProvider>
               </AuthProvider>
 
               <AuthProvider>
-                <ServerConfigProvider>
+
                   <OrderProvider>
                     <Routes>
                       {/* order - cart, orderSheet */}
@@ -75,15 +80,18 @@ function Client() {
                       <Route path="/ordersheet" element={<OrderSheet />}></Route>
                     </Routes>
                   </OrderProvider>
-                </ServerConfigProvider>
-              </AuthProvider>
+                </AuthProvider>
 
-            </div>
-          </main>
-        </RecentProductProvider>
+              </div>
+            </main>
+          </RecentProductProvider>
+
+
 
         <footer>
+          <Footer></Footer>
         </footer>
+      </ServerConfigProvider>
       </div>
   )
 }

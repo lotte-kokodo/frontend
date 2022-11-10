@@ -1,16 +1,18 @@
-import React, {useEffect, useState, useRef} from "react"
+import React, {useContext, useEffect, useState, useRef} from "react"
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
 import left from '../../../../src_assets/main/left.png'
 import right from '../../../../src_assets/main/right.png'
 import timer from '../../../../src_assets/main/timer.png'
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/main.css"
 
 function Home() {
     // link용
     const history = useNavigate();
+    const { url } = useContext(ServerConfigContext);
 
     // 배너
     const [slideState, setSlideState] = useState(0);
@@ -133,7 +135,7 @@ function Home() {
     const fetchNew = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:8001/product-service/product/main/new"
+        url: url + "/product-service/product/main/new"
         })
         .then(function(response){
             setNewState(response.data.result.data);
@@ -146,7 +148,7 @@ function Home() {
     const fetchSale = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:8001/product-service/product/main/sale"
+        url: url + "/product-service/product/main/sale"
         })
         .then(function(response){
             setSaleState(response.data.result.data);
@@ -160,7 +162,7 @@ function Home() {
     const fetchMd = async () => {
         await axios({
         method: "get",
-        url: "http://localhost:8001/product-service/product/main/seller"
+        url: url + "/product-service/product/main/seller"
         })
         .then(function(response){
             console.log(response.data.result.data);
@@ -213,7 +215,7 @@ function Home() {
             </div>
 
             <div className='main-category-product'>
-                <div className='main-category'>
+                {/* <div className='main-category'>
                     <button className='main-category-div' onClick={category1}>
                         <img className='main-category-item' alt="신상품" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653WAC282333226.png"/>
                     </button>
@@ -238,7 +240,7 @@ function Home() {
                     <button className='main-category-div' onClick={category8}>
                         <img className='main-category-item' alt="소고기" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653GoW282835152.png"/>
                     </button>
-                </div>
+                </div> */}
 
                 <div className="main-product">
                     <div className="new-product" >
@@ -301,7 +303,7 @@ function NewItem(props) {
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>
@@ -320,7 +322,7 @@ function SaleItem(props) {
                 <img className='product-thumbnail-img' alt='sale-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>
@@ -339,7 +341,7 @@ function MdItem(props) {
                 <img className='product-thumbnail-img' alt='md-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>

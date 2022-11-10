@@ -2,25 +2,88 @@ import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {NavLink,useNavigate } from "react-router-dom";
 
-import profile from '../../../../src_assets/mypage/mypage-top-left-profile.png'
+import profile from '../../../../src_assets/seller/default_profile.png'
 import star from '../../../../src_assets/mypage/star.png'
 import OrderList from '../../order/js/orderList'
 
 import '../css/mypage.css'
 import {AuthContext} from "../../../../context/authProvider";
 import CouponModal from '../../../../components/mypage/js/couponModal';
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
+
+import Pagination from "react-js-pagination";
 
 function Mypage() {
     const [name,setName] = useState('');
-    const [reviewList,setReviewList] = useState([]);
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const [orderList, setOrderList] = useState([]);
     const history = useNavigate();
     const {headers} = useContext(AuthContext);
     const [couponFlag, setCouponFlag] = useState(false);
     const [couponCount, setCouponCount] = useState(0);
+    const { url } = useContext(ServerConfigContext);
+
+    const [reviewList,setReviewList] = useState([]); //아이템
+    const [reviewFlag, setReviewFlag] = useState(true);
+    const [count, setCount] = useState(0); //아이템 총 수
+    const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    const [postPerPage] = useState(8); //페이지당 아이템 개수
+
+    const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
+
+    /* 페이징 */
+
+    const Paging = ({page, count, setPage}) => {
+        return (
+            <Pagination
+                    activePage={page}
+                    itemsCountPerPage={8}
+                    totalItemsCount={count}
+                    pageRangeDisplayed={5}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                    onChange={setPage} />
+        );
+    }
+
+    const setPage = (e) => {
+        setCurrentpage(e);
+      };
+
+      useEffect(() => {
+        setCount(count);
+        setIndexOfLastPost(currentpage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(reviewList);
+    }, [currentpage, indexOfFirstPost, indexOfLastPost, reviewList, postPerPage]);
+
+    useEffect(() => {
+        fetchReview();
+    },[currentpage]);
+
+    
+    const fetchReview = async () => {
+        await axios({
+            method: "get",
+            url: url + "/member-service/member/mypage/review/"
+            + localStorage.getItem('memberId') + "/" + currentpage,
+            headers: headers
+        }) 
+        .then(function(response){
+            console.log(response.data.result.data);
+            setReviewList(response.data.result.data.mypageReviewDtoList);
+            setCount(response.data.result.data.totalCount);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    }
+
 
     const firstEnter = () => {
-        if(localStorage.getItem('token') === null || localStorage.getItem('token') === ""){
+        if(localStorage.getItem('accessToken') === null || localStorage.getItem('accessToken') === ""){
             alert("로그인 후 이용이 가능합니다.");
             history("/login");
         }else{
@@ -31,10 +94,13 @@ function Mypage() {
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
+            url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId"),
+            headers: headers
         })
         .then(function(response){
-            setName(response.data.result.data.loginId);
+            const data = response.data.result.data;
+            setName(data.name);
+            setProfileImageUrl(data.profileImageUrl);
         })
         .catch(function(error){
             console.log(error)
@@ -46,18 +112,17 @@ function Mypage() {
     }
 
     const clickReview = () => {
-        fetchReview();
         setOrderList([]);
+        setReviewFlag(true);
+        fetchReview();
     }
 
     const clickOrder = () => {
+        setReviewList([]);
+        setCurrentPosts([]);
+        setCount(0);
+        setReviewFlag(false);
         fetchOrder();
-        setReviewList([]);
-        // setReviewList([]);
-    }
-
-    const clickCoupon = () => {
-        setReviewList([]);
     }
 
     const openCouponModal = ()=>{
@@ -72,26 +137,8 @@ function Mypage() {
     useEffect(() => {
         firstEnter();
         fetchCouponCount();
-        // fetchOrder();
-        // fetchReview();
+        fetchReview();
     },[]);
-
-    const fetchReview = async () => {
-        await axios({
-            method: "get",
-            url: "http://localhost:8001/product-service/review/member",
-            headers: {
-                'memberId': localStorage.getItem('memberId')
-            }
-        }) 
-        .then(function(response){
-            console.log(response.data.result.data);
-            setReviewList(response.data.result.data);
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-    }
 
     const fetchOrder = async() => {
         const id = localStorage.getItem("memberId");
@@ -99,11 +146,11 @@ function Mypage() {
         console.log(id);
         await axios({
             method: "get",
-            url: `http://localhost:8001/order-payment-service/orders/${id}`,
+            url: url + `/order-payment-service/orders/${id}`,
             headers: headers
         }) 
         .then(function(response){
-            console.log("결과값!");
+            console.log("결과값");
             console.log(response);
 
             setOrderList(response.data.result.data);
@@ -118,10 +165,8 @@ function Mypage() {
 
         await axios({
             method: "get",
-            url: "http://localhost:8001/promotion-service/userCoupon/count",
-            headers: {
-                'memberId': localStorage.getItem('memberId')
-            }
+            url: url + "/promotion-service/userCoupon/count",
+            headers: headers
         }) 
         .then(function(response){
             console.log(response);
@@ -139,7 +184,12 @@ function Mypage() {
                 <div className='mypage-top-left'>
                     <div className='mypage-top-left-profile'>
                         <div className='mypage-top-button'>
-                            <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
+                            {
+                                !profileImageUrl ?
+                                    <img className='mypage-top-left-profile-image' alt="profile" src={profile} />
+                                :
+                                    <img className='mypage-top-left-profile-image mypage-profile-img' alt="profile" src={profileImageUrl} />
+                            }
                         </div>
                     </div>
                     <div className='mypage-top-left-writing'>
@@ -154,7 +204,7 @@ function Mypage() {
                     </div>
                 </div>
 
-                <div className='mypage-top-center'>|</div>
+                <div className='mypage-top-center'></div>
 
                 <div className='mypage-top-right'>
                     <div className='mypage-top-right-coupon'>
@@ -172,25 +222,34 @@ function Mypage() {
                     <button onClick={() => {clickReview()}}><li>리뷰 내역</li></button>
                 </ul>
             </div>
-            
             <div className="mypage-main">
-                {/* 각자 데이터 뿌려주기 구현*/}
-                    {
-                        orderList.map( function(object) {
-                            return (
-                                <OrderList obj={object} />
-                            )
-                        })
-                    }
-                    { 
-                        reviewList.map( function(object, i){
-                            return(
-                                <ReviewListItem obj={object} key={i} cnt={i + 1} />
-                            )
-                        })
-                    } 
+                {reviewFlag ?
+                    <div className='mypage-main-review'>
+                        <div className='mypage-main-review-items'>
+                            {currentPosts && 
+                                currentPosts.map( function(object, i){
+                                    return(
+                                        <ReviewListItem obj={object} key={i} cnt={i + 1} />
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className='mypage-main-review-page'>
+                            {reviewFlag && <Paging page={currentpage} count={count} setPage={setPage} />}
+                        </div>
+                    </div>
+                    :
+                    <div className='mypage-main-order'>
+                        {orderList && 
+                            orderList.map( function(object) {
+                                return (
+                                    <OrderList obj={object} />
+                                )
+                            })
+                        }
+                    </div>
+                }
             </div>
-
             {couponFlag && <CouponModal onModalDisplay={closeCouponModal}></CouponModal>}
         </div>
     )
@@ -205,7 +264,7 @@ function ReviewListItem(props) {
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='mypage-review'>
                     <div>
                         {props.obj.createdDate} 
@@ -217,7 +276,6 @@ function ReviewListItem(props) {
                 </div>
             </div>
         </NavLink>
-        
     )
 }
 

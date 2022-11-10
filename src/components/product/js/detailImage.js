@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 import "../css/detailImage.css";
 
 export default function ProductDetail() {
-
+    const { url } = useContext(ServerConfigContext);
     let { productId } = useParams(null);
 
     const [detailImages, setDetailImages] = useState([]);
@@ -14,7 +16,7 @@ export default function ProductDetail() {
 // product 이미지 조회
 useEffect(() => {
     const fetchData = async () => {
-        await axios.get(`http://localhost:8001/product-service/productDetail/${productId}`)
+        await axios.get(url + `/product-service/productDetail/${productId}`)
             .then(function (resp) {
                 setDetailImages(resp.data.result.data);
 

@@ -1,11 +1,13 @@
 import axios from 'axios';
-import {useState, useEffect} from "react";
+import {useContext, useState, useEffect} from "react";
 import {NavLink,useLocation} from 'react-router-dom';
 import Pagination from "react-js-pagination";
 
 import "../css/paging.css"
 import "../css/category.css"
 import "../../main/css/main.css"
+
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 
 function Category() {
@@ -22,6 +24,7 @@ function Category() {
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
     const [currentPosts, setCurrentPosts] = useState([]);
+    const { url } = useContext(ServerConfigContext);
 
     /* 페이징 */
 
@@ -74,7 +77,7 @@ function Category() {
     const fetchSorting = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/product/categoryId/" + seq + "/" + num + "/" + currentpage
+            url: url + "/product-service/product/categoryId/" + seq + "/" + num + "/" + currentpage
         })
         .then(function(response){
             setCategoryProduct(response.data.result.data.productDtoList);
@@ -86,7 +89,7 @@ function Category() {
     }
 
     return(
-        <div>
+        <div style={{marginTop: "50px"}}>
             <div className='cateogryProduct'>
                 <div className='cateogryProduct-name'>
                     <h3>{name}</h3>
@@ -107,7 +110,7 @@ function Category() {
 
 
                 <div className="category-product" >
-                    <h3 className='category-product-title'> <span className='cateNum'>총 {count}</span>개 상품이 있습니다.</h3>
+                    <h3 className='category-product-title'> 총<span className='cateNum'> {count}</span>개 상품이 있습니다.</h3>
                     <div className='product-list'>
                         { currentPosts && categoryProduct.length  >0 ?
                             currentPosts.map( function(object, i){
@@ -139,7 +142,7 @@ function CategoryItem(props) {
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>

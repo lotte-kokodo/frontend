@@ -1,14 +1,15 @@
-import React, {useEffect ,useState} from 'react';
+import React, {useContext, useEffect ,useState} from 'react';
 import axios from 'axios';
 import {useNavigate } from "react-router-dom";
 import DaumPostcode from 'react-daum-postcode';
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/signup.css";
+import {AuthContext} from "../../../../context/authProvider";
 
 function MypageRead(){
     const id = localStorage.getItem("memberId");
     const [inputId, setInputId] = useState("");
-    const [inputPw, setInputPw] = useState("");
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputBirth, setInputBirth] = useState("");
@@ -17,6 +18,8 @@ function MypageRead(){
     const [inputGrade, setInputGrade]= useState("");
     const [profileImageUrl, setInputProfileImageUrl]= useState("");
     const history = useNavigate();
+    const { url } = useContext(ServerConfigContext);
+    const { headers, memberId } = useContext(AuthContext);
 
     /*daum address*/
     const [openPostcode, setOpenPostcode] = useState(false);
@@ -43,9 +46,6 @@ function MypageRead(){
         fetchMypage();
     },[]);
 
-    const handleInputPw = (e) => {
-        setInputPw(e.target.value);
-    }
     const handleInputName = (e) => {
         setInputName(e.target.value);
     }
@@ -60,24 +60,20 @@ function MypageRead(){
     }
 
     const updateMypage = () => {
-        if(inputPw === null || inputPw.trim() === "" || inputPw.length < 6){
-            alert('패스워드는 6자 이상이여야 합니다.');
-        } else if(inputName === null || inputName.trim() === "" || inputName.length < 2){
+        if(inputName === null || inputName.trim() === "" || inputName.length < 2){
             alert('이름은 두글자 이상이여야 합니다.');
         } else if (inputEmail === null || inputEmail.trim() === "" || !inputEmail.includes('@') || inputEmail.length < 3) {
             alert('이메일은 @ 포함하고 3글자 이상이여야 합니다');
         } else if (inputBirth === null || inputBirth.trim() === "") {
             alert("생년월일을 입력하세요.");
-        } else if (inputPhone === null || inputPhone.trim() === "") {
-            alert("핸드폰번호 예시 010-xxxx-xxxx");
-        } else if (inputPhone === null || inputPhone.trim() === "") {
+        } else if (!inputPhone || inputPhone.trim() === "") {
             alert("핸드폰번호 예시 010-xxxx-xxxx");
         } else if(!(inputPhone.substring(0,3) === "010" && inputPhone.length === 13)) {
             alert("핸드폰번호 예시 010-xxxx-xxxx");
-        } else if (inputAddr === null || inputAddr.trim() === "") {
+        } else if (!inputAddr || inputAddr.trim() === "") {
             alert("주소를 입력하세요.");
         } else {
-            const params = {"id":id,"loginId":inputId, "name":inputName, "email":inputEmail, "password":inputPw, "birthday":inputBirth, "profileImageUrl":profileImageUrl, "phoneNumber":inputPhone, "address":inputAddr, "grade":inputGrade};
+            const params = {"id":id,"loginId":inputId, "name":inputName, "email":inputEmail, "birthday":inputBirth, "profileImageUrl":profileImageUrl, "phoneNumber":inputPhone, "address":inputAddr, "grade":inputGrade};
             fetchUpdateMypage(params)
         }
     };
@@ -86,7 +82,8 @@ function MypageRead(){
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/member-service/member/myPage/" + localStorage.getItem("memberId")
+            url: url + `/member-service/member/myPage/${memberId}`,
+            headers: headers
         })
         .then(function(response){
             setInputId(response.data.result.data.loginId);
@@ -106,8 +103,9 @@ function MypageRead(){
     const fetchUpdateMypage = async (params) => {
         await axios({
             method: "post",
-            url: "http://localhost:8001/member-service/member/myPage",
-            data : params
+            url: url + "/member-service/member/myPage",
+            data : params,
+            headers: headers
         })
         .then(function(response){
             if(response.data.result.data === "success") {
@@ -128,9 +126,6 @@ function MypageRead(){
         <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <div className="card">
-                    <div className="card-header">
-                        <h3>회원가입</h3>
-                    </div>
                     {openPostcode ?
                         <div>
                             {openPostcode && 
@@ -142,14 +137,10 @@ function MypageRead(){
                         </div>
                     :
                     <div className="card-body">
+                        <h3>회원정보수정 </h3><br/><br/>
                         <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
                                 <input type="text" className="form-control" name='input_update_id' value={inputId} readOnly/>
-                        </div>
-
-                        <div className="input-group form-group">
-                                <span className='inputText'>비밀번호  </span>
-                                <input type="password" className="form-control form-pw" name='input_update_pw' value={inputPw} onChange={handleInputPw} />  
                         </div>
 
                         <div className="input-group form-group">
@@ -164,7 +155,7 @@ function MypageRead(){
 
                         <div className="input-group form-group">
                                 <span className='inputText'>생년월일  </span>
-                                <input type="text" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />  
+                                <input type="date" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />
                         </div>
 
                         <div className="input-group form-group">
@@ -177,10 +168,8 @@ function MypageRead(){
                                 <button className="form-control form-addr" name='input_addr' onClick={handle.clickButton} >{inputAddr}</button>
                         </div>
 
-                        <div className="login-group">
-                            <div className="form-group">
-                                <button className="btn float-right login_btn" onClick={updateMypage}>회원수정 </button>
-                            </div>
+                        <div className="d-flex justify-content-center">
+                            <button className="btn float-right login_btn" onClick={updateMypage}>회원수정 </button>
                         </div>
                     </div>
                     }

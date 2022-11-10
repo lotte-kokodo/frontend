@@ -6,8 +6,12 @@ import "../css/sellerProductRegister.css"
 
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useParams,useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 function SellerProductRegister() {
+    const { url } = useContext(ServerConfigContext);
+
     const params = useParams();
     const history = useNavigate();
 
@@ -49,9 +53,10 @@ function SellerProductRegister() {
     const fetchCategorySearch = async (categorySearch) => {
         await axios({
             method: "get",
-            url: "http://localhost:8001/product-service/category/categoryName/" + categorySearch
+            url: url + "/product-service/category/categoryName/" + categorySearch
         })
         .then(function(response){
+            console.log(response);
             setDisplayCategory(response.data.result.data[0].name);
             setSelectCategoryId(response.data.result.data[0].id);
         })
@@ -66,45 +71,34 @@ function SellerProductRegister() {
     // 템플릿 자동 글
     const [sellerTitle, setSellerTitle] = useState('');
     const [sellerTitleDetail, setSelerTitleDetail ] = useState('');
-    const [sellerTitleHighklight1, setSellerTitleHighklight1 ] = useState('');
-    const [sellerTitleHighklight2, setSellerTitleHighklight2 ] = useState('');
+    const [sellerTitleHighlight1, setSellerTitleHighlight1 ] = useState('');
+    const [sellerTitleHighlight2, setSellerTitleHighlight2 ] = useState('');
     const [sellerProductName, setSellerProductName ] = useState('');
-    const [sellerProductDeatil, setSellerProductDeatil ] = useState('');
+    const [sellerProductDetail, setSellerProductDetail ] = useState('');
+
+    const [detailFileImageList, setDetailFileImageList] = useState([]);
+    const [ detailFormData, setDetailFormData] = useState('');
+    const [ detailTemplateFileImageList, setDetailTemplateFileImageList] = useState([]);
 
     /* 대표 이미지 미리보기 url 생성 */
 
     // 대표 이미지 url 저장해줄 state
     const [fileImage, sestFileImage] = useState("");
-    const formData = new FormData();
 
-    // 대표 이미지 파일 저장
-    const saveFileImage = (e) => {
+    const [thumbnail, setThumbnail] = useState('');
+
+
+
+      // 대표 이미지 파일 저장
+      const saveFileImage = (e) => {
         URL.revokeObjectURL(fileImage);
         sestFileImage("");
 
         sestFileImage(URL.createObjectURL(e.target.files[0]));
-        formData.append("data", e.target.files[0]);
-        fetchImage(formData);
+        setThumbnail(e.target.files[0]);
     }
 
-    // 대표 이미지 axios
-    const fetchImage = async (param) => {
-        await axios({
-            method: "post",
-            url: "http://localhost:8001/seller-service/product/upload",
-            data : param,
-            headers : {
-                "Content-Type": "multipart/form-data"
-            }
-        })
-        .then(function(response){
-                sestFileImage(response.data);
-            })
-            .catch(function(error){
-                alert("상품 등록에 실패하셨습니다.");
-                console.log(error);
-            })
-    }
+
 
     // 대표 이미지 버튼클릭시 input 태그에 클릭이벤트를 걸어준다.
     const onClickImageUpload = () => {
@@ -120,6 +114,8 @@ function SellerProductRegister() {
     const saveFileImageDetail = (e) => {
         const imageLists = e.target.files;
         let urlList = [];
+        setDetailFileImageList(imageLists);
+
 
         for(let i=0; i<imageLists.length; i++) {
             const currentImageUrl = URL.createObjectURL(imageLists[i]);
@@ -144,6 +140,8 @@ function SellerProductRegister() {
     const saveFileImageTemplate = (e) => {
         const imageLists = e.target.files;
         let urlList = [];
+
+        setDetailTemplateFileImageList(imageLists);
 
         for(let i=0; i<imageLists.length; i++) {
             const currentImageUrl = URL.createObjectURL(imageLists[i]);
@@ -190,19 +188,19 @@ function SellerProductRegister() {
     };
 
     const onHandlersellerTitleHighlight1 = (e) => {
-        setSellerTitleHighklight1(e.target.value);
+        setSellerTitleHighlight1(e.target.value);
     };
 
     const onHandlersellerTitleHighlight2 = (e) => {
-        setSellerTitleHighklight2(e.target.value);
+        setSellerTitleHighlight2(e.target.value);
     };
 
     const onHandlersellerProductName = (e) => {
         setSellerProductName(e.target.value);
     };
 
-    const onHandlersellerProductDeatil = (e) => {
-        setSellerProductDeatil(e.target.value);
+    const onHandlersellerProductDetail = (e) => {
+        setSellerProductDetail(e.target.value);
     };
 
     // Template 저장인지 아닌지 확인
@@ -224,23 +222,96 @@ function SellerProductRegister() {
 
     // 상품 등록 axios
     const fetchProduct = async (param) => {
-        await axios({
-            method: "post",
-            url: "http://localhost:8001/seller-service/product",
-            data : param
-        })
-        .then(function(response){
-            if(response.data.success) {
-                alert("상품 등록에 성공하셨습니다.");
-                history(`/seller/${params.sellerId}`);
-            }else{
-                alert("상품 등록에 실패하셨습니다.");
+
+
+        console.log("tempalteCheck: "+templateCheck);
+        const productParams = {
+            categoryId: selectCategoryId,
+            thumbnail: fileImage,
+            name: formDisplayName,
+            price: price,
+            stock: stock,
+            deadline: deadline,
+            displayName: formDisplayName,
+            sellerId: params.sellerId,
+            deliveryFee: 3000
+        };
+
+        const fd = new FormData();
+        fd.append(
+            "data",
+            new Blob([JSON.stringify(productParams)], { type: "application/json" })
+        ); // JSON 형식으로 파싱 후 추가
+        fd.append("thumbnail",thumbnail);
+        
+        // 이미지 디테일 경우
+        if(templateCheck && false){
+
+            let files = detailFileImageList;
+            for (let i = 0; i < files.length; i++) {
+                fd.append("files", files[i]);
             }
-         })
-         .catch(function(error){
-            alert("상품 등록에 실패하셨습니다.");
-            console.log(error);
-         })
+            
+
+
+            await axios({
+                method: "post",
+                url: url + "/seller-service/product",
+                data : fd
+            })
+            .then(function(response){
+                if(response.data.success) {
+                    alert("상품 등록에 성공하셨습니다.");
+                    history(`/seller/${params.sellerId}`);
+                }else{
+                    alert("상품 등록에 실패하셨습니다.");
+                }
+            })
+            .catch(function(error){
+                alert("상품 등록에 실패하셨습니다.");
+                console.log(error);
+            })
+        }
+        else{
+            console.log("template");
+            const templateArticle = {
+                sellerTitle: sellerTitle,
+                sellerTitleDetail: sellerTitleDetail,
+                sellerTitleHighlight1: sellerTitleHighlight1,
+                sellerTitleHighlight2: sellerTitleHighlight2,
+                sellerProductName: sellerProductName,
+                sellerProductDetail: sellerProductDetail
+            };
+
+            fd.append(
+                "templateArticle",
+                new Blob([JSON.stringify(templateArticle)], { type: "application/json" })
+            ); 
+            let files = detailTemplateFileImageList;
+            for (let i = 0; i < files.length; i++) {
+                fd.append("files", files[i]);
+            }
+
+
+            await axios({
+                method: "post",
+                url: url + "/seller-service/product/template",
+                data : fd
+            })
+            .then(function(response){
+                if(response.data.success) {
+                    alert("상품 등록에 성공하셨습니다.");
+                    history(`/seller/${params.sellerId}`);
+                }else{
+                    alert("상품 등록에 실패하셨습니다.");
+                }
+            })
+            .catch(function(error){
+                alert("상품 등록에 실패하셨습니다.");
+                console.log(error);
+            })
+
+        }
     }
 
 
@@ -266,21 +337,21 @@ function SellerProductRegister() {
                     alert("템플릿 이미지 5개 등록은 필수입니다.");
                 }else if(sellerTitle === null || sellerTitle === ""
                         || sellerTitleDetail === null || sellerTitleDetail === ""
-                        || sellerTitleHighklight1 === null || sellerTitleHighklight1 === ""
-                        || sellerTitleHighklight2 === null || sellerTitleHighklight2 === ""
+                        || sellerTitleHighlight1 === null || sellerTitleHighlight1 === ""
+                        || sellerTitleHighlight2 === null || sellerTitleHighlight2 === ""
                         || sellerProductName === null || sellerProductName === ""
-                        || sellerProductDeatil === null || sellerProductDeatil === ""){
+                        || sellerProductDetail === null || sellerProductDetail === ""){
                     alert("글 등록 6개는 필수입니다.")
                 }else{
                     fetchProduct(productParams);
                     alert("이미지 디테일 등록 axios 하세요.");
                 }
-            }else {
+            }else { // 이미지 디테일
                 if(fileImageDetail.length <= 0 || fileImageDetail===null) {
                     alert("이미지 디테일 사진은 필수입니다.");
                 }else{
                     fetchProduct(productParams);
-                    alert("템플릿 추천 등록 axios 하세요.");
+                    
                 }
             }
         }
@@ -358,7 +429,7 @@ function SellerProductRegister() {
             </div>
                             
             <div className="seller-product-div4">
-                <div>
+                <div style={{marginBottom:"30px"}}>
                     <h5>상세설명</h5>
                 </div>
                 <div>
@@ -368,7 +439,7 @@ function SellerProductRegister() {
                 {templateCheck === false ?
 
                     <div className = "seller-detail">
-                        <div>
+                        <div style={{marginTop:"30px"}}>
                             <h5 className="template-title">디테일 이미지 등록</h5>
                         </div>
                         <div className="seller-product-div5">
@@ -444,14 +515,14 @@ function SellerProductRegister() {
                                     </div>
                                     <div className="seller-template-item">
                                     <div className="seller-template-writeButton" >강조 문구1</div>
-                                        <input type="text" className="form-control seller-title" value={sellerTitleHighklight1} onChange={onHandlersellerTitleHighlight1} />  
+                                        <input type="text" className="form-control seller-title" value={sellerTitleHighlight1} onChange={onHandlersellerTitleHighlight1} />  
                                     </div>
                                 </div>
                                 
                                 <div className="seller-template-block2">
                                     <div className="seller-template-item">
                                     <div className="seller-template-writeButton" >강조 문구2</div>
-                                        <input type="text" className="form-control seller-title" value={sellerTitleHighklight2} onChange={onHandlersellerTitleHighlight2} />  
+                                        <input type="text" className="form-control seller-title" value={sellerTitleHighlight2} onChange={onHandlersellerTitleHighlight2} />  
                                     </div>
                                     <div className="seller-template-item">
                                     <div className="seller-template-writeButton" >제품 이름</div>
@@ -459,7 +530,7 @@ function SellerProductRegister() {
                                     </div>
                                     <div className="seller-template-item">
                                     <div className="seller-template-writeButton" >제품 설명</div>
-                                        <input type="text" className="form-control seller-title" value={sellerProductDeatil} onChange={onHandlersellerProductDeatil} />  
+                                        <input type="text" className="form-control seller-title" value={sellerProductDetail} onChange={onHandlersellerProductDetail} />  
                                     </div>
                                 </div>
                             </div>
@@ -481,20 +552,20 @@ function SellerProductRegister() {
                                             <span>
                                                 <img className="already-icon-highlight" alt="highlight" src={highlight}/>
                                             </span>
-                                            &nbsp;{sellerTitleHighklight1}
+                                            &nbsp;{sellerTitleHighlight1}
                                         </div>
                                         <div className="already-highlight2">
                                             <span>
                                                 <img className="already-icon-highlight" alt="highlight" src={highlight}/>
                                             </span>
-                                            &nbsp;{sellerTitleHighklight2}
+                                            &nbsp;{sellerTitleHighlight2}
                                         </div>
                                     </div>
                                     <div className="already-image2">
                                         <img className="seller-template-already-image2" src={fileImageTemplate[1]} alt="image2" />
                                     </div>
                                     <div className="already-productName">{sellerProductName}</div>
-                                    <div className="already-productDetail">{sellerProductDeatil}</div>
+                                    <div className="already-productDetail">{sellerProductDetail}</div>
                                     <div className="already-image3">
                                         <img className="seller-template-already-image3" src={fileImageTemplate[2]} alt="image2" />
                                     </div>

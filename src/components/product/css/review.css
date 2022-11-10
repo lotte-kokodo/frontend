@@ -192,5 +192,5 @@ button span {
 }
 .reviewContent:focus {
 	border: 2px solid rgb(213, 194, 194);
-    outline-color: #FE6B8B;
+    outline-color: rgb(119, 118, 118);
 }

@@ -21,9 +21,15 @@
     position: absolute;
     top: 170px;
     left: 0px;
-    background-color: #ffffff;
+    background-color: transparent;
 }
 
+.banner_buttonsLeft > button{
+    background-color: transparent;
+}
+.banner_buttonsRight > button{
+    background-color: transparent;
+}
 .banner_buttonsRight{
     width: 70px;
     height: 70px;
@@ -33,7 +39,7 @@
     position: absolute;
     top: 170px;
     right: 0px;
-    background-color: #ffffff;
+    background-color: transparent;
 }
 
 .banner-button-left{
@@ -132,9 +138,10 @@
 }
 
 .product-div:hover{
-    color: #fb7d98;
+    color: #0c0c0c;
     background-color: #ffffff;
-    border-color: #fb7d98;
+    border-color: #000;
+    text-decoration: none;
 }
 
 .product-thumbnail-img{

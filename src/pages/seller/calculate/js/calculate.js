@@ -2,7 +2,7 @@ import React from "react"
 import axios from "axios"
 import "../css/calculate.css"
 
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import CalculateTableRow from "../../../../components/calculate/js/calculateTableRow"
 import {dateParseToSimple, moneyComma, parseToLocalDate, weekDateParseToLocalDate, monthDateParseToLocalDate} from "../../../../common/calculate/function"
@@ -12,8 +12,11 @@ import Box from "@mui/material/Box";
 import {Modal} from "@mui/material";
 import CalculatePreviewModal from "../../../../components/calculate/js/calculatePreviewModal";
 
-export default function CalculatePresent() {
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
+
+export default function CalculatePresent() {
+    const { url } = useContext(ServerConfigContext);
     const params = useParams();
 
     let history = useNavigate();
@@ -53,7 +56,7 @@ export default function CalculatePresent() {
 
     const searchContent = async () => {
         history(`/seller/${params.sellerId}/calculateList`)
-        await axios.post(`http://localhost:8001/calculate-service/calculate/${params.sellerId}/calculateList`,{
+        await axios.post(url + `/calculate-service/calculate/${params.sellerId}/calculateList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",
@@ -70,7 +73,7 @@ export default function CalculatePresent() {
     }
 
     const getDay = async() =>{
-        await axios.get(`http://localhost:8001/calculate-service/calculate/expectDay`)
+        await axios.get(url + `/calculate-service/calculate/expectDay`)
             .then(function (resp){
                 setCalculateExpectDay(dateParseToSimple(resp))
             }).catch(function (error){
@@ -79,7 +82,7 @@ export default function CalculatePresent() {
     }
 
     const getMoney = async() =>{
-        await axios.get(`http://localhost:8001/calculate-service/calculate/${params.sellerId}/expectMoney`)
+        await axios.get(url + `/calculate-service/calculate/${params.sellerId}/expectMoney`)
             .then(function (resp){
                 setCalculateExpectMoney(moneyComma(resp.data.result.data));
             }).catch(function (error){

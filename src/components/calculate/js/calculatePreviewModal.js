@@ -1,9 +1,13 @@
 import {useEffect, useState} from "react";
+import { useContext } from "react";
 import calculatePreviewModal from "./../css/calculatePreviewModal.css"
 import CalculateBottomLine from "./calculateBottomLine";
 import axios from "axios";
-export default function CalculatePreviewModal(props){
 
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
+
+export default function CalculatePreviewModal(props){
+    const { url } = useContext(ServerConfigContext);
     const [bankName, setBankName] = useState("");
     const [accountNumber, setAccountNumber] = useState("");
     const [accountHolder, setAccountHolder] = useState("");
@@ -24,7 +28,7 @@ export default function CalculatePreviewModal(props){
     // const [fee, setFee] = useState("");
 
     const getInitInfo = async () => {
-        await axios.get(`http://localhost:8001/calculate-service/calculate/${props.sellerId}/calculateModal/${props.calculateId}`,{
+        await axios.get(url + `/calculate-service/calculate/${props.sellerId}/calculateModal/${props.calculateId}`,{
         }).then(function (resp) {
             setFinalPaymentCost(resp.data.result.data.finalPaymentCost)
             setProvideStatus(resp.data.result.data.provideStatus)

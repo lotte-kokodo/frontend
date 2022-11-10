@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "../css/productDetailInfo.css";
 import {AuthContext} from "../../../context/authProvider";
 import {RecentProductContext} from "../../../context/recentProductProvider";
-import {ServerConfigContext} from "../../../context/serverConfigProvider";
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 const st1 = { transitionDuration: "300ms" }
 const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
@@ -15,7 +15,6 @@ const st4 = { width: "88px", marginRight: "10px" }
 
 
 export default function ProductDetail() {
-
     let { productId } = useParams(null);
 
     const { headers, memberId } = useContext(AuthContext);
@@ -87,7 +86,7 @@ export default function ProductDetail() {
 
         // TODO: Member ID 같이 전송해야함
         const test = async () => {
-            await axios.post(`http://localhost:8001/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
+            await axios.post(url + `/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
                 .then(function (resp) {
                     alert("쿠폰 다운로드 성공");
                 })
@@ -137,7 +136,7 @@ export default function ProductDetail() {
         console.log("product/detail");
 
         const fetchData = async () => {
-            await axios.get(`http://localhost:8001/product-service/product/detail/${productId}`)
+            await axios.get(url + `/product-service/product/detail/${productId}`)
                 .then(function (resp) {
                     setProduct(resp.data.result.data);
                     recentProduct(resp.data.result.data);
@@ -152,7 +151,7 @@ export default function ProductDetail() {
     useEffect(() => {
         console.log("review/total");
         const fetchData = async () => {
-            await axios.get(`http://localhost:8001/product-service/review/total/${productId}`)
+            await axios.get(url + `/product-service/review/total/${productId}`)
                 .then(function (resp) {
                     console.log(resp);
                     setTotalReview(resp.data.result.data);
@@ -169,7 +168,7 @@ export default function ProductDetail() {
     useEffect(() => {
         console.log("rateCoupon");
         const fetchData = async () => {
-            await axios.get(`http://localhost:8001/promotion-service/rateCoupon/${productId}`)
+            await axios.get(url + `/promotion-service/rateCoupon/${productId}`)
                 .then(function (resp) {
                     setCoupon(resp.data.result.data)
                 })
@@ -188,7 +187,7 @@ export default function ProductDetail() {
     }, [salePrice,product]);
 
     const fetchData = async () => {
-        await axios.get(`http://localhost:8001/promotion-service/rate-discount/${productId}`)
+        await axios.get(url + `/promotion-service/rate-discount/${productId}`)
             .then(function (resp) {
                 setRatePolicy(resp.data.result.data);
                 setSalePrice(calcSalePercent(resp.data.result.data.rate));
@@ -265,7 +264,7 @@ export default function ProductDetail() {
     </div>
     <div className="orange-mem-box">
         <a onClick={()=>{downloadCoupon(coupon)}} href="#" className="box-head">
-            <i className="ico-bl-orgmem"></i><strong className="text-primary">주문 시 적용되는 혜택이 있어요</strong>
+            <i className="ico-bl-orgmem"></i><strong className="product-info-coupon-primary">주문 시 적용되는 혜택이 있어요</strong>
             <span className="txt">쿠폰 다운로드 <i className="ico-arr-right"></i></span>
         </a>
         <ul className="sale-desc">

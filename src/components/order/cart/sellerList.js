@@ -20,17 +20,16 @@ const SellerList = () => {
   const [carts, setCarts] = useState([]);
   const [cartProductIds, setCartProductIds] = useState([]);
 
-  let a = [];
-  let b = [];
-
   useEffect(() => {
     getCarts();
   }, []);
 
   useEffect(() => {
-    getRateDiscountPolicy();
-    getFixDiscountPolicy();
-    getSellerNames();
+    if (cartMap.size > 0) {
+      getRateDiscountPolicy();
+      getFixDiscountPolicy();
+      getSellerNames();
+    }
   }, [cartMap]);
 
   const getCarts = async () => {

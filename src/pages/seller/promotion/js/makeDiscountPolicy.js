@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
+import { useContext } from "react";
 import { useParams } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,6 +13,7 @@ import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, Ta
 
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.root}`]: {
@@ -43,6 +45,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MakeDiscountPolicy() {
+    const { url } = useContext(ServerConfigContext);
     // const sellerId = useParams().sellerId;
 
     const [discountPolicyName, setDiscountPolicyName] = useState('');
@@ -108,7 +111,7 @@ function MakeDiscountPolicy() {
         }
         await axios({
             method: "post",
-            url: "http://localhost:8001/promotion-service/rate-discount/save",
+            url: url + "/promotion-service/rate-discount/save",
             data: ratePolicyDto
         })
             .then(function (resp) {
@@ -136,7 +139,7 @@ function MakeDiscountPolicy() {
         console.log(fixPolicyDto);
         await axios({
             method: "post",
-            url: "http://localhost:8001/promotion-service/fix-discount/save",
+            url: url + "/promotion-service/fix-discount/save",
             data: fixPolicyDto
         })
             .then(function (resp) {
@@ -166,7 +169,7 @@ function MakeDiscountPolicy() {
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: "http://localhost:8001/product-service/product/detail/" + productId,
+                url: url + "/product-service/product/detail/" + productId,
                 // data: params
             })
                 .then(function (resp) {
