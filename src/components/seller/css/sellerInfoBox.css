@@ -1,0 +1,63 @@
+.seller-info-box-out {
+    /*margin: auto;*/
+    width: 450px;
+    height: 100%;
+    /*text-align: center;*/
+    box-shadow: 2px 2px 4px 2px grey;
+}
+
+.seller-info-box-outline-layout{
+    border: 1px solid green;
+    width: 90%;
+    height: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    background-color: white;
+}
+
+.seller-info-box-out-2{
+    width: 88%;
+    border: 1px solid red;
+    height: 90%;
+    margin: auto;
+    margin-top: 7px;
+}
+.seller-info-box-text-bold{
+    font-weight: bold;
+}
+
+.seller-info-box-title-font-size{
+    font-size: 25px;
+}
+
+.seller-info-box-number-font-size{
+    font-size: 35px;
+}
+
+.seller-info-box-unit-font-size{
+    font-size: 17px;
+}
+
+.d-flex{
+    display: flex;
+}
+.seller-info-box-margin{
+    margin: auto;
+    width: 90%;
+}
+
+.seller-number-per-info{
+    font-weight: bold;
+    font-size: 20px;
+}
+.seller-num-color-red{
+    color: red;
+}
+
+.seller-num-color-blue{
+    color: deepskyblue;
+}

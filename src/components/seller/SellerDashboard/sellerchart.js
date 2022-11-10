@@ -1,7 +1,8 @@
 import React from 'react'
-import Chart from 'chart.js/auto';
 import styled from 'styled-components';
-import { Line } from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
+
 
 const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -32,15 +33,20 @@ const data = {
 
 const SellerChart = () => {
     return (
-            <Container>
-                <Line type="line" data={data} />
-             </Container>
+        <Container>
+            <Line type="line" data={data} />
+        </Container>
     );
 };
 
 export default SellerChart;
 
 const Container = styled.div`
-  width: 90vw;
-  max-width: 900px;
+  width: 1000px;
+  height: 550px;
+  // max-width: 900px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 `;
