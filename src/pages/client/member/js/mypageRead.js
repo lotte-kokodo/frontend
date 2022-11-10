@@ -166,7 +166,7 @@ function MypageRead(){
 
                         <div className="input-group form-group">
                                 <span className='inputText'>생년월일  </span>
-                                <input type="text" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />  
+                                <input type="date" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />  
                         </div>
 
                         <div className="input-group form-group">
