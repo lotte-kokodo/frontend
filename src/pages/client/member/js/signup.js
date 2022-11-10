@@ -100,7 +100,7 @@ function Signup() {
             url: url + "/member-service/member/signup/" + id
         })
             .then((response) => {
-                if (response.data.result.data === "success") {
+                if (response.data.success) {
                     setIdCheck(true);
                     alert("해당 아이디는 사용 가능합니다.");
                 } else {
@@ -119,7 +119,7 @@ function Signup() {
             data : params
         })
             .then(function (response) {
-                if (response.data === "success") {
+                if (response.data.success) {
                     alert("회원 가입에 성공하셨습니다.");
                     history('/login');
                 } else {
