@@ -5,6 +5,7 @@ import DaumPostcode from 'react-daum-postcode';
 import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
 import "../css/signup.css";
+import {AuthContext} from "../../../../context/authProvider";
 
 function MypageRead(){
     const id = localStorage.getItem("memberId");
@@ -19,6 +20,7 @@ function MypageRead(){
     const [profileImageUrl, setInputProfileImageUrl]= useState("");
     const history = useNavigate();
     const { url } = useContext(ServerConfigContext);
+    const { headers, memberId } = useContext(AuthContext);
 
     /*daum address*/
     const [openPostcode, setOpenPostcode] = useState(false);
@@ -88,7 +90,8 @@ function MypageRead(){
     const fetchMypage = async () => {
         await axios({
             method: "get",
-            url: url + "/member-service/member/myPage/" + localStorage.getItem("memberId")
+            url: url + `/member-service/member/myPage/${memberId}`,
+            headers: headers
         })
         .then(function(response){
             setInputId(response.data.result.data.loginId);
@@ -109,7 +112,8 @@ function MypageRead(){
         await axios({
             method: "post",
             url: url + "/member-service/member/myPage",
-            data : params
+            data : params,
+            headers: headers
         })
         .then(function(response){
             if(response.data.result.data === "success") {
@@ -166,7 +170,7 @@ function MypageRead(){
 
                         <div className="input-group form-group">
                                 <span className='inputText'>생년월일  </span>
-                                <input type="date" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />  
+                                <input type="date" className="form-control form-birth" name='input_update_birth' value={inputBirth} onChange={handleInputBirth} />
                         </div>
 
                         <div className="input-group form-group">
