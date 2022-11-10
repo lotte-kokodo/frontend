@@ -146,7 +146,7 @@ function Mypage() {
             headers: headers
         }) 
         .then(function(response){
-            console.log("결과값!");
+            console.log("결과값");
             console.log(response);
 
             setOrderList(response.data.result.data);
