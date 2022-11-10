@@ -134,9 +134,6 @@ function MypageRead(){
         <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <div className="card">
-                    <div className="card-header">
-                        <h3>회원가입</h3>
-                    </div>
                     {openPostcode ?
                         <div>
                             {openPostcode && 
@@ -148,6 +145,7 @@ function MypageRead(){
                         </div>
                     :
                     <div className="card-body">
+                        <h3>회원정보수정 </h3><br/><br/>
                         <div className="input-group form-group">
                                 <span className='inputText'>아이디  </span>
                                 <input type="text" className="form-control" name='input_update_id' value={inputId} readOnly/>
@@ -183,10 +181,8 @@ function MypageRead(){
                                 <button className="form-control form-addr" name='input_addr' onClick={handle.clickButton} >{inputAddr}</button>
                         </div>
 
-                        <div className="login-group">
-                            <div className="form-group">
-                                <button className="btn float-right login_btn" onClick={updateMypage}>회원수정 </button>
-                            </div>
+                        <div className="d-flex justify-content-center">
+                            <button className="btn float-right login_btn" onClick={updateMypage}>회원수정 </button>
                         </div>
                     </div>
                     }
