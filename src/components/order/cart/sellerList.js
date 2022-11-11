@@ -25,11 +25,9 @@ const SellerList = () => {
   }, []);
 
   useEffect(() => {
-    if (cartMap.size > 0) {
       getRateDiscountPolicy();
       getFixDiscountPolicy();
       getSellerNames();
-    }
   }, [cartMap]);
 
   const getCarts = async () => {
@@ -95,6 +93,7 @@ const SellerList = () => {
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
       const data = resp.data.result.data;
+      console.log(data);
       setFixDiscountPolicyMap(data);
     })
     .catch((err) => {

@@ -38,19 +38,19 @@ const CartRow = (props) => {
 		}
 
 		await axios.post(api, req, {headers: headers })
-			.then((resp) => {
-				console.log(resp);
+		.then((resp) => {
+			console.log(resp);
 
-				setQty(updatedQty);
-				updateProductQty(updatedQty);
-			})
-			.catch((err) => {
-				console.log(err);
+			setQty(updatedQty);
+			updateProductQty(updatedQty);
+		})
+		.catch((err) => {
+			console.log(err);
 
-				const data = err.response.data;
-				alert(data.message);
-				setQty(data.result.qtyAvailable);
-			});
+			const data = err.response.data;
+			alert(data.message);
+			setQty(data.result.qtyAvailable);
+		});
 	}
 
 	const updateProductQty = (updatedQty) => {
@@ -81,31 +81,43 @@ const CartRow = (props) => {
 	}
 
 	return (
-		<>
-			<div className="row container-fluid order-product-row-div">
-				<div className="col-1">
-					<CheckBox cartId={cart.cartId}
-										cart={cart}
-										handler={props.handler}
-										checkCartCnt={props.checkCartCnt}
-										sellerCartCnt={props.sellerCartCnt}/>
+			<>
+				<div className="row container-fluid order-product-row-div">
+					{
+						cart.productId === -1 ?
+								<div className="col">
+								<span>
+									<i className="fas fa-exclamation-circle"></i> &nbsp;
+									해당 상품을 표시할 수 없습니다. 관리자에게 문의하세요.
+								</span>
+								</div>
+								:
+								<>
+									<div className="col-1">
+										<CheckBox cartId={cart.cartId}
+															cart={cart}
+															handler={props.handler}
+															checkCartCnt={props.checkCartCnt}
+															sellerCartCnt={props.sellerCartCnt}/>
+									</div>
+									<div className="col-2">
+										<img className="order-product-img" src={cart.productThumbnail} alt={cart.productName} />
+									</div>
+									<div className="col-4">
+										<span>{cart.productName}</span>
+									</div>
+									<div className="col-2">
+										<button onClick={decreaseQty}>-</button> &nbsp;
+										<span>{qty}</span> &nbsp;
+										<button onClick={increaseQty}>+</button> &nbsp;
+									</div>
+									<div className="col-3">
+										<Price cart={cart} />
+									</div>
+								</>
+					}
 				</div>
-				<div className="col-2">
-					<img className="order-product-img" src={cart.productThumbnail} alt={cart.productName} />
-				</div>
-				<div className="col-4">
-					<span>{cart.productName}</span>
-				</div>
-				<div className="col-2">
-					<button onClick={decreaseQty}>-</button> &nbsp;
-						<span>{qty}</span> &nbsp;
-						<button onClick={increaseQty}>+</button> &nbsp;
-					</div>
-				<div className="col-3">
-					<Price cart={cart} />
-				</div>
-			</div>
-		</>
+			</>
 	);
 
 }

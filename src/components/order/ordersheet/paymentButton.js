@@ -25,19 +25,23 @@ const PaymentButton = (props) => {
 
   const orderSingleProduct = async () => {
 
-    let api = url + "/order-service/orders/single-product";
+    let api = url + "/order-service/orders/singleProduct";
 
     const productId = productIds[0];
-    const params = {
+    const sellerId = orderProductMap[productId].sellerId;
+    let productSellerMap = {};
+    productSellerMap[productId] = sellerId;
+    const req = {
       memberId: memberId,
       productId: productId,
-      sellerId: orderProductMap[productId].sellerId,
+      sellerId: sellerId,
       qty: productQtyMap[productId],
       rateCouponId: checkRateCoupons.length !== 0 ? checkRateCoupons[0].id : null,
-      fixCouponId: checkFixCoupons.length !== 0 ? checkFixCoupons[0].id : null
+      fixCouponId: checkFixCoupons.length !== 0 ? checkFixCoupons[0].id : null,
+      productSellerMap: productSellerMap
     }
 
-    await axios.post(api, null, { params: params, headers: headers })
+    await axios.post(api, req, { headers: headers })
     .then((resp) => {
       alert(resp.data.result.data.msg);
       navigate(`/`); // TODO 주문상세로 이동

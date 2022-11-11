@@ -146,7 +146,7 @@ function Mypage() {
         console.log(id);
         await axios({
             method: "get",
-            url: url + `/order-payment-service/orders/${id}`,
+            url: url + `/order-service/orders/${id}`,
             headers: headers
         }) 
         .then(function(response){
