@@ -224,7 +224,7 @@ function SellerProductRegister() {
     const fetchProduct = async (param) => {
 
 
-        console.log("tempalteCheck: "+templateCheck);
+        console.log(templateCheck==false?"img":"tempalte");
         const productParams = {
             categoryId: selectCategoryId,
             thumbnail: fileImage,
@@ -243,17 +243,17 @@ function SellerProductRegister() {
             new Blob([JSON.stringify(productParams)], { type: "application/json" })
         ); // JSON 형식으로 파싱 후 추가
         fd.append("thumbnail",thumbnail);
-        
         // 이미지 디테일 경우
-        if(templateCheck && false){
+        if(templateCheck== false){
+
+            console.log("img");
+            
 
             let files = detailFileImageList;
             for (let i = 0; i < files.length; i++) {
                 fd.append("files", files[i]);
             }
             
-
-
             await axios({
                 method: "post",
                 url: url + "/seller-service/product",
