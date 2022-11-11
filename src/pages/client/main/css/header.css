@@ -42,14 +42,27 @@ a {
 
 .headerCenter-logo{
     font-size: 35px;
-    color:#FB7D98;
+    color:#000000;
     font-weight: bold;
     float: left;
 }
 
 .headerCenter-logo a {
-    color:#FB7D98;
+    color:#000000;
     text-decoration: none;
+}
+
+.seller-logo-img {
+    width: 200px;
+    height: 200px;
+}
+
+.seller-logo-span {
+    font-size: 35px;
+    color:#000000;
+    font-weight: bold;
+    float: left;
+    margin: -30px auto 20px auto
 }
 
 .headerCenter-search{

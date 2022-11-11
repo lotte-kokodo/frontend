@@ -138,9 +138,10 @@
 }
 
 .product-div:hover{
-    color: #fb7d98;
+    color: #0c0c0c;
     background-color: #ffffff;
-    border-color: #fb7d98;
+    border-color: #000;
+    text-decoration: none;
 }
 
 .product-thumbnail-img{

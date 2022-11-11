@@ -303,7 +303,7 @@ function NewItem(props) {
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>
@@ -322,7 +322,7 @@ function SaleItem(props) {
                 <img className='product-thumbnail-img' alt='sale-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>
@@ -341,7 +341,7 @@ function MdItem(props) {
                 <img className='product-thumbnail-img' alt='md-product' src={props.obj.thumbnail} />
             </div>
             <div className='product-displayName'>
-                <strong>{props.obj.displayName}</strong>
+                <span>{props.obj.displayName}</span>
                 <div className='product-price'>
                     {priceChange} 원
                 </div>

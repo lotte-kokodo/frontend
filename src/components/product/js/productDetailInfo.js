@@ -201,7 +201,7 @@ export default function ProductDetail() {
     /* 장바구니 생성 API */
     const addCart = async () => {
 
-        await axios.post(url + `/order-payment-service/carts/${memberId}`, null,
+        await axios.post(url + `/order-service/carts/${memberId}`, null,
             {params: {productId: productId, qty: orderNum}, headers: headers})
         .then((resp) => {
             console.log("[SUCCESS] (ProductDetailInfo) POST /order-payment-service/carts/");

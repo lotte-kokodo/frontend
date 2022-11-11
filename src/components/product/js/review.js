@@ -3,9 +3,14 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { FaStar } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import "../css/review.css";
 import { ServerConfigContext } from "../../../context/serverConfigProvider";
+
+const ARRAY = [0, 1, 2, 3, 4];
+
 
 export default function Review() {
     const { url } = useContext(ServerConfigContext);
@@ -13,32 +18,62 @@ export default function Review() {
 
     const [totalReview, setTotalReview ]=useState(0);
     const [reviewList, setReviewList ]=useState([]);
+    const [reviewContent, setReviewContent] = useState('');
+
+    const [clicked, setClicked] = useState([false, false, false, false, false]);
+    const [ rate, setRate] =useState(0);
+
+    const handleStarClick = index => {
+      let clickStates = [...clicked];
+      for (let i = 0; i < 5; i++) {
+        clickStates[i] = i <= index ? true : false;
+      }
+      setClicked(clickStates);
+    };
+
+    const changeReviewContent = (e)=>{
+        setReviewContent(e.target.value);
+    }
   
-    const saveReview = (s) =>{
+    useEffect(() => {
+      sendReview();
+    }, [clicked]); //컨디마 컨디업
+  
+    const sendReview = () => {
+      let score = clicked.filter(Boolean).length;
+      setRate(score);
+    };
+  
+    const saveReview = () =>{
+
+        console.log(productId);
+        console.log(reviewContent);
+        console.log(rate);
 
         const fetchData = async () => {
-            await axios.post(url + `/product-service/review`,null
-            ,{
-                productId: {productId},
-                content: {s},
-                rating: "5.0"
-            }, {headers: {'memberId' : '1'}} )
-                .then(function (resp) {
-                    console.log(resp);
 
+            await axios({
+                method: 'post',
+                url: url + `/product-service/review`,
+                data: {
+                    productId: productId,
+                    content: reviewContent,
+                    rating: rate
+                },
+                headers: {'memberId' : '1'}
+            })
+              .then(function (resp) {
+                        alert("리뷰 등록 완료");
+                        window.location.reload()
+    
                 })
                 .catch(function (error) {
-                    console.log(error);
-                })
+                        console.log(error);
+                    })
+
         }
         fetchData();
     }
-
-    const test = (target) => {
-        alert(target);
-
-    };
-
 
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
@@ -106,9 +141,22 @@ export default function Review() {
         </div>
 
         <div style={{padding: "10px"}}>
-
-                <textarea class="reviewContent"  style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
-                <button onClick={saveReview()} style={{backgroundColor: "#000", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
+        <Wrap>
+      <Stars>
+        {ARRAY.map((el, idx) => {
+          return (
+            <FaStar
+              key={idx}
+              size="50"
+              onClick={() => handleStarClick(el)}
+              className={clicked[el] && 'yellowStar'}
+            />
+          );
+        })}
+      </Stars>
+    </Wrap>
+                <textarea class="reviewContent"  value={reviewContent} onChange={changeReviewContent} style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
+                <button onClick={()=>saveReview()} style={{backgroundColor: "#000", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
                 color:"#fff", borderRadius: "10px",verticalAlign: "top"}}>리뷰 등록</button>
         </div>
 
@@ -172,3 +220,36 @@ export default function Review() {
 
     )
 }
+
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+`;
+
+const Stars = styled.div`
+  display: flex;
+  padding-top: 5px;
+  padding-left: 10px;
+
+  & svg {
+    color: #F0F0F0;
+    cursor: pointer;
+    width:30px;
+  }
+
+  :hover svg {
+    color: #fcc419;
+  }
+
+  & svg:hover ~ svg {
+    color: #F0F0F0;
+    width:30px;
+  }
+
+  .yellowStar {
+    color: #fcc419;
+    width:30px;
+  }
+`;
