@@ -15,22 +15,36 @@ import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagemen
 import CouponManagement from '../../promotion/js/couponManagement'
 
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
+import SellerLogin from "../../seller/js/sellerLogin";
+import AuthProvider from "../../../../context/authProvider";
 
 function Seller() {
-    const params = useParams();
+    const sellerId = localStorage.getItem("sellerId");
 
-    return(
-        <div>
-            <ServerConfigProvider>
-            <SellerHeader />
-            <hr className="headerBottom-hr"></hr>
-            <SellerNav />
-
+    const sellerLogin = () => {
+      return (
+          <>
             <main>
-                <Routes>
-                    <Route path="/" element={<SellerHome />}></Route>
+              <Routes>
+                <Route path="/" element={<SellerLogin />}></Route>
+              </Routes>
+            </main>
+          </>
+      );
+    }
 
-                        
+    const seller = () => {
+      return (
+          <>
+            <ServerConfigProvider>
+              <AuthProvider>
+                <SellerHeader />
+                <hr className="headerBottom-hr"></hr>
+                <SellerNav />
+
+                <main>
+                  <Routes>
+                    <Route path={`/${sellerId}`} element={<SellerHome />}></Route>
 
                     {/* Seller Product */}
                     <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
@@ -44,11 +58,24 @@ function Seller() {
                     {/* Seller Promotion */}
                     <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
                     <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
-                </Routes>
-            </main>
+                  </Routes>
+                </main>
+                </AuthProvider>
+            </ServerConfigProvider>
+          </>
+      );
+    }
+
+    return(
+        <div>
+            <ServerConfigProvider>
+
+              {
+                sellerId ? seller() : sellerLogin()
+              }
             </ServerConfigProvider>
         </div>
-    )
+    );
 }
 
 export default Seller;
