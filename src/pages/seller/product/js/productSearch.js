@@ -7,13 +7,14 @@ import {useNavigate, useParams} from "react-router-dom";
 import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
+import Pagination from "react-js-pagination";
+
 export default function ProductSearch() {
     const { url } = useContext(ServerConfigContext);
 
     const params = useParams();
 
     let history = useNavigate();
-    const [productList, setProductList] = useState([]);
     const [pdStatus, setPdStatus] = useState(0);
     const [productType, setProductType] = useState("ALL");
 
@@ -24,24 +25,57 @@ export default function ProductSearch() {
 
     const parmas = useParams();
 
+    /* 페이징 */
+    const [productList, setProductList] = useState([]); //아이템
+    const [count, setCount] = useState(0); //아이템 총 수
+    const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    const [postPerPage] = useState(20); //페이지당 아이템 개수
+    const [searchFlag, setSearchFlag] = useState(false);
 
+
+    const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
+
+    const Paging = ({page, count, setPage}) => {
+        return (
+            <Pagination
+                    activePage={page}
+                    itemsCountPerPage={20}
+                    totalItemsCount={count}
+                    pageRangeDisplayed={5}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                    onChange={setPage} />
+        );
+    }
+
+    const setPage = (e) => {
+        setCurrentpage(e);
+        };
+
+    useEffect(() => {
+        setCount(count);
+        setIndexOfLastPost(currentpage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(productList);
+    }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
+        
     const pdChange = (e) => {setPdStatus(e.target.value);};
     const changeProductName = (e) => {setProductName(e.target.value);}
-
     const startDateChange = (e) => {setTmpStartDate(e.target.value);}
-
     const endDateChange = (e) => {setTmpEndDate(e.target.value);}
 
     // button axios
     const searchContent = async () => {
-        // history(`/product/present/${params.id}`)
-
         let sdate = tmpStartDate+" 00:00";
         let edate= tmpEndDate+" 00:00";
-        await axios.get(url + `/seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${parmas.sellerId}`
-        ).then(function (resp) {
-            setProductList(resp.data);
-
+        await axios.get(url + `/seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${parmas.sellerId}&page=${currentpage}`
+        ).then(function (response) {
+            console.log(response.data);
+            setSearchFlag(true);
+            setProductList(response.data.productDtoList);
+            setCount(response.data.totalCount);
         }).catch(function (error) {
             console.log(error);
         })
@@ -50,13 +84,13 @@ export default function ProductSearch() {
     const getExpectEndDay = async() =>{
         let today = new Date();
         today.setMonth(today.getMonth() + 1);
-        setTmpEndDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
+        setTmpEndDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getDate()))
     }
 
     const getExpecStartDy = async() =>{
         let today = new Date();
         today.setMonth(today.getMonth() + 1);
-        setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
+        setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getDate()))
     }
 
     // 유저 아이드, 날짜를 전달해줘야 한다.
@@ -64,6 +98,10 @@ export default function ProductSearch() {
         getExpecStartDy()
         getExpectEndDay()
     }, []);
+
+    useEffect(() => {
+        searchContent();
+    },[currentpage]);
 
     return (
         <div className="body">
@@ -106,40 +144,49 @@ export default function ProductSearch() {
                     </div>
                 </div>
             </div>
-            <div className="product-bottom-result-box">
-                <div className="product-search-result-box">상품목록</div>
-            </div>
-            <table className="table product-search-table">
-                <thead>
-                <tr>
-                    <th>-</th>
-                    <th>등록 상품명</th>
-                    <th>카테고리</th>
-                    <th>가격</th>
-                    <th>재고</th>
-                    
-                </tr>
-                </thead>
+            <div className="product-list-main">
+                <div className="product-bottom-result-box">
+                    <div className="product-search-result-box">상품목록</div>
+                </div>
+                <table className="table product-search-table">
+                    <thead>
+                    <tr>
+                        <th>상품 이미지</th>
+                        <th>등록 상품명</th>
+                        <th>카테고리</th>
+                        <th>가격</th>
+                        <th>재고</th>
+                        
+                    </tr>
+                    </thead>
 
-                <tbody>
-                {productList &&
-                    productList.map(function (obj, i) {
-                        return (
-                            <tr>
-                                <th><img src={obj.thumbnail} style={{width:"100px", height:"100px"}}/></th>
-                                <td>{obj.displayName}</td>
-                                <td>{obj.categoryName}</td>
-                                <td>{obj.price}</td>
-                                <td>{obj.stock}</td>
-                            </tr>
-                            // <productTableRow obj={productRow} key={i} cnt={i + 1}/>
-                        )
-                    })
-                }
-                </tbody>
-            </table>
+                    <tbody>
+                    {productList &&
+                        productList.map(function (obj, i) {
+                            return (
+                                <tr>
+                                    <th><img src={obj.thumbnail} style={{width:"100px", height:"100px"}}/></th>
+                                    <td>{obj.displayName}</td>
+                                    <td>{obj.categoryName}</td>
+                                    <td>{obj.price}</td>
+                                    <td>{obj.stock}</td>
+                                </tr>
+                                // <productTableRow obj={productRow} key={i} cnt={i + 1}/>
+                            )
+                        })
+                    }
+                    </tbody>
+                </table>
+                <div className="pagingProduct">
+                    {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
+                </div>
+            </div>
         </div>
     );
+}
+
+function Popup() {
+
 }
 
 function productTableRow(row) {
@@ -199,7 +246,7 @@ function parseToLocalDate(strLocalDate){
     }
 
     if(strMonth< 10){ strMonth = "0" + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
+    if(strDate< 10){ strDate = "0" + date.getDate();}
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
@@ -209,7 +256,7 @@ function weekDateParseToLocalDate(strLocalDate){
     date.setDate(date.getDate() - 5);
     let strYear = date.getFullYear();
     let strMonth = date.getMonth();
-    let strDate = date.getUTCDate();
+    let strDate = date.getDate();
 
     if(strYear < 10){
         strYear ="000" + date.getFullYear();
@@ -220,7 +267,7 @@ function weekDateParseToLocalDate(strLocalDate){
     }
 
     if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
+    if(strDate< 10){ strDate = "0" + date.getDate();}
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
@@ -230,7 +277,7 @@ function monthDateParseToLocalDate(strLocalDate){
     date.setDate(date.getDate() - 30);
     let strYear = date.getFullYear();
     let strMonth = date.getMonth();
-    let strDate = date.getUTCDate();
+    let strDate = date.getDate();
 
     if(strYear < 10){
         strYear ="000" + date.getFullYear();
@@ -241,7 +288,7 @@ function monthDateParseToLocalDate(strLocalDate){
     }
 
     if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
+    if(strDate< 10){ strDate = "0" + date.getDate();}
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
