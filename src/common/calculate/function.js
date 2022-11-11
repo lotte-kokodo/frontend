@@ -87,6 +87,28 @@ function weekDateParseToLocalDate(strLocalDate){
     return value;
 }
 
+function oneWeekDateParseToLocalDate(strLocalDate){
+    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
+    date.setDate(date.getDate() - 7);
+    let strYear = date.getFullYear();
+    let strMonth = date.getMonth();
+    let strDate = date.getUTCDate();
+
+    if(strYear < 10){
+        strYear ="000" + date.getFullYear();
+    }else if(strYear < 100){
+        strYear ="00" + date.getFullYear();
+    }else if(strYear < 1000){
+        strYear = "0" + date.getFullYear();
+    }
+
+    if(strMonth< 10){ strMonth = '0' + date.getMonth();}
+    if(strDate< 10){ strDate = "0" + date.getUTCDate();}
+    let value = strYear+"-"+strMonth+"-"+strDate
+    return value;
+}
+
+
 function monthDateParseToLocalDate(strLocalDate){
     const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
     date.setDate(date.getDate() - 30);
@@ -116,5 +138,6 @@ export {
     dateParseToSimple,
     parseToLocalDate,
     weekDateParseToLocalDate,
+    oneWeekDateParseToLocalDate,
     monthDateParseToLocalDate,
 }
