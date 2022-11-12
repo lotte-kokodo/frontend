@@ -16,6 +16,8 @@ import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 
 export default function CalculatePresent() {
+    const sellerId = localStorage.getItem("sellerId");
+
     const { url } = useContext(ServerConfigContext);
     const params = useParams();
 
@@ -56,7 +58,7 @@ export default function CalculatePresent() {
 
     const searchContent = async () => {
         history(`/seller/${params.sellerId}/calculateList`)
-        await axios.post(url + `/calculate-service/calculate/${params.sellerId}/calculateList`,{
+        await axios.post(url + `/calculate-service/calculate/${sellerId}/calculateList`,{
             "sellerId" : params.sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",
@@ -82,7 +84,7 @@ export default function CalculatePresent() {
     }
 
     const getMoney = async() =>{
-        await axios.get(url + `/calculate-service/calculate/${params.sellerId}/expectMoney`)
+        await axios.get(url + `/calculate-service/calculate/${sellerId}/expectMoney`)
             .then(function (resp){
                 setCalculateExpectMoney(moneyComma(resp.data.result.data));
             }).catch(function (error){

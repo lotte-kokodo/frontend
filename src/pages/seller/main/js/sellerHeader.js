@@ -13,7 +13,7 @@ function SellerHeader() {
     const { parmas } = useParams();
     const { sellerHeaders } = useContext(AuthContext);
     const { url } = useContext(ServerConfigContext);
-
+    const sellerId = localStorage.getItem("sellerId");
     const [ sellerName, setSellerName ] = useState("");
 
     useEffect(() => {
@@ -38,7 +38,7 @@ function SellerHeader() {
             <header>
                 <div className="headerCenter">
                     <div className="headerCenter-logo seller-logo" >
-                        <Link to={`/seller/${parmas}`}>
+                        <Link to={`/seller/${sellerId}`}>
                             <div style={{float:"left",width:"0px"}}>
                                 <img src={logo} style={{width:"80px", height:"80px",marginTop:"10px",marginLeft:"20px", float:"left"}}></img>
                                 <div style={{marginTop:"20px",marginLeft:"20px", color:"#000",width:"1000px",height:"10px"}}>KOKODO SELLER

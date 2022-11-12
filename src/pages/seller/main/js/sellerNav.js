@@ -14,6 +14,7 @@ function SellerNav() {
     const [isListHover2, setIsListHover2] = useState(false);
     const [isListHover3, setIsListHover3] = useState(false);
     const params = useParams();
+    const sellerId = localStorage.getItem("sellerId");
 
     return(
         <div className="seller-nav-container">
@@ -28,14 +29,14 @@ function SellerNav() {
                 <div className="seller-hover-parent">
                     <div className='seller-nav-child-hover'>
                         <div className="seller-hover-child">
-                            <Link to={`/seller/${params.sellerId}/sellerProductRegister`} style={{textDecoration: "none", color: "#000"}}>
+                            <Link to={`/seller/${sellerId}/sellerProductRegister`} style={{textDecoration: "none", color: "#000"}}>
                                 <div className='seller-hover-child-span'>상품 등록</div>
                             </Link>
                         </div>
                     </div>
                     <div className='seller-nav-child-hover'>
                         <div className="seller-hover-child">
-                            <Link to={`/seller/${params.sellerId}/productSearch`} style={{textDecoration: "none", color: "#000"}}>
+                            <Link to={`/seller/${sellerId}/productSearch`} style={{textDecoration: "none", color: "#000"}}>
                                 <div className='seller-hover-child-span'>상품 조회/수정</div>
                             </Link>
                         </div>
@@ -92,11 +93,11 @@ function SellerNav() {
                 <div className="seller-hover-parent">
 
                 <div className='seller-nav-child-hover'>
-                        <Link to={`/seller/${params.sellerId}/calculateList`} style={{textDecoration: "none", color: "#000"}}>
+                        <Link to={`/seller/${sellerId}/calculateList`} style={{textDecoration: "none", color: "#000"}}>
                         <div className="seller-hover-child">정산 현황</div></Link>
                 </div>
                 <div className='seller-nav-child-hover'>
-                    <Link to={`/seller/${params.sellerId}/saleList`} style={{textDecoration: "none", color: "#000"}}>
+                    <Link to={`/seller/${sellerId}/saleList`} style={{textDecoration: "none", color: "#000"}}>
                     <div className="seller-hover-child">
                         매출 내역
                         </div></Link>
@@ -112,16 +113,16 @@ function SellerNav() {
                 <div className="seller-hover-parent">
                     <div className="seller-nav-child-hover">
                         
-                        <Link to={`/seller/${params.sellerId}/discountPolicyManagement`} style={{textDecoration: "none", color: "#000"}}>
+                        <Link to={`/seller/${sellerId}/discountPolicyManagement`} style={{textDecoration: "none", color: "#000"}}>
                         <div className="seller-hover-child">할인정책 관리</div></Link>
                     </div>
                     <div className="seller-nav-child-hover">
-                        <Link to={`/seller/${params.sellerId}`} style={{textDecoration: "none", color: "#000"}}>
+                        <Link to={`/seller/${sellerId}`} style={{textDecoration: "none", color: "#000"}}>
                             <div className="seller-hover-child">할인상품 조회</div>
                         </Link>
                     </div>
                     <div className="seller-nav-child-hover">
-                        <Link to={`/seller/${params.sellerId}/promotion/coupon`} style={{textDecoration: "none", color: "#000"}}>
+                        <Link to={`/seller/${sellerId}/promotion/coupon`} style={{textDecoration: "none", color: "#000"}}>
                         <div className="seller-hover-child">할인 쿠폰 관리</div></Link></div>
                 </div>
             </div>

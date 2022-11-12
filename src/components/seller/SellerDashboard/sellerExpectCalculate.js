@@ -4,10 +4,11 @@ import axios from "axios";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
 import {oneWeekDateParseToLocalDate,dateParseToSimple, moneyComma, parseToLocalDate, weekDateParseToLocalDate, monthDateParseToLocalDate} from "../../../common/calculate/function"
 import {useParams} from "react-router-dom";
+import {AuthContext} from "../../../context/authProvider";
 
 export default function SellerExpectCalculate(){
-    // const { url } = useContext(ServerConfigContext);
-    let url = "http://localhost:8001";
+    const { url } = useContext(ServerConfigContext);
+    const {sellerHeaders} = useContext(AuthContext);
     const params = useParams();
 
     let titleName = "이번주 정산 예정 금액"
@@ -16,8 +17,8 @@ export default function SellerExpectCalculate(){
     const [changeNumberInfo, setChangeNumberInfo] = useState("");
 
     const getCalculateExpectMount = async () => {
-        await axios.get( url + `/calculate-service/calculate/${params.sellerId}/SellerDashBoardExpectMoney`,{
-        }).then(function (resp) {
+        await axios.get( url + `/calculate-service/calculate/${params.sellerId}/SellerDashBoardExpectMoney`,{headers : sellerHeaders})
+        .then(function (resp) {
             setChangeNumberInfo(resp.data.result.data.changeNumberInfo);
             setNumberInfo(moneyComma(resp.data.result.data.numberInfo));
         }).catch(function (error) {

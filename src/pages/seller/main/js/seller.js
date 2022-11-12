@@ -20,7 +20,7 @@ import AuthProvider from "../../../../context/authProvider";
 
 function Seller() {
     const sellerId = localStorage.getItem("sellerId");
-
+    console.log("sellerId" + sellerId);
     const sellerLogin = () => {
       return (
           <>
@@ -47,17 +47,17 @@ function Seller() {
                     <Route path={`/${sellerId}`} element={<SellerHome />}></Route>
 
                     {/* Seller Product */}
-                    <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
-                    <Route path="/productNotice" element={<ProductNotice />}></Route>
-                    <Route path="/productSearch" element={<ProductSearch />}></Route>
+                    <Route path={`/${sellerId}/sellerProductRegister`} element={<SellerProductRegister />}></Route>
+                    <Route path={`/${sellerId}/productNotice`} element={<ProductNotice />}></Route>
+                    <Route path={`/${sellerId}/productSearch`} element={<ProductSearch />}></Route>
 
                     {/* Seller Calculate */}
-                    <Route path="/calculateList" element={<CalculatePresent />}></Route>
-                    <Route path="/saleList" element={<SaleList />}></Route>
+                    <Route path={`/${sellerId}/calculateList`} element={<CalculatePresent />}></Route>
+                    <Route path={`/${sellerId}/saleList`} element={<SaleList />}></Route>
 
                     {/* Seller Promotion */}
-                    <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
-                    <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
+                    <Route path={`${sellerId}/discountPolicyManagement`} element={<DiscountPolicyManagement />}></Route>
+                    <Route path={`${sellerId}/promotion/coupon`} element={<CouponManagement />}></Route>
                   </Routes>
                 </main>
                 </AuthProvider>
