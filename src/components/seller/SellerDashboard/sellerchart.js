@@ -4,9 +4,12 @@ import {Line} from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from "axios";
 import {moneyComma} from "../../../common/calculate/function";
+import { useParams } from 'react-router-dom';
 
 const SellerChart = () => {
     let calculateUrl = "http://localhost:8001"
+
+    const params = useParams(null);
 
     const [january, setJanuary] = useState("");
     const [february, setFebruary] = useState("");
