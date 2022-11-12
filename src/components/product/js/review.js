@@ -137,9 +137,6 @@ export default function Review() {
     const reviewData = async () => {
         await axios.get(url + `/product-service/review/${productId}?page=${currentpage}`)
                 .then(function (resp) {
-                    console.log(resp.data.result.data);
-                    console.log("totalCount : ");
-                    console.log(resp.data.result.data.totalCount);
                     setSearchFlag(true);
                     setCount(resp.data.result.data.totalCount);
                     setReviewList(resp.data.result.data.reviewResponseDtoList);

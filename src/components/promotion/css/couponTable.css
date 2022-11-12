@@ -18,8 +18,10 @@
 .coupon-nav li{
     width: 100px;
     display: inline;
-    border: 1px solid #FB7D98;
+    border: 1px solid black;
+    /* border-radius: 10px; */
     padding: 15px 30px;
+    border-bottom: transparent;
 }
 .coupon-nav{
     padding: 20px 0;
