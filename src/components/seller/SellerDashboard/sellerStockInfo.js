@@ -1,5 +1,6 @@
 import SellerInfoBox from "./sellerInfoBox";
 import React, {useContext, useState, useEffect} from "react";
+import {Link} from "react-router-dom"
 import axios from "axios";
 import {ServerConfigContext} from "../../../context/serverConfigProvider"
 import {AuthContext} from "../../../context/authProvider"
@@ -32,6 +33,8 @@ export default function SellerStockInfo(){
     },[]);
 
     return(
-        <SellerInfoBox titleName={titleName} numberInfo={numberInfo} unit={unit}></SellerInfoBox>
+        <Link to={`/seller/${sellerId}/productSearch`} style={{textDecoration: "none", height: 150}}>
+            <SellerInfoBox titleName={titleName} numberInfo={numberInfo} unit={unit} />
+        </Link>
     )
 }

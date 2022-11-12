@@ -1,25 +1,24 @@
 import React from "react"
 import axios from "axios"
-import "../css/productSearch.css"
-
 import {useState, useEffect} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import { useContext } from "react";
-import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+
+import {ServerConfigContext} from "../../../../context/serverConfigProvider"
+import {AuthContext} from "../../../../context/authProvider"
+import question from '../../../../src_assets/seller/question.png'
+import StockModal from '../../../../components/seller/js/stockModal';
+import "../css/productSearch.css"
 
 import Pagination from "react-js-pagination";
 
 export default function ProductSearch() {
     const { url } = useContext(ServerConfigContext);
+    const { sellerHeaders } = useContext(AuthContext);
+    const sellerId = localStorage.getItem("sellerId");
 
-    const params = useParams();
-
-    let history = useNavigate();
-    const [pdStatus, setPdStatus] = useState(0);
-    const [productType, setProductType] = useState("ALL");
-
+    const [pdStatus, setPdStatus] = useState(3);
     const [productName, setProductName] = useState("");
-
     const [tmpStartDate, setTmpStartDate] = useState("");
     const [tmpEndDate, setTmpEndDate] = useState("");
 
@@ -41,7 +40,7 @@ export default function ProductSearch() {
         return (
             <Pagination
                     activePage={page}
-                    itemsCountPerPage={20}
+                    itemsCountPerPage={10}
                     totalItemsCount={count}
                     pageRangeDisplayed={5}
                     prevPageText={"<"}
@@ -52,7 +51,7 @@ export default function ProductSearch() {
 
     const setPage = (e) => {
         setCurrentpage(e);
-        };
+    };
 
     useEffect(() => {
         setCount(count);
@@ -65,20 +64,42 @@ export default function ProductSearch() {
     const changeProductName = (e) => {setProductName(e.target.value);}
     const startDateChange = (e) => {setTmpStartDate(e.target.value);}
     const endDateChange = (e) => {setTmpEndDate(e.target.value);}
+    const stockDes = () => {alert("재고위험 : 모든 조건 무시하고 재고가 10개 미만인 상품 조회");}
 
     // button axios
     const searchContent = async () => {
         let sdate = tmpStartDate+" 00:00";
         let edate= tmpEndDate+" 00:00";
-        await axios.get(url + `/seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${parmas.sellerId}&page=${currentpage}`
-        ).then(function (response) {
-            console.log(response.data);
-            setSearchFlag(true);
-            setProductList(response.data.productDtoList);
-            setCount(response.data.totalCount);
-        }).catch(function (error) {
-            console.log(error);
-        })
+
+        if(pdStatus == 3){
+            await axios({
+                method: "get",
+                url: url + `/seller-service/product/stock/${sellerId}/${currentpage}`,
+                headers: sellerHeaders
+            }) 
+            .then(function(response){
+                setSearchFlag(true);
+                setProductList(response.data.productDtoList);
+                setCount(response.data.totalCount);
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        }else{
+            await axios({
+                method: "get",
+                url: url + `/seller-service/product?startDate=${sdate}&endDate=${edate}&status=${pdStatus}&productName=${productName}&sellerId=${sellerId}&page=${currentpage}`,
+                headers: sellerHeaders
+            }) 
+            .then(function(response){
+                setSearchFlag(true);
+                setProductList(response.data.productDtoList);
+                setCount(response.data.totalCount);
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        }
     }
 
     const getExpectEndDay = async() =>{
@@ -92,6 +113,25 @@ export default function ProductSearch() {
         today.setMonth(today.getMonth() + 1);
         setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getDate()))
     }
+
+
+    /* 재고 팝업 모달 */
+    const [stockFlag, setStockFlag] = useState(false);
+    const [stcokUpdate, setStockUpdate] = useState([]);
+
+    const openStockModal = (e)=>{
+        setStockUpdate(e);
+        setStockFlag(true);
+    }
+
+    const closeStockModal = ()=>{
+        setStockFlag(false);
+    }
+
+    const doubleProduct = () => {
+        alert("상품 더블 클릭 시 재고 업데이트가 가능합니다.");
+    }
+
 
     // 유저 아이드, 날짜를 전달해줘야 한다.
     useEffect( () => {
@@ -119,20 +159,27 @@ export default function ProductSearch() {
             <div>
                 <div className="product-provide-status-border">
                     <div className="product-title-provide-status-box">상품상태</div>
-                    <input name="prvidesuccess" className="product-radio-unit" type="radio"/>
-                    <div className="product-radio-unit2" value="0" onClick={()=>setPdStatus(0)}>전체</div>
-                    <input name="prvidesuccess" id='test' className="product-radio-unit" value="1" type="radio" onClick={()=>setPdStatus(1)}/>
+
+                    <input name="prvidesuccess" className="product-radio-unit" value="0" type="radio" onClick={pdChange}/>
+                    <div name="prvidesuccess" className="product-radio-unit2" >전체</div>
+
+                    <input name="prvidesuccess" className="product-radio-unit" value="1" type="radio" onClick={pdChange}/>
                     <div name="prvidesuccess" className="product-radio-unit2" >판매중</div>
-                    <input name="prvidesuccess" className="product-radio-unit" value="2" type="radio" onClick={()=>setPdStatus(2)}/>
-                    <div className="product-radio-unit2" value="PROVIDE_SCHEDULE">품절</div>
+
+                    <input name="prvidesuccess" className="product-radio-unit" value="2" type="radio" onClick={pdChange}/>
+                    <div className="product-radio-unit2" value="PROVIDE_SCHEDULE" >품절</div>
+
+                    <input name="prvidesuccess" className="product-radio-unit" value="3" type="radio" onClick={pdChange} defaultChecked/>
+                    <div className="product-radio-unit2" value="PROVIDE_SCHEDULE" >재고위험</div>
+                    <button onClick={stockDes}>
+                        <img className="seller-question-icon" alt="productStock" src={question}/>
+                    </button>
                 </div>
             </div>
             <div>
                 <div className="product-search-criteria-box">
                     <div className="product-criteria-day-box">등록일</div>
                     <div className="product-criteria-unit">
-                        {/*<p><input type="number" name="number" placeholder="정산일"/></p>*/}
-                        {/*date-date-inline-licker는 누군가 문자열을 입력하기 이전까지 빈 문자열값이다*/}
                         <input className="product-calender-box" type="date" data-date-inline-picker="true" value={tmpStartDate} onChange={startDateChange}/>
                         <div className="product-calender-mark" > ~ </div>
                         <input className="product-calender-box2" type="date" ata-date-inline-picker="true" value={tmpEndDate} onChange={endDateChange}/>
@@ -146,14 +193,18 @@ export default function ProductSearch() {
             </div>
             <div className="product-list-main">
                 <div className="product-bottom-result-box">
-                    <div className="product-search-result-box">상품목록</div>
+                    <div className="product-search-result-box">
+                        <span>상품목록</span>
+                        <button onClick={doubleProduct}>
+                            <img className="seller-question-icon" alt="productStock" src={question}/>
+                        </button>
+                    </div>
                 </div>
                 <table className="table product-search-table">
                     <thead>
                     <tr>
                         <th>상품 이미지</th>
                         <th>등록 상품명</th>
-                        <th>카테고리</th>
                         <th>가격</th>
                         <th>재고</th>
                         
@@ -164,14 +215,12 @@ export default function ProductSearch() {
                     {productList &&
                         productList.map(function (obj, i) {
                             return (
-                                <tr>
+                                <tr onDoubleClick={() => openStockModal(obj)}>
                                     <th><img src={obj.thumbnail} style={{width:"100px", height:"100px"}}/></th>
                                     <td>{obj.displayName}</td>
-                                    <td>{obj.categoryName}</td>
                                     <td>{obj.price}</td>
                                     <td>{obj.stock}</td>
                                 </tr>
-                                // <productTableRow obj={productRow} key={i} cnt={i + 1}/>
                             )
                         })
                     }
@@ -180,55 +229,12 @@ export default function ProductSearch() {
                 <div className="pagingProduct">
                     {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
                 </div>
+                <div className='stockPopup'>
+                    {stockFlag && <StockModal stcokUpdate={stcokUpdate} onModalDisplay={closeStockModal} />}
+                </div>
             </div>
         </div>
     );
-}
-
-function Popup() {
-
-}
-
-function productTableRow(row) {
-    return (
-        <tr>
-            {/* <th><img src={row.thumbnail}/></th> */}
-            {/* <td>{row.displayName}</td> */}
-            {/* <td>{row.categoryName}</td> */}
-            {/* <td>{row.price}</td> */}
-            <td>{row.obj.stock}</td>
-        </tr>
-    )
-}
-
-function moneyComma(num){
-    let len, point, str;
-
-    num = num + "";
-    point = num.length % 3 ;
-    len = num.length;
-
-    str = num.substring(0, point);
-    while (point < len) {
-        if (str !== "") str += ",";
-        str += num.substring(point, point + 3);
-        //,를 포함해서 idx 3을 추가해줌
-        point += 3;
-    }
-
-    return str;
-}
-
-function dateParseToSimple(date){
-    let day = date.data.result.data;
-    let idx = day.indexOf('T');
-    return day.substring(0,idx);
-}
-
-function dateParseToSimple2(date){
-    let day = date.obj.date
-    let idx = day.indexOf('T');
-    return day.substring(0,idx);
 }
 
 function parseToLocalDate(strLocalDate){
@@ -271,25 +277,3 @@ function weekDateParseToLocalDate(strLocalDate){
     let value = strYear+"-"+strMonth+"-"+strDate
     return value;
 }
-
-function monthDateParseToLocalDate(strLocalDate){
-    const date = new Date(parseInt(strLocalDate.substring(0,4)), parseInt(strLocalDate.substring(5,7)), parseInt(strLocalDate.substring(8)));
-    date.setDate(date.getDate() - 30);
-    let strYear = date.getFullYear();
-    let strMonth = date.getMonth();
-    let strDate = date.getDate();
-
-    if(strYear < 10){
-        strYear ="000" + date.getFullYear();
-    }else if(strYear < 100){
-        strYear ="00" + date.getFullYear();
-    }else if(strYear < 1000){
-        strYear = "0" + date.getFullYear();
-    }
-
-    if(strMonth< 10){ strMonth = '0' + date.getMonth();}
-    if(strDate< 10){ strDate = "0" + date.getDate();}
-    let value = strYear+"-"+strMonth+"-"+strDate
-    return value;
-}
-
