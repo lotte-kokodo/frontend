@@ -8,6 +8,7 @@ import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useParams,useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import SellerTitle from "../../../../components/seller/sellerTitle";
 
 function SellerProductRegister() {
     const { url } = useContext(ServerConfigContext);
@@ -361,8 +362,8 @@ function SellerProductRegister() {
         <div className="seller-product-container">
 
             <div className="seller-product-resgister">
-                <h5>상품등록</h5>
-            </div>
+                <h3>상품 등록</h3>
+            </div> 
 
             <div className="seller-product-div1">
                 <div>

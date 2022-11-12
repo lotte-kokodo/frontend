@@ -1,5 +1,5 @@
 .body{
-    font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;
+    /* font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif; */
 }
 
 .product-title-box{
@@ -8,7 +8,6 @@
     /*margin-block-end: 0.83em;*/
     /*margin-inline-start: 0px;*/
     /*margin-inline-end: 0px;*/
-    font-weight: bold;
     /*font-family: sans-serif;*/
     padding: 1%;
     margin: 2px;
@@ -52,17 +51,15 @@
 .product-search-criteria-box{
     display: flex;
     flex-direction: row;
-    border: 1px solid gray;
+    border: 3px solid #fff;
     margin-right: auto;
     margin-left: auto;
-    background-color: #fff;
-    /*-ms-flex-pack: justify;*/
-    /*justify-content: space-between;*/
-    /*-ms-flex-align: center;*/
-    /*align-items: center;*/
-    /*height: 10%;*/
+    background-color: #f1f3f5;
     width: 80%;
     padding: 1% 1% 1% 1%;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
 
 /*    display: flex;*/
 /*    flex-direction: row;*/
@@ -138,17 +135,19 @@
 .product-provide-status-border{
     display: flex;
     flex-direction: row;
-    border: 1px solid gray;
+    border: 3px solid #fff;
     border-top-width: 0;
     margin-right: auto;
     margin-left: auto;
-    background-color: #fff;
+    background-color: #f1f3f5;
     -ms-flex-pack: justify;
     -ms-flex-align: center;
     /*align-items: center;*/
     height: 10%;
     width: 80%;
     padding: 1% 1% 1% 1%;
+    border-left: transparent;
+    border-right: transparent;
 }
 
 /*지급상태*/
@@ -190,15 +189,15 @@
 .product-type-common-box{
     display: flex;
     flex-direction: row;
-    border: 1px solid gray;
+    border: 3px solid #fff;
     margin-right: auto;
     margin-left: auto;
-    background-color: #fff;
-    /*-ms-flex-pack: justify;*/
-    /*-ms-flex-align: center;*/
+    background-color: #f1f3f5;
     height: 10%;
     width: 80%;
     padding: 1% 1% 1% 1%;
+    border-left: transparent;
+    border-right: transparent;
 }
 
 /*detailcontion*/
@@ -217,17 +216,22 @@
 /*search button*/
 .product-search-button{
     margin:auto;
-    /*display:block;*/
-    border: 1px #fb7d98 solid;
+    display:block;
+    border: 1px black solid;
     color: white;
-    background-color:#FB7D98;
-
+    background-color:black;
+    margin: auto;
     width: 120px;
     height: 40px;
     font-size: 20px;
     line-height: 20px;
     text-align: center;
     border-radius: 9px;
+    margin-top: 10px;
+}
+
+.search-button-div{
+    margin: auto;
 }
 
 /*search result*/

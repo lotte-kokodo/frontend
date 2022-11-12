@@ -106,7 +106,8 @@ export default function ProductSearch() {
     return (
         <div className="body">
             <div>
-                <div className="product-title-box">상품 조회/수정</div>
+                
+                <div className="product-title-box"><h3>상품 조회/수정</h3></div>
             </div>
             <div className="product-type-common-box">
                 <div className="product-search-detail-box">
@@ -137,17 +138,19 @@ export default function ProductSearch() {
                         <div className="product-calender-mark" > ~ </div>
                         <input className="product-calender-box2" type="date" ata-date-inline-picker="true" value={tmpEndDate} onChange={endDateChange}/>
                     </div>
-                    <div>
-                        <button type="button" className="product-search-button" value="" onClick={searchContent}>
+                    
+                </div>
+
+                <div className="search-button-div">
+                    <button type="button" className="product-search-button" value="" onClick={searchContent}>
                             검색
                         </button>
-                    </div>
                 </div>
             </div>
             <div className="product-list-main">
-                <div className="product-bottom-result-box">
+                {/* <div className="product-bottom-result-box">
                     <div className="product-search-result-box">상품목록</div>
-                </div>
+                </div> */}
                 <table className="table product-search-table">
                     <thead>
                     <tr>

@@ -1,5 +1,5 @@
 .body{
-    font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif;
+    /* font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif; */
 }
 
 .product-title-box{
@@ -221,9 +221,9 @@
 .product-search-button{
     margin:auto;
     /*display:block;*/
-    border: 1px #fb7d98 solid;
+    border: 1px black solid;
     color: white;
-    background-color:#FB7D98;
+    background-color:black;
 
     width: 120px;
     height: 40px;
