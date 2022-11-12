@@ -6,6 +6,7 @@ import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import search from '../../../../src_assets/seller/title/search.png';
 
 import Pagination from "react-js-pagination";
 
@@ -105,9 +106,16 @@ export default function ProductSearch() {
 
     return (
         <div className="body">
-            <div>
+            <div className="product-search-title">
+                <div className="product-title-box">
+                    <div className="product-title-box-div">
+                        <img className="product-title-box-img" src={search}></img>
+                        <h2 className="product-title-box-h2">상품 검색/수정</h2>
+                        </div>
+                <div>
                 
-                <div className="product-title-box"><h3>상품 조회/수정</h3></div>
+            </div>
+                </div>
             </div>
             <div className="product-type-common-box">
                 <div className="product-search-detail-box">

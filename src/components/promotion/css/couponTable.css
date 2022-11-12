@@ -1,14 +1,14 @@
 .couponTable{
     width: 80%;
-    border: 1px solid black;
     /* margin: 30px; */
     /* margin-left: 240px; */
 }
 .couponTable th{
-    background-color: #E2E2E2;
+    background-color: #F1F3F5;
     border: 1px solid black;
     padding: 10px;
     text-align: center;
+   
 }
 .couponTable td{
     border: 1px solid black;

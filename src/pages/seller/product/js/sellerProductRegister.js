@@ -9,6 +9,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 import SellerTitle from "../../../../components/seller/sellerTitle";
+import productRegisterImg from "../../../../src_assets/seller/title/product-register.png";
 
 function SellerProductRegister() {
     const { url } = useContext(ServerConfigContext);
@@ -362,7 +363,10 @@ function SellerProductRegister() {
         <div className="seller-product-container">
 
             <div className="seller-product-resgister">
-                <h3>상품 등록</h3>
+                <div className="seller-product-register-div">
+                <img className="seller-product-register-img" src={productRegisterImg} ></img>
+                <h2 className="seller-product-resgister-h2">상품 등록</h2>
+                </div>
             </div> 
 
             <div className="seller-product-div1">
@@ -431,6 +435,7 @@ function SellerProductRegister() {
                             
             <div className="seller-product-div4">
                 <div style={{marginBottom:"30px"}}>
+                    
                     <h5>상세설명</h5>
                 </div>
                 <div>
@@ -582,7 +587,7 @@ function SellerProductRegister() {
                         </div>
 
                         <div className="seller-already-success">
-                            <button className="category-sd" onClick={onClickAlreadyProduct}>미리보기</button>
+                            <button className="category-sd-pre" onClick={onClickAlreadyProduct}>미리보기</button>
                             <button className="category-sd" onClick={onClickRegisterProduct}>상품등록</button>
                         </div>
                     </div>

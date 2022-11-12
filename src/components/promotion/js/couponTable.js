@@ -195,7 +195,7 @@ export default function CouponTable() {
                             {!listFlag&&<td>{object.rate} %</td>}
                             {!listFlag&&<td>{object.minPrice} 원</td>}
                             <td><button onClick={()=>showProductModal(object.name)} style={{backgroundColor: "#fff", padding : "5px", textAlign:"center",
-                                color:"black", borderRadius: "10px", border: "1px solid black"}}>적용 상품 보기</button>
+                                color:"black", borderRadius: "4px", border: "1px solid black"}}>적용 상품 보기</button>
                             </td>
                         </tr>
                         )

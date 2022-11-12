@@ -1,23 +1,44 @@
 .body{
     /* font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif; */
 }
+.product-search-title{
+    margin-left: 100px;
+}
 
 .product-title-box{
     font-size: 1.5em;
-    /*margin-block-start: 0.83em;*/
-    /*margin-block-end: 0.83em;*/
-    /*margin-inline-start: 0px;*/
-    /*margin-inline-end: 0px;*/
-    /*font-family: sans-serif;*/
+    width:1500px;
     padding: 1%;
-    margin: 2px;
-
-    /*display: table;*/
+    margin-top: 10px;
+    margin-left: 230px;
+    display: table;
     /*min-height: 60px;*/
     /*margin-left: -16px;*/
     /*margin-bottom: -1px;*/
     /*border-spacing: 16px 0;*/
 }
+.product-title-box-div{
+    width: 1500px;
+    display: table-cell;
+    text-align: center;
+}
+
+
+
+.product-title-box-img{
+    width: 30px;
+    display: inline-block;
+    height: 30px;
+    margin-top: -5px;
+}
+
+.product-title-box-h2{
+    display: inline-block;
+    margin-left: 5px;
+}
+
+
+
 .product-header-box{
     display: flex;
     flex-direction: row;
