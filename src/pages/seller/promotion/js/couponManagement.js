@@ -41,7 +41,7 @@ function CouponManagement() {
             <div className="coupon-management-title-container">
                 <div className="coupon-management-title">
                     <img src={couponImg} className="coupon-management-img"></img>
-                    <h2 className="coupon-management-title-h2">쿠폰 관리</h2>
+                    <h2 className="coupon-management-title-h3">쿠폰 관리</h2>
                 </div>
             </div>
             <button className="origin-button" onClick={() => {handleOpen()}}>+  할인 쿠폰 만들기</button>
