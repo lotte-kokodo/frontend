@@ -23,8 +23,7 @@ const SellerChart = () => {
     const [november, setNovember] = useState("");
     const [december, setDecember] = useState("");
 
-    const params = useParams();
-
+    const sellerId = localStorage.getItem("sellerId");
     const [initData, setInitData] = useState({
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'],
         datasets: [
@@ -53,11 +52,10 @@ const SellerChart = () => {
     });
 
     const getAnnualSalesInfo = async () =>{
-        await axios.get( url + `/calculate-service/calculate/${params.sellerId}/annualSalesInfo`,{
+        await axios.get( url + `/calculate-service/calculate/${sellerId}/annualSalesInfo`,{
         }).then(function (resp) {
-            console.log(resp)
             setJanuary(resp.data.result.data.january);
-            setFebruary(resp.data.result.data.febuary);
+            setFebruary(resp.data.result.data.february);
             setMarch(resp.data.result.data.march);
             setApril(resp.data.result.data.april);
             setMay(resp.data.result.data.may);

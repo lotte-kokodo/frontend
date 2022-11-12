@@ -9,15 +9,15 @@ import {AuthContext} from "../../../context/authProvider";
 export default function SellerExpectCalculate(){
     const { url } = useContext(ServerConfigContext);
     const {sellerHeaders} = useContext(AuthContext);
-    const params = useParams();
 
+    const sellerId = localStorage.getItem("sellerId");
     let titleName = "이번주 정산 예정 금액"
     let unit = "원"
     const [numberInfo, setNumberInfo] = useState("");
     const [changeNumberInfo, setChangeNumberInfo] = useState("");
 
     const getCalculateExpectMount = async () => {
-        await axios.get( url + `/calculate-service/calculate/${params.sellerId}/SellerDashBoardExpectMoney`,{headers : sellerHeaders})
+        await axios.get( url + `/calculate-service/calculate/${sellerId}/SellerDashBoardExpectMoney`,{headers : sellerHeaders})
         .then(function (resp) {
             setChangeNumberInfo(resp.data.result.data.changeNumberInfo);
             setNumberInfo(moneyComma(resp.data.result.data.numberInfo));
