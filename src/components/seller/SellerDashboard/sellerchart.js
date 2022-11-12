@@ -4,6 +4,7 @@ import {Line} from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from "axios";
 import {moneyComma} from "../../../common/calculate/function";
+import { useParams,useNavigate } from "react-router-dom";
 
 const SellerChart = () => {
     let calculateUrl = "http://localhost:8001"
@@ -20,6 +21,7 @@ const SellerChart = () => {
     const [october, setOctober] = useState("");
     const [november, setNovember] = useState("");
     const [december, setDecember] = useState("");
+    const params = useParams();
 
     const [initData, setInitData] = useState({
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'],
@@ -79,25 +81,25 @@ const SellerChart = () => {
         )
     },[]);
 
-    const getAnnualSalesInfo = async () =>{
-        await axios.get( calculateUrl + `/calculate-service/calculate/${params.sellerId}/annualSalesInfo`,{
-        }).then(function (resp) {
-            setJanuary(resp.data.result.data.january);
-            setFebruary(resp.data.result.data.febuary);
-            setMarch(resp.data.result.data.march);
-            setApril(resp.data.result.data.april);
-            setMay(resp.data.result.data.may);
-            setJune(resp.data.result.data.june);
-            setJuly(resp.data.result.data.july);
-            setAugust(resp.data.result.data.august);
-            setSeptember(resp.data.result.data.september);
-            setOctober(resp.data.result.data.october);
-            setNovember(resp.data.result.data.november);
-            setDecember(resp.data.result.data.december);
-        }).catch(function (error) {
-            console.log(error);
-        })
-    }
+    // const getAnnualSalesInfo = async () =>{
+    //     await axios.get( calculateUrl + `/calculate-service/calculate/${params.sellerId}/annualSalesInfo`,{
+    //     }).then(function (resp) {
+    //         setJanuary(resp.data.result.data.january);
+    //         setFebruary(resp.data.result.data.febuary);
+    //         setMarch(resp.data.result.data.march);
+    //         setApril(resp.data.result.data.april);
+    //         setMay(resp.data.result.data.may);
+    //         setJune(resp.data.result.data.june);
+    //         setJuly(resp.data.result.data.july);
+    //         setAugust(resp.data.result.data.august);
+    //         setSeptember(resp.data.result.data.september);
+    //         setOctober(resp.data.result.data.october);
+    //         setNovember(resp.data.result.data.november);
+    //         setDecember(resp.data.result.data.december);
+    //     }).catch(function (error) {
+    //         console.log(error);
+    //     })
+    // }
 
     return (
         <>
