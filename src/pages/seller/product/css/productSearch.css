@@ -190,9 +190,6 @@
 .product-type-common-box{
     display: flex;
     flex-direction: row;
-
-    display: flex;
-    flex-direction: row;
     border: 1px solid gray;
     margin-right: auto;
     margin-left: auto;
@@ -290,6 +287,24 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0% 0% 0% 38%;
 }
 
+.product-list-main{
+    margin:0 auto;
+    text-align: center;
+}
+
 .product-search-table{
+    margin:20px auto;
     width: 80%;
+}
+
+.pagingProduct{
+    margin:50px auto;
+    text-align: center;
+    width:500px;
+}
+
+.seller-question-icon{
+    width:20px;
+    height: 20px;
+    margin-left:10px;
 }
