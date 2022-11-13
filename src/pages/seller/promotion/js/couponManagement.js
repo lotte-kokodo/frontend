@@ -3,7 +3,7 @@ import {useState, useEffect} from "react";
 import * as React from 'react';
 import SellerTitle from '../../../../components/seller/sellerTitle';
 import CouponTable from '../../../../components/promotion/js/couponTable';
-
+import couponImg from '../../../../src_assets/seller/title/coupon-title.png';
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
@@ -38,7 +38,12 @@ function CouponManagement() {
 
     return (
         <div className="board">
-            <SellerTitle title="쿠폰 관리"></SellerTitle>
+            <div className="coupon-management-title-container">
+                <div className="coupon-management-title">
+                    <img src={couponImg} className="coupon-management-img"></img>
+                    <h2 className="coupon-management-title-h3">쿠폰 관리</h2>
+                </div>
+            </div>
             <button className="origin-button" onClick={() => {handleOpen()}}>+  할인 쿠폰 만들기</button>
 
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

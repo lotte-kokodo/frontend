@@ -14,7 +14,7 @@ const st4 = { width: "88px", marginRight: "10px" }
 
 
 
-export default function ProductDetail() {
+export default function ProductDetail({img, template}) {
     const { url } = useContext(ServerConfigContext);
     let { productId } = useParams(null);
 
@@ -138,6 +138,7 @@ export default function ProductDetail() {
         const fetchData = async () => {
             await axios.get(url + `/product-service/product/detail/${productId}`)
                 .then(function (resp) {
+                    if(resp.data.result.data.detailFlag == 'TEMPLATE') template();
                     setProduct(resp.data.result.data);
                     recentProduct(resp.data.result.data);
                 })

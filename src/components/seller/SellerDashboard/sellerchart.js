@@ -10,6 +10,7 @@ import {ServerConfigContext} from "../../../context/serverConfigProvider";
 const SellerChart = () => {
     const {url} = useContext(ServerConfigContext)
 
+
     const [january, setJanuary] = useState("");
     const [february, setFebruary] = useState("");
     const [march, setMarch] = useState("");

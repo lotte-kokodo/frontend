@@ -4,6 +4,6 @@ export default function SellerTitle(props) {
 
 
     return (
-        <h1 style={{marginLeft : "240px", marginTop:"50px"}}>{props.title}</h1>
+        <h2 style={{marginLeft : "240px", marginTop:"30px"}}>{props.title}</h2>
     )
 }
