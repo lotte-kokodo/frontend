@@ -1,0 +1,16 @@
+.template-already-container{
+    text-align: center;
+    width: 1050px;
+    border: 3px solid #f0f0f0;
+}
+
+.tempalte-already-highlight1{
+    width:100px;
+    margin: 0 auto;
+    margin-left:300px;
+    float: left;
+}
+
+.template-already-highlight2{
+    width: 100px;
+}

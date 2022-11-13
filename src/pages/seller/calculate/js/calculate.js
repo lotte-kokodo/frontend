@@ -3,7 +3,7 @@ import axios from "axios"
 import "../css/calculate.css"
 
 import {useState, useEffect, useContext} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import CalculateTableRow from "../../../../components/calculate/js/calculateTableRow"
 import {dateParseToSimple, moneyComma, parseToLocalDate, weekDateParseToLocalDate, monthDateParseToLocalDate} from "../../../../common/calculate/function"
 import MakeCoupon from "../../promotion/js/makeCoupon";
@@ -16,8 +16,9 @@ import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 
 export default function CalculatePresent() {
+    const sellerId = localStorage.getItem("sellerId");
+
     const { url } = useContext(ServerConfigContext);
-    const params = useParams();
 
     let history = useNavigate();
     const [choiceCalculate, setChoiceCalculate] = useState("");
@@ -55,9 +56,9 @@ export default function CalculatePresent() {
     }
 
     const searchContent = async () => {
-        history(`/seller/${params.sellerId}/calculateList`)
-        await axios.post(url + `/calculate-service/calculate/${params.sellerId}/calculateList`,{
-            "sellerId" : params.sellerId,
+        history(`/seller/${sellerId}/calculateList`)
+        await axios.post(url + `/calculate-service/calculate/${sellerId}/calculateList`,{
+            "sellerId" : sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",
             "provideStatus": provideStatus,
@@ -82,7 +83,7 @@ export default function CalculatePresent() {
     }
 
     const getMoney = async() =>{
-        await axios.get(url + `/calculate-service/calculate/${params.sellerId}/expectMoney`)
+        await axios.get(url + `/calculate-service/calculate/${sellerId}/expectMoney`)
             .then(function (resp){
                 setCalculateExpectMoney(moneyComma(resp.data.result.data));
             }).catch(function (error){
@@ -236,7 +237,7 @@ export default function CalculatePresent() {
                 <Modal open={modalFlag} onClose={() => setModalFlag(!modalFlag)} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                     <Fade in={modalFlag}>
                         <Box sx={style}>
-                            <CalculatePreviewModal sellerId={params.sellerId} calculateId={choiceCalculate}>
+                            <CalculatePreviewModal sellerId={sellerId} calculateId={choiceCalculate}>
                             </CalculatePreviewModal>
                         </Box>
                     </Fade>
