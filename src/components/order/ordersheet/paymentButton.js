@@ -29,8 +29,6 @@ const PaymentButton = (props) => {
 
     const productId = productIds[0];
     const sellerId = orderProductMap[productId].sellerId;
-    let productSellerMap = {};
-    productSellerMap[productId] = sellerId;
     const req = {
       memberId: memberId,
       productId: productId,
@@ -38,7 +36,6 @@ const PaymentButton = (props) => {
       qty: productQtyMap[productId],
       rateCouponId: checkRateCoupons.length !== 0 ? checkRateCoupons[0].id : null,
       fixCouponId: checkFixCoupons.length !== 0 ? checkFixCoupons[0].id : null,
-      productSellerMap: productSellerMap
     }
 
     await axios.post(api, req, { headers: headers })
@@ -56,11 +53,6 @@ const PaymentButton = (props) => {
   const orderCartProducts = async() => {
     let api = url + "/order-service/orders/cart";
 
-    const productSellerMap = {};
-    Object.values(orderProductMap).map((product) => {
-      productSellerMap[product.id] = product.sellerId;
-    });
-
     const rateCouponIds = [];
     checkRateCoupons.map((coupon) => {
       rateCouponIds.push(coupon.id);
@@ -74,14 +66,13 @@ const PaymentButton = (props) => {
     const req = {
       memberId: memberId,
       cartIds: cartIds,
-      productSellerMap: productSellerMap,
       rateCouponIds: rateCouponIds,
       fixCouponIds: fixCouponIds
     };
 
     await axios.post(api, req, {headers: headers})
     .then((resp) => {
-      alert(resp.data.result.data.msg);
+      alert(resp.data.result.data);
       navigate(`/`); // TODO 주문상세로 이동
     })
     .catch((err) => {

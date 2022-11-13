@@ -212,7 +212,7 @@ export default function ProductDetail() {
         .then((resp) => {
             console.log(resp.data.result.data);
 
-            alert(resp.data.result.data.msg);
+            alert(resp.data.result.data);
         })
         .catch((err) => {
             console.log(err);

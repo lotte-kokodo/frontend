@@ -93,7 +93,6 @@ const SellerList = () => {
     await axios.get(api, {params: params, headers: headers})
     .then((resp) => {
       const data = resp.data.result.data;
-      console.log(data);
       setFixDiscountPolicyMap(data);
     })
     .catch((err) => {

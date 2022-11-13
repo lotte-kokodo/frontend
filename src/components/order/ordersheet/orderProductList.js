@@ -34,7 +34,7 @@ const OrderProductList = (props) => {
   }, [orderProductMap]);
 
   const getOrderProducts = async () => {
-    const api = url + "/product-service/product/orderSheet";
+    const api = url + "/product-service/product/ordersheet";
 
     await axios.get(api, { params: { productIds: productIds.join(",") }, headers: headers})
     .then((resp) => {
@@ -73,9 +73,10 @@ const OrderProductList = (props) => {
 
     let productIdList = [];
     let sellerIdList = [];
-    Object.values(orderProductMap).map((product) => {
-        productIdList.push(product.id);
-        sellerIdList.push(product.sellerId);
+    Object.keys(orderProductMap).map((productId) => {
+      let orderProduct = orderProductMap[productId];
+      productIdList.push(orderProduct.id);
+      sellerIdList.push(orderProduct.sellerId);
     });
 
     const params = {

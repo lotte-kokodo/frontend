@@ -39,14 +39,10 @@ const CartRow = (props) => {
 
 		await axios.post(api, req, {headers: headers })
 		.then((resp) => {
-			console.log(resp);
-
 			setQty(updatedQty);
 			updateProductQty(updatedQty);
 		})
 		.catch((err) => {
-			console.log(err);
-
 			const data = err.response.data;
 			alert(data.message);
 			setQty(data.result.qtyAvailable);

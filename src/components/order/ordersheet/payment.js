@@ -72,7 +72,6 @@ const Payment = (props) => {
   }
 
   const notAppliedFixDiscountPolicy = (sellerId) => {
-    console.log(fixDiscountPolicyMap);
     return fixDiscountPolicyMap[sellerId] === false;
   }
 

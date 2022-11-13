@@ -15,7 +15,7 @@ import { useContext, useEffect, useState } from "react"
 	const { url } = useContext(ServerConfigContext);
 	const { headers } = useContext(AuthContext);
 
-	const api = url + "/member-service/member/deliveryInfo"
+	const api = url + "/member-service/member/cart"
 
 	const [ deliveryInfo, setDeliveryInfo ] = useState({});
 

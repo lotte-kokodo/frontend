@@ -19,7 +19,7 @@ const Delivery = () => {
 
 	const [member, setMember] = useState({});
 
-	const api = url + "/member-service/member/orderInfo";
+	const api = url + "/member-service/member/order";
 
 	useEffect(() => {
 		getDeliveryInfo();
