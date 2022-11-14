@@ -2,7 +2,6 @@ import SellerChart from "../../../../components/seller/SellerDashboard/sellercha
 import React from "react";
 import "../css/sellerHome.css"
 import "../../../../components/seller/css/sellerInfoBox.css"
-import SellerInfoBox from "../../../../components/seller/SellerDashboard/sellerInfoBox";
 import SellerTodayOrder from "../../../../components/seller/SellerDashboard/sellerTodayOrder";
 import SellerExpectCalculate from "../../../../components/seller/SellerDashboard/sellerExpectCalculate";
 import SellerStockInfo from "../../../../components/seller/SellerDashboard/sellerStockInfo";
