@@ -117,7 +117,7 @@ function MakeCoupon() {
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/rateCoupon/save",
+            url: url + "/promotion-service/rateCoupon",
             data: ratePolicyDto
         })
             .then(function (resp) {
@@ -144,7 +144,7 @@ function MakeCoupon() {
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/fixCoupon",
+            url: url + "/promotion-service/fixCoupon",
             data: fixPolicyDto
         })
             .then(function (resp) {
@@ -173,12 +173,13 @@ function MakeCoupon() {
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: url + `product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&sellerId=3`
+                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&sellerId=1&page=1`
                 
                 // data: params
             })
                 .then(function (resp) {
-                    setProductList(resp.data);
+                    console.log(resp);
+                    setProductList(resp.data.productDtoList);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -187,16 +188,24 @@ function MakeCoupon() {
         }
         fetchProduct();
     }
+
+
+
     // 지원
     const productData= async () => {
-            await axios.get(url + `product-service/product/seller/3`)
-                .then(function (resp) {
-                    setProductList(resp.data.result.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
+        console.log("response>>>>");
+        await axios({
+            method: "get",
+            url: url + "/product-service/product/seller/1"
+        })
+        .then(function (resp) {
+            setProductList(resp.data.result.data);
+            console.log(resp);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
     
         useEffect(() => {
             productData();
