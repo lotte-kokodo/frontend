@@ -1,20 +1,20 @@
-import React, {useRef, useState} from "react"
+import React, {useRef, useState, useContext} from "react"
 import DatePicker from "react-datepicker";
 import axios from 'axios';
 
 import "../css/sellerProductRegister.css"
 
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
-import { useParams,useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
-import SellerTitle from "../../../../components/seller/sellerTitle";
+import {AuthContext} from "../../../../context/authProvider"
+import CategoryAlls from '../../../../components/seller/js/categoryAlls';
 import productRegisterImg from "../../../../src_assets/seller/title/product-register.png";
 
 function SellerProductRegister() {
     const { url } = useContext(ServerConfigContext);
-
-    const params = useParams();
+    const { sellerHeaders } = useContext(AuthContext);
+    const sellerId = localStorage.getItem("sellerId");
     const history = useNavigate();
 
     // useRef를 이용해 input태그에 접근한다.
@@ -28,11 +28,11 @@ function SellerProductRegister() {
     const [stock, setStock] = useState('');
     const [deadline, setDeadline] = useState(new Date());
 
-    // 카테고리 찾기, 삭제 버튼
+    // 카테고리 찾기, 전체, 삭제 버튼
     const [formCategory, setFormCategory] = useState("");
-    const [displayCategory, setDisplayCategory] = useState("");
     const [selectCategory, setSelectCategory] = useState("");
     const [selectCategoryId, setSelectCategoryId] = useState("");
+    const [displayAllCategory, setDisplayAllCategory] = useState(false);
     
     const onClickFormCategory = (e) => {
         setFormCategory(e.target.value);
@@ -42,24 +42,24 @@ function SellerProductRegister() {
         fetchCategorySearch(formCategory)
     }
 
-    const categoryDelete = () => {
-        setSelectCategory("");
+    const categoryAll = () => {
+        setDisplayAllCategory(!displayAllCategory);
     }
 
-    const categorySelect = () => {
-        setSelectCategory(displayCategory);
+    const categoryDelete = () => {
+        setSelectCategory("");
         setFormCategory("");
-        setDisplayCategory("");
     }
 
     const fetchCategorySearch = async (categorySearch) => {
         await axios({
             method: "get",
+            headers: sellerHeaders,
             url: url + "/product-service/category/categoryName/" + categorySearch
         })
         .then(function(response){
             console.log(response);
-            setDisplayCategory(response.data.result.data[0].name);
+            setSelectCategory(response.data.result.data[0].name);
             setSelectCategoryId(response.data.result.data[0].id);
         })
         .catch(function(error){
@@ -77,19 +77,14 @@ function SellerProductRegister() {
     const [sellerTitleHighlight2, setSellerTitleHighlight2 ] = useState('');
     const [sellerProductName, setSellerProductName ] = useState('');
     const [sellerProductDetail, setSellerProductDetail ] = useState('');
-
     const [detailFileImageList, setDetailFileImageList] = useState([]);
-    const [ detailFormData, setDetailFormData] = useState('');
     const [ detailTemplateFileImageList, setDetailTemplateFileImageList] = useState([]);
 
     /* 대표 이미지 미리보기 url 생성 */
 
     // 대표 이미지 url 저장해줄 state
     const [fileImage, sestFileImage] = useState("");
-
     const [thumbnail, setThumbnail] = useState('');
-
-
 
       // 대표 이미지 파일 저장
       const saveFileImage = (e) => {
@@ -99,8 +94,6 @@ function SellerProductRegister() {
         sestFileImage(URL.createObjectURL(e.target.files[0]));
         setThumbnail(e.target.files[0]);
     }
-
-
 
     // 대표 이미지 버튼클릭시 input 태그에 클릭이벤트를 걸어준다.
     const onClickImageUpload = () => {
@@ -224,8 +217,6 @@ function SellerProductRegister() {
 
     // 상품 등록 axios
     const fetchProduct = async (param) => {
-
-
         console.log(templateCheck==false?"img":"tempalte");
         const productParams = {
             categoryId: selectCategoryId,
@@ -235,7 +226,7 @@ function SellerProductRegister() {
             stock: stock,
             deadline: deadline,
             displayName: formDisplayName,
-            sellerId: params.sellerId,
+            sellerId: sellerId,
             deliveryFee: 3000
         };
 
@@ -259,12 +250,13 @@ function SellerProductRegister() {
             await axios({
                 method: "post",
                 url: url + "/seller-service/product",
+                headers: sellerHeaders,
                 data : fd
             })
             .then(function(response){
                 if(response.data.success) {
                     alert("상품 등록에 성공하셨습니다.");
-                    history(`/seller/${params.sellerId}`);
+                    history(`/seller/${sellerId}`);
                 }else{
                     alert("상품 등록에 실패하셨습니다.");
                 }
@@ -298,12 +290,13 @@ function SellerProductRegister() {
             await axios({
                 method: "post",
                 url: url + "/seller-service/product/template",
+                headers: sellerHeaders,
                 data : fd
             })
             .then(function(response){
                 if(response.data.success) {
                     alert("상품 등록에 성공하셨습니다.");
-                    history(`/seller/${params.sellerId}`);
+                    history(`/seller/${sellerId}`);
                 }else{
                     alert("상품 등록에 실패하셨습니다.");
                 }
@@ -319,7 +312,7 @@ function SellerProductRegister() {
 
     // 상품 등록 
     const onClickRegisterProduct = () => {
-        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"price":price,"stock":stock,"deadline":deadline,"displayName":formDisplayName,"sellerId":params.sellerId,"deliveryFee":3000};
+        const productParams = {"categoryId":selectCategoryId,"thumbnail":fileImage,"name":formDisplayName,"price":price,"stock":stock,"deadline":deadline,"displayName":formDisplayName,"sellerId":sellerId,"deliveryFee":3000};
 
         if(fileImage===null || fileImage==="") {
             alert("대표 이미지를 등록하세요.");
@@ -346,14 +339,12 @@ function SellerProductRegister() {
                     alert("글 등록 6개는 필수입니다.")
                 }else{
                     fetchProduct(productParams);
-                    alert("이미지 디테일 등록 axios 하세요.");
                 }
             }else { // 이미지 디테일
                 if(fileImageDetail.length <= 0 || fileImageDetail===null) {
                     alert("이미지 디테일 사진은 필수입니다.");
                 }else{
                     fetchProduct(productParams);
-                    
                 }
             }
         }
@@ -424,10 +415,11 @@ function SellerProductRegister() {
                     <div>
                         <div className="seller-category">
                             <button className="category-sd" onClick={categorySearch}>카테고리 검색</button>
+                            <button className="category-sd" onClick={categoryAll}>카테고리 전체</button>
                             <button className="category-sd" onClick={categoryDelete}>카테고리 삭제</button>
+                            {displayAllCategory ? <CategoryAlls /> : <span></span>}
                         </div>
                         <input type="text" className="form-control form-displayName" name='form-displayName' value={formCategory} onChange={onClickFormCategory} />  
-                        <button className="category-select" onClick={categorySelect}>{displayCategory}</button>
                         <div> 선택된 카테고리 : <span>{selectCategory}</span></div>
                     </div>
                 </div>
