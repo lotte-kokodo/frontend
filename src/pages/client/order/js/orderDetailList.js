@@ -37,7 +37,7 @@ function OrderDetailList() {
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(url + `/order-payment-service/orders/${userId}/${orderId}`, {headers: headers}
+            await axios.get(url + `/order-service/orders/${userId}/${orderId}`, {headers: headers}
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);
@@ -51,7 +51,7 @@ function OrderDetailList() {
 
     // 환불을 위한 API확인 필요
     const setRefundOrderDetail = async () => {
-        await axios.get(url + `/order-payment-service/orders/`)
+        await axios.get(url + `/order-service/orders/`)
             .then(function (resp) {
 
             })

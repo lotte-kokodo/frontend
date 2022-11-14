@@ -15,8 +15,6 @@ const KakaoLogin = () => {
   }, []);
 
   const authenticationWithKakao = async () => {
-    console.log(location);
-
     // 네이버 사용자 정보제공 동의 후 결과로 얻은 Request Params 그대로 서버에 전달
     const api = url + "/member-service/oauth/kakao" + location.search;
     await axios.get(api)

@@ -24,7 +24,6 @@ function SellerHeader() {
         const api = url + "/seller-service/seller/name"
         await axios.get(api, { headers: sellerHeaders })
         .then((resp) => {
-            console.log(resp.data.result.data);
             setSellerName(resp.data.result.data);
         })
         .catch((err) => {

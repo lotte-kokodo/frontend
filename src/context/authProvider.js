@@ -19,7 +19,11 @@ function AuthProvider({ children }) {
 	const [memberId, setMemberId] = useState(localStorage.getItem("memberId"));
 	const [sellerId, setSellerId] = useState(localStorage.getItem("sellerId"));
 
-	const value = {headers, setHeaders, sellerHeaders, setSellerHeaders, memberId, setMemberId, sellerId, setSellerId};
+	const value = {headers, setHeaders,
+		sellerHeaders, setSellerHeaders,
+		memberId, setMemberId,
+		sellerId, setSellerId,
+	};
 
 	return (
 		<AuthContext.Provider value = {value}>
