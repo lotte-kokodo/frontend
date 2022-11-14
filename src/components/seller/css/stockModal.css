@@ -3,8 +3,13 @@
     height:500px; 
     background-color: #ffffff;
     position: absolute;
-    top: 300px;
-    left:500px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transform: translate(50%,50%);
+    -ms-transform: translate(50%,50%);
+    transform: translate(50%,50%);
     border:1px solid rgb(97, 96, 96);
 }
 

@@ -180,9 +180,7 @@ export default function ProductSearch() {
 
                     <input name="prvidesuccess" className="product-radio-unit" value="3" type="radio" onClick={pdChange} defaultChecked/>
                     <div className="product-radio-unit2" value="PROVIDE_SCHEDULE" >재고위험</div>
-                    <button onClick={stockDes}>
-                        <img className="seller-question-icon" alt="productStock" src={question}/>
-                    </button>
+                    <img className="seller-question-icon" alt="productStock" src={question} onClick={stockDes}/>
                 </div>
             </div>
             <div>
