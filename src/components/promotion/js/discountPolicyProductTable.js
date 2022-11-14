@@ -7,15 +7,16 @@ import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 export default function ProductTable(props) {
     const { url } = useContext(ServerConfigContext);
-    const [couponName, setCouponName] =useState(props.name);
+    const [discountPolicyName, setDiscountPolicyName] =useState(props.name);
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
 
         console.log(props.couponFlag);
         
-        const fetchRateCouponProduct = async () => {
-            await axios.get(url + `/promotion-service/rateCoupon/${couponName}/product`)
+        const fetchRateDiscountPolicyProduct = async () => {
+            console.log(url + `/promotion-service/rate-discount/${discountPolicyName}/product`)
+            await axios.get(url + `/promotion-service/rate-discount/${discountPolicyName}/product`)
                 .then(function (resp) {
                     setProductList(resp.data.result.data);
 
@@ -25,8 +26,9 @@ export default function ProductTable(props) {
                 })
         }
 
-        const fetchFixCouponProduct = async () => {
-            await axios.get(url + `/promotion-service/fixCoupon/${couponName}/product`)
+        const fetchFixDiscountPolicyProduct = async () => {
+            console.log(url + `/promotion-service/fix-discount/${discountPolicyName}/product`)
+            await axios.get(url + `/promotion-service/fix-discount/${discountPolicyName}/product`)
                 .then(function (resp) {
                     console.log(resp.data.result.data);
                     setProductList(resp.data.result.data);
@@ -36,11 +38,11 @@ export default function ProductTable(props) {
                     console.log(error);
                 })
         }
-        if(!props.couponFlag) {
-            fetchRateCouponProduct();
+        if(props.couponFlag) {
+            fetchRateDiscountPolicyProduct();
         }
         else {
-            fetchFixCouponProduct();
+            fetchFixDiscountPolicyProduct();
         }
 
     }, []);
@@ -48,7 +50,7 @@ export default function ProductTable(props) {
 
 
     return(
-        <div style={{marginLeft: "30px"}} className="visible-scrollbar">
+        <div style={{marginLeft: "30px"}} class="visible-scrollbar">
 
             <table className="product-table" style={{width:"95%", height:"90%"}}>
                 <thead>
