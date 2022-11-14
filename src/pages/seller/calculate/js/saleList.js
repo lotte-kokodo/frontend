@@ -17,11 +17,9 @@ import moment from "moment";
 
 export default function SaleList() {
     const { url } = useContext(ServerConfigContext);
-
+    const sellerId = localStorage.getItem("sellerId")
     let today = new Date();
     today.setMonth(today.getMonth() + 1);
-
-    const params = useParams();
 
     let history = useNavigate();
     const [saleList, setSaleList] = useState([]);
@@ -48,9 +46,9 @@ export default function SaleList() {
     }
 
     const searchContent = async () => {
-        history(`/seller/${params.sellerId}/saleList`)
+        history(`/seller/${sellerId}/saleList`)
         await axios.post(url + `/calculate-service/commission/saleList`,{
-            "sellerId" : params.sellerId,
+            "sellerId" : sellerId,
             "startDate" : tmpStartDate + "T"+"00:00:00",
             "endDate" : tmpEndDate +  "T"+"12:59:59",
             "provideStatus": searchCondition

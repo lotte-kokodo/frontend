@@ -15,40 +15,67 @@ import DiscountPolicyManagement from "../../promotion/js/discountPolicyManagemen
 import CouponManagement from '../../promotion/js/couponManagement'
 
 import ServerConfigProvider from "../../../../context/serverConfigProvider";
+import SellerLogin from "../../seller/js/sellerLogin";
+import AuthProvider from "../../../../context/authProvider";
 
 function Seller() {
-    const params = useParams();
+    const sellerId = localStorage.getItem("sellerId");
+
+    const sellerLogin = () => {
+      return (
+          <>
+            <main>
+              <Routes>
+                <Route path="/" element={<SellerLogin />}></Route>
+              </Routes>
+            </main>
+          </>
+      );
+    }
+
+    const seller = () => {
+      return (
+          <>
+            <ServerConfigProvider>
+              <AuthProvider>
+                <SellerHeader />
+                <hr className="headerBottom-hr"></hr>
+                <SellerNav />
+
+                <main>
+                  <Routes>
+                    <Route path={`/${sellerId}`} element={<SellerHome />}></Route>
+
+                    {/* Seller Product */}
+                    <Route path={`/${sellerId}/SellerProductRegister`} element={<SellerProductRegister />}></Route>
+                    <Route path={`/${sellerId}/SellerProductRegister/productNotice`} element={<ProductNotice />}></Route>
+                    <Route path={`/${sellerId}/productSearch`} element={<ProductSearch />}></Route>
+
+                    {/* Seller Calculate */}
+                    <Route path={`/${sellerId}/calculateList`} element={<CalculatePresent />}></Route>
+                    <Route path={`/${sellerId}/saleList`} element={<SaleList />}></Route>
+
+                    {/* Seller Promotion */}
+                    <Route path={`/${sellerId}/discountPolicyManagement`} element={<DiscountPolicyManagement />}></Route>
+                    <Route path={`/${sellerId}/promotion/coupon`} element={<CouponManagement />}></Route>
+                  </Routes>
+                </main>
+                </AuthProvider>
+            </ServerConfigProvider>
+          </>
+      );
+    }
 
     return(
         <div>
             <ServerConfigProvider>
-            <SellerHeader />
-            <hr className="headerBottom-hr"></hr>
-            <SellerNav />
 
-            <main>
-                <Routes>
-                    <Route path="/" element={<SellerHome />}></Route>
-
-                        
-
-                    {/* Seller Product */}
-                    <Route path="/sellerProductRegister" element={<SellerProductRegister />}></Route>
-                    <Route path="/productNotice" element={<ProductNotice />}></Route>
-                    <Route path="/productSearch" element={<ProductSearch />}></Route>
-
-                    {/* Seller Calculate */}
-                    <Route path="/calculateList" element={<CalculatePresent />}></Route>
-                    <Route path="/saleList" element={<SaleList />}></Route>
-
-                    {/* Seller Promotion */}
-                    <Route path="/discountPolicyManagement" element={<DiscountPolicyManagement />}></Route>
-                    <Route path="/promotion/coupon" element={<CouponManagement />}></Route>
-                </Routes>
-            </main>
+              {
+                sellerId ? seller() : sellerLogin()
+              }
             </ServerConfigProvider>
         </div>
-    )
+    );
 }
 
 export default Seller;

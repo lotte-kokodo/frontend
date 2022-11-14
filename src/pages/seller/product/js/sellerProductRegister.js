@@ -8,6 +8,8 @@ import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useParams,useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import SellerTitle from "../../../../components/seller/sellerTitle";
+import productRegisterImg from "../../../../src_assets/seller/title/product-register.png";
 
 function SellerProductRegister() {
     const { url } = useContext(ServerConfigContext);
@@ -224,7 +226,7 @@ function SellerProductRegister() {
     const fetchProduct = async (param) => {
 
 
-        console.log("tempalteCheck: "+templateCheck);
+        console.log(templateCheck==false?"img":"tempalte");
         const productParams = {
             categoryId: selectCategoryId,
             thumbnail: fileImage,
@@ -243,17 +245,17 @@ function SellerProductRegister() {
             new Blob([JSON.stringify(productParams)], { type: "application/json" })
         ); // JSON 형식으로 파싱 후 추가
         fd.append("thumbnail",thumbnail);
-        
         // 이미지 디테일 경우
-        if(templateCheck && false){
+        if(templateCheck== false){
+
+            console.log("img");
+            
 
             let files = detailFileImageList;
             for (let i = 0; i < files.length; i++) {
                 fd.append("files", files[i]);
             }
             
-
-
             await axios({
                 method: "post",
                 url: url + "/seller-service/product",
@@ -361,8 +363,11 @@ function SellerProductRegister() {
         <div className="seller-product-container">
 
             <div className="seller-product-resgister">
-                <h5>상품등록</h5>
-            </div>
+                <div className="seller-product-register-div">
+                <img className="seller-product-register-img" src={productRegisterImg} ></img>
+                <h2 className="seller-product-resgister-h2">상품 등록</h2>
+                </div>
+            </div> 
 
             <div className="seller-product-div1">
                 <div>
@@ -429,7 +434,8 @@ function SellerProductRegister() {
             </div>
                             
             <div className="seller-product-div4">
-                <div>
+                <div style={{marginBottom:"30px"}}>
+                    
                     <h5>상세설명</h5>
                 </div>
                 <div>
@@ -439,7 +445,7 @@ function SellerProductRegister() {
                 {templateCheck === false ?
 
                     <div className = "seller-detail">
-                        <div>
+                        <div style={{marginTop:"30px"}}>
                             <h5 className="template-title">디테일 이미지 등록</h5>
                         </div>
                         <div className="seller-product-div5">
@@ -581,7 +587,7 @@ function SellerProductRegister() {
                         </div>
 
                         <div className="seller-already-success">
-                            <button className="category-sd" onClick={onClickAlreadyProduct}>미리보기</button>
+                            <button className="category-sd-pre" onClick={onClickAlreadyProduct}>미리보기</button>
                             <button className="category-sd" onClick={onClickRegisterProduct}>상품등록</button>
                         </div>
                     </div>

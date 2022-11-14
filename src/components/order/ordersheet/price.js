@@ -3,7 +3,8 @@
  */
 
 // Module
-import { useEffect, useState } from "react"
+import {useContext, useEffect, useState} from "react"
+import {OrderContext} from "../../../context/orderProvider";
 
 
 const Price = (props) => {
@@ -11,12 +12,12 @@ const Price = (props) => {
   const product = props.product;
   const qty = props.qty;
 
-  const unitPrice = product.unitPrice;
-  const discRate = product.discRate;
+  const { rateDiscountPolicyMap, replaceNumberComma } = useContext(OrderContext);
 
-  const totalPrice = unitPrice*qty;
+  const totalPrice = product.price*qty;
   const [ discPrice, setDiscPrice ] = useState(0);
 
+  const discountRate = rateDiscountPolicyMap[product.id] ? rateDiscountPolicyMap[product.id].rate : undefined
 
   useEffect(() => {
     calcDiscPrice();
@@ -24,13 +25,17 @@ const Price = (props) => {
 
 
   const calcDiscPrice = () => {
-    setDiscPrice(discRate !== 0 ?
-            Math.floor(totalPrice*(1-discRate*0.01)) : totalPrice);
+    if (discountRate) {
+      setDiscPrice(Math.floor(totalPrice*(1-0.01*discountRate)));
+    }
+    else {
+      setDiscPrice(product.price*qty);
+    }
   }
 
   return (
       <>
-        <span>{discPrice} 원</span><br/><br/>
+        <span>{replaceNumberComma(discPrice)} 원</span><br/><br/>
       </>
   )
 

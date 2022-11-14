@@ -31,18 +31,16 @@ const CouponList = (props) => {
 
     await axios.get(api, {params: {productIdList: productIds.join(",")}, headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (Delivery) GET /promotion-service/userCoupon/rateCoupon/list");
       console.log(resp.data.result.data);
 
       const data = resp.data.result.data;
       Object.values(data).map((coupons) => {
         coupons.map((coupon) => {
-          setRateCoupons([...rateCoupons, coupon]);
+          setRateCoupons((prev) => [...prev, coupon]);
         })
       });
     })
     .catch((err) => {
-      console.log("[ERROR] (Delivery) GET /promotion-service/userCoupon/rateCoupon/list");
       console.log(err);
     })
   }
@@ -52,7 +50,6 @@ const CouponList = (props) => {
 
     await axios.get(api, {params: {productIdList: productIds.join(",")}, headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (Delivery) GET /promotion-service/userCoupon/fixCoupon/list");
       console.log(resp);
       console.log(resp.data.result.data);
 
@@ -60,7 +57,6 @@ const CouponList = (props) => {
       setFixCoupons(Object.values(data));
     })
     .catch((err) => {
-      console.log("[ERROR] (Delivery) GET /promotion-service/userCoupon/fixCoupon/list");
       console.log(err);
     })
   }

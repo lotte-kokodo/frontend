@@ -37,6 +37,10 @@
     height: 100px;
 }
 
+.mypage-profile-img {
+    border-radius: 50%;
+}
+
 .mypage-top-left-writing{
     margin-top: 10px;
     font-size: 20px;
@@ -45,7 +49,6 @@
 .mypage-top-left-profile-name {
     margin-top: 20px;
 }
-
 
 .mypage-top-center{
     margin-top: 15px;
@@ -108,8 +111,24 @@
     border-color: #fb7d98;
 }
 
+.mypage-main{
+    height:900px;
+}
+
 .mypage-review{
     margin-top: 30px;
+}
+.mypage-main-review{
+    height:900px;
+}
+
+.mypage-main-review-items{
+    height: 700px;
+}
+
+.mypage-main-review-page{
+    margin:50px;
+    border: #ffffff 10px solid;
 }
 
 .mypage-review div:nth-child(1){

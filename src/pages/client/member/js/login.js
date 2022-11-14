@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 
+import kakaoLogo from '../../../../src_assets/login/kakao-login-logo.png'
+import naverLogo from '../../../../src_assets/login/naver-login-logo.png'
+
 import "../css/login.css";
 
 function Login() {
@@ -39,8 +42,19 @@ function Login() {
         fetchLogin(params);
     }
 
-    const onClickKakao = () => {}
-    const onClickNaver = () => {}
+    const onClickKakao = () => {
+        const REST_API_KEY = "6eba566b2a92f612fb5cf08e93c15ac5";
+        const REDIRECT_URI = "http://localhost:9090/login/kakao"
+        const kakaoOAuthApi = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+        window.location.href = kakaoOAuthApi;
+    }
+
+    const onClickNaver = () => {
+        const CLIENT_ID = "Rjyho8H2B4sgRJf9JE1c"
+        const REDIRECT_URI = "http://localhost:9090/login/naver";
+        const naverOAuthApi = `https://nid.naver.com/oauth2.0/authorize?response_type=code&state=1234&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
+        window.location.href = naverOAuthApi;
+    }
 
     const fetchLogin = async (params) => {
         await axios({
@@ -49,11 +63,12 @@ function Login() {
             data : params
         })
         .then(function(response){
-            localStorage.setItem("memberId",response.headers.memberid);
-            localStorage.setItem("token",response.headers.token);
+            localStorage.setItem("memberId",response.data.memberId);
+            localStorage.setItem("accessToken",response.data.accessToken);
+            localStorage.setItem("refreshToken",response.data.refreshToken);
 
-            if(localStorage.getItem("token") !== null || localStorage.getItem("token") !== ""){
-                
+            if(localStorage.getItem("accessToken") !== null || localStorage.getItem("accessToken") !== ""){
+
                 if(bCheked){
                     setCookie('rememberId', inputId, {maxAge: 2000});
                 } else{
@@ -66,30 +81,31 @@ function Login() {
             }else {
                 alert("로그인에 실패했습니다. 관리자에게 문의하세요.");
             }
-         })
-         .catch(function(error){
+        })
+        .catch(function(error){
             alert("아이디와 비밀번호를 확인하세요.");
             console.log(error);
-         })
+        })
     }
 
     return(
         <div className="container">
             <div className="d-flex justify-content-center h-100">
                 <div className="card">
-                    <div className="card-header">
-                        <h3>로그인</h3>
-                        {/* <div className="d-flex justify-content-end social_icon">
+                    {/*<div className="card-header">*/}
+                    {/* <div className="d-flex justify-content-end social_icon">
                             <span><i className="fab fa-facebook-square"></i></span>
                             <span><i className="fab fa-google-plus-square"></i></span>
                             <span><i className="fab fa-twitter-square"></i></span>
                         </div> */}
-                    </div>
+                    {/*</div>*/}
                     <div className="card-body">
+                        <h3>로그인</h3><br/>
+
                         <form method='post'>
                             <div className="input-group form-group">
                                 <input type="text" className="form-control" name='input_login_id' value={inputId} onChange={handleInputId} placeholder="아이디" />
-                                
+
                             </div>
                             <div className="input-group form-group">
                                 <input type="password" className="form-control" name='input_login_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호" autoComplete="on" />
@@ -104,18 +120,23 @@ function Login() {
                                 <button className="btn float-right login_btn" onClick={onClickLogin} >로그인하기 </button>
                             </div>
                             <div className="form-group">
-                                <button className="btn float-right kakao" onClick={onClickKakao} >카카오로 시작하기 </button>
+                                <button className="btn float-right kakao" onClick={onClickKakao} >
+                                    <img className="login-logo-img" src={kakaoLogo}/>카카오로 시작하기 </button>
                             </div>
                             <div className="form-group">
-                                <button className="btn float-right naver" onClick={onClickNaver} >네이버로 시작하기 </button>                                
+                                <button className="btn float-right naver" onClick={onClickNaver}>
+                                    <img className="login-logo-img" src={naverLogo}/>네이버로 시작하기 </button>
                             </div>
                         </div>
                     </div>
-                    <div className="card-footer">
-                        <div className="d-flex justify-content-center links">
-                            <Link to="/signup">회원가입</Link>
-                        </div>
+                    <div className="d-flex justify-content-center">
+                        <span className="login-signup-suggestion-span">아직 회원이 아니신가요?</span>
                     </div>
+                    <div className="d-flex justify-content-center links">
+                        <Link to="/signup"><button className="btn signup-btn">회원가입</button></Link>
+                    </div><br/>
+
+
                 </div>
             </div>
         </div>
