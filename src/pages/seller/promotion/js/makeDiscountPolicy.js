@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { styled, withStyles } from '@mui/material/styles';
-import { Box } from '@mui/system';
+import { border, Box } from '@mui/system';
 import { pink } from '@mui/material/colors';
 import { Button } from '@mui/material';
 import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TablePagination, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
@@ -21,7 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         padding: "10px",
     },
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#F5A9BC',
+        backgroundColor: '#FFFFFF',
         color: theme.palette.common.black,
         fontWeight: 'bold',
     },
@@ -271,7 +271,7 @@ function MakeDiscountPolicy() {
                             <div className='find-product-component'>
                                 <div className='find-product-component-title'>
                                     <div>
-                                        상품 ID로 찾기
+                                        상품명으로 찾기
                                     </div>
                                 </div>
                                 <div>
@@ -282,8 +282,8 @@ function MakeDiscountPolicy() {
                                 <div>
                                     <div>
                                         <button onClick={() => { FetchProduct() }} style={{
-                                            backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
-                                            color: "#fff", borderRadius: "10px"
+                                            backgroundColor: "#FFFFFF", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                                            color: "#000", borderRadius: "10px", border: "solid black 1px"
                                         }}>조회</button>
                                     </div>
                                 </div>
@@ -309,22 +309,13 @@ function MakeDiscountPolicy() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
-                            component="div"
-                            count={productList.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
                     </Paper>
                 </Box>
             </div>
 
             <button onClick={() => { makePolicy() }} style={{
-                backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
-                color: "#fff", borderRadius: "10px"
+                backgroundColor: "#FFFFFF", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                color: "#000", borderRadius: "10px", marginTop: "10px", border: "solid black 1px"
             }}>등록</button>
         </div>
     )

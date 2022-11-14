@@ -1,11 +1,11 @@
 .origin-button{
-    background-color: #FB7D98;
+    background-color: #FFFFFF;
     padding: 10px;
     padding-left:40px;
     padding-right:40px;
     text-align: center; 
-    color:#fff;
+    color:#000;
     border-radius: 10px;
     margin: 20px 25px;
-    box-shadow: 1px 1px 1px 1px gray;
+    border: 1px solid #000;
 }

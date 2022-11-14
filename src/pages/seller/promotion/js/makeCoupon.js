@@ -21,7 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         padding: "10px",
     },
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#F5A9BC',
+        backgroundColor: '#FFFFFF',
         color: theme.palette.common.black,
         fontWeight: 'bold',
     },
@@ -301,8 +301,8 @@ function MakeCoupon() {
                                                 ~ 
                                             <input type="date" style={{marginLeft: "10px"}} value={searchEndDate || ''} onChange={changeSearchEndDate}/></div>
                                         <div style={{display: "flex",  marginLeft: "90px"}}> 
-                                        <button style={{backgroundColor: "#FB7D98", padding: "5px", paddingLeft: "25px", paddingRight: "25px", textAlign: "center",
-                                                color: "#fff", borderRadius: "10px"}} onClick={FetchProduct}> 조회</button></div>
+                                        <button style={{backgroundColor: "#FFFFFF", padding: "5px", paddingLeft: "25px", paddingRight: "25px", textAlign: "center",
+                                                color: "#000", borderRadius: "10px", border: "solid black 1px"}} onClick={FetchProduct}> 조회</button></div>
                                     </div>
                                 </div>
                             </div>
@@ -328,22 +328,13 @@ function MakeCoupon() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
-                            component="div"
-                            count={productList.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
                     </Paper>
                 </Box>
             </div>
 
             <button onClick={() => {makePolicy()}} style={{
-                backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
-                color: "#fff", borderRadius: "10px"
+                backgroundColor: "#FFFFFF", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                color: "#000", borderRadius: "10px", marginTop: "10px", border: "solid black 1px"
             }}>등록</button>
         </div>
     )
