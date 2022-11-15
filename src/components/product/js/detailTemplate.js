@@ -18,7 +18,7 @@ useEffect(() => {
     const fetchData = async () => {
         await axios.get(url + `/product-service/templateRec/${productId}`)
             .then(function (resp) {
-                console.log(resp);
+                console.log(resp.data.result.data.writingTitle);
                 setTemplateRec(resp.data.result.data);
 
             })
@@ -32,7 +32,7 @@ useEffect(() => {
     return (
 
         <>
-             <div>
+               <div>
                             <div className="seller-template-write">
                                 <div className="template-already-container">
                                     <div className="already-title">{templateRec.writingTitle}</div>
@@ -71,7 +71,7 @@ useEffect(() => {
                                 </div>
                                 
                             </div>
-                        </div> 
+                        </div>   
         </>
     )
 }
