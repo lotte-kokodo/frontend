@@ -1,0 +1,23 @@
+.navContainer-category-list1{
+    width:700px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    overflow: hidden;
+}
+
+.navContainer-category-list-ul1{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navContainer-category-list-item1{
+    float: left;
+    font-size: 12px;
+    text-align: center;
+    padding:10px 0;
+    margin-right: 28px;
+}
+
+.navContainer-category-list-item1:hover{
+    background-color: #f0f0f0;
+}

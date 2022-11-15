@@ -76,16 +76,21 @@ input[type="file"] {
 
 .form-displayName{
     width:700px;
+    height:30px;
+    margin : 10px 0;
 }
 
 .form-stock{
     width: 332px;
     margin-left: 30px;
+    margin-bottom: 10px;
+    height:30px;
     display: inline;
 }
 
 .form-price{
     display: inline;
+    height:30px;
     width: 332px;
 }
 

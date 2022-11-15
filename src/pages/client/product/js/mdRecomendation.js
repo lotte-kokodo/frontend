@@ -84,7 +84,7 @@ function MdRecommendation() {
     }
 
     return(
-        <div>
+        <div className='product-containers'>
             <div className='cateogryProduct'>
                 <div className='cateogryProduct-name'>
                     <h3>MD추천 상품</h3>
