@@ -110,10 +110,14 @@ function MakeCoupon() {
         }
     }
 
+    const changeDate = (day) =>{
+        return moment(day).format('YYYY-MM-DD hh:mm:ss');
+    }
+
     const makeArCoupon = async () => {
         
-        // let name = couponName;
-        // let startDate = moment(startDate).format('YYYY-MM-DD hh:mm:ss');
+        let name = couponName;
+        // let startDate = changeDate(startDate);
         // let endDate = moment(endDate).format('YYYY-MM-DD hh:mm:ss');
         // let rate = Number(arPercent);
         // let minPrice =  Number(arMinPrice);
@@ -130,7 +134,9 @@ function MakeCoupon() {
         // console.log("sellerId : "+sellerId);
 
         // navigate('/');
-        navigate(url + `/sellerIndex.html?name=${couponName}&regDate=${regDate}&startDate=${startDate}&endDate=${endDate}&rate=${arPercent}&minPrice=${arMinPrice}&productList=${checkedItems}&sellerId=${sellerId}`);
+        navigate(url + `/sellerIndex.html?name=`+name+'&regDate='+regDate+
+            '&startDate='+moment(startDate).format('YYYY-MM-DD hh:mm:ss')+'&endDate='+moment(endDate).format('YYYY-MM-DD hh:mm:ss')
+            +'&rate='+Number(arPercent)+'&minPrice='+Number(arMinPrice)+'&productList='+Array.from(checkedItems)+'&sellerId='+sellerId);
         
         // await axios({
         //     method: "get",
