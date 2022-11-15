@@ -12,7 +12,7 @@ const Price = (props) => {
   const product = props.product;
   const qty = props.qty;
 
-  const { rateDiscountPolicyMap, replaceNumberComma } = useContext(OrderContext);
+  const { checkRateCoupons, rateDiscountPolicyMap, replaceNumberComma } = useContext(OrderContext);
 
   const totalPrice = product.price*qty;
   const [ discPrice, setDiscPrice ] = useState(0);
@@ -21,7 +21,7 @@ const Price = (props) => {
 
   useEffect(() => {
     calcDiscPrice();
-  });
+  }, [checkRateCoupons]);
 
 
   const calcDiscPrice = () => {

@@ -17,7 +17,7 @@ import { useContext, useEffect, useState } from "react"
 
 	const api = url + "/member-service/member/cart"
 
-	const [ deliveryInfo, setDeliveryInfo ] = useState({});
+	const [ deliveryInfo, setDeliveryInfo ] = useState({address: ""});
 
 	useEffect(() => {
 		getDeliveryInfo();
