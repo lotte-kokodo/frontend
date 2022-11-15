@@ -9,7 +9,7 @@ export default function SellerInfoBox(props) {
                 <div className="seller-info-box-number-text">
                     <div className="seller-info-box-second-box">
                         <div className="seller-number-box-info">
-                            <div className="seller-info-box-text-bold seller-info-box-number-font-size">{props.numberInfo}</div>
+                            <div className="seller-info-box-text-bold seller-info-box-number-font-size" style={{fontSize: "30px"}}>{props.numberInfo}</div>
                             <div className="seller-info-box-text-bold seller-info-box-unit-font-size">{props.unit}</div>
                         </div>
                         {/*{props.updownFlag ? "seller-num-color-red" : "seller-num-color-blue"}*/}

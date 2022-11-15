@@ -45,7 +45,10 @@ const PaymentButton = (props) => {
     })
     .catch((err) => {
       console.log(err);
-
+      const errMessage = err.response.data.message;
+      if (errMessage === "배송정보 미등록") {
+        navigate("/mypageRead")
+      }
     });
 
   }
@@ -73,10 +76,15 @@ const PaymentButton = (props) => {
     await axios.post(api, req, {headers: headers})
     .then((resp) => {
       alert(resp.data.result.data);
-      navigate(`/`); // TODO 주문상세로 이동
+      navigate(`/`);
     })
     .catch((err) => {
       console.log(err);
+      const errMessage = err.response.data.message;
+      if (errMessage === "배송정보 미등록") {
+        alert(errMessage);
+        navigate("/mypageRead");
+      }
     });
   }
 

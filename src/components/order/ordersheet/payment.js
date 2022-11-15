@@ -62,7 +62,7 @@ const Payment = (props) => {
 
     let delPrice = 0;
     sellerIds.map((sellerId) => {
-      if (notAppliedFixDiscountPolicy(sellerId)) {
+      if (notAppliedFixDiscountPolicy(sellerId) && notAppliedFixCouponPolicy(sellerId)) {
         delPrice += DELIVERY_PRICE;
       }
     })
@@ -73,6 +73,16 @@ const Payment = (props) => {
 
   const notAppliedFixDiscountPolicy = (sellerId) => {
     return fixDiscountPolicyMap[sellerId] === false;
+  }
+
+  const notAppliedFixCouponPolicy = (sellerId) => {
+    for (let i=0; i<checkFixCoupons.length; i++) {
+      const fixCoupon = checkFixCoupons[i];
+      if (fixCoupon.sellerId === sellerId) {
+        return false;
+      }
+    }
+    return true;
   }
 
   return (
