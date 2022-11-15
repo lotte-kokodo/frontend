@@ -1,7 +1,6 @@
 import SellerInfoBox from "./sellerInfoBox";
 import {AuthContext} from '../../../context/authProvider';
 
-import axios from 'axios';
 import  { useState, useRef, useEffect } from 'react';
 import { useContext } from "react";
 
