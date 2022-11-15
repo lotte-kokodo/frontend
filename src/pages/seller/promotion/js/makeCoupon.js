@@ -55,7 +55,7 @@ function MakeCoupon() {
 
     const [radioCheck, setRadioCheck] = useState('');
 
-    const [page, setPage] = React.useState(0);
+    // const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     let [productList, setProductList] = React.useState([]);
 
@@ -215,38 +215,38 @@ function MakeCoupon() {
         return Math.ceil(result);
     }
 
-    // {/* Paging */}
-    // const [count, setCount] = useState(0); //아이템 총 수
-    // const [currentpage, setCurrentpage] = useState(1); //현재페이지
-    // const [postPerPage] = useState(5); //페이지당 아이템 개수
-    // const [searchFlag, setSearchFlag] = useState(false);
-    // const [indexOfLastPost, setIndexOfLastPost] = useState(0);
-    // const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
-    // const [currentPosts, setCurrentPosts] = useState([]);
-    // const setPage = (e) => {
-    //     setCurrentpage(e);
-    // };
-    // const Paging = ({page, count, setPage}) => {
-    //     return (
-    //         <Pagination
-    //                 activePage={page}
-    //                 itemsCountPerPage={5}
-    //                 totalItemsCount={count}
-    //                 pageRangeDisplayed={5}
-    //                 prevPageText={"<"}
-    //                 nextPageText={">"}
-    //                 onChange={setPage} />
-    //     );
-    // }
-    // useEffect(() => {
-    //     setCount(count);
-    //     setIndexOfLastPost(currentpage * postPerPage);
-    //     setIndexOfFirstPost(indexOfLastPost - postPerPage);
-    //     setCurrentPosts(productList);
-    // }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
-    // useEffect(() => {
-    //     FetchProduct();
-    // },[currentpage]);
+    {/* Paging */}
+    const [count, setCount] = useState(0); //아이템 총 수
+    const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    const [postPerPage] = useState(5); //페이지당 아이템 개수
+    const [searchFlag, setSearchFlag] = useState(false);
+    const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
+    const setPage = (e) => {
+        setCurrentpage(e);
+    };
+    const Paging = ({page, count, setPage}) => {
+        return (
+            <Pagination
+                    activePage={page}
+                    itemsCountPerPage={5}
+                    totalItemsCount={count}
+                    pageRangeDisplayed={5}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                    onChange={setPage} />
+        );
+    }
+    useEffect(() => {
+        setCount(count);
+        setIndexOfLastPost(currentpage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(productList);
+    }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
+    useEffect(() => {
+        FetchProduct();
+    },[currentpage]);
 
     const FetchProduct = () => {
 
@@ -260,7 +260,7 @@ function MakeCoupon() {
             console.log(searchEndDate);
             axios({
                 method: "get",
-                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&page=1`,
+                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&page=${currentpage}`,
                 headers: sellerHeaders
             })
                 .then(function (resp) {
@@ -424,15 +424,15 @@ function MakeCoupon() {
                                 </TableHead>
                                 <TableBody>
                                     {/* 데이터 props에 넣기 */}
-                                    <IssueList props={{ productList, page, rowsPerPage }} propFunction={checkedItemHandler}></IssueList>
+                                    <IssueList props={{ productList }} propFunction={checkedItemHandler}></IssueList>
                                 </TableBody>
                                 
                             </Table>
 
-                            {/* 페이징
+                            {/* 페이징 */}
                             <div className="pagingProduct">
-                            {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
-                            </div> */}
+                                {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
+                            </div>
 
                         </TableContainer>
                     </Paper>

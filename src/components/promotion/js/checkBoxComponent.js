@@ -63,7 +63,7 @@ const IssueList = (props) => {
     console.log(props.props.productList);
     setRows(props.props.productList);
     return (
-        rows.slice(props.props.page * props.props.rowsPerPage, props.props.page * props.props.rowsPerPage + props.props.rowsPerPage).map((row) => (
+        rows.slice().map((row) => (
             // rows.map((row) => (
             <StyledTableRow >
                 <Issue props={row} propFunction={checkedItemHandler} />{/*props={row} */}
