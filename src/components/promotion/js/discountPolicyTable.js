@@ -6,6 +6,8 @@ import { useState, useEffect, useContext } from "react";
 import DiscountPolicyProductModal from './discountPolicyProductModal';
 import "../css/couponTable.css"
 
+import freeDelivery from '../../../src_assets/seller/free_delivery.png';
+import rate from '../../../src_assets/seller/rate.png';
 import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 export default function DiscountPolicyTable() {
@@ -35,18 +37,7 @@ export default function DiscountPolicyTable() {
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            console.log("effect")
-            console.log(url + `/promotion-service/rate-discount/seller/1`)
-            await axios.get(url + `/promotion-service/rate-discount/seller/1`)
-                .then(function (resp) {
-                    setDiscountPolicyList(resp.data.result.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
-        fetchData();
+        getRateDiscountPolicy();
     }, []);
 
     const getRateDiscountPolicy = () => {
@@ -86,8 +77,8 @@ export default function DiscountPolicyTable() {
         <div style={{ marginLeft: "240px" }} >
             <div className="coupon-nav">
                 <ul >
-                    <li onClick={getFixDiscountPolicy}>고정 할인 정책</li>
-                    <li onClick={getRateDiscountPolicy}>비율 할인 정책</li>
+                <li onClick={getFixDiscountPolicy}><img src={rate} style={{width:"30ox", height:"30px", marginLeft:"-20px"}}/>고정 할인 정책</li>
+                <li onClick={getRateDiscountPolicy}><img src={freeDelivery} style={{width:"50ox", height:"80px", marginLeft:"-30px"}}/>비율 할인 정책</li>
                 </ul>
             </div>
 
