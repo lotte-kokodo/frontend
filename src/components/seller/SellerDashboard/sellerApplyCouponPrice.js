@@ -1,7 +1,5 @@
 import SellerInfoBox from "./sellerInfoBox";
 import {AuthContext} from '../../../context/authProvider';
-
-import axios from 'axios';
 import  { useState, useRef, useEffect } from 'react';
 import { useContext } from "react";
 
@@ -9,9 +7,6 @@ import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 import React from "react";
 import axios from 'axios';
-import { useState, useRef, useEffect } from 'react';
-import { ServerConfigContext } from "../../../context/serverConfigProvider";
-import { useContext } from "react";
 import {Link} from "react-router-dom"
 
 export default function SellerApplyCouponPolicy(){
