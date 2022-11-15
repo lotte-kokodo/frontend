@@ -15,7 +15,7 @@ const OrderProvider = ({ children }) => {
 	const [checkRateCoupons, setCheckRateCoupons] = useState([]);
 
 	// 선택한 고정할인쿠폰
-	const [checkFixCoupons, setCheckCoupons] = useState([]);
+	const [checkFixCoupons, setCheckFixCoupons] = useState([]);
 
 	// 비올할인정책
 	const [rateDiscountPolicyMap, setRateDiscountPolicyMap] = useState({});
@@ -41,7 +41,7 @@ const OrderProvider = ({ children }) => {
 		cartMap, setCartMap,
 		checkCartMap, setCheckCartMap,
 		checkRateCoupons, setCheckRateCoupons,
-		checkFixCoupons, setCheckCoupons,
+		checkFixCoupons, setCheckFixCoupons,
 		rateDiscountPolicyMap, setRateDiscountPolicyMap,
 		fixDiscountPolicyMap, setFixDiscountPolicyMap,
 		sellerNameMap, setSellerNameMap,
