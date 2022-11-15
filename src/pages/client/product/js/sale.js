@@ -84,7 +84,7 @@ function Sale() {
     }
 
     return(
-        <div>
+        <div className='product-containers'>
             <div className='cateogryProduct'>
                 <div className='cateogryProduct-name'>
                     <h3>타임세일 상품</h3>
