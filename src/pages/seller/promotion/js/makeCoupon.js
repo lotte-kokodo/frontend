@@ -264,7 +264,6 @@ function MakeCoupon() {
                 headers: sellerHeaders
             })
                 .then(function (resp) {
-                    console.log(">>>>"+resp);
                     setProductList(resp.data.productDtoList);
                 })
                 .catch(function (error) {
@@ -274,6 +273,9 @@ function MakeCoupon() {
         }
         fetchProduct();
     }
+
+
+
     // 지원
     const productData= async () => {
         console.log("productData");

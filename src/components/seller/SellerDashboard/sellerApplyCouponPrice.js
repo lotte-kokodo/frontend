@@ -8,36 +8,43 @@ import { useContext } from "react";
 import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 import React from "react";
+import axios from 'axios';
+import { useState, useRef, useEffect } from 'react';
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
+import { useContext } from "react";
+import {Link} from "react-router-dom"
 
 export default function SellerApplyCouponPolicy(){
 
-    const { sellerHeaders } = useContext(AuthContext);
     const { url } = useContext(ServerConfigContext);
-    const [couponTitle, setCouponTitle]=useState('');
-    
-    useEffect(()=>{
-        const fetchData = async () => {
-                console.log("wwww");
-            await axios({
-                method: 'get',
-                url: url + `/promotion-service/userCoupon/dashboard`,
-                headers: sellerHeaders
-            })
-              .then(function (resp) {
-                console.log(resp);
-                setCouponTitle(resp.data.result.data);
-    
-                })
-                .catch(function (error) {
-                        console.log(error);
-                    })
+    const [numberInfo, setNumberInfo]=useState('');
+    const sellerId = localStorage.getItem("sellerId");
 
-        }
 
-        fetchData();
-    },[]);
+    const couponData= async () => {
+        console.log("response>>>>");
+        await axios({
+            method: "get",
+            url: url + "/promotion-service/userCoupon/dashboard",
+            headers: {sellerId : 1}
+        })
+        .then(function (resp) {
+            console.log(resp.data.result.data);
+            setNumberInfo(resp.data.result.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+    
+        useEffect(() => {
+            couponData();
+        }, []);
+    
 
     return(
-        <SellerInfoBox numberInfo={couponTitle} titleName="주간 Best 쿠폰"></SellerInfoBox>
+        <Link to={`/seller/${sellerId}/promotion/coupon`} style={{textDecoration: "none", height: 150}}>
+            <SellerInfoBox numberInfo={numberInfo} titleName="주간 Best 쿠폰"></SellerInfoBox>
+        </Link>
     )
 }
