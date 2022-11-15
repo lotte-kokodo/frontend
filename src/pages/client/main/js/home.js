@@ -54,78 +54,13 @@ function Home() {
         return () => clearTimeout(timeoutId);
     });
 
-    // 카테고리
-    const category1 = () => {
-        history('/category', {
-            state: {
-                seq: 1,
-                name: "신상품"
-            }
-        })
-    };
+    const moveTimeSale = () => {
+        history('/sale')
+    }
 
-    const category2 = () => {
-        history('/category', {
-            state: {
-                seq: 2,
-                name: "닭가슴살"
-            }
-        })
-    };
-
-    const category3 = () => {
-        history('/category', {
-            state: {
-                seq: 3,
-                name: "도시락·볶음밥"
-            }
-        })
-    };
-
-    const category4 = () => {
-        history('/category', {
-            state: {
-                seq: 4,
-                name: "샐러드·과일"
-            }
-        })
-    };
-
-    const category5 = () => {
-        history('/category', {
-            state: {
-                seq: 5,
-                name: "즉석 간편식"
-            }
-        })
-    };
-
-    const category6 = () => {
-        history('/category', {
-            state: {
-                seq: 6,
-                name: "음료·차·프로틴"
-            }
-        })
-    };
-
-    const category7 = () => {
-        history('/category', {
-            state: {
-                seq: 7,
-                name: "계란·난백·콩"
-            }
-        })
-    };
-
-    const category8 = () => {
-        history('/category', {
-            state: {
-                seq: 8,
-                name: "소고기"
-            }
-        })
-    };
+    const moveMd = () => {
+        history('/mdRecommendation')
+    }
 
     // 상품
     const [newState, setNewState] = useState([]);
@@ -215,33 +150,6 @@ function Home() {
             </div>
 
             <div className='main-category-product'>
-                {/* <div className='main-category'>
-                    <button className='main-category-div' onClick={category1}>
-                        <img className='main-category-item' alt="신상품" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653WAC282333226.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category2}>
-                        <img className='main-category-item' alt="닭가슴살" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653Sxk282370687.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category3}>
-                        <img className='main-category-item' alt="도시락·볶음밥" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653QFH282812482.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category4}>
-                        <img className='main-category-item' alt="샐러드·과일" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653bRc282853493.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category5}>
-                        <img className='main-category-item' alt="즉석 간편식" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653yyQ282384594.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category6}>
-                        <img className='main-category-item' alt="음료·차·프로틴" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653CzB282898866.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category7}>
-                        <img className='main-category-item' alt="계란·난백·콩" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653vhR282906283.png"/>
-                    </button>
-                    <button className='main-category-div' onClick={category8}>
-                        <img className='main-category-item' alt="소고기" src="https://file.rankingdak.com/image/RANK/BANNER/CATE_PC1_1/20220523/IMG1653GoW282835152.png"/>
-                    </button>
-                </div> */}
-
                 <div className="main-product">
                     <div className="new-product" >
                         <h3 className='product-title'>이달의 신상품=☆</h3>
@@ -257,11 +165,12 @@ function Home() {
                     </div>
 
                     <div className="sale-product" >
-                        
-                        <h3 className='product-title'>
-                            <img className='timer' alt='timer' src={timer} />
-                            지금 이순간 깜짝 타임세일!
-                        </h3>
+                        <button onClick={moveTimeSale}>
+                            <h3 className='product-title'>
+                                <img className='timer' alt='timer' src={timer} />
+                                지금 이순간 깜짝 타임세일!
+                            </h3>
+                        </button>
 
                         <div className='product-list'>
                             {saleState &&
@@ -276,7 +185,7 @@ function Home() {
                     </div>
 
                     <div className="md-product" >
-                        <h3 className='product-title'>MD's 추천 상품</h3>
+                        <button onClick={moveMd}><h3 className='product-title'>MD's 추천 상품</h3></button>
                         <div className='product-list'>
                             {mdState &&
                                 mdState.map( function(object, i){
