@@ -11,15 +11,17 @@ export default function DetailTemplate() {
     const { url } = useContext(ServerConfigContext);
     let { productId } = useParams(null);
 
-    const [templateRec, setTemplateRec] = useState();
+    const [templateRec, setTemplateRec] = useState([]);
 
     // product 이미지 조회
 useEffect(() => {
     const fetchData = async () => {
         await axios.get(url + `/product-service/templateRec/${productId}`)
             .then(function (resp) {
-                console.log(resp.data.result.data.writingTitle);
+                
+                console.log(resp.data);
                 setTemplateRec(resp.data.result.data);
+                
 
             })
             .catch(function (error) {
@@ -32,7 +34,7 @@ useEffect(() => {
     return (
 
         <>
-               <div>
+             {true &&   <div>
                             <div className="seller-template-write">
                                 <div className="template-already-container">
                                     <div className="already-title">{templateRec.writingTitle}</div>
@@ -71,7 +73,7 @@ useEffect(() => {
                                 </div>
                                 
                             </div>
-                        </div>   
+                        </div>    }
         </>
     )
 }

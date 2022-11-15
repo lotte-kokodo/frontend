@@ -55,7 +55,7 @@ export default function ProductDetailNavBar(props) {
                 </div>
                     {
                         checked==false? 
-                            ( props.detailFlag =='IMG' ? <DetailImage></DetailImage> : <DetailTemplate></DetailTemplate> ): <Review></Review>
+                            ( props.detailFlag ==='IMG' ? <DetailImage></DetailImage> : <DetailTemplate></DetailTemplate> ): <Review></Review>
                     }
                     
             </div>
