@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import axios from "axios";
 import { useState, useEffect, useContext} from "react";
 import CouponProductModal from './couponProductModal';
+import {AuthContext} from "../../../context/authProvider";
 
 import freeDelivery from '../../../src_assets/seller/free_delivery.png';
 import rate from '../../../src_assets/seller/rate.png'
@@ -28,6 +29,7 @@ export default function CouponTable() {
     const [indexOfLastPost, setIndexOfLastPost] = useState(0);
     const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
     const [currentPosts, setCurrentPosts] = useState([]);
+    const { sellerHeaders } = useContext(AuthContext);
 
     const setPage = (e) => {
         setCurrentpage(e);
@@ -78,8 +80,10 @@ export default function CouponTable() {
     }
 
     useEffect(() => {
+
+        console.log("coupon table");
         const fetchData = async () => {
-            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1&page=${currentpage}`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
                     setCouponList(resp.data.result.data.rateCouponList);
                     setSearchFlag(true);
@@ -97,7 +101,7 @@ export default function CouponTable() {
         setListFlag(false);
         setCurrentpage(1);
         const fetchData = async () => {
-            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1&page=${currentpage}`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
                     setCouponList(resp.data.result.data.rateCouponList);
                     setSearchFlag(true);
@@ -113,7 +117,7 @@ export default function CouponTable() {
 
     const getRateCoupon = ()=>{
         const fetchData = async () => {
-            await axios.get(url + `/promotion-service/rateCoupon/seller?sellerId=1&page=${currentpage}`)
+            await axios.get(url + `/promotion-service/rateCoupon/seller?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
                     setCouponList(resp.data.result.data.rateCouponList);
                     setSearchFlag(true);
@@ -131,7 +135,7 @@ export default function CouponTable() {
         setListFlag(true);
         setCurrentpage(1);
         const fetchData = async () => {
-            await axios.get(url + `/promotion-service/fixCoupon/seller?sellerId=1&page=${currentpage}`)
+            await axios.get(url + `/promotion-service/fixCoupon/seller?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
                     setCouponList(resp.data.result.data.fixCouponList);
                     setSearchFlag(true);
@@ -147,7 +151,7 @@ export default function CouponTable() {
 
     const getFixCoupon = ()=>{
         const fetchData = async () => {
-            await axios.get(url + `/promotion-service/fixCoupon/seller?sellerId=1&page=${currentpage}`)
+            await axios.get(url + `/promotion-service/fixCoupon/seller?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
                     setCouponList(resp.data.result.data.fixCouponList);
                     setSearchFlag(true);

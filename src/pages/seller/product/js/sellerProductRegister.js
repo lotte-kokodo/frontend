@@ -2,10 +2,11 @@ import React, {useRef, useState, useContext} from "react"
 import DatePicker from "react-datepicker";
 import axios from 'axios';
 
+import "../css/sellerProductRegister.css"
+import {AuthContext} from "../../../../context/authProvider";
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useNavigate } from "react-router-dom";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
-import {AuthContext} from "../../../../context/authProvider"
 import productRegisterImg from "../../../../src_assets/seller/title/product-register.png";
 
 
@@ -250,7 +251,6 @@ function SellerProductRegister() {
             stock: stock,
             deadline: deadline,
             displayName: formDisplayName,
-            sellerId: sellerId,
             deliveryFee: 3000
         };
 
@@ -314,8 +314,8 @@ function SellerProductRegister() {
             await axios({
                 method: "post",
                 url: url + "/seller-service/product/template",
-                headers: sellerHeaders,
-                data : fd
+                data : fd,
+                headers: sellerHeaders
             })
             .then(function(response){
                 if(response.data.success) {

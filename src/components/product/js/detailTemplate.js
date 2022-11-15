@@ -18,7 +18,7 @@ useEffect(() => {
     const fetchData = async () => {
         await axios.get(url + `/product-service/templateRec/${productId}`)
             .then(function (resp) {
-                console.log(resp.data.result.data);
+                console.log(resp);
                 setTemplateRec(resp.data.result.data);
 
             })
@@ -71,7 +71,7 @@ useEffect(() => {
                                 </div>
                                 
                             </div>
-                        </div>
+                        </div> 
         </>
     )
 }
