@@ -192,6 +192,8 @@ export default function ProductDetail({img, template}) {
     const fetchData = async () => {
         await axios.get(url + `/promotion-service/rate-discount/${productId}`)
             .then(function (resp) {
+                console.log("discount policy")
+                console.log(resp);
                 setRatePolicy(resp.data.result.data);
                 setSalePrice(calcSalePercent(resp.data.result.data.rate));
                 setTotalPrice(calcSalePercent(resp.data.result.data.rate));

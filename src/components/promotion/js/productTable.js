@@ -15,8 +15,11 @@ export default function ProductTable(props) {
         console.log(props.couponFlag);
         
         const fetchRateCouponProduct = async () => {
+
+            console.log("dddd");
             await axios.get(url + `/promotion-service/rateCoupon/${couponName}/product`)
                 .then(function (resp) {
+                    console.log(resp);
                     setProductList(resp.data.result.data);
 
                 })
