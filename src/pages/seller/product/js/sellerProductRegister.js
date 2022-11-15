@@ -64,7 +64,7 @@ function SellerProductRegister() {
         await axios({
         method: "get",
         headers: sellerHeaders,
-        url: url + "/product-service/category/all"
+        url: url + "/seller-service/product/category/all"
         })
         .then(function(response){
             console.log(response.data);
