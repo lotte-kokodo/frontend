@@ -79,9 +79,6 @@ function OrderDetailList() {
                 <div className="status">
                     <div className="order-status">{changeOrderStatus(orderDetail.obj.orderStatus)}</div>
                 </div>
-                <div className='refund-button-value'>
-                    <button type="button" onClick={() => setRefundOrderDetail()} className="refund-button">환불 요청</button>
-                </div>
             </div>
         )
     }

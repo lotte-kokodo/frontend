@@ -31,7 +31,7 @@ function GetOrderList(order) {
                                         orderId:orderId
                                     }
                                 }
-                        >이동</Link>
+                        >상세보기</Link>
                     </div>
                 </div>
                 <div className='content-value-detail'>
@@ -45,7 +45,6 @@ function GetOrderList(order) {
                         <div className='price'>결제금액 {order.obj.obj.price}</div>
                     </div>
                     <div className='cancel-button'>
-                        <button type='button' className='button'>주문취소</button>
                     </div>
                 </div>
             </div>
