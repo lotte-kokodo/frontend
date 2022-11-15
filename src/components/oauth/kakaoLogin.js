@@ -31,6 +31,8 @@ const KakaoLogin = () => {
     })
     .catch((err) => {
       alert("회원 인증 실패");
+      navigate("/");
+      window.location.reload();
     });
   }
 
