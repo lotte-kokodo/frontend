@@ -4,6 +4,7 @@ import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import MakeDiscountPolicy from './makeDiscountPolicy';
+import SellerTitle from '../../../../components/seller/sellerTitle';
 import DiscountPolicyTable from '../../../../components/promotion/js/discountPolicyTable';
 import "../css/couponManagement.css"
 
@@ -33,7 +34,7 @@ const DiscountPolicyManagement = () => {
 
     return (
         <>
-            <h3>할인 정책 관리</h3>
+            <SellerTitle title="할인 정책 관리"></SellerTitle>
             <button className="origin-button" onClick={() => {handleOpen()}}>+  할인 정책 만들기</button>
 
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" >
