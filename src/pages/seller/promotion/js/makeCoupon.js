@@ -13,6 +13,8 @@ import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, Ta
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import { AuthContext } from '../../../../context/authProvider';
+import { useNavigate } from 'react-router-dom';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -51,7 +53,7 @@ function MakeCoupon() {
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
     const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
-    const sellerId = Number(1);
+    const navigate = useNavigate();
 
     const [radioCheck, setRadioCheck] = useState('');
 
@@ -68,6 +70,11 @@ function MakeCoupon() {
     const [searchProductName , setSearchProductName] = useState('');
     const [searchStartDate, setSearchStartDate] =useState(null);
     const [searchEndDate, setSearchEndDate] =useState(null);
+    
+    const { sellerHeaders, sellerId } = useContext(AuthContext);
+
+    const [arMinPrice, setArMinPrice] = useState('');
+    const [arPercent, setArPercent] = useState('');
 
     const handleClickRadio = (e) => {
         setRadioCheck(e.target.value);
@@ -98,6 +105,46 @@ function MakeCoupon() {
         else if (radioCheck === 'rate') {
             makeRatePolicy();
         }
+        else if(radioCheck === 'ar'){
+            makeArCoupon();
+        }
+    }
+
+    const makeArCoupon = async () => {
+        
+        // let name = couponName;
+        // let startDate = moment(startDate).format('YYYY-MM-DD hh:mm:ss');
+        // let endDate = moment(endDate).format('YYYY-MM-DD hh:mm:ss');
+        // let rate = Number(arPercent);
+        // let minPrice =  Number(arMinPrice);
+        // let productList=  Array.from(checkedItems);
+        // let sellerId= sellerId;
+
+        // console.log("name : "+name);
+        // console.log("regDate : "+regDate);    
+          // console.log("startDate : "+startDate);
+        // console.log("endDate : "+endDate);
+        // console.log("rate : "+rate);
+        // console.log("minPrice : "+minPrice);
+        // console.log("productList : "+productList);
+        // console.log("sellerId : "+sellerId);
+
+        // navigate('/');
+        navigate(url + `/sellerIndex.html?name=${couponName}&regDate=${regDate}&startDate=${startDate}&endDate=${endDate}&rate=${arPercent}&minPrice=${arMinPrice}&productList=${checkedItems}&sellerId=${sellerId}`);
+        
+        // await axios({
+        //     method: "get",
+        //     url: url + `/sellerIndex.html?name=${name}&regDate=${regDate}&startDate=${startDate}&endDate=${startDate}&rate=${rate}&minPrice=${minPrice}&productList=${productList}&sellerId=${sellerId}`
+        // })
+        //     .then(function (resp) {
+        //         if(resp.request.status == 200) {
+        //         alert('등록완료!')
+        //         window.location.reload();
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error.value);
+        //     })
     }
 
 
@@ -112,13 +159,13 @@ function MakeCoupon() {
             endDate: moment(endDate).format('YYYY-MM-DD hh:mm:ss'),
             rate: Number(ratePercent),
             minPrice: Number(rateMinPrice),
-            productList: Array.from(checkedItems),
-            sellerId: sellerId
+            productList: Array.from(checkedItems)
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/rateCoupon/save",
-            data: ratePolicyDto
+            url: url + "/promotion-service/rateCoupon",
+            data: ratePolicyDto,
+            headers: sellerHeaders
         })
             .then(function (resp) {
                 if(resp.request.status == 200) {
@@ -140,12 +187,12 @@ function MakeCoupon() {
             price: Number(fixWon),
             minPrice: Number(0),
             productList: Array.from(checkedItems),
-            sellerId: sellerId
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/fixCoupon",
-            data: fixPolicyDto
+            url: url + "/promotion-service/fixCoupon",
+            data: fixPolicyDto,
+            headers: sellerHeaders
         })
             .then(function (resp) {
                 if(resp.request.status == 200) {
@@ -169,13 +216,11 @@ function MakeCoupon() {
         let sDate =searchStartDate+" 00:00";
         let eDate = searchEndDate+" 00:00";
 
-        // TODO: seller ID 추가
         const fetchProduct = () => {
             axios({
                 method: "get",
-                url: url + `product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&sellerId=3`
-                
-                // data: params
+                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}`,
+                headers: sellerHeaders
             })
                 .then(function (resp) {
                     setProductList(resp.data);
@@ -189,7 +234,8 @@ function MakeCoupon() {
     }
     // 지원
     const productData= async () => {
-            await axios.get(url + `product-service/product/seller/3`)
+        console.log("productData");
+            await axios.get(url + `/product-service/product/seller`,{headers: sellerHeaders})
                 .then(function (resp) {
                     setProductList(resp.data.result.data);
                 })
@@ -198,9 +244,9 @@ function MakeCoupon() {
                 })
         }
     
-        useEffect(() => {
-            productData();
-        }, []);
+    useEffect(() => {
+        productData();
+    }, []);
     
     const changeSearchProductName = (e) => {setSearchProductName(e.target.value);}
     const changeSearchStartDate = (e) => {setSearchStartDate(e.target.value);}
@@ -209,7 +255,7 @@ function MakeCoupon() {
     return (
         <div id="makeDiscountPolicy">
             <div>
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{ width: '100%', overflow: "auto",height:"750px"}}>
                     <Paper>
 
                         <TableContainer component={Paper}>
@@ -260,7 +306,7 @@ function MakeCoupon() {
 
                                             <StyledTableRow>
 
-                                                <StyledTableCell align="center" rowSpan={2}>
+                                                <StyledTableCell align="center" rowSpan={3}>
                                                     할인 방식
                                                 </StyledTableCell>
 
@@ -278,8 +324,17 @@ function MakeCoupon() {
                                                     <FormControlLabel value="fix" control={<Radio />} label="무료배송"  onChange={(e) => {handleClickRadio(e)}}/>
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
+                                            </StyledTableRow>
+
+                                            <StyledTableRow>
+
+                                                <StyledTableCell>
+                                                    <FormControlLabel value="ar" control={<Radio />} label="AR 할인 쿠폰" onChange={(e) => {handleClickRadio(e)}}/>
+                                                </StyledTableCell>
+                                                <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
-                                                    <input type="input" value={fixMinPrice} onChange={(e) => setFixMinPrice(e.target.value)}></input>원 이상 구매시 <input type="input" value={fixWon} onChange={(e) => setFixWon(e.target.value)}></input>원 할인
+                                                    <input type="input" value={arMinPrice} onChange={(e) => setArMinPrice(e.target.value)}></input>원 이상 구매시 
+                                                    <input type="input" value={arPercent} onChange={(e) => setArPercent(e.target.value)}></input>% 할인
                                                 </StyledTableCell>
                                             </StyledTableRow>
 

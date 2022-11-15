@@ -12,9 +12,6 @@ import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 const ARRAY = [0, 1, 2, 3, 4];
 
-
-
-
 export default function Review() {
     const { url } = useContext(ServerConfigContext);
     let { productId } = useParams(null);

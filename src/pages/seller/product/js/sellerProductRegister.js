@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import axios from 'axios';
 
 import "../css/sellerProductRegister.css"
-
+import {AuthContext} from "../../../../context/authProvider";
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useParams,useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -16,6 +16,7 @@ function SellerProductRegister() {
 
     const params = useParams();
     const history = useNavigate();
+    const { sellerHeaders } = useContext(AuthContext);
 
     // useRef를 이용해 input태그에 접근한다.
     const imageInput = useRef();
@@ -235,7 +236,6 @@ function SellerProductRegister() {
             stock: stock,
             deadline: deadline,
             displayName: formDisplayName,
-            sellerId: params.sellerId,
             deliveryFee: 3000
         };
 
@@ -259,7 +259,8 @@ function SellerProductRegister() {
             await axios({
                 method: "post",
                 url: url + "/seller-service/product",
-                data : fd
+                data : fd,
+                headers: sellerHeaders
             })
             .then(function(response){
                 if(response.data.success) {
@@ -298,7 +299,8 @@ function SellerProductRegister() {
             await axios({
                 method: "post",
                 url: url + "/seller-service/product/template",
-                data : fd
+                data : fd,
+                headers: sellerHeaders
             })
             .then(function(response){
                 if(response.data.success) {
