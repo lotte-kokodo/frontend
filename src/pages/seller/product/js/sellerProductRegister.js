@@ -2,14 +2,15 @@ import React, {useRef, useState, useContext} from "react"
 import DatePicker from "react-datepicker";
 import axios from 'axios';
 
-import "../css/sellerProductRegister.css"
-
 import highlight from '../../../../src_assets/seller/nav/highlight.png'
 import { useNavigate } from "react-router-dom";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 import {AuthContext} from "../../../../context/authProvider"
-import CategoryAlls from '../../../../components/seller/js/categoryAlls';
 import productRegisterImg from "../../../../src_assets/seller/title/product-register.png";
+
+
+import "../css/sellerProductRegister.css"
+import "../css/categoryAlls.css"
 
 function SellerProductRegister() {
     const { url } = useContext(ServerConfigContext);
@@ -29,10 +30,11 @@ function SellerProductRegister() {
     const [deadline, setDeadline] = useState(new Date());
 
     // 카테고리 찾기, 전체, 삭제 버튼
-    const [formCategory, setFormCategory] = useState("");
-    const [selectCategory, setSelectCategory] = useState("");
-    const [selectCategoryId, setSelectCategoryId] = useState("");
-    const [displayAllCategory, setDisplayAllCategory] = useState(false);
+    const [formCategory, setFormCategory] = useState(""); //input 카테고리 검색
+    const [selectCategory, setSelectCategory] = useState(""); // 카테고리 이름 최종 선택
+    const [selectCategoryId, setSelectCategoryId] = useState(""); // 카테고리 Id
+    const [displayAllCategory, setDisplayAllCategory] = useState(false); // 카테고리 전체 보이도록 하는 flag
+    const [categoryList, setCategoryList] = useState([]); // 카테고리 List
     
     const onClickFormCategory = (e) => {
         setFormCategory(e.target.value);
@@ -43,12 +45,34 @@ function SellerProductRegister() {
     }
 
     const categoryAll = () => {
+        if(!displayAllCategory) fetchCategory();
         setDisplayAllCategory(!displayAllCategory);
     }
 
     const categoryDelete = () => {
         setSelectCategory("");
         setFormCategory("");
+    }
+
+    const categoryClick = (e) => {
+        setSelectCategory(e.name);
+        setSelectCategoryId(e.id);
+        setDisplayAllCategory(false);
+    }
+
+    const fetchCategory = async () => {
+        await axios({
+        method: "get",
+        headers: sellerHeaders,
+        url: url + "/product-service/category/all"
+        })
+        .then(function(response){
+            console.log(response.data);
+            setCategoryList(response.data.result.data);
+        })
+        .catch(function(error){
+            console.log(error)
+        })
     }
 
     const fetchCategorySearch = async (categorySearch) => {
@@ -417,7 +441,23 @@ function SellerProductRegister() {
                             <button className="category-sd" onClick={categorySearch}>카테고리 검색</button>
                             <button className="category-sd" onClick={categoryAll}>카테고리 전체</button>
                             <button className="category-sd" onClick={categoryDelete}>카테고리 삭제</button>
-                            {displayAllCategory ? <CategoryAlls /> : <span></span>}
+                            {displayAllCategory ? 
+                                <div>
+                                    <div className='navContainer-category-list1'>
+                                        <ul className='navContainer-category-list-ul1'>
+                                            {categoryList && 
+                                                categoryList.map( function(obj){
+                                                    return(
+                                                        <li className='navContainer-category-list-item1' onClick={() => categoryClick(obj)}>
+                                                            {obj.name}
+                                                        </li>
+                                                    )
+                                                })
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            : <span></span>}
                         </div>
                         <input type="text" className="form-control form-displayName" name='form-displayName' value={formCategory} onChange={onClickFormCategory} />  
                         <div> 선택된 카테고리 : <span>{selectCategory}</span></div>
