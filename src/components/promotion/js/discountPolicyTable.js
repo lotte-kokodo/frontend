@@ -5,10 +5,11 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import DiscountPolicyProductModal from './discountPolicyProductModal';
 import "../css/couponTable.css"
-
+import {AuthContext} from "../../../context/authProvider";
 import freeDelivery from '../../../src_assets/seller/free_delivery.png';
 import rate from '../../../src_assets/seller/rate.png';
 import { ServerConfigContext } from "../../../context/serverConfigProvider";
+import Pagination from "react-js-pagination";
 
 export default function DiscountPolicyTable() {
     const { url } = useContext(ServerConfigContext);
@@ -16,6 +17,33 @@ export default function DiscountPolicyTable() {
     const [discountPolicyList, setDiscountPolicyList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [discountPolicyName, setDiscountPolicyName] = useState('');
+
+    {/* Paging */}
+    const [productList, setProductList] = useState([]); //아이템
+    const [count, setCount] = useState(0); //아이템 총 수
+    const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    const [postPerPage] = useState(5); //페이지당 아이템 개수
+    const [searchFlag, setSearchFlag] = useState(false);
+    const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
+    const { sellerHeaders } = useContext(AuthContext);
+
+    const setPage = (e) => {
+        setCurrentpage(e);
+    };
+    const Paging = ({page, count, setPage}) => {
+        return (
+            <Pagination
+                    activePage={page}
+                    itemsCountPerPage={5}
+                    totalItemsCount={count}
+                    pageRangeDisplayed={5}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                    onChange={setPage} />
+        );
+    }
 
     const showProductModal = (discountPolicyName) => {
         setModalOpen(true);
@@ -37,17 +65,78 @@ export default function DiscountPolicyTable() {
     }
 
     useEffect(() => {
-        getRateDiscountPolicy();
-    }, []);
+        setCount(count);
+        setIndexOfLastPost(currentpage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(productList);
+    }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
 
-    const getRateDiscountPolicy = () => {
+    useEffect(() => {
+        if(listFlag!=true) getFixDiscountPolicy();
+        else getRateDiscountPolicy();
+    },[currentpage]);
+
+    useEffect (()=>{
         setListFlag(true);
         const fetchData = async () => {
-            console.log("rate")
-            console.log(url + `/promotion-service/rate-discount/seller/1`)
-            await axios.get(url + `/promotion-service/rate-discount/seller/1`)
+            await axios.get(url + `/promotion-service/rate-discount/seller?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
-                    setDiscountPolicyList(resp.data.result.data);
+                    setDiscountPolicyList(resp.data.result.data.rateDiscountPolicyList);
+                    setSearchFlag(true);
+                    setCount(resp.data.result.data.totalCount);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+        fetchData();
+    }, []);
+
+    const clickRateDiscountPolicy = ()=>{
+        setListFlag(true);
+        setCurrentpage(1);
+        const fetchData = async () => {
+            await axios.get(url + `/promotion-service/rate-discount/seller?page=${currentpage}`,{headers: sellerHeaders})
+                .then(function (resp) {
+                    setDiscountPolicyList(resp.data.result.data.rateDiscountPolicyList);
+                    setSearchFlag(true);
+                    setCount(resp.data.result.data.totalCount);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+        fetchData();
+    }
+
+    const clickFixDiscountPolicy = ()=>{
+        setListFlag(false);
+        setCurrentpage(1);
+        const fetchData = async () => {
+            await axios.get(url + `/promotion-service/fix-discount/seller?page=${currentpage}`,{headers: sellerHeaders})
+                .then(function (resp) {
+                    setDiscountPolicyList(resp.data.result.data.fixDiscountPolicyList);
+                    setSearchFlag(true);
+                    setCount(resp.data.result.data.totalCount);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+        fetchData();
+    }
+
+    const getRateDiscountPolicy = () => {
+        const fetchData = async () => {
+            await axios.get(url + `/promotion-service/rate-discount/seller?page=${currentpage}`,{headers: sellerHeaders})
+                .then(function (resp) {
+                    console.log(resp.data.result.data)
+                    setDiscountPolicyList(resp.data.result.data.rateDiscountPolicyList);
+                    setSearchFlag(true);
+                    setCount(resp.data.result.data.totalCount)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -57,14 +146,13 @@ export default function DiscountPolicyTable() {
     }
 
     const getFixDiscountPolicy = () => {
-        setListFlag(false);
         const fetchData = async () => {
-            console.log("fix")
-            console.log(url + `/promotion-service/fix-discount/seller/1`)
-            await axios.get(url + `/promotion-service/fix-discount/seller/1`)
+            await axios.get(url + `/promotion-service/fix-discount/seller/?page=${currentpage}`,{headers: sellerHeaders})
                 .then(function (resp) {
-                    setDiscountPolicyList(resp.data.result.data);
-
+                    console.log(resp.data.result.data)
+                    setDiscountPolicyList(resp.data.result.data.fixDiscountPolicyList);
+                    setSearchFlag(true);
+                    setCount(resp.data.result.data.totalCount)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -77,9 +165,10 @@ export default function DiscountPolicyTable() {
         <div style={{ marginLeft: "240px" }} >
             <div className="coupon-nav">
                 <ul >
-                <li onClick={getFixDiscountPolicy}><img src={rate} style={{width:"30ox", height:"30px", marginLeft:"-20px"}}/>고정 할인 정책</li>
-                <li onClick={getRateDiscountPolicy}><img src={freeDelivery} style={{width:"50ox", height:"80px", marginLeft:"-30px"}}/>비율 할인 정책</li>
+                <li onClick={() => clickFixDiscountPolicy()}><img src={rate} style={{width:"30ox", height:"30px", marginLeft:"-20px"}}/>고정 할인 정책</li>
+                <li onClick={() => clickRateDiscountPolicy()}><img src={freeDelivery} style={{width:"50ox", height:"80px", marginLeft:"-30px"}}/>비율 할인 정책</li>
                 </ul>
+                <hr style={{width:"1330px", marginTop:"-31px",marginLeft:"-1px"}}/>
             </div>
 
             <table className="couponTable">
@@ -125,6 +214,10 @@ export default function DiscountPolicyTable() {
                 </tbody>
 
             </table>
+            {/* 페이징 */}
+            <div className="pagingProduct">
+                    {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
+            </div>
 
 
 
