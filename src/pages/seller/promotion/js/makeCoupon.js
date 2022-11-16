@@ -6,8 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { styled, withStyles } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { pink } from '@mui/material/colors';
-import { Button } from '@mui/material';
 import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TablePagination, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
 
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
@@ -15,7 +13,7 @@ import "../css/makeDiscountPolicy.css";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 import { AuthContext } from '../../../../context/authProvider';
 import { useNavigate } from 'react-router-dom';
-
+import Pagination from "react-js-pagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.root}`]: {
@@ -134,7 +132,7 @@ function MakeCoupon() {
         // console.log("sellerId : "+sellerId);
 
         // navigate('/');
-        navigate(url + `/sellerIndex.html?name=`+name+'&regDate='+regDate+
+        navigate(`/sellerApp/sellerIndex.html?name=`+name+'&regDate='+regDate+
             '&startDate='+moment(startDate).format('YYYY-MM-DD hh:mm:ss')+'&endDate='+moment(endDate).format('YYYY-MM-DD hh:mm:ss')
             +'&rate='+Number(arPercent)+'&minPrice='+Number(arMinPrice)+'&productList='+Array.from(checkedItems)+'&sellerId='+sellerId);
         
@@ -217,19 +215,55 @@ function MakeCoupon() {
         return Math.ceil(result);
     }
 
+    // {/* Paging */}
+    // const [count, setCount] = useState(0); //아이템 총 수
+    // const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    // const [postPerPage] = useState(5); //페이지당 아이템 개수
+    // const [searchFlag, setSearchFlag] = useState(false);
+    // const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    // const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    // const [currentPosts, setCurrentPosts] = useState([]);
+    // const setPage = (e) => {
+    //     setCurrentpage(e);
+    // };
+    // const Paging = ({page, count, setPage}) => {
+    //     return (
+    //         <Pagination
+    //                 activePage={page}
+    //                 itemsCountPerPage={5}
+    //                 totalItemsCount={count}
+    //                 pageRangeDisplayed={5}
+    //                 prevPageText={"<"}
+    //                 nextPageText={">"}
+    //                 onChange={setPage} />
+    //     );
+    // }
+    // useEffect(() => {
+    //     setCount(count);
+    //     setIndexOfLastPost(currentpage * postPerPage);
+    //     setIndexOfFirstPost(indexOfLastPost - postPerPage);
+    //     setCurrentPosts(productList);
+    // }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
+    // useEffect(() => {
+    //     FetchProduct();
+    // },[currentpage]);
+
     const FetchProduct = () => {
 
         let sDate =searchStartDate+" 00:00";
         let eDate = searchEndDate+" 00:00";
 
         const fetchProduct = () => {
+
+            console.log(sDate);
+            console.log(eDate);
+            console.log(searchEndDate);
             axios({
                 method: "get",
-                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}`,
+                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&page=1`,
                 headers: sellerHeaders
             })
                 .then(function (resp) {
-                    console.log(resp);
                     setProductList(resp.data.productDtoList);
                 })
                 .catch(function (error) {
@@ -245,8 +279,9 @@ function MakeCoupon() {
     // 지원
     const productData= async () => {
         console.log("productData");
-            await axios.get(url + `/product-service/product/seller`,{headers: sellerHeaders})
+            await axios.get(url + `/product-service/product/seller`,{headers: {sellerId: sellerId} })
                 .then(function (resp) {
+                    console.log(resp);
                     setProductList(resp.data.result.data);
                 })
                 .catch(function (error) {
@@ -391,7 +426,14 @@ function MakeCoupon() {
                                     {/* 데이터 props에 넣기 */}
                                     <IssueList props={{ productList, page, rowsPerPage }} propFunction={checkedItemHandler}></IssueList>
                                 </TableBody>
+                                
                             </Table>
+
+                            {/* 페이징
+                            <div className="pagingProduct">
+                            {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
+                            </div> */}
+
                         </TableContainer>
                     </Paper>
                 </Box>
