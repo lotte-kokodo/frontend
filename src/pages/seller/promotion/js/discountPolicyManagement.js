@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade';
 import MakeDiscountPolicy from './makeDiscountPolicy';
 import SellerTitle from '../../../../components/seller/sellerTitle';
 import DiscountPolicyTable from '../../../../components/promotion/js/discountPolicyTable';
+import discountPolicyImg from '../../../../src_assets/seller/title/discount-policy-title.png';
 import "../css/couponManagement.css"
 
 const style = {
@@ -34,7 +35,12 @@ const DiscountPolicyManagement = () => {
 
     return (
         <>
-            <SellerTitle title="할인 정책 관리"></SellerTitle>
+            <div className="coupon-management-title-container">
+                <div className="coupon-management-title">
+                    <img src={discountPolicyImg} className="coupon-management-img"></img>
+                    <h2 className="coupon-management-title-h3">할인 정책 관리</h2>
+                </div>
+            </div>
             <button className="origin-button" onClick={() => {handleOpen()}}>+  할인 정책 만들기</button>
 
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" >

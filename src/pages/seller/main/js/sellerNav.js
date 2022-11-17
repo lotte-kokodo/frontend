@@ -115,11 +115,11 @@ function SellerNav() {
                         <Link to={`/seller/${sellerId}/discountPolicyManagement`} style={{textDecoration: "none", color: "#000"}}>
                         <div className="seller-hover-child">할인정책 관리</div></Link>
                     </div>
-                    <div className="seller-nav-child-hover">
-                        <Link to={`/seller/${sellerId}`} style={{textDecoration: "none", color: "#000"}}>
-                            <div className="seller-hover-child">할인상품 조회</div>
-                        </Link>
-                    </div>
+                    {/*<div className="seller-nav-child-hover">*/}
+                    {/*    <Link to={`/seller/${sellerId}`} style={{textDecoration: "none", color: "#000"}}>*/}
+                    {/*        <div className="seller-hover-child">할인상품 조회</div>*/}
+                    {/*    </Link>*/}
+                    {/*</div>*/}
                     <div className="seller-nav-child-hover">
                         <Link to={`/seller/${sellerId}/promotion/coupon`} style={{textDecoration: "none", color: "#000"}}>
                         <div className="seller-hover-child">할인 쿠폰 관리</div></Link></div>
