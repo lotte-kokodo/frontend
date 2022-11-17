@@ -15,9 +15,9 @@ import { useContext, useEffect, useState } from "react"
 	const { url } = useContext(ServerConfigContext);
 	const { headers } = useContext(AuthContext);
 
-	const api = url + "/member-service/member/deliveryInfo"
+	const api = url + "/member-service/member/cart"
 
-	const [ deliveryInfo, setDeliveryInfo ] = useState({});
+	const [ deliveryInfo, setDeliveryInfo ] = useState({address: ""});
 
 	useEffect(() => {
 		getDeliveryInfo();
@@ -27,15 +27,10 @@ import { useContext, useEffect, useState } from "react"
 
 		await axios.get(api, {headers: headers})
 		.then((resp) => {
-			console.log("[success] (Delivery) GET /member/deliveryInfo");
 			const data = resp.data.result.data;
-	
-			console.log(data);
-			
 			setDeliveryInfo(data);
 		})
 		.catch((err) => {
-			console.log("[error] (Delivery) GET /member/deliveryInfo");
 			console.log(err);
 		});
 

@@ -146,7 +146,7 @@ function Mypage() {
         console.log(id);
         await axios({
             method: "get",
-            url: url + `/order-payment-service/orders/${id}`,
+            url: url + `/order-service/orders/`,
             headers: headers
         }) 
         .then(function(response){
@@ -259,7 +259,7 @@ function Mypage() {
 function ReviewListItem(props) {
     
     return(
-        <NavLink to={`/product/detail/${props.obj.memberId}`} className='product-div'>
+        <NavLink to={`/productDetail/${props.obj.productId}`} className='product-div'>
             <div className='product-thumbnail'>
                 <img className='product-thumbnail-img' alt='new-product' src={props.obj.thumbnail} />
             </div>

@@ -15,8 +15,11 @@ export default function ProductTable(props) {
         console.log(props.couponFlag);
         
         const fetchRateCouponProduct = async () => {
+
+            console.log("dddd");
             await axios.get(url + `/promotion-service/rateCoupon/${couponName}/product`)
                 .then(function (resp) {
+                    console.log(resp);
                     setProductList(resp.data.result.data);
 
                 })
@@ -48,7 +51,7 @@ export default function ProductTable(props) {
 
 
     return(
-        <div style={{marginLeft: "30px"}} class="visible-scrollbar">
+        <div style={{marginLeft: "30px"}} className="visible-scrollbar">
 
             <table className="product-table" style={{width:"95%", height:"90%"}}>
                 <thead>

@@ -1,42 +1,12 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FixDiscountPolicyList from "../../../../components/promotion/js/fixDiscountPolicyList";
-import RateDiscountPolicyList from '../../../../components/promotion/js/rateDiscountPolicyList';
-import AddIcon from '@mui/icons-material/Add';
 import { Button, Modal, Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Fade from '@mui/material/Fade';
 import MakeDiscountPolicy from './makeDiscountPolicy';
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return <div {...other}>{value === index && <Box>{children}</Box>}</div>;
-}
-
-function LinkTab(props) {
-    return (
-        <Tab
-            component="a"
-            onClick={(event) => {
-                event.preventDefault();
-            }}
-            {...props}
-        />
-    );
-}
-
-const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[500],
-    '&:hover': {
-        backgroundColor: pink[700],
-    },
-}));
+import SellerTitle from '../../../../components/seller/sellerTitle';
+import DiscountPolicyTable from '../../../../components/promotion/js/discountPolicyTable';
+import "../css/couponManagement.css"
 
 const style = {
     position: 'absolute',
@@ -64,15 +34,10 @@ const DiscountPolicyManagement = () => {
 
     return (
         <>
-            <h3>할인 정책 관리</h3>
-            <button onClick={() => {handleOpen()}} style={{backgroundColor: "#FB7D98", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center",
-                color:"#fff", borderRadius: "10px"}}>+ 할인 정책 만들기</button>
-            <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            >
+            <SellerTitle title="할인 정책 관리"></SellerTitle>
+            <button className="origin-button" onClick={() => {handleOpen()}}>+  할인 정책 만들기</button>
+
+            <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" >
                 <Fade in={open}>
                     <Box sx={style}>
                         <MakeDiscountPolicy>
@@ -82,18 +47,9 @@ const DiscountPolicyManagement = () => {
                 </Fade>
             </Modal>
 
-            <Box sx={{ width: '100%' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="nav tabs example" sx={{ marginBottom: 7 }}>
-                    <LinkTab label="고정 정책 목록" href="fispolicy"></LinkTab>
-                    <LinkTab label="비율 정책 목록" href="ratepolicy"></LinkTab>
-                </Tabs>
-                <TabPanel value={value} index={0}>
-                    <FixDiscountPolicyList />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <RateDiscountPolicyList />
-                </TabPanel>
-            </Box>
+            <div className="">
+                <DiscountPolicyTable></DiscountPolicyTable>
+            </div>
         </>
     );
 };

@@ -1,11 +1,46 @@
 .origin-button{
-    background-color: #FB7D98;
+    background-color: #FFFFFF;
     padding: 10px;
     padding-left:40px;
     padding-right:40px;
     text-align: center; 
-    color:#fff;
+    color:#000;
     border-radius: 10px;
     margin: 20px 25px;
-    box-shadow: 1px 1px 1px 1px gray;
+    border: 1px solid #000;
+}
+
+.coupon-management-title-container{
+    margin-top: 30px;
+    display: table;
+}
+
+.coupon-management-title{
+    /* margin-top: 30px;
+    margin-left: 250px;
+    */
+    width: 1500px;
+    margin: auto;
+    display: block;
+    display: table;
+
+}
+
+.coupon-management-title{
+    display: table-cell;
+    text-align: center;
+
+}
+.coupon-management-img{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-top: -13px;
+
+}
+.coupon-management-title-h2{
+    width:fit-content;
+    margin:auto;
+    display: inline-block;
+    margin-left: 10px;
 }

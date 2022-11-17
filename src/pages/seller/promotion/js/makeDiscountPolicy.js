@@ -5,11 +5,9 @@ import { useParams } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
-import { styled, withStyles } from '@mui/material/styles';
-import { Box } from '@mui/system';
-import { pink } from '@mui/material/colors';
-import { Button } from '@mui/material';
-import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TablePagination, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import {  Box } from '@mui/system';
+import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
 
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
@@ -21,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         padding: "10px",
     },
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#F5A9BC',
+        backgroundColor: '#FFFFFF',
         color: theme.palette.common.black,
         fontWeight: 'bold',
     },
@@ -51,17 +49,17 @@ function MakeDiscountPolicy() {
     const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
-    const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
-    const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
+    const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DD hh:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
+    const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DD hh:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const sellerId = Number(1);
 
-    const [radioCheck, setRadioCheck] = useState('');
+    const [radioCheck, setRadioCheck] = useState('rate');
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [productList, setProductList] = React.useState([]);
 
-    const [productId, setProductId] = useState();
+    const [productName, setProductName] = useState();
     const [rateMinPrice, setRateMinPrice] = useState();
     const [ratePercent, setRatePercent] = useState();
     const [fixMinPrice, setFixMinPrice] = useState();
@@ -71,30 +69,21 @@ function MakeDiscountPolicy() {
         setRadioCheck(e.target.value);
     }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    function createData(product_id, category_id, display_name, price, stock, deadline, delivery_fee, create_date) {
-        return { product_id, category_id, display_name, price, stock, deadline, delivery_fee, create_date };
-    }
-
     const checkedItemHandler = (idList) => {
         setCheckedItems(idList);
     };
 
     const makePolicy = () => {
-        // e.preventDefault();
-        if (radioCheck === 'fix') {
-            makeFixPolicy();
-        }
-        else if (radioCheck === 'rate') {
-            makeRatePolicy();
+
+        setStartDateAndEndDate();
+
+        if(checkCheckedItems()) {
+            if (radioCheck === 'fix') {
+                if(checkFixItems()) makeFixPolicy();
+            }
+            else if (radioCheck === 'rate') {
+                if(checkRateItems()) makeRatePolicy();
+            }
         }
     }
 
@@ -102,11 +91,11 @@ function MakeDiscountPolicy() {
         let ratePolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: moment(startDate).format('YYYY-MM-DDThh:mm:ss'),
-            endDate: moment(endDate).format('YYYY-MM-DDThh:mm:ss'),
+            startDate: startDate,
+            endDate: endDate,
             rate: Number(ratePercent),
             minPrice: Number(rateMinPrice),
-            productId: Number(Array.from(checkedItems)[0]),
+            productId: Array.from(checkedItems),
             sellerId: sellerId
         }
         await axios({
@@ -129,11 +118,11 @@ function MakeDiscountPolicy() {
         let fixPolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
-            startDate: moment(startDate).format('YYYY-MM-DDThh:mm:ss'),
-            endDate: moment(endDate).format('YYYY-MM-DDThh:mm:ss'),
+            startDate: startDate,
+            endDate: endDate,
             price: Number(fixWon),
             minPrice: Number(fixMinPrice),
-            productId: Number(Array.from(checkedItems)[0]),
+            productId: Array.from(checkedItems),
             sellerId: sellerId
         }
         console.log(fixPolicyDto);
@@ -161,16 +150,17 @@ function MakeDiscountPolicy() {
 
     const FetchProduct = () => {
         console.log("프로덕트 아이디");
-        console.log(productId);
-        if (productId === undefined) {
-            alert('id를 입력해주세요!');
+        console.log(productName);
+        if (productName === undefined) {
+            alert('이름을 입력해주세요!');
             return;
         }
         const fetchProduct = () => {
-            axios({
-                method: "get",
-                url: url + "/product-service/product/detail/" + productId,
-                // data: params
+            axios.get(
+                url + "/product-service/product/detail/name", {
+                params: {
+                    productName: productName
+                }
             })
                 .then(function (resp) {
                     setProductList(resp.data.result.data);
@@ -184,6 +174,48 @@ function MakeDiscountPolicy() {
         fetchProduct();
     }
 
+    const setStartDateAndEndDate = () => {
+        startDate.setHours(0, 0, 0);
+        endDate.setHours(23, 59, 59);
+    }
+
+    function checkCheckedItems() {
+        if(checkedItems.size == 0) {
+            alert("상품을 체크해주세요!")
+            return false;
+        }else if(discountPolicyName == '') {
+            alert("정책명을 입력해주세요!")
+            return false;
+        }
+        return true;
+    }
+
+    function checkRateItems() {
+        console.log(ratePercent)
+        console.log(rateMinPrice)
+        if(ratePercent == undefined) {
+            alert("비율을 입력해주세요!")
+            return false;
+        }
+        else if (rateMinPrice == undefined) {
+            alert("최소 금액을 입력해주세요!")
+            return false;
+        }
+        return true;
+    }
+
+    function checkFixItems() {
+        if(fixWon == undefined) {
+            alert("할인 금액을 입력해주세요!")
+            return false;
+        }
+        else if (fixMinPrice == undefined) {
+            alert("최소 금액을 입력해주세요!")
+            return false;
+        }
+        return true;
+    }
+
     return (
         <div id="makeDiscountPolicy">
             <div>
@@ -193,7 +225,7 @@ function MakeDiscountPolicy() {
                         <TableContainer component={Paper}>
                             <h2>할인 정보 입력</h2>
                             <FormControl>
-                                <RadioGroup>
+                                <RadioGroup defaultValue="rate">
                                     <Table aria-label="customized table">
                                         <TableBody>
 
@@ -271,19 +303,19 @@ function MakeDiscountPolicy() {
                             <div className='find-product-component'>
                                 <div className='find-product-component-title'>
                                     <div>
-                                        상품 ID로 찾기
+                                        상품명으로 찾기
                                     </div>
                                 </div>
                                 <div>
                                     <div>
-                                        <input type="input" value={productId} onChange={(e) => setProductId(e.target.value)}></input>
+                                        <input type="input" value={productName} onChange={(e) => setProductName(e.target.value)}></input>
                                     </div>
                                 </div>
                                 <div>
                                     <div>
                                         <button onClick={() => { FetchProduct() }} style={{
-                                            backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
-                                            color: "#fff", borderRadius: "10px"
+                                            backgroundColor: "#FFFFFF", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                                            color: "#000", borderRadius: "10px", border: "solid black 1px"
                                         }}>조회</button>
                                     </div>
                                 </div>
@@ -309,22 +341,13 @@ function MakeDiscountPolicy() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
-                            component="div"
-                            count={productList.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
                     </Paper>
                 </Box>
             </div>
 
             <button onClick={() => { makePolicy() }} style={{
-                backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
-                color: "#fff", borderRadius: "10px"
+                backgroundColor: "#FFFFFF", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                color: "#000", borderRadius: "10px", marginTop: "10px", border: "solid black 1px"
             }}>등록</button>
         </div>
     )

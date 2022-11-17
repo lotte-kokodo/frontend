@@ -1,17 +1,19 @@
-import {Link} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 import "../css/sellerHeader.css"
+import spoon from "../../../../src_assets/seller/spoon.png";
 import logo from "../../../../src_assets/main/footer_logo.png";
 import defaultProfile from "../../../../src_assets/seller/default_profile.png";
+import { height } from "@mui/system";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../../../context/authProvider";
 import axios from "axios";
 import {ServerConfigContext} from "../../../../context/serverConfigProvider";
 
 function SellerHeader() {
-    const sellerId = localStorage.getItem("sellerId");
+    const { parmas } = useParams();
     const { sellerHeaders } = useContext(AuthContext);
     const { url } = useContext(ServerConfigContext);
-
+    const sellerId = localStorage.getItem("sellerId");
     const [ sellerName, setSellerName ] = useState("");
 
     useEffect(() => {
@@ -22,7 +24,6 @@ function SellerHeader() {
         const api = url + "/seller-service/seller/name"
         await axios.get(api, { headers: sellerHeaders })
         .then((resp) => {
-            console.log(resp.data.result.data);
             setSellerName(resp.data.result.data);
         })
         .catch((err) => {

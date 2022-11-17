@@ -28,7 +28,6 @@ function OrderDetailList() {
     const [orderDetails, setOrderDetails] = useState([]);
     const {headers} = useContext(AuthContext);
     const state = useLocation();
-    const userId = state.state.userId;
     const orderId = state.state.orderId;
     const { url } = useContext(ServerConfigContext);
 
@@ -37,7 +36,7 @@ function OrderDetailList() {
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(url + `/order-payment-service/orders/${userId}/${orderId}`, {headers: headers}
+            await axios.get(url + `/order-service/orders/${orderId}`, {headers: headers}
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);
@@ -51,7 +50,7 @@ function OrderDetailList() {
 
     // 환불을 위한 API확인 필요
     const setRefundOrderDetail = async () => {
-        await axios.get(url + `/order-payment-service/orders/`)
+        await axios.get(url + `/order-service/orders/`)
             .then(function (resp) {
 
             })
@@ -78,9 +77,6 @@ function OrderDetailList() {
                 </div>
                 <div className="status">
                     <div className="order-status">{changeOrderStatus(orderDetail.obj.orderStatus)}</div>
-                </div>
-                <div className='refund-button-value'>
-                    <button type="button" onClick={() => setRefundOrderDetail()} className="refund-button">환불 요청</button>
                 </div>
             </div>
         )

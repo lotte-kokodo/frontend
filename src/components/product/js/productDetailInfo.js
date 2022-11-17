@@ -14,8 +14,10 @@ const st4 = { width: "88px", marginRight: "10px" }
 
 
 
-export default function ProductDetail() {
+
+export default function ProductDetail({img, template}) {
     const { url } = useContext(ServerConfigContext);
+
     let { productId } = useParams(null);
 
     const { headers, memberId } = useContext(AuthContext);
@@ -138,6 +140,7 @@ export default function ProductDetail() {
         const fetchData = async () => {
             await axios.get(url + `/product-service/product/detail/${productId}`)
                 .then(function (resp) {
+                    if(resp.data.result.data.detailFlag == 'TEMPLATE') template();
                     setProduct(resp.data.result.data);
                     recentProduct(resp.data.result.data);
                 })
@@ -189,6 +192,8 @@ export default function ProductDetail() {
     const fetchData = async () => {
         await axios.get(url + `/promotion-service/rate-discount/${productId}`)
             .then(function (resp) {
+                console.log("discount policy")
+                console.log(resp);
                 setRatePolicy(resp.data.result.data);
                 setSalePrice(calcSalePercent(resp.data.result.data.rate));
                 setTotalPrice(calcSalePercent(resp.data.result.data.rate));
@@ -201,16 +206,20 @@ export default function ProductDetail() {
     /* 장바구니 생성 API */
     const addCart = async () => {
 
-        await axios.post(url + `/order-service/carts/${memberId}`, null,
-            {params: {productId: productId, qty: orderNum}, headers: headers})
+        const api = url + "/order-service/carts";
+        const req = {
+            memberId: memberId,
+            productId: productId,
+            qty: orderNum
+        }
+
+        await axios.post(api, req,  { headers: headers })
         .then((resp) => {
-            console.log("[SUCCESS] (ProductDetailInfo) POST /order-payment-service/carts/");
             console.log(resp.data.result.data);
 
-            alert(resp.data.result.data.msg);
+            alert(resp.data.result.data);
         })
         .catch((err) => {
-            console.log("[ERROR] (ProductDetailInfo) POST /order-payment-service/carts/");
             console.log(err);
         });
 
@@ -220,7 +229,6 @@ export default function ProductDetail() {
     const makeOrderSheetData = () => {
         productQtyMap[productId] = orderNum;
     }
-
 
     return (
         

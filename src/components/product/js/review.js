@@ -5,12 +5,12 @@ import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';
+import Pagination from "react-js-pagination";
 
 import "../css/review.css";
 import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 const ARRAY = [0, 1, 2, 3, 4];
-
 
 export default function Review() {
     const { url } = useContext(ServerConfigContext);
@@ -75,6 +75,46 @@ export default function Review() {
         fetchData();
     }
 
+    {/* Paging */}
+    const [productList, setProductList] = useState([]); //아이템
+    const [count, setCount] = useState(0); //아이템 총 수
+    const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    const [postPerPage] = useState(5); //페이지당 아이템 개수
+    const [searchFlag, setSearchFlag] = useState(false);
+
+    const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
+
+    const setPage = (e) => {
+        setCurrentpage(e);
+    };
+
+    const Paging = ({page, count, setPage}) => {
+        return (
+            <Pagination
+                    activePage={page}
+                    itemsCountPerPage={5}
+                    totalItemsCount={count}
+                    pageRangeDisplayed={5}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                    onChange={setPage} />
+        );
+    }
+
+    useEffect(() => {
+        setCount(count);
+        setIndexOfLastPost(currentpage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(productList);
+    }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
+
+    useEffect(() => {
+        reviewData();
+    },[currentpage]);
+
+
     // 리뷰 갯수 & 평균 평점 조회 (Product)
     useEffect(() => {
         const fetchData = async () => {
@@ -91,19 +131,21 @@ export default function Review() {
     }, []);
 
     // 리뷰 조회
-    useEffect(() => {
-        const fetchData = async () => {
-            await axios.get(url + `/product-service/review/${productId}?page=`+0)
+    const reviewData = async () => {
+        await axios.get(url + `/product-service/review/${productId}?page=${currentpage}`)
                 .then(function (resp) {
-                    console.log(resp);
-                    setReviewList(resp.data.result.data);
+                    setSearchFlag(true);
+                    setCount(resp.data.result.data.totalCount);
+                    setReviewList(resp.data.result.data.reviewResponseDtoList);
 
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-        }
-        fetchData(productId);
+    }
+
+    useEffect(() => {
+        reviewData(productId);
     }, []);
 
 
@@ -155,7 +197,7 @@ export default function Review() {
         })}
       </Stars>
     </Wrap>
-                <textarea class="reviewContent"  value={reviewContent} onChange={changeReviewContent} style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
+                <textarea className="reviewContent"  value={reviewContent} onChange={changeReviewContent} style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
                 <button onClick={()=>saveReview()} style={{backgroundColor: "#000", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
                 color:"#fff", borderRadius: "10px",verticalAlign: "top"}}>리뷰 등록</button>
         </div>
@@ -163,8 +205,8 @@ export default function Review() {
 
 
         <div>
-        {
-            reviewList.map( function(object){ 
+        { true &&
+            reviewList.map((object) => { 
                     return (
                         <div key={object} data-v-05ce94ee data-v-a49b620e className="reviewList">
                         <div data-v-05ce94ee className="uswersAndMoremenu">
@@ -204,17 +246,12 @@ export default function Review() {
             }
       </div>
 
-        
-        
-    
-    {/* <div data-v-a49b620e className="paginationArea short">
-        <div data-v-68fee7ac data-v-a49b620e className="v-popover tooltipPolicy">
-            <div aria-describedby="popover_exscfhl3x4" className="trigger" style={{ display: 'inline-block' }}>
-                <button data-v-68fee7ac className="tooltip-target">리뷰 운영정책</button>
-            </div> 
+      {/* 페이징 */}
+        <div className="pagingProduct">
+                    {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
         </div>
-    </div> */}
-</div></div>
+</div>
+</div>
 
         </div>
 

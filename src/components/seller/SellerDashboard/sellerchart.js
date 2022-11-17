@@ -1,105 +1,83 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components';
 import {Line} from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from "axios";
 import {moneyComma} from "../../../common/calculate/function";
-import { useParams,useNavigate } from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {ServerConfigContext} from "../../../context/serverConfigProvider";
+import {AuthContext} from "../../../context/authProvider";
 
 const SellerChart = () => {
-    let calculateUrl = "http://localhost:8001"
+    const {url} = useContext(ServerConfigContext);
+    const { sellerHeaders } = useContext(AuthContext);
 
-    const [january, setJanuary] = useState("");
-    const [february, setFebruary] = useState("");
-    const [march, setMarch] = useState("");
-    const [april, setApril] = useState("");
-    const [may, setMay] = useState("");
-    const [june, setJune] = useState("");
-    const [july, setJuly] = useState("");
-    const [august, setAugust] = useState("");
-    const [september, setSeptember] = useState("");
-    const [october, setOctober] = useState("");
-    const [november, setNovember] = useState("");
-    const [december, setDecember] = useState("");
-    const params = useParams();
+    const sellerId = localStorage.getItem("sellerId");
+
+    /**
+     * 월간 매출 차트
+     */
+    let monthlySaleDataset =  {
+        type: 'line',
+        label: 'Dataset 1',
+        borderColor: 'rgb(54, 162, 235)',
+        borderWidth: 2,
+        data: Array.from({length: 12}, () => 0)
+    };
+
+    /**
+     * 월간 주문 차트
+     */
+    let monthlyOrderDataset =  {
+        type: 'bar',
+        label: '월별 주문건수',
+        borderColor: 'rgb(54, 162, 235)',
+        borderWidth: 2,
+        data: Array.from({length: 12}, () => 0)
+
+    };
 
     const [initData, setInitData] = useState({
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'],
         datasets: [
-            {
-                type: 'line',
-                label: 'Dataset 1',
-                borderColor: 'rgb(54, 162, 235)',
-                borderWidth: 2,
-                data: [january, february, march, april, may, june, july, august, september, october, november, december]
-            }
-            // {
-            //     type: 'bar',
-            //     label: 'Dataset 2',
-            //     backgroundColor: 'rgb(255, 99, 132)',
-            //     data: [1, 2, 3, 4, 5, 6],
-            //     borderColor: 'red',
-            //     borderWidth: 2,
-            // },
-            // {
-            //     type: 'bar',
-            //     label: 'Dataset 3',
-            //     backgroundColor: 'rgb(75, 192, 192)',
-            //     data: [1, 2, 3, 4, 5, 6],
-            // },
+            monthlySaleDataset, monthlyOrderDataset
         ]
     });
 
-    useEffect(()=>{
-        setInitData(
-            {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'],
-                datasets: [
-                    {
-                        type: 'line',
-                        label: 'Dataset 1',
-                        borderColor: 'rgb(54, 162, 235)',
-                        borderWidth: 2,
-                        data: [january, february, march, april, may, june, july, august, september, october, november, december]
-                    }
-                    // {
-                    //     type: 'bar',
-                    //     label: 'Dataset 2',
-                    //     backgroundColor: 'rgb(255, 99, 132)',
-                    //     data: [1, 2, 3, 4, 5, 6],
-                    //     borderColor: 'red',
-                    //     borderWidth: 2,
-                    // },
-                    // {
-                    //     type: 'bar',
-                    //     label: 'Dataset 3',
-                    //     backgroundColor: 'rgb(75, 192, 192)',
-                    //     data: [1, 2, 3, 4, 5, 6],
-                    // },
-                ]
-            }
-        )
-    },[]);
+    const getAnnualSalesInfo = async () =>{
+        await axios.get( url + `/calculate-service/calculate/${sellerId}/annualSalesInfo`,{
+        }).then(function (resp) {
+            // TODO: 백엔드와 연동 시 52라인 주석, 51라인 사용
+            // monthlySaleDataset.data = resp.data.result.data;
+            monthlySaleDataset.data = [2,2,2,2,2,2,2,2,2,2,2,2];
+            setInitData(prevState => ({...prevState,
+                datasets: [monthlySaleDataset, monthlyOrderDataset]
+            }));
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
 
-    // const getAnnualSalesInfo = async () =>{
-    //     await axios.get( calculateUrl + `/calculate-service/calculate/${params.sellerId}/annualSalesInfo`,{
-    //     }).then(function (resp) {
-    //         setJanuary(resp.data.result.data.january);
-    //         setFebruary(resp.data.result.data.febuary);
-    //         setMarch(resp.data.result.data.march);
-    //         setApril(resp.data.result.data.april);
-    //         setMay(resp.data.result.data.may);
-    //         setJune(resp.data.result.data.june);
-    //         setJuly(resp.data.result.data.july);
-    //         setAugust(resp.data.result.data.august);
-    //         setSeptember(resp.data.result.data.september);
-    //         setOctober(resp.data.result.data.october);
-    //         setNovember(resp.data.result.data.november);
-    //         setDecember(resp.data.result.data.december);
-    //     }).catch(function (error) {
-    //         console.log(error);
-    //     })
-    // }
+    const getMonthlyOrderInfo = async () => {
+        const api = url + "/seller-service/orders/monthlyCount";
+
+        await axios.get(api, { headers: sellerHeaders })
+        .then((resp) => {
+            monthlyOrderDataset.data = resp.data.result.data;
+            setInitData(prevState => ({...prevState,
+                datasets: [monthlySaleDataset, monthlyOrderDataset]
+            }));
+
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+    useEffect(()=>{
+        getAnnualSalesInfo();
+        getMonthlyOrderInfo();
+    },[]);
 
     return (
         <>
@@ -121,6 +99,27 @@ const Container = styled.div`
     align-items: center;
     margin: 0 auto;
 `;
+
+
+// const [initData, setInitData] = useState({
+//     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'],
+//     datasets: [
+//         {
+//             type: 'bar',
+//             label: 'Dataset 2',
+//             backgroundColor: 'rgb(255, 99, 132)',
+//             data: [1, 2, 3, 4, 5, 6],
+//             borderColor: 'red',
+//             borderWidth: 2,
+//         },
+//         {
+//             type: 'bar',
+//             label: 'Dataset 3',
+//             backgroundColor: 'rgb(75, 192, 192)',
+//             data: [1, 2, 3, 4, 5, 6],
+//         }
+//     ]
+// });
 
 // const options = {
 //     plugins: {

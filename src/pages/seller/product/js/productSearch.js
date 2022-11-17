@@ -3,6 +3,7 @@ import axios from "axios"
 import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import { useContext } from "react";
+import search from '../../../../src_assets/seller/title/search.png';
 
 import {ServerConfigContext} from "../../../../context/serverConfigProvider"
 import {AuthContext} from "../../../../context/authProvider"
@@ -145,8 +146,16 @@ export default function ProductSearch() {
 
     return (
         <div className="body">
-            <div>
-                <div className="product-title-box">상품 조회/수정</div>
+            <div className="product-search-title">
+                <div className="product-title-box">
+                    <div className="product-title-box-div">
+                        <img className="product-title-box-img" src={search}></img>
+                        <h2 className="product-title-box-h2">상품 검색/수정</h2>
+                        </div>
+                <div>
+                
+            </div>
+                </div>
             </div>
             <div className="product-type-common-box">
                 <div className="product-search-detail-box">
@@ -171,9 +180,7 @@ export default function ProductSearch() {
 
                     <input name="prvidesuccess" className="product-radio-unit" value="3" type="radio" onClick={pdChange} defaultChecked/>
                     <div className="product-radio-unit2" value="PROVIDE_SCHEDULE" >재고위험</div>
-                    <button onClick={stockDes}>
-                        <img className="seller-question-icon" alt="productStock" src={question}/>
-                    </button>
+                    <img className="seller-question-icon" alt="productStock" src={question} onClick={stockDes}/>
                 </div>
             </div>
             <div>
@@ -184,14 +191,17 @@ export default function ProductSearch() {
                         <div className="product-calender-mark" > ~ </div>
                         <input className="product-calender-box2" type="date" ata-date-inline-picker="true" value={tmpEndDate} onChange={endDateChange}/>
                     </div>
-                    <div>
-                        <button type="button" className="product-search-button" value="" onClick={searchContent}>
+                    
+                </div>
+
+                <div className="search-button-div">
+                    <button type="button" className="product-search-button" value="" onClick={searchContent}>
                             검색
                         </button>
-                    </div>
                 </div>
             </div>
             <div className="product-list-main">
+
                 <div className="product-bottom-result-box">
                     <div className="product-search-result-box">
                         <span>상품목록</span>

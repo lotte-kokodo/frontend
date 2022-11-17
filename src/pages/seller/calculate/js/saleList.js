@@ -1,7 +1,7 @@
 import React from "react"
 import axios from "axios"
 import "../css/saleList.css"
-
+import Pagination from "react-js-pagination";
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {
@@ -17,20 +17,24 @@ import moment from "moment";
 
 export default function SaleList() {
     const { url } = useContext(ServerConfigContext);
-
+    const sellerId = localStorage.getItem("sellerId")
     let today = new Date();
     today.setMonth(today.getMonth() + 1);
 
-    const params = useParams();
+    let pastTime = new Date();
+    pastTime.setDate(today.getDate() - 7)
 
+
+    let startTimeInitValue = pastTime.toISOString;
+    let endTimeInitValue = today.toISOString;
+
+    // console.log(pastTime.toISOString().substring(0,10))
     let history = useNavigate();
     const [saleList, setSaleList] = useState([]);
     const [searchCondition, setSearchCondition] = useState("");
 
-    const [tmpStartDate, setTmpStartDate] = useState("");
-    const [tmpEndDate, setTmpEndDate] = useState("");
-
-    const [resultCnt, setResultCnt] = useState("0");
+    const [tmpStartDate, setTmpStartDate] = useState(() => pastTime.toISOString().substring(0, 10));
+    const [tmpEndDate, setTmpEndDate] = useState(() => new Date().toISOString().substring(0, 10));
 
     const provideStatusChange = (e) => {setSearchCondition(e.target.value);};
 
@@ -42,21 +46,27 @@ export default function SaleList() {
         setTmpEndDate(e.target.value);
     }
 
-    const searchResultCnt = (data) => {
-        let size = data.data.result.data.length;
-        setResultCnt(size);
-    }
+    const [count, setCount] = useState(0); //아이템 총 수
+    const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    const [postPerPage] = useState(5); //페이지당 아이템 개수
+    const [searchFlag, setSearchFlag] = useState(false);
 
-    const searchContent = async () => {
-        history(`/seller/${params.sellerId}/saleList`)
-        await axios.post(url + `/calculate-service/commission/saleList`,{
-            "sellerId" : params.sellerId,
-            "startDate" : tmpStartDate + "T"+"00:00:00",
-            "endDate" : tmpEndDate +  "T"+"12:59:59",
-            "provideStatus": searchCondition
+    const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    const [currentPosts, setCurrentPosts] = useState([]);
+
+    const searchContent = async (page) => {
+        // history(`/seller/${sellerId}/saleList`)
+        await axios.get(url + `/calculate-service/commission/saleList?sellerId=${sellerId}&startDate=${tmpStartDate}T00:00:00&endDate=${tmpEndDate}T12:59:59&page=${currentpage -1}&size=${postPerPage}`,{
+            // "sellerId" : sellerId,
+            // "startDate" : tmpStartDate + "T"+"T00:00:00",
+            // "endDate" : tmpEndDate +  "T"+"12:59:59",
+            // "searchCondition": searchCondition
         }).then(function (resp) {
-            setSaleList(resp.data.result.data)
-            searchResultCnt(resp);
+            console.log(resp);
+            setSearchFlag(true)
+            setCount(resp.data.result.data.totalElements)
+            setSaleList(resp.data.result.data.content)
         }).catch(function (error) {
             console.log(error);
         })
@@ -66,7 +76,7 @@ export default function SaleList() {
         setTmpEndDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
     }
 
-    const getExpecStartDy = async() =>{
+    const getExpecStartDay = async() =>{
         setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
     }
 
@@ -84,11 +94,34 @@ export default function SaleList() {
         setTmpStartDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
         setTmpEndDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
     }
-    //유저 아이드, 날짜를 전달해줘야 한다.
-    useEffect( () => {
-        getExpecStartDy()
-        getExpectEndDay()
-    }, []);
+
+    const setPage = (e) => {
+        setCurrentpage(e);
+    };
+
+    const Paging = ({page, count, setPage}) => {
+        return (
+            <Pagination
+                activePage={page}
+                itemsCountPerPage={5}
+                totalItemsCount={count}
+                pageRangeDisplayed={5}
+                prevPageText={"<"}
+                nextPageText={">"}
+                onChange={setPage} />
+        );
+    }
+
+    useEffect(() => {
+        setCount(count);
+        setIndexOfLastPost(currentpage * postPerPage);
+        setIndexOfFirstPost(indexOfLastPost - postPerPage);
+        setCurrentPosts(saleList);
+    }, [currentpage, indexOfFirstPost, indexOfLastPost, saleList, postPerPage]);
+
+    useEffect(() => {
+        searchContent( );
+    },[currentpage]);
 
     return (
         <div className="body">
@@ -126,7 +159,7 @@ export default function SaleList() {
             </div>
             <div className="saleList-bottom-result-box">
                 <div className="saleList-search-result-box">검색 결과</div>
-                <div className="saleList-search-result-cnt-box"> (총 {resultCnt}건)</div>
+                <div className="saleList-search-result-cnt-box"> (총 {count}건)</div>
             </div>
             <table className="table saleList-table">
                 <thead>
@@ -146,7 +179,7 @@ export default function SaleList() {
 
                 <tbody>
                 {
-                    saleList.map(function (saleListRow, i) {
+                    currentPosts.map(function (saleListRow, i) {
                         return (
                             <SaleListTableRow obj={saleListRow} key={i} cnt={i + 1}/>
                         )
@@ -157,6 +190,9 @@ export default function SaleList() {
             {/*<div className="calculate-detail-condition-list">*/}
             {/*    <StickyHeadTable/>*/}
             {/*</div>*/}
+            <div className="pagingProduct">
+                {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
+            </div>
         </div>
     );
 }

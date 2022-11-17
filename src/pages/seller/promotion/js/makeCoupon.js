@@ -6,14 +6,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { styled, withStyles } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { pink } from '@mui/material/colors';
-import { Button } from '@mui/material';
 import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TablePagination, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
 
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
-
+import { AuthContext } from '../../../../context/authProvider';
+import { useNavigate } from 'react-router-dom';
+import Pagination from "react-js-pagination";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.root}`]: {
@@ -21,7 +21,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         padding: "10px",
     },
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#F5A9BC',
+        backgroundColor: '#FFFFFF',
         color: theme.palette.common.black,
         fontWeight: 'bold',
     },
@@ -51,7 +51,7 @@ function MakeCoupon() {
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
     const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DDTHH:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
-    const sellerId = Number(1);
+    const navigate = useNavigate();
 
     const [radioCheck, setRadioCheck] = useState('');
 
@@ -68,6 +68,11 @@ function MakeCoupon() {
     const [searchProductName , setSearchProductName] = useState('');
     const [searchStartDate, setSearchStartDate] =useState(null);
     const [searchEndDate, setSearchEndDate] =useState(null);
+    
+    const { sellerHeaders, sellerId } = useContext(AuthContext);
+
+    const [arMinPrice, setArMinPrice] = useState('');
+    const [arPercent, setArPercent] = useState('');
 
     const handleClickRadio = (e) => {
         setRadioCheck(e.target.value);
@@ -98,6 +103,52 @@ function MakeCoupon() {
         else if (radioCheck === 'rate') {
             makeRatePolicy();
         }
+        else if(radioCheck === 'ar'){
+            makeArCoupon();
+        }
+    }
+
+    const changeDate = (day) =>{
+        return moment(day).format('YYYY-MM-DD hh:mm:ss');
+    }
+
+    const makeArCoupon = async () => {
+        
+        let name = couponName;
+        // let startDate = changeDate(startDate);
+        // let endDate = moment(endDate).format('YYYY-MM-DD hh:mm:ss');
+        // let rate = Number(arPercent);
+        // let minPrice =  Number(arMinPrice);
+        // let productList=  Array.from(checkedItems);
+        // let sellerId= sellerId;
+
+        // console.log("name : "+name);
+        // console.log("regDate : "+regDate);    
+          // console.log("startDate : "+startDate);
+        // console.log("endDate : "+endDate);
+        // console.log("rate : "+rate);
+        // console.log("minPrice : "+minPrice);
+        // console.log("productList : "+productList);
+        // console.log("sellerId : "+sellerId);
+
+        // navigate('/');
+        navigate(`/sellerApp/sellerIndex.html?name=`+name+'&regDate='+regDate+
+            '&startDate='+moment(startDate).format('YYYY-MM-DD hh:mm:ss')+'&endDate='+moment(endDate).format('YYYY-MM-DD hh:mm:ss')
+            +'&rate='+Number(arPercent)+'&minPrice='+Number(arMinPrice)+'&productList='+Array.from(checkedItems)+'&sellerId='+sellerId);
+        
+        // await axios({
+        //     method: "get",
+        //     url: url + `/sellerIndex.html?name=${name}&regDate=${regDate}&startDate=${startDate}&endDate=${startDate}&rate=${rate}&minPrice=${minPrice}&productList=${productList}&sellerId=${sellerId}`
+        // })
+        //     .then(function (resp) {
+        //         if(resp.request.status == 200) {
+        //         alert('등록완료!')
+        //         window.location.reload();
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error.value);
+        //     })
     }
 
 
@@ -112,13 +163,13 @@ function MakeCoupon() {
             endDate: moment(endDate).format('YYYY-MM-DD hh:mm:ss'),
             rate: Number(ratePercent),
             minPrice: Number(rateMinPrice),
-            productList: Array.from(checkedItems),
-            sellerId: sellerId
+            productList: Array.from(checkedItems)
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/rateCoupon/save",
-            data: ratePolicyDto
+            url: url + "/promotion-service/rateCoupon",
+            data: ratePolicyDto,
+            headers: sellerHeaders
         })
             .then(function (resp) {
                 if(resp.request.status == 200) {
@@ -140,12 +191,12 @@ function MakeCoupon() {
             price: Number(fixWon),
             minPrice: Number(0),
             productList: Array.from(checkedItems),
-            sellerId: sellerId
         }
         await axios({
             method: "post",
-            url: url + "promotion-service/fixCoupon",
-            data: fixPolicyDto
+            url: url + "/promotion-service/fixCoupon",
+            data: fixPolicyDto,
+            headers: sellerHeaders
         })
             .then(function (resp) {
                 if(resp.request.status == 200) {
@@ -164,21 +215,56 @@ function MakeCoupon() {
         return Math.ceil(result);
     }
 
+    // {/* Paging */}
+    // const [count, setCount] = useState(0); //아이템 총 수
+    // const [currentpage, setCurrentpage] = useState(1); //현재페이지
+    // const [postPerPage] = useState(5); //페이지당 아이템 개수
+    // const [searchFlag, setSearchFlag] = useState(false);
+    // const [indexOfLastPost, setIndexOfLastPost] = useState(0);
+    // const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
+    // const [currentPosts, setCurrentPosts] = useState([]);
+    // const setPage = (e) => {
+    //     setCurrentpage(e);
+    // };
+    // const Paging = ({page, count, setPage}) => {
+    //     return (
+    //         <Pagination
+    //                 activePage={page}
+    //                 itemsCountPerPage={5}
+    //                 totalItemsCount={count}
+    //                 pageRangeDisplayed={5}
+    //                 prevPageText={"<"}
+    //                 nextPageText={">"}
+    //                 onChange={setPage} />
+    //     );
+    // }
+    // useEffect(() => {
+    //     setCount(count);
+    //     setIndexOfLastPost(currentpage * postPerPage);
+    //     setIndexOfFirstPost(indexOfLastPost - postPerPage);
+    //     setCurrentPosts(productList);
+    // }, [currentpage, indexOfFirstPost, indexOfLastPost, productList, postPerPage]);
+    // useEffect(() => {
+    //     FetchProduct();
+    // },[currentpage]);
+
     const FetchProduct = () => {
 
         let sDate =searchStartDate+" 00:00";
         let eDate = searchEndDate+" 00:00";
 
-        // TODO: seller ID 추가
         const fetchProduct = () => {
+
+            console.log(sDate);
+            console.log(eDate);
+            console.log(searchEndDate);
             axios({
                 method: "get",
-                url: url + `product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&sellerId=3`
-                
-                // data: params
+                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&page=1`,
+                headers: sellerHeaders
             })
                 .then(function (resp) {
-                    setProductList(resp.data);
+                    setProductList(resp.data.productDtoList);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -187,10 +273,15 @@ function MakeCoupon() {
         }
         fetchProduct();
     }
+
+
+
     // 지원
     const productData= async () => {
-            await axios.get(url + `product-service/product/seller/3`)
+        console.log("productData");
+            await axios.get(url + `/product-service/product/seller`,{headers: {sellerId: sellerId} })
                 .then(function (resp) {
+                    console.log(resp);
                     setProductList(resp.data.result.data);
                 })
                 .catch(function (error) {
@@ -198,9 +289,9 @@ function MakeCoupon() {
                 })
         }
     
-        useEffect(() => {
-            productData();
-        }, []);
+    useEffect(() => {
+        productData();
+    }, []);
     
     const changeSearchProductName = (e) => {setSearchProductName(e.target.value);}
     const changeSearchStartDate = (e) => {setSearchStartDate(e.target.value);}
@@ -209,7 +300,7 @@ function MakeCoupon() {
     return (
         <div id="makeDiscountPolicy">
             <div>
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{ width: '100%', overflow: "auto",height:"750px"}}>
                     <Paper>
 
                         <TableContainer component={Paper}>
@@ -260,7 +351,7 @@ function MakeCoupon() {
 
                                             <StyledTableRow>
 
-                                                <StyledTableCell align="center" rowSpan={2}>
+                                                <StyledTableCell align="center" rowSpan={3}>
                                                     할인 방식
                                                 </StyledTableCell>
 
@@ -278,8 +369,17 @@ function MakeCoupon() {
                                                     <FormControlLabel value="fix" control={<Radio />} label="무료배송"  onChange={(e) => {handleClickRadio(e)}}/>
                                                 </StyledTableCell>
                                                 <StyledTableCell></StyledTableCell>
+                                            </StyledTableRow>
+
+                                            <StyledTableRow>
+
+                                                <StyledTableCell>
+                                                    <FormControlLabel value="ar" control={<Radio />} label="AR 할인 쿠폰" onChange={(e) => {handleClickRadio(e)}}/>
+                                                </StyledTableCell>
+                                                <StyledTableCell></StyledTableCell>
                                                 <StyledTableCell colSpan={1}>
-                                                    <input type="input" value={fixMinPrice} onChange={(e) => setFixMinPrice(e.target.value)}></input>원 이상 구매시 <input type="input" value={fixWon} onChange={(e) => setFixWon(e.target.value)}></input>원 할인
+                                                    <input type="input" value={arMinPrice} onChange={(e) => setArMinPrice(e.target.value)}></input>원 이상 구매시 
+                                                    <input type="input" value={arPercent} onChange={(e) => setArPercent(e.target.value)}></input>% 할인
                                                 </StyledTableCell>
                                             </StyledTableRow>
 
@@ -301,8 +401,8 @@ function MakeCoupon() {
                                                 ~ 
                                             <input type="date" style={{marginLeft: "10px"}} value={searchEndDate || ''} onChange={changeSearchEndDate}/></div>
                                         <div style={{display: "flex",  marginLeft: "90px"}}> 
-                                        <button style={{backgroundColor: "#FB7D98", padding: "5px", paddingLeft: "25px", paddingRight: "25px", textAlign: "center",
-                                                color: "#fff", borderRadius: "10px"}} onClick={FetchProduct}> 조회</button></div>
+                                        <button style={{backgroundColor: "#FFFFFF", padding: "5px", paddingLeft: "25px", paddingRight: "25px", textAlign: "center",
+                                                color: "#000", borderRadius: "10px", border: "solid black 1px"}} onClick={FetchProduct}> 조회</button></div>
                                     </div>
                                 </div>
                             </div>
@@ -326,24 +426,22 @@ function MakeCoupon() {
                                     {/* 데이터 props에 넣기 */}
                                     <IssueList props={{ productList, page, rowsPerPage }} propFunction={checkedItemHandler}></IssueList>
                                 </TableBody>
+                                
                             </Table>
+
+                            {/* 페이징
+                            <div className="pagingProduct">
+                            {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
+                            </div> */}
+
                         </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 25]}
-                            component="div"
-                            count={productList.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
                     </Paper>
                 </Box>
             </div>
 
             <button onClick={() => {makePolicy()}} style={{
-                backgroundColor: "#FB7D98", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
-                color: "#fff", borderRadius: "10px"
+                backgroundColor: "#FFFFFF", padding: "10px", paddingLeft: "40px", paddingRight: "40px", textAlign: "center",
+                color: "#000", borderRadius: "10px", marginTop: "10px", border: "solid black 1px"
             }}>등록</button>
         </div>
     )

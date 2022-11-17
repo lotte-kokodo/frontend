@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import axios from "axios";
-import { useState, useEffect} from "react";
+import { useState} from "react";
 import '../css/stockModal.css';
 
 import {ServerConfigContext} from "../../../context/serverConfigProvider"

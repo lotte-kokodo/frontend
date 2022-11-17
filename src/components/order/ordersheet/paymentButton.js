@@ -19,46 +19,42 @@ const PaymentButton = (props) => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers, memberId } = useContext(AuthContext);
-  const { checkRateCoupons, checkFixCoupons, orderProductMap } = useContext(OrderContext);
+  const { orderProductMap, checkRateCoupons, checkFixCoupons } = useContext(OrderContext);
 
   const navigate = useNavigate();
 
   const orderSingleProduct = async () => {
 
-    let api = url + "/order-payment-service/orders/" + memberId + "/single-product";
+    let api = url + "/order-service/orders/singleProduct";
 
     const productId = productIds[0];
-    const params = {
+    const sellerId = orderProductMap[productId].sellerId;
+    const req = {
+      memberId: memberId,
       productId: productId,
-      sellerId: orderProductMap[productId].sellerId,
+      sellerId: sellerId,
       qty: productQtyMap[productId],
       rateCouponId: checkRateCoupons.length !== 0 ? checkRateCoupons[0].id : null,
-      fixCouponId: checkFixCoupons.length !== 0 ? checkFixCoupons[0].id : null
+      fixCouponId: checkFixCoupons.length !== 0 ? checkFixCoupons[0].id : null,
     }
 
-    await axios.post(api, null, { params: params, headers: headers })
+    await axios.post(api, req, { headers: headers })
     .then((resp) => {
-      console.log("[SUCCESS] (PaymentButton) POST /order-payment-service/orders/single-product");
-      console.log(resp.data.result.data);
-
       alert(resp.data.result.data.msg);
       navigate(`/`); // TODO 주문상세로 이동
     })
     .catch((err) => {
-      console.log("[ERROR] (PaymentButton) POST /order-payment-service/orders/single-product");
       console.log(err);
-
+      const errMessage = err.response.data.message;
+      if (errMessage === "배송정보 미등록") {
+        navigate("/mypageRead")
+      }
     });
 
   }
 
   const orderCartProducts = async() => {
-    let api = url + "/order-payment-service/orders/" + memberId + "/cart";
-
-    const productSellerMap = {};
-    productIds.map((productId) => {
-      productSellerMap[productId] = orderProductMap[productId].sellerId;
-    });
+    let api = url + "/order-service/orders/cart";
 
     const rateCouponIds = [];
     checkRateCoupons.map((coupon) => {
@@ -71,23 +67,24 @@ const PaymentButton = (props) => {
     });
 
     const req = {
+      memberId: memberId,
       cartIds: cartIds,
-      productSellerMap: productSellerMap,
       rateCouponIds: rateCouponIds,
       fixCouponIds: fixCouponIds
     };
 
     await axios.post(api, req, {headers: headers})
     .then((resp) => {
-      console.log("[SUCCESS] (PaymentButton) POST /order-payment-service/orders/cart");
-      console.log(resp.data.result.data);
-
-      alert(resp.data.result.data.msg);
-      navigate(`/`); // TODO 주문상세로 이동
+      alert(resp.data.result.data);
+      navigate(`/`);
     })
     .catch((err) => {
-      console.log("[ERROR] (PaymentButton) POST /order-payment-service/orders/cart");
       console.log(err);
+      const errMessage = err.response.data.message;
+      if (errMessage === "배송정보 미등록") {
+        alert(errMessage);
+        navigate("/mypageRead");
+      }
     });
   }
 
