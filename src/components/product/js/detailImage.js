@@ -33,7 +33,7 @@ useEffect(() => {
             {
             detailImages.map( function(object,i){ 
                     return (
-                        <img key={i} className="detail-image" src={object.image} style={{verticalAlign:"middle"}}></img>
+                        <img key={i} className="detail-image" src={object.image} ></img>
                     )
                 })
             }
