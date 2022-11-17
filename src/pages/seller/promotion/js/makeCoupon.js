@@ -112,43 +112,19 @@ function MakeCoupon() {
         return moment(day).format('YYYY-MM-DD hh:mm:ss');
     }
 
+    const [link, setLink]=useState('');
+
     const makeArCoupon = async () => {
         
         let name = couponName;
-        // let startDate = changeDate(startDate);
-        // let endDate = moment(endDate).format('YYYY-MM-DD hh:mm:ss');
-        // let rate = Number(arPercent);
-        // let minPrice =  Number(arMinPrice);
-        // let productList=  Array.from(checkedItems);
-        // let sellerId= sellerId;
 
-        // console.log("name : "+name);
-        // console.log("regDate : "+regDate);    
-          // console.log("startDate : "+startDate);
-        // console.log("endDate : "+endDate);
-        // console.log("rate : "+rate);
-        // console.log("minPrice : "+minPrice);
-        // console.log("productList : "+productList);
-        // console.log("sellerId : "+sellerId);
 
-        // navigate('/');
         navigate(`/sellerApp/sellerIndex.html?name=`+name+'&regDate='+regDate+
             '&startDate='+moment(startDate).format('YYYY-MM-DD hh:mm:ss')+'&endDate='+moment(endDate).format('YYYY-MM-DD hh:mm:ss')
             +'&rate='+Number(arPercent)+'&minPrice='+Number(arMinPrice)+'&productList='+Array.from(checkedItems)+'&sellerId='+sellerId);
+
+        window.location.href=link;
         
-        // await axios({
-        //     method: "get",
-        //     url: url + `/sellerIndex.html?name=${name}&regDate=${regDate}&startDate=${startDate}&endDate=${startDate}&rate=${rate}&minPrice=${minPrice}&productList=${productList}&sellerId=${sellerId}`
-        // })
-        //     .then(function (resp) {
-        //         if(resp.request.status == 200) {
-        //         alert('등록완료!')
-        //         window.location.reload();
-        //         }
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error.value);
-        //     })
     }
 
 
