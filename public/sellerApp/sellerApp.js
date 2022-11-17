@@ -173,8 +173,9 @@ class sellerApp {
   }
 };
 
+const url = "https://api.kokodo.shop/promotion-service"
 // const url = "http://18.177.67.173:8001/promotion-service";
-const url = "http://localhost:8001/promotion-service";
+// const url = "http://localhost:8001/promotion-service";
 const sellerId = localStorage.getItem("sellerId");
 
 window.app = new sellerApp();

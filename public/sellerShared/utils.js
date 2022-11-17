@@ -19,7 +19,8 @@ class Bellygom extends THREE.Object3D {
     super();
 
     this.loader = new THREE.GLTFLoader();
-    this.loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", (gltf) => {
+    this.loader.load("https://kokodo.shop/clientShared/scene.gif", (gltf) => {
+    // this.loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", (gltf) => {
     // this.loader.load("https://kokodo.shop/test/shared/scene.gltf", (gltf) => {
       this.add(gltf.scene);
     })
@@ -29,8 +30,9 @@ class Bellygom extends THREE.Object3D {
 }
 
 //여기서 레온이 파일을 설정해줘야한다.
-window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", function(gltf) {
+// window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", function(gltf) {
 // window.gltfLoader.load("https://kokodo.shop/test/shared/scene.gltf", function(gltf) {
+window.gltfLoader.load("https://kokodo.shop/clientShared/scene.gif", function(gltf) {
   const flower = gltf.scene.children.find(c => c.name === 'sunflower')
   // flower.castShadow = true;
   window.sunflower = gltf.scene;
