@@ -28,7 +28,6 @@ function OrderDetailList() {
     const [orderDetails, setOrderDetails] = useState([]);
     const {headers} = useContext(AuthContext);
     const state = useLocation();
-    const userId = state.state.userId;
     const orderId = state.state.orderId;
     const { url } = useContext(ServerConfigContext);
 
@@ -37,7 +36,7 @@ function OrderDetailList() {
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(url + `/order-service/orders/${userId}/${orderId}`, {headers: headers}
+            await axios.get(url + `/order-service/orders/${orderId}`, {headers: headers}
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);

@@ -88,7 +88,7 @@ export default function ProductDetail({img, template}) {
 
         // TODO: Member ID 같이 전송해야함
         const test = async () => {
-            await axios.post(url + `/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId : 1 } })
+            await axios.post(url + `/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId: memberId } })
                 .then(function (resp) {
                     alert("쿠폰 다운로드 성공");
                 })
@@ -133,7 +133,7 @@ export default function ProductDetail({img, template}) {
         setImg(watchImage);
     }
 
-    // product 정보 조회 (Product)
+    // product detail 정보 조회 (Product)
     useEffect(() => {
         console.log("product/detail");
 
@@ -173,6 +173,8 @@ export default function ProductDetail({img, template}) {
         const fetchData = async () => {
             await axios.get(url + `/promotion-service/rateCoupon/${productId}`)
                 .then(function (resp) {
+                    console.log("쿠폰 조회");
+                    console.log(resp);
                     setCoupon(resp.data.result.data)
                 })
                 .catch(function (error) {

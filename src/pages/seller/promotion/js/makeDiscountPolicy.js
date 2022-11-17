@@ -1,14 +1,14 @@
 import axios from 'axios';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useContext } from "react";
 import { useParams } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { styled } from '@mui/material/styles';
-import {  Box } from '@mui/system';
+import { Box } from '@mui/system';
 import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
-
+import { AuthContext } from "../../../../context/authProvider";
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
@@ -44,15 +44,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function MakeDiscountPolicy() {
     const { url } = useContext(ServerConfigContext);
-    // const sellerId = useParams().sellerId;
-
     const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
     const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DD hh:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
     const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DD hh:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
-    const sellerId = Number(1);
-
+    const sellerId = localStorage.getItem("sellerId");
     const [radioCheck, setRadioCheck] = useState('rate');
 
     const [page, setPage] = React.useState(0);
@@ -64,6 +61,10 @@ function MakeDiscountPolicy() {
     const [ratePercent, setRatePercent] = useState();
     const [fixMinPrice, setFixMinPrice] = useState();
     const [fixWon, setFixWon] = useState();
+
+    useEffect(() => {
+        FetchProduct();
+    }, []);
 
     const handleClickRadio = (e) => {
         setRadioCheck(e.target.value);
@@ -77,17 +78,18 @@ function MakeDiscountPolicy() {
 
         setStartDateAndEndDate();
 
-        if(checkCheckedItems()) {
+        if (checkCheckedItems()) {
             if (radioCheck === 'fix') {
-                if(checkFixItems()) makeFixPolicy();
+                if (checkFixItems()) makeFixPolicy();
             }
             else if (radioCheck === 'rate') {
-                if(checkRateItems()) makeRatePolicy();
+                if (checkRateItems()) makeRatePolicy();
             }
         }
     }
 
     const makeRatePolicy = async () => {
+
         let ratePolicyDto = {
             name: discountPolicyName,
             regDate: regDate,
@@ -149,29 +151,41 @@ function MakeDiscountPolicy() {
     }
 
     const FetchProduct = () => {
-        console.log("프로덕트 아이디");
-        console.log(productName);
         if (productName === undefined) {
-            alert('이름을 입력해주세요!');
-            return;
-        }
-        const fetchProduct = () => {
-            axios.get(
-                url + "/product-service/product/detail/name", {
-                params: {
-                    productName: productName
-                }
-            })
-                .then(function (resp) {
-                    setProductList(resp.data.result.data);
+            const fetchProduct = () => {
+                axios({
+                    method: "get",
+                    url: url + "/product-service/product/detail/all",
+                    params: {sellerId: sellerId}
                 })
-                .catch(function (error) {
-                    alert(error);
-                })
-
+                    .then(function (resp) {
+                        setProductList(resp.data.result.data);
+                    })
+                    .catch(function (error) {
+                        alert(error);
+                    })
+            }
+            fetchProduct();
         }
-
-        fetchProduct();
+        else {
+            const fetchProduct = () => {
+                axios({
+                    method: "get",
+                    url: url + "/product-service/product/detail/name",
+                    params: {
+                        sellerId: sellerId,
+                        productName: productName
+                    }
+                })
+                    .then(function (resp) {
+                        setProductList(resp.data.result.data);
+                    })
+                    .catch(function (error) {
+                        alert(error);
+                    })
+            }
+            fetchProduct();
+        }
     }
 
     const setStartDateAndEndDate = () => {
@@ -180,10 +194,10 @@ function MakeDiscountPolicy() {
     }
 
     function checkCheckedItems() {
-        if(checkedItems.size == 0) {
+        if (checkedItems.size == 0) {
             alert("상품을 체크해주세요!")
             return false;
-        }else if(discountPolicyName == '') {
+        } else if (discountPolicyName == '') {
             alert("정책명을 입력해주세요!")
             return false;
         }
@@ -193,7 +207,7 @@ function MakeDiscountPolicy() {
     function checkRateItems() {
         console.log(ratePercent)
         console.log(rateMinPrice)
-        if(ratePercent == undefined) {
+        if (ratePercent == undefined) {
             alert("비율을 입력해주세요!")
             return false;
         }
@@ -205,7 +219,7 @@ function MakeDiscountPolicy() {
     }
 
     function checkFixItems() {
-        if(fixWon == undefined) {
+        if (fixWon == undefined) {
             alert("할인 금액을 입력해주세요!")
             return false;
         }
