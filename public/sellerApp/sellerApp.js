@@ -1,15 +1,39 @@
 (async function() {
   const isArSessionSupported = navigator.xr && navigator.xr.isSessionSupported && await navigator.xr.isSessionSupported("immersive-ar");
+
   if (isArSessionSupported) {
-    window.app.arCouponClickEvent(() => 1, "테스트 쿠폰_김남협 작성", 20, 2, 3,
-        50000, 10000,"2022-11-10T00:00:00", "2022-11-20T00:00:00", "2022-11-14T00:00:00");
-    document.getElementById("enter-ar").addEventListener("click", window.app.activateXR);
-  } else {
+    window.app.arCouponClickEvent(productList, couponName, rate, this.reticle.position.x, this.reticle.position.y,
+        this.reticle.position.z, minPrice, startDate, endDate, regDate);
     // window.app.arCouponClickEvent(() => 1, "테스트 쿠폰_김남협 작성", 20, 2, 3,
     //     50000, 10000,"2022-11-10T00:00:00", "2022-11-20T00:00:00", "2022-11-14T00:00:00");
+    document.getElementById("enter-ar").addEventListener("click", window.app.activateXR);
+  } else {
+    window.app.arCouponClickEvent(productList, couponName, rate, 1, 2,
+        3, minPrice, startDate, endDate, regDate);
     onNoXRDevice();
+    // window.app.arCouponClickEvent(productList, couponName, rate, 3, 5,
+    //     2, minPrice, startDate, endDate, regDate);
   }
 })();
+const urlParams = new URL(location.href).searchParams;
+
+let productList = urlParams.getAll("productList[]");
+const couponName = urlParams.get("name");
+const rate =  urlParams.get("rate");
+const minPrice =  urlParams.get("minPrice");
+const startDate = urlParams.get("startDate").substring(0, 10) + "T00:00:00";
+const endDate = urlParams.get("endDate").substring(0,10) + "T00:00:00";
+const regDate = urlParams.get("regDate");
+
+console.log(window.location.href)
+console.log(productList);
+console.log(couponName);
+console.log(rate);
+console.log(minPrice);
+console.log(startDate);
+console.log(endDate);
+console.log(regDate);
+console.log(startDate.substring(0,10))
 
 class sellerApp {
   /*
@@ -66,8 +90,8 @@ class sellerApp {
 
       console.log("reticle.position ="  + JSON.stringify(this.reticle.position))
 
-      window.app.arCouponClickEvent(1, "테스트 쿠폰_김남협 작성", 20, 2, 3,
-          50000, 10000,"2022-11-10T00:00:00", "2022-11-20T00:00:00", "2022-11-14T00:00:00");
+      window.app.arCouponClickEvent(productList, couponName, rate, this.reticle.position.x, this.reticle.position.y,
+          this.reticle.position.z, minPrice, startDate, endDate, regDate);
 
       const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
       shadowMesh.position.y = clone.position.y;
@@ -131,7 +155,7 @@ class sellerApp {
   arCouponClickEvent = async (productId, couponName, rate, x, y, z, minPrice, startDate, endDate, regDate) =>{
     await axios.post(url + `/arCoupon/seller/saveCoupon`, {
       "sellerId" : sellerId,
-      "productId" : productId,
+      "productId" : productList,
       "couponName" : couponName,
       "rate" : rate,
       "x" : x,
@@ -149,7 +173,8 @@ class sellerApp {
   }
 };
 
-const url = "http://18.177.67.173:8001/promotion-service";
+// const url = "http://18.177.67.173:8001/promotion-service";
+const url = "http://localhost:8001/promotion-service";
 const sellerId = localStorage.getItem("sellerId");
 
 window.app = new sellerApp();

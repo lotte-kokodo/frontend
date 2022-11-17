@@ -5,12 +5,12 @@
         arCouponPos();
     } else {
         arCouponPos();
+        // arCouponFindEvent(16);
         onNoXRDevice();
     }
 })();
 
 let couponArr = new Array();
-
 class App {
     activateXR = async () => {
         try {
@@ -49,7 +49,7 @@ class App {
     /** Place a sunflower when the screen is tapped. */
     onSelect = () => {
         console.log(couponArr)
-        console.log(couponArr[0].position.x)
+        console.log(couponArr[0].xpos)
         for (var idx = 0; idx < couponArr.length; idx++) {
             var xleft = couponArr[idx].xpos - (couponArr[idx].xpos / 1.5);
             var xright = couponArr[idx].xpos + (couponArr[idx].xpos / 1.5);
@@ -73,8 +73,8 @@ class App {
             if (this.reticle.position.x >= xleft && this.reticle.position.x <= xright) {
                 console.log("1 단계")
                 // if (this.reticle.position.z >= zleft && this.reticle.position.z <= zright) {
-                alert("시바를 잡으셨습니다!")
                 arCouponFindEvent(couponArr[idx].rateCoupon.id);
+                alert("시바를 잡으셨습니다!")
                 // }
             }
         }
@@ -138,6 +138,7 @@ class App {
 };
 
 const url = "http://18.177.67.173:8001/promotion-service/"
+// const url = "http://localhost:8001/promotion-service/"
 const clientId = localStorage.getItem("clientId");
 
 const arCouponPos = async () => {
@@ -146,6 +147,7 @@ const arCouponPos = async () => {
             couponArr = resp.data.result.data
             console.log(couponArr)
             console.log(couponArr[0].xpos)
+            console.log(couponArr[0].rateCoupon.id)
             console.log(resp)
         })
         .catch(function (error) {
@@ -154,7 +156,7 @@ const arCouponPos = async () => {
 }
 
 const arCouponFindEvent = async (couponId) => {
-    await axios.post(url + `/arCoupon/client/arFindEvent/${clientId}`, {
+    await axios.post(url + `arCoupon/client/arFindEvent`, {
         "clientId" : clientId,
         "couponId" : couponId
     }).then(function (resp) {
