@@ -47,6 +47,18 @@ function Mypage() {
                 onChange={setPage} />
         );
     }
+    const OrderPaging = ({ page, count, setPage }) => {
+        return (
+            <Pagination
+                activePage={page}
+                itemsCountPerPage={5}
+                totalItemsCount={count}
+                pageRangeDisplayed={5}
+                prevPageText={"<"}
+                nextPageText={">"}
+                onChange={setPage} />
+        );
+    }
 
     const setPage = (e) => {
         setCurrentpage(e);
@@ -60,7 +72,8 @@ function Mypage() {
     }, [currentpage, indexOfFirstPost, indexOfLastPost, reviewList, postPerPage]);
 
     useEffect(() => {
-        fetchReview();
+        if(reviewFlag) fetchReview();
+        else fetchOrder();
     }, [currentpage]);
 
 
@@ -116,6 +129,7 @@ function Mypage() {
         setCurrentPosts([]);
         setCount(0);
         setReviewFlag(true);
+        setPage(1);
         fetchReview();
     }
 
@@ -124,12 +138,12 @@ function Mypage() {
         setCurrentPosts([]);
         setCount(0);
         setReviewFlag(false);
+        setPage(1);
         fetchOrder();
     }
 
     const openCouponModal = () => {
         setCouponFlag(true);
-        console.log(couponFlag);
     }
 
     const closeCouponModal = () => {
@@ -143,20 +157,14 @@ function Mypage() {
     }, []);
 
     const fetchOrder = async () => {
-        const id = localStorage.getItem("memberId");
-
-        console.log(id);
         await axios({
             method: "get",
             url: url + `/order-service/orders/`,
             headers: headers,
-            params: currentpage
+            params: {page : currentpage}
         })
             .then(function (response) {
-                console.log("결과값");
-                console.log(response);
-
-                setOrderList(response.data.result.data);
+                setOrderList(response.data.result.data.orderInformationDtoList);
                 setCount(response.data.result.data.totalCount);
             })
             .catch(function (error) {
@@ -253,8 +261,8 @@ function Mypage() {
                                 })
                             }
                         </div>
-                        <div className='mypage-main-review-page'>
-                            {reviewFlag && <Paging page={currentpage} count={count} setPage={setPage} />}
+                        <div className='mypage-main-order-page'>
+                            {!reviewFlag && <OrderPaging page={currentpage} count={count} setPage={setPage} />}
                         </div>
                     </div>
                 }
