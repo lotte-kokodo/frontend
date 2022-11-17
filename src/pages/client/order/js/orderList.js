@@ -16,7 +16,6 @@ var orders = [];
 
 function GetOrderList(order) {
     orderId = order.obj.obj.orderId;
-    userId = 1;
     return (
         <div className='content'>
             <div className='order-date'>{ChangeLocalDateTime(order.obj.obj.orderDate)}</div>
@@ -27,7 +26,6 @@ function GetOrderList(order) {
                     <div className='move-button'>
                         <Link className='moveButton' to = "/orderDetailList"
                                     state = {{
-                                        userId:userId,
                                         orderId:orderId
                                     }
                                 }
