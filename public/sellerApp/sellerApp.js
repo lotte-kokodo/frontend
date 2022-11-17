@@ -153,7 +153,7 @@ class sellerApp {
   }
 
   arCouponClickEvent = async (productId, couponName, rate, x, y, z, minPrice, startDate, endDate, regDate) =>{
-    await axios.post(url + `/arCoupon/seller/saveCoupon`, {
+    await axios.post(url + `arCoupon/seller/saveCoupon`, {
       "sellerId" : sellerId,
       "productId" : productList,
       "couponName" : couponName,
@@ -173,7 +173,7 @@ class sellerApp {
   }
 };
 
-const url = "https://api.kokodo.shop/promotion-service"
+const url = "https://api.kokodo.shop/promotion-service/"
 // const url = "http://18.177.67.173:8001/promotion-service";
 // const url = "http://localhost:8001/promotion-service";
 const sellerId = localStorage.getItem("sellerId");
