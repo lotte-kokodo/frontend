@@ -23,7 +23,8 @@ const Payment = (props) => {
     if (orderProductMap && rateDiscountPolicyMap && fixDiscountPolicyMap && checkRateCoupons && checkFixCoupons) {
       calcPaymentPrice();
     }
-  }, [orderProductMap, rateDiscountPolicyMap, fixDiscountPolicyMap, checkRateCoupons, checkFixCoupons]);
+  }, [orderProductMap, rateDiscountPolicyMap,
+    fixDiscountPolicyMap, checkRateCoupons, checkFixCoupons]);
 
   const calcPaymentPrice = () => {
     // 상품 총 금액 계산
