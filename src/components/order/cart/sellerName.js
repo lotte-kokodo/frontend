@@ -5,10 +5,11 @@ const SellerName = (props) => {
 
   const sellerCartCnt = props.sellerCartCnt;
   const sellerId = props.sellerId;
-  const { sellerNameMap } = useContext(OrderContext);
+  const sellerNameMap = props.sellerNameMap;
+  // const { sellerNameMap } = useContext(OrderContext);
 
-  useEffect(() => {
-  }, [sellerNameMap.length]);
+  // useEffect(() => {
+  // }, [sellerNameMap.length]);
 
 
   return (
