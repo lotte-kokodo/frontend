@@ -40,7 +40,7 @@ const PaymentButton = (props) => {
 
     await axios.post(api, req, { headers: headers })
     .then((resp) => {
-      alert(resp.data.result.data.msg);
+      alert(resp.data.result.data);
       navigate(`/`); // TODO 주문상세로 이동
     })
     .catch((err) => {
