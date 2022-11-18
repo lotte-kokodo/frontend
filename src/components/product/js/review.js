@@ -6,7 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';
 import Pagination from "react-js-pagination";
-import AuthContext from "../../../context/authProvider";
+import { AuthContext } from "../../../context/authProvider";
 
 import "../css/review.css";
 import { ServerConfigContext } from "../../../context/serverConfigProvider";
@@ -63,7 +63,7 @@ export default function Review() {
                     content: reviewContent,
                     rating: rate
                 },
-                headers: {"memberId" : memberId}
+                headers: headers
             })
               .then(function (resp) {
                         alert("리뷰 등록 완료");
