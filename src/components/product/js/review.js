@@ -63,7 +63,7 @@ export default function Review() {
                     content: reviewContent,
                     rating: rate
                 },
-                headers: {"memberId" : memberId}
+                headers: headers
             })
               .then(function (resp) {
                         alert("리뷰 등록 완료");
