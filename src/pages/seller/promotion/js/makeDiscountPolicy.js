@@ -94,7 +94,6 @@ const MakeDiscountPolicy = () => {
     };
 
     const makePolicy = () => {
-        console.log(radioCheck)
         if (checkCheckedItems()) {
             if (radioCheck === 'fix') {
                 if (checkFixItems()) makeFixPolicy();
@@ -129,7 +128,8 @@ const MakeDiscountPolicy = () => {
                 }
             })
             .catch(function (error) {
-                alert(error.value);
+                console.log(error)
+                alert("같은 정책의 이름이 존재합니다!");
             })
     }
 
@@ -144,7 +144,6 @@ const MakeDiscountPolicy = () => {
             productId: Array.from(checkedItems),
             sellerId: sellerId
         }
-        console.log(fixPolicyDto);
         await axios({
             method: "post",
             url: url + "/promotion-service/fix-discount/save",
@@ -157,7 +156,8 @@ const MakeDiscountPolicy = () => {
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error)
+                alert("같은 정책의 이름이 존재합니다!");
             })
     }
 
@@ -211,8 +211,6 @@ const MakeDiscountPolicy = () => {
     }
 
     function checkRateItems() {
-        console.log(ratePercent)
-        console.log(rateMinPrice)
         if (ratePercent == undefined) {
             alert("비율을 입력해주세요!")
             return false;

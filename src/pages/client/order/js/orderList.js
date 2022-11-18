@@ -53,8 +53,6 @@ function GetOrderList(order) {
 
 
 const OrderList = (object) => {
-    console.log("object 결과값");
-    console.log(object);
     orders = object;
 
     return (

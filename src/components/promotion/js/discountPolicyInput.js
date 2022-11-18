@@ -57,7 +57,6 @@ const DiscountPolicyInput = (props) => {
 
     const setPropDiscountPolicyName = (discountPolicyName) => {
         setDiscountPolicyName(discountPolicyName);
-        console.log("현재 이름 : " + discountPolicyName)
         props.setPropDiscountPolicyName(discountPolicyName);
     }
 
