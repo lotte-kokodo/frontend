@@ -137,7 +137,8 @@ class App {
     }
 };
 
-const url = "http://18.177.67.173:8001/promotion-service/"
+const url = "https://api.kokodo.shop/promotion-service/"
+// const url = "http://18.177.67.173:8001/promotion-service/"
 // const url = "http://localhost:8001/promotion-service/"
 const clientId = localStorage.getItem("clientId");
 
@@ -145,10 +146,10 @@ const arCouponPos = async () => {
     await axios.get(url + `arCoupon/client/searchCoupon`, {})
         .then(function (resp) {
             couponArr = resp.data.result.data
+            console.log(resp)
             console.log(couponArr)
             console.log(couponArr[0].xpos)
             console.log(couponArr[0].rateCoupon.id)
-            console.log(resp)
         })
         .catch(function (error) {
             console.log(error);

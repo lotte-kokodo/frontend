@@ -2,8 +2,8 @@
   const isArSessionSupported = navigator.xr && navigator.xr.isSessionSupported && await navigator.xr.isSessionSupported("immersive-ar");
 
   if (isArSessionSupported) {
-    window.app.arCouponClickEvent(productList, couponName, rate, this.reticle.position.x, this.reticle.position.y,
-        this.reticle.position.z, minPrice, startDate, endDate, regDate);
+    // window.app.arCouponClickEvent(productList, couponName, rate, this.reticle.position.x, this.reticle.position.y,
+    //     this.reticle.position.z, minPrice, startDate, endDate, regDate);
     // window.app.arCouponClickEvent(() => 1, "테스트 쿠폰_김남협 작성", 20, 2, 3,
     //     50000, 10000,"2022-11-10T00:00:00", "2022-11-20T00:00:00", "2022-11-14T00:00:00");
     document.getElementById("enter-ar").addEventListener("click", window.app.activateXR);
@@ -153,7 +153,7 @@ class sellerApp {
   }
 
   arCouponClickEvent = async (productId, couponName, rate, x, y, z, minPrice, startDate, endDate, regDate) =>{
-    await axios.post(url + `/arCoupon/seller/saveCoupon`, {
+    await axios.post(url + `arCoupon/seller/saveCoupon`, {
       "sellerId" : sellerId,
       "productId" : productList,
       "couponName" : couponName,
@@ -173,8 +173,9 @@ class sellerApp {
   }
 };
 
+const url = "https://api.kokodo.shop/promotion-service/"
 // const url = "http://18.177.67.173:8001/promotion-service";
-const url = "http://localhost:8001/promotion-service";
+// const url = "http://localhost:8001/promotion-service";
 const sellerId = localStorage.getItem("sellerId");
 
 window.app = new sellerApp();
