@@ -71,4 +71,4 @@ const IssueList = (props) => {
         ))
     );
 };
-export default IssueList;
+export default React.memo(IssueList);
