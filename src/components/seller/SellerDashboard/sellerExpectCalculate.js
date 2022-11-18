@@ -13,7 +13,7 @@ export default function SellerExpectCalculate(){
     const sellerId = localStorage.getItem("sellerId");
     let titleName = "이번주 정산 예정 금액"
     let unit = "원"
-    const [numberInfo, setNumberInfo] = useState("");
+    const [numberInfo, setNumberInfo] = useState("0");
     const [changeNumberInfo, setChangeNumberInfo] = useState("");
 
     const getCalculateExpectMount = async () => {
