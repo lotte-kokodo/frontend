@@ -5,47 +5,49 @@
 }
 
 .content {
-     /* float: left; */
-     position:relative;
-     margin: 10px;
-     border-bottom: 1px solid #999999;
-     padding-bottom: 1rem;
+    /* float: left; */
+    position: relative;
+    margin: 10px;
+    padding-bottom: 1rem;
+    background-color: #EEEEEE;
+    border-radius: 20px;
+}
 
- }
- 
 div.order-date {
     display: block;
     font-size: 20px;
 }
 
 .content-value {
-    padding: 30px;
-    border: 1px solid black;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.order-information {
+    width: 50%
 }
 
 .content-name {
     display: flex;
     font-size: 20px;
-    padding-bottom: 15px;
-
 }
 
 .name {
     float: left;
-    width: 80%;
+    width: 85%;
 }
 
 .move-button {
-    width: 20%;
+    margin-top: 15%;
 }
 
 .moveButton {
     background-color: #FFFFFF;
-    padding: 10px;
-    padding-left:40px;
-    padding-right:40px;
-    text-align: center; 
-    color:#000;
+    padding: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    color: #000;
     border-radius: 10px;
     /* margin: 10px 15px; */
     border: 1px solid #000;
@@ -56,23 +58,28 @@ div.order-date {
     position: relative;
     width: 100%;
     vertical-align: middle;
-    border-top: 1px solid black;
-    padding-top: 10px;
 }
 
-.content-thumbnail{
-    width: 30%;
+.content-thumbnail {
+    width: 13%;
 }
-
-.content-thumbnail img{
-     /* float: left; */
-    width: 200px;
- }
+    
+.content-thumbnail img {
+    width: 100px;
+    border-radius: 20px;
+}
 
 .order-value {
     position: relative;
-    padding-top: 6%;
     width: 50%;
+}
+
+.order-value > * {
+    margin-top: 3.5%;
+}
+
+.order-status {
+    width: 37%;
 }
 
 .cancel-button {
@@ -80,17 +87,17 @@ div.order-date {
     margin-right: 5%;
     padding-top: 6%;
 }
- 
- .button {
-     background-color: white;
-     border: 3px solid #FB7D98;
-     border-radius: 20px;
-     width: 180px;
-     height: 50px;
-     color: #FB7D98;
-     font-size: 25px;
+
+.button {
+    background-color: white;
+    border: 3px solid #FB7D98;
+    border-radius: 20px;
+    width: 180px;
+    height: 50px;
+    color: #FB7D98;
+    font-size: 25px;
 }
- 
- .click-button {
+
+.click-button {
     display: inline-block;
 }

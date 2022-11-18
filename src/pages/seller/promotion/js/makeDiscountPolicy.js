@@ -1,17 +1,15 @@
 import axios from 'axios';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
-import { useParams } from 'react-router-dom'
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/system';
-import { Radio, TableContainer, TableBody, TableRow, TableHead, Table, Paper, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
-import { AuthContext } from "../../../../context/authProvider";
+import { TableContainer, TableBody, TableRow, TableHead, Table, Paper, TextField, TableCell, tableCellClasses, tableRowClasses, FormControl, RadioGroup, FormControlLabel } from '@mui/material';
 import IssueList from '../../../../components/promotion/js/checkBoxComponent';
 import "../css/makeDiscountPolicy.css";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import DiscountPolicyInput from '../../../../components/promotion/js/discountPolicyInput';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.root}`]: {
@@ -42,42 +40,60 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function MakeDiscountPolicy() {
+const MakeDiscountPolicy = () => {
     const { url } = useContext(ServerConfigContext);
-    const [discountPolicyName, setDiscountPolicyName] = useState('');
     const [checkedItems, setCheckedItems] = useState(new Set());
     const regDate = moment().format('YYYY-MM-DDTHH:mm:ss');
-    const [startDate, setStartDate] = useState(new Date(), 'YYYY-MM-DD hh:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
-    const [endDate, setEndDate] = useState(new Date(), 'YYYY-MM-DD hh:mm:ss');//useState(new Date(), 'YYYY:MM:DDTHH:mm:ss');
+
     const sellerId = localStorage.getItem("sellerId");
-    const [radioCheck, setRadioCheck] = useState('rate');
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [productList, setProductList] = React.useState([]);
-
     const [productName, setProductName] = useState();
-    const [rateMinPrice, setRateMinPrice] = useState();
-    const [ratePercent, setRatePercent] = useState();
-    const [fixMinPrice, setFixMinPrice] = useState();
-    const [fixWon, setFixWon] = useState();
+    
+    var discountPolicyName, startDate, endDate, radioCheck;
+    var rateMinPrice, ratePercent;
+    var fixMinPrice, fixWon;
+
+    function setPropDiscountPolicyName(e) {
+        discountPolicyName = e;
+    }
+
+    function setPropStartDate(e) {
+        startDate = e;
+    }
+
+    function setPropEndDate(e) {
+        endDate = e;
+    }
+
+    function setPropRadioCheck(e) {
+        radioCheck = e;
+    }
+
+    function setPropRateMinPrice(e) {
+        rateMinPrice = e;
+    }
+
+    function setPropRatePercent(e) {
+        ratePercent = e;
+    }
+
+    function setPropFixMinPrice(e) {
+        fixMinPrice = e;
+    }
+
+    function setPropFixWon(e) {
+        fixWon = e;
+    }
 
     useEffect(() => {
         FetchProduct();
     }, []);
-
-    const handleClickRadio = (e) => {
-        setRadioCheck(e.target.value);
-    }
 
     const checkedItemHandler = (idList) => {
         setCheckedItems(idList);
     };
 
     const makePolicy = () => {
-
-        setStartDateAndEndDate();
-
         if (checkCheckedItems()) {
             if (radioCheck === 'fix') {
                 if (checkFixItems()) makeFixPolicy();
@@ -112,7 +128,8 @@ function MakeDiscountPolicy() {
                 }
             })
             .catch(function (error) {
-                alert(error.value);
+                console.log(error)
+                alert("같은 정책의 이름이 존재합니다!");
             })
     }
 
@@ -127,7 +144,6 @@ function MakeDiscountPolicy() {
             productId: Array.from(checkedItems),
             sellerId: sellerId
         }
-        console.log(fixPolicyDto);
         await axios({
             method: "post",
             url: url + "/promotion-service/fix-discount/save",
@@ -140,14 +156,9 @@ function MakeDiscountPolicy() {
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error)
+                alert("같은 정책의 이름이 존재합니다!");
             })
-    }
-
-    function getDifferenceDay() {
-        var result = 0;
-        result += moment.duration(endDate - startDate).asDays() + 1;
-        return Math.ceil(result);
     }
 
     const FetchProduct = () => {
@@ -188,16 +199,11 @@ function MakeDiscountPolicy() {
         }
     }
 
-    const setStartDateAndEndDate = () => {
-        startDate.setHours(0, 0, 0);
-        endDate.setHours(23, 59, 59);
-    }
-
     function checkCheckedItems() {
         if (checkedItems.size == 0) {
             alert("상품을 체크해주세요!")
             return false;
-        } else if (discountPolicyName == '') {
+        } else if ((discountPolicyName === undefined) || (discountPolicyName === '')) {
             alert("정책명을 입력해주세요!")
             return false;
         }
@@ -205,8 +211,6 @@ function MakeDiscountPolicy() {
     }
 
     function checkRateItems() {
-        console.log(ratePercent)
-        console.log(rateMinPrice)
         if (ratePercent == undefined) {
             alert("비율을 입력해주세요!")
             return false;
@@ -233,84 +237,13 @@ function MakeDiscountPolicy() {
     return (
         <div id="makeDiscountPolicy">
             <div>
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{ width: '100%', overflow: "auto",height:"750px"}}>
                     <Paper>
 
                         <TableContainer component={Paper}>
-                            <h2>할인 정보 입력</h2>
-                            <FormControl>
-                                <RadioGroup defaultValue="rate">
-                                    <Table aria-label="customized table">
-                                        <TableBody>
-
-                                            <StyledTableRow>
-                                                {/* align="center" */}
-                                                <StyledTableCell align="center" >정책명</StyledTableCell>
-                                                <StyledTableCell colSpan={3}><input type="input" value={discountPolicyName} onChange={(e) => { setDiscountPolicyName(e.target.value) }}></input></StyledTableCell>
-
-                                            </StyledTableRow>
-                                            <StyledTableRow>
-                                                <StyledTableCell align="center">정책 발행일시</StyledTableCell>
-                                                <StyledTableCell colSpan={3}>{regDate}</StyledTableCell>
-
-                                            </StyledTableRow>
-                                            <StyledTableRow>
-                                                <StyledTableCell align="center">
-                                                    정책 유효기간
-                                                </StyledTableCell>
-                                                <StyledTableCell align="center">
-                                                    <DatePicker
-                                                        selected={startDate}
-                                                        onChange={(date) => setStartDate(date)}
-                                                        selectsStart
-                                                        startDate={startDate}
-                                                        endDate={endDate}
-                                                    />
-                                                </StyledTableCell>
-                                                <StyledTableCell align="center">
-                                                    <DatePicker
-                                                        selected={endDate}
-                                                        onChange={(date) => setEndDate(date)}
-                                                        selectsEnd
-                                                        startDate={startDate}
-                                                        endDate={endDate}
-                                                        minDate={startDate}
-                                                    />
-                                                </StyledTableCell>
-                                                <StyledTableCell colSpan={2} align="right">
-                                                    발행일로부터 : {getDifferenceDay()}일
-                                                </StyledTableCell>
-                                            </StyledTableRow>
-
-                                            <StyledTableRow>
-
-                                                <StyledTableCell align="center" rowSpan={2}>
-                                                    할인 방식
-                                                </StyledTableCell>
-
-                                                <StyledTableCell>
-                                                    <FormControlLabel value="rate" control={<Radio />} label="정률" onChange={(e) => { handleClickRadio(e) }} />
-                                                </StyledTableCell>
-                                                <StyledTableCell></StyledTableCell>
-                                                <StyledTableCell colSpan={1}>
-                                                    <input type="input" value={rateMinPrice} onChange={(e) => setRateMinPrice(e.target.value)}></input>원 이상 구매시 <input type="input" value={ratePercent} onChange={(e) => setRatePercent(e.target.value)}></input>% 할인
-                                                </StyledTableCell>
-                                            </StyledTableRow>
-                                            <StyledTableRow>
-
-                                                <StyledTableCell>
-                                                    <FormControlLabel value="fix" control={<Radio />} label="정액" onChange={(e) => { handleClickRadio(e) }} />
-                                                </StyledTableCell>
-                                                <StyledTableCell></StyledTableCell>
-                                                <StyledTableCell colSpan={1}>
-                                                    <input type="input" value={fixMinPrice} onChange={(e) => setFixMinPrice(e.target.value)}></input>원 이상 구매시 <input type="input" value={fixWon} onChange={(e) => setFixWon(e.target.value)}></input>원 할인
-                                                </StyledTableCell>
-                                            </StyledTableRow>
-
-                                        </TableBody>
-                                    </Table>
-                                </RadioGroup>
-                            </FormControl>
+                            <DiscountPolicyInput setPropRateMinPrice={setPropRateMinPrice} setPropRatePercent={setPropRatePercent}
+                                setPropFixMinPrice={setPropFixMinPrice} setPropFixWon={setPropFixWon} setPropDiscountPolicyName={setPropDiscountPolicyName}
+                                setPropStartDate={setPropStartDate} setPropEndDate={setPropEndDate} setPropRadioCheck={setPropRadioCheck}/>
                             <div>
                                 <h2>정책 적용 상품 찾기</h2>
                             </div>
@@ -351,7 +284,7 @@ function MakeDiscountPolicy() {
                                 </TableHead>
                                 <TableBody>
                                     {/* 데이터 props에 넣기 */}
-                                    <IssueList props={{ productList, page, rowsPerPage }} propFunction={checkedItemHandler} ></IssueList>
+                                    <IssueList props={{ productList }} propFunction={checkedItemHandler} ></IssueList>
                                 </TableBody>
                             </Table>
                         </TableContainer>

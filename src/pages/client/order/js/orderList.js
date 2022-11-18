@@ -4,10 +4,7 @@ import { Link } from "react-router-dom"
 import "../css/orderList.css";
 
 function ChangeLocalDateTime(dateTime) {
-    var resultDate = new Date("2022-09-12T12:00:00")//"YYYY-MM-DDTHH:mm:sszz"
-    resultDate = resultDate.toString().substring(0, 24);
-
-    return resultDate.toString();
+    return dateTime[0] + "년 " + dateTime[1] + "월 " + dateTime[2] + "일 " + dateTime[3] + "시 " + dateTime[4] + "분 " + dateTime[5] + "초"
 }
 
 var orderId = "";
@@ -18,32 +15,34 @@ function GetOrderList(order) {
     orderId = order.obj.obj.orderId;
     return (
         <div className='content'>
-            <div className='order-date'>{ChangeLocalDateTime(order.obj.obj.orderDate)}</div>
-
             <div className='content-value'>
-                <div className='content-name'>
-                    <div className='name'>{order.obj.obj.name}</div>
-                    <div className='move-button'>
-                        <Link className='moveButton' to = "/orderDetailList"
-                                    state = {{
-                                        orderId:orderId
-                                    }
-                                }
-                        >상세보기</Link>
-                    </div>
-                </div>
+
                 <div className='content-value-detail'>
                     <div className='content-thumbnail'>
                         <img className='thumbnail' src={order.obj.obj.thumbnail} />
                     </div>
-
-                    <div className='order-value'>
-                        <div className='order-id'>주문번호 {order.obj.obj.orderId}</div>
-                        <br></br>
-                        <div className='price'>결제금액 {order.obj.obj.price}</div>
+                    <div className='order-information'>
+                        <div className='content-name'>
+                            <div className='name'>{order.obj.obj.name}</div>
+                        </div>
+                        <div className='order-value'>
+                            <div className='order-id'>주문번호 : {order.obj.obj.orderId}</div>
+                            <div className='price'>결제금액 : {order.obj.obj.price}</div>
+                        </div>
                     </div>
-                    <div className='cancel-button'>
+                    <div className='order-status'>
+                        <div className='order-date'>{ChangeLocalDateTime(order.obj.obj.orderDate)}</div>
+                        <div className='move-button'>
+                            <Link className='moveButton' to = "/orderDetailList"
+                                        state = {{
+                                            orderId:orderId
+                                        }
+                                    }
+                            >상세보기</Link>
+                        </div>
                     </div>
+                    
+                    {/* <div className='order-date'>{ChangeLocalDateTime(order.obj.obj.orderDate)}</div> */}
                 </div>
             </div>
         </div>
@@ -53,8 +52,6 @@ function GetOrderList(order) {
 
 
 const OrderList = (object) => {
-    console.log("object 결과값");
-    console.log(object);
     orders = object;
 
     return (
