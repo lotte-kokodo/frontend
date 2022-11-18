@@ -13,7 +13,7 @@ export default function SellerInfoBox(props) {
                             <div className="seller-info-box-text-bold seller-info-box-unit-font-size">{props.unit}</div>
                         </div>
                         {/*{props.updownFlag ? "seller-num-color-red" : "seller-num-color-blue"}*/}
-                        <div className={"seller-number-per-info " + (props.updownFlag ? "seller-num-color-red" : "seller-num-color-blue")}> {props.updownFlag ? '^' : 'v'}{props.changeNumberInfo}{props.changNumberPercent} </div>
+                        <div className={"seller-number-per-info " + (props.updownFlag ? "seller-num-color-red" : "seller-num-color-blue")}> {props.updownFlag == "0" ? "" : props.updownFlag ? '^' : 'v'}{props.changeNumberInfo}{props.changNumberPercent} </div>
                     </div>
                 </div>
             </div>
