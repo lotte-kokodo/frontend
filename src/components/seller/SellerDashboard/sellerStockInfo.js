@@ -33,8 +33,8 @@ export default function SellerStockInfo(){
     },[]);
 
     return(
-        <Link to={`/seller/${sellerId}/productSearch`} style={{textDecoration: "none", height: 150}}>
-            <SellerInfoBox titleName={titleName} numberInfo={numberInfo} unit={unit} />
-        </Link>
+        // <Link to={`/seller/${sellerId}/productSearch`} style={{textDecoration: "none", height: 150}}>
+            <SellerInfoBox titleName={titleName} updownFlag={"0"} numberInfo={numberInfo} unit={unit} />
+        // </Link>
     )
 }

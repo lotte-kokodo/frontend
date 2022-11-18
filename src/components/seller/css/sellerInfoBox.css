@@ -4,10 +4,11 @@
     height: 100%;
     /*text-align: center;*/
     box-shadow: 2px 2px 4px 2px grey;
+    background-color: white;
 }
 
 .seller-info-box-outline-layout{
-    border: 1px solid green;
+    /*border: 1px solid grey;*/
     width: 90%;
     height: 70%;
     display: flex;
@@ -15,13 +16,13 @@
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
-    background-color: white;
+    /*margin-top: 30px;*/
+    background-color: #F0F0F0;
 }
 
 .seller-info-box-out-2{
     width: 88%;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     height: 90%;
     margin: auto;
     margin-top: 7px;
