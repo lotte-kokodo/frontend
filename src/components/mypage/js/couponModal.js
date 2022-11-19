@@ -50,12 +50,14 @@ export default function CouponModal(props) {
             <div style={{display:"flex"}}>
                 <h3 className="coupon-product-title">나의 쿠폰 보기</h3>
 
-                <button onClick={props.onModalDisplay} style={{marginLeft:"680px"}} >X</button>
+                <button onClick={props.onModalDisplay} style={{marginLeft:"650px"}} >X</button>
             </div>
+
+            <hr className="mypage-coupon-modal-hr"/>
+
             <div className="mypage-coupon-container" >
             <div data-v-10ba636e="" data-v-6e428e76="" className="couponGroup">
                 <ul data-v-10ba636e="" className="couponUseEvent">
-
 
                 {
                     couponList.map( function(object, i){ 
