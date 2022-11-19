@@ -17,7 +17,7 @@
 })();
 const urlParams = new URL(location.href).searchParams;
 
-let productList = urlParams.getAll("productList[]");
+let productList = urlParams.getAll("productList");
 const couponName = urlParams.get("name");
 const rate =  urlParams.get("rate");
 const minPrice =  urlParams.get("minPrice");
@@ -26,7 +26,7 @@ const endDate = urlParams.get("endDate").substring(0,10) + "T00:00:00";
 const regDate = urlParams.get("regDate");
 
 console.log(window.location.href)
-console.log(productList);
+console.log("productList=" + productList);
 console.log(couponName);
 console.log(rate);
 console.log(minPrice);
