@@ -61,8 +61,8 @@ class App {
             if (yleft > yright) {
                 [yleft, yright] = [yright, yleft]
             }
-            var zleft = couponArr[idx].zpos - (couponArr[idx].zpos / 2);
-            var zright = couponArr[idx].zpos + (couponArr[idx].zpos / 2);
+            var zleft = couponArr[idx].zpos - (couponArr[idx].zpos / 2.4);
+            var zright = couponArr[idx].zpos + (couponArr[idx].zpos / 2.4);
             if (zleft > zright) {
                 [zleft, zright] = [zright, zleft]
             }
