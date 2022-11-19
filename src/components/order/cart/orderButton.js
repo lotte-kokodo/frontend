@@ -34,7 +34,6 @@ const OrderButton = () => {
           else {
             alert("주문 전 배송정보 등록 필수");
             navigate("/mypageRead");
-
           }
         })
         .catch((err) => {
