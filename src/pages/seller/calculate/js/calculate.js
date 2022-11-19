@@ -1,9 +1,10 @@
 import React from "react"
 import axios from "axios"
 import "../css/calculate.css"
+import "../../promotion/css/couponManagement.css"
 import Pagination from "react-js-pagination";
-import {useState, useEffect, useContext} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import CalculateTableRow from "../../../../components/calculate/js/calculateTableRow"
 import {
     dateParseToSimple,
@@ -15,17 +16,17 @@ import {
 import MakeCoupon from "../../promotion/js/makeCoupon";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
-import {Modal} from "@mui/material";
+import { Modal } from "@mui/material";
 import CalculatePreviewModal from "../../../../components/calculate/js/calculatePreviewModal";
 
-import {ServerConfigContext} from "../../../../context/serverConfigProvider";
-import discountPolicyImg from "../../../../src_assets/seller/title/discount-policy-title.png";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider";
+import calcImage from "../../../../src_assets/seller/title/calc-title.png";
 
 
 export default function CalculatePresent() {
     const sellerId = localStorage.getItem("sellerId");
 
-    const {url} = useContext(ServerConfigContext);
+    const { url } = useContext(ServerConfigContext);
 
     let history = useNavigate();
     const [choiceCalculate, setChoiceCalculate] = useState("");
@@ -137,8 +138,8 @@ export default function CalculatePresent() {
             "provideStatus": provideStatus,
             "calculateType": calculateType,
             "id": calculateId,
-            "pageNumber" : currentpage -1,
-            "pageSize" : postPerPage
+            "pageNumber": currentpage - 1,
+            "pageSize": postPerPage
         })
             .then(function (resp) {
                 console.log(resp);
@@ -164,7 +165,7 @@ export default function CalculatePresent() {
         getCalculateData();
     }, [currentpage]);
 
-    const Paging = ({page, count, setPage}) => {
+    const Paging = ({ page, count, setPage }) => {
         return (
             <Pagination
                 activePage={page}
@@ -173,7 +174,7 @@ export default function CalculatePresent() {
                 pageRangeDisplayed={5}
                 prevPageText={"<"}
                 nextPageText={">"}
-                onChange={setPage}/>
+                onChange={setPage} />
         );
     }
 
@@ -193,8 +194,8 @@ export default function CalculatePresent() {
         <div className="body">
             <div>
                 <div className="coupon-management-title-container">
-                    <div className="calculate-management-title">
-                        <img src={discountPolicyImg} className="coupon-management-img"></img>
+                    <div className="coupon-management-title">
+                        <img src={calcImage} className="coupon-management-img"></img>
                         <h2 className="coupon-management-title-h3">정산 현황</h2>
                     </div>
                 </div>
@@ -220,13 +221,13 @@ export default function CalculatePresent() {
                         {/*<p><input type="number" name="number" placeholder="정산일"/></p>*/}
                         {/*date-date-inline-licker는 누군가 문자열을 입력하기 이전까지 빈 문자열값이다*/}
                         <input className="calculate-calender-box" type="date" data-date-inline-picker="true"
-                               value={tmpStartDate} onChange={startDateChange}/>
+                            value={tmpStartDate} onChange={startDateChange} />
                         <div> ~</div>
-                        <input type="date" data-date-inline-picker="true" value={tmpEndDate} onChange={endDateChange}/>
+                        <input type="date" data-date-inline-picker="true" value={tmpEndDate} onChange={endDateChange} />
                         <input type="button" className="calculate-criteria-button1" value="최근 1주"
-                               onClick={fetchRecentDate}/>
+                            onClick={fetchRecentDate} />
                         <input type="button" className="calculate-criteria-button2" value="최근 1달"
-                               onClick={fetchRecentMonth}/>
+                            onClick={fetchRecentMonth} />
                     </div>
                 </div>
             </div>
@@ -236,17 +237,17 @@ export default function CalculatePresent() {
                 <div className="calculate-provide-status-border">
                     <div className="calculate-title-provide-status-box">지급상태</div>
                     <input name="prvidesuccess" className="calculate-radio-unit" value="ALL"
-                           type="radio" onClick={provideStatusChange}/>
+                        type="radio" onClick={provideStatusChange} checked/>
                     <div className="calculate-radio-unit2" value="">전체</div>
                     <input name="prvidesuccess" id='test' className="calculate-radio-unit" value="PROVIDE_SUCCESS"
-                           type="radio" onClick={provideStatusChange}/>
+                        type="radio" onClick={provideStatusChange} />
                     {/*(1)<label name="prvidesuccess" htmlFor='test' className="calculate-radio-unit2" value='sa' >지급확정</label>*/}
                     <div name="prvidesuccess" className="calculate-radio-unit2">지급확정</div>
                     <input name="prvidesuccess" className="calculate-radio-unit" value="PROVIDE_SCHEDULE" type="radio"
-                           onClick={provideStatusChange}/>
+                        onClick={provideStatusChange} />
                     <div className="calculate-radio-unit2" value="PROVIDE_SCHEDULE">지급예정</div>
                     <input name="prvidesuccess" className="calculate-radio-unit" value="PROVIDE_POSTPONE" type="radio"
-                           onClick={provideStatusChange}/>
+                        onClick={provideStatusChange} />
                     <div className="calculate-radio-unit2" value="PROVIDE_POSTPONE">지급보류</div>
                 </div>
             </div>
@@ -254,7 +255,7 @@ export default function CalculatePresent() {
                 <div className="calculate-calculate-type-box">정산유형</div>
                 <div>
                     <select className="calculate-type-typelist" name="calculateTypeList"
-                            onChange={calculateTypeStatusChange}>
+                        onChange={calculateTypeStatusChange}>
                         <option name="calculateTypeList" value="MAIN_CALCULATE">주정산</option>
                         <option name="calculateTypeList" value="FINAL_AMOUNT_CALCULATE">최종액 정산</option>
                     </select>
@@ -266,7 +267,7 @@ export default function CalculatePresent() {
                             <option value="옵션ID">옵션ID</option>
                         </select>
                         <input className="calculate-condition-detail-input" type="text" placeholder=""
-                               onChange={changeCalculateId}/>
+                            onChange={changeCalculateId} />
                     </div>
                 </div>
             </div>
@@ -282,38 +283,38 @@ export default function CalculatePresent() {
             </div>
             <table className="table calculate-table">
                 <thead>
-                <tr>
-                    <th>정산일</th>
-                    <th>정산유형</th>
-                    <th>지급비율</th>
-                    <th>지급상태</th>
-                    <th>최종지급액</th>
-                    <th>주문상세내역</th>
-                    {/*<th></th>*/}
-                </tr>
+                    <tr>
+                        <th>정산일</th>
+                        <th>정산유형</th>
+                        <th>지급비율</th>
+                        <th>지급상태</th>
+                        <th>최종지급액</th>
+                        <th>주문상세내역</th>
+                        {/*<th></th>*/}
+                    </tr>
                 </thead>
 
                 <tbody>
-                {
-                    calculateList.map(function (calculateRow, i) {
-                        return (
-                            <CalculateTableRow obj={calculateRow} key={i} cnt={i + 1} setModalFlag={setModalFlag}
-                                               flag={modalFlag} calculateId={calculateRow.calculateId}
-                                               setChoiceCalculate={setChoiceCalculate}/>
-                        )
-                    })
-                }
+                    {
+                        calculateList.map(function (calculateRow, i) {
+                            return (
+                                <CalculateTableRow obj={calculateRow} key={i} cnt={i + 1} setModalFlag={setModalFlag}
+                                    flag={modalFlag} calculateId={calculateRow.calculateId}
+                                    setChoiceCalculate={setChoiceCalculate} />
+                            )
+                        })
+                    }
                 </tbody>
                 {/*{modalClose && <CalculatePreviewModal={couponName} onModalDisplay={closeProductModal} couponFlag={listFlag}></CalculatePreviewModal>}*/}
             </table>
 
             <div className="pagingProduct">
-                {searchFlag && <Paging page={currentpage} count={count} setPage={setPage}/>}
+                {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} />}
             </div>
 
             <div>
                 <Modal open={modalFlag} onClose={() => setModalFlag(!modalFlag)} aria-labelledby="modal-modal-title"
-                       aria-describedby="modal-modal-description">
+                    aria-describedby="modal-modal-description">
                     <Fade in={modalFlag}>
                         <Box sx={style}>
                             <CalculatePreviewModal sellerId={sellerId} calculateId={choiceCalculate}>
