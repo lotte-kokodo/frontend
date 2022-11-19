@@ -236,10 +236,11 @@ function MakeCoupon() {
             console.log(searchEndDate);
             axios({
                 method: "get",
-                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&page=${currentpage}`,
-                headers: sellerHeaders
+                url: url + `/product-service/product?productName=${searchProductName}&status=1&startDate=${sDate}&endDate=${eDate}&page=1&sellerId=${sellerId}`,
             })
                 .then(function (resp) {
+                    console.log(">>>>>>>>>>>>");
+                    console.log(resp);
                     setProductList(resp.data.productDtoList);
                 })
                 .catch(function (error) {

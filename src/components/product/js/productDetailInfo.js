@@ -92,7 +92,7 @@ export default function ProductDetail({img, template}) {
         for(var fixCouponId  of fixCoupon){
             fixCouponIds.push(fixCouponId.id);
         }
-        // TODO: Member ID 같이 전송해야함
+        
         const test = async () => {
             await axios.post(url + `/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId: memberId } })
                 .then(function (resp) {
