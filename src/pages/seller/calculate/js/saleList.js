@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 import moment from "moment";
+import discountPolicyImg from "../../../../src_assets/seller/title/discount-policy-title.png";
 
 export default function SaleList() {
     const { url } = useContext(ServerConfigContext);
@@ -125,6 +126,10 @@ export default function SaleList() {
 
     return (
         <div className="body">
+            <div className="saleList-management-title">
+                <img src={discountPolicyImg} className="coupon-management-img"></img>
+                <h2 className="coupon-management-title-h3">매출 내역</h2>
+            </div>
             <div>
                 <div className="saleList-title-box">매출내역</div>
             </div>
