@@ -17,7 +17,8 @@
 })();
 const urlParams = new URL(location.href).searchParams;
 
-let productList = urlParams.getAll("productList");
+let productList = String(urlParams.getAll("productList"));
+console.log(typeof productList)
 const couponName = urlParams.get("name");
 const rate =  urlParams.get("rate");
 const minPrice =  urlParams.get("minPrice");
