@@ -25,6 +25,7 @@ export default function Review() {
     const [ rate, setRate] =useState(0);
 
     const { headers, memberId } = useContext(AuthContext);
+    const [orderFlag, setOrderFlag]=useState(false);
 
     const handleStarClick = index => {
       let clickStates = [...clicked];
@@ -77,6 +78,25 @@ export default function Review() {
         }
         fetchData();
     }
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            await axios({
+                method: 'get',
+                url: url + `/order-service/orders/check/${memberId}/${productId}`,
+                headers: headers
+            })
+                .then(function (resp) {
+                    setOrderFlag(resp.data);
+                })
+                .catch(function (error) {
+                    
+                })
+        }
+        fetchData(productId);
+    }, []);
 
     {/* Paging */}
     const [productList, setProductList] = useState([]); //아이템
@@ -153,8 +173,7 @@ export default function Review() {
 
 
     return (
-        <div>
-
+           
             <div className="tabContents"><div data-v-a49b620e id="reviewMain" className="productReviewWrap" style={{width:"1100px"}}>{/**/}
                 <div data-v-2d2cca6e data-v-a49b620e className="reviewPanel groupProd summaryExists">
                     <div data-v-12dc8e2a data-v-2d2cca6e className="optionWrap stockOnly block hasImage stockOnly">{/**/}
@@ -185,25 +204,31 @@ export default function Review() {
             
         </div>
 
+        { orderFlag &&
         <div style={{padding: "10px"}}>
         <Wrap>
-      <Stars>
-        {ARRAY.map((el, idx) => {
-          return (
-            <FaStar
+            <Stars>
+            {ARRAY.map((el, idx) => {
+                return (
+                <FaStar
               key={idx}
               size="50"
               onClick={() => handleStarClick(el)}
               className={clicked[el] && 'yellowStar'}
             />
-          );
-        })}
-      </Stars>
-    </Wrap>
+                );
+            })}
+            </Stars>
+        </Wrap>
                 <textarea className="reviewContent"  value={reviewContent} onChange={changeReviewContent} style={{width: "80%", height:"100px", marginRight:"10px", marginLeft:"10px"}}></textarea>
                 <button onClick={()=>saveReview()} style={{backgroundColor: "#000", padding : "10px", paddingLeft:"40px", paddingRight:"40px", textAlign:"center", 
                 color:"#fff", borderRadius: "10px",verticalAlign: "top"}}>리뷰 등록</button>
-        </div>
+        </div> 
+
+}
+            </div>
+
+            
 
 
 
@@ -254,9 +279,7 @@ export default function Review() {
                     {searchFlag && <Paging page={currentpage} count={count} setPage={setPage} /> }
         </div>
 </div>
-</div>
 
-        </div>
 
     )
 }

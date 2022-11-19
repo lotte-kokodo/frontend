@@ -73,6 +73,7 @@ function MakeCoupon() {
 
     const [arMinPrice, setArMinPrice] = useState('');
     const [arPercent, setArPercent] = useState('');
+    const [orderFlag, setOrderFlag]=useState(false);
 
     const handleClickRadio = (e) => {
         setRadioCheck(e.target.value);
