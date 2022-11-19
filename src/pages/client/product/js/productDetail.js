@@ -20,7 +20,7 @@ function ProductDetail() {
             <ProductDetailInfo  template={changeDetailTemplate}></ProductDetailInfo>
             </div>
             <div id="productDetailNavBar">
-            <ProductDetailNavBar detailFlag={detailFlag}></ProductDetailNavBar>
+            <ProductDetailNavBar detailFlag={detailFlag} productId={productId}></ProductDetailNavBar>
             </div>
         </div>
     )
