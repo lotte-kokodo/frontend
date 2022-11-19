@@ -19,6 +19,7 @@ import {Modal} from "@mui/material";
 import CalculatePreviewModal from "../../../../components/calculate/js/calculatePreviewModal";
 
 import {ServerConfigContext} from "../../../../context/serverConfigProvider";
+import discountPolicyImg from "../../../../src_assets/seller/title/discount-policy-title.png";
 
 
 export default function CalculatePresent() {
@@ -191,7 +192,14 @@ export default function CalculatePresent() {
     return (
         <div className="body">
             <div>
-                <div className="calculate-title-box">정산현황</div>
+                <div className="coupon-management-title-container">
+                    <div className="calculate-management-title">
+                        <img src={discountPolicyImg} className="coupon-management-img"></img>
+                        <h2 className="coupon-management-title-h3">정산 현황</h2>
+                    </div>
+                </div>
+                {/*<img src={discountPolicyImg} className="coupon-management-img"></img>*/}
+                {/*<h2 className="calculate-title-box">정산현황</h2>*/}
                 <div className="calculate-header-box">
                     <div className="calculate-expect-day"> &#183; 정산 지급 예정일 &nbsp;:</div>
                     <div> &nbsp; {calculateExpectDay}</div>
@@ -265,7 +273,7 @@ export default function CalculatePresent() {
             &nbsp;
             <div>
                 <button type="button" className="calculate-button" value="" onClick={getCalculateData}>
-                    <i className="fas fa-search"></i> 검색
+                    <i className=""></i> 검색
                 </button>
             </div>
             <div className="calculate-bottom-result-box">
