@@ -51,18 +51,18 @@ class App {
         console.log(couponArr)
         console.log(couponArr[0].xpos)
         for (var idx = 0; idx < couponArr.length; idx++) {
-            var xleft = couponArr[idx].xpos - (couponArr[idx].xpos / 1.5);
-            var xright = couponArr[idx].xpos + (couponArr[idx].xpos / 1.5);
+            var xleft = couponArr[idx].xpos - (couponArr[idx].xpos / 2);
+            var xright = couponArr[idx].xpos + (couponArr[idx].xpos / 2);
             if (xleft > xright) {
                 [xleft, xright] = [xright, xleft]
             }
-            var yleft = couponArr[idx].ypos - (couponArr[idx].ypos / 1.5);
-            var yright = couponArr[idx].ypos + (couponArr[idx].ypos / 1.5);
+            var yleft = couponArr[idx].ypos - (couponArr[idx].ypos / 2);
+            var yright = couponArr[idx].ypos + (couponArr[idx].ypos / 2);
             if (yleft > yright) {
                 [yleft, yright] = [yright, yleft]
             }
-            var zleft = couponArr[idx].zpos - (couponArr[idx].zpos / 1.5);
-            var zright = couponArr[idx].zpos + (couponArr[idx].zpos / 1.5);
+            var zleft = couponArr[idx].zpos - (couponArr[idx].zpos / 2);
+            var zright = couponArr[idx].zpos + (couponArr[idx].zpos / 2);
             if (zleft > zright) {
                 [zleft, zright] = [zright, zleft]
             }
