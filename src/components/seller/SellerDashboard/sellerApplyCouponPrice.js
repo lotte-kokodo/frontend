@@ -37,7 +37,7 @@ export default function SellerApplyCouponPolicy(){
 
     return(
         // <Link to={`/seller/${sellerId}/promotion/coupon`} style={{textDecoration: "none", height: 10}}>
-            <SellerInfoBox numberInfo={numberInfo} titleName="주간 Best 쿠폰"></SellerInfoBox>
+            <SellerInfoBox updownFlag={"0"} numberInfo={numberInfo} titleName="주간 Best 쿠폰"></SellerInfoBox>
         // </Link>
     )
 }

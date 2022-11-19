@@ -19,7 +19,7 @@ const SellerChart = () => {
      */
     let monthlySaleDataset =  {
         type: 'line',
-        label: 'Dataset 1',
+        label: '2022년 정산 현황',
         borderColor: 'rgb(54, 162, 235)',
         borderWidth: 2,
         data: Array.from({length: 12}, () => 0)

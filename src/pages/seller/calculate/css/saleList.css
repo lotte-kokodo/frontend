@@ -2,6 +2,14 @@
     /* font-family: Apple SD Gothic Neo,Malgun Gothic,Helvetica Neue,Helvetica,Arial,sans-serif; */
 }
 
+.saleList-management-title{
+    display: flex;
+    justify-content: center;
+    width: 1290px;
+    align-items: center;
+    margin-top: 30px;
+}
+
 .saleList-title-box{
     font-size: 1.5em;
     /*margin-block-start: 0.83em;*/
@@ -195,9 +203,9 @@
 .saleList-button{
     margin:auto;
     display:block;
-    border: 1px #fb7d98 solid;
-    color: #FB7D98;
-    background: white;
+    border: 1px black solid;
+    color: white;
+    background-color:black;
 
     width: 120px;
     height: 40px;
@@ -205,7 +213,6 @@
     line-height: 20px;
     text-align: center;
     border-radius: 9px;
-    margin: 0% 0% 0% 50%;
 }
 
 /*search result*/
