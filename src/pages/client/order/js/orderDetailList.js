@@ -1,42 +1,42 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from "react-router-dom"
 
 import '../css/orderDetailList.css';
-import {AuthContext} from "../../../../context/authProvider";
-import {ServerConfigContext} from "../../../../context/serverConfigProvider"
+import { AuthContext } from "../../../../context/authProvider";
+import { ServerConfigContext } from "../../../../context/serverConfigProvider"
 
 function changeOrderStatus(orderStatus) {
     let result;
-    switch(orderStatus) {
+    switch (orderStatus) {
         case "ORDER_SUCCESS":
             result = "주문 완료";
-        break;
+            break;
         case "PURCHASE_CONFIRM":
             result = "구매 확정"
-        break;
+            break;
         case "REFUND_PROCESS":
             result = "환불 진행중";
-        break;
+            break;
         default:
-        result = "에러";
+            result = "에러";
     }
     return result;
 }
 
 function OrderDetailList() {
     const [orderDetails, setOrderDetails] = useState([]);
-    const {headers} = useContext(AuthContext);
+    const { headers } = useContext(AuthContext);
     const state = useLocation();
     const orderId = state.state.orderId;
     const { url } = useContext(ServerConfigContext);
 
     useEffect(() => {
-        
+
         const fetchData = async () => {
             // const memberId = 1;
             // const orderId = 1;
-            await axios.get(url + `/order-service/orders/${orderId}`, {headers: headers}
+            await axios.get(url + `/order-service/orders/${orderId}`, { headers: headers }
             )
                 .then(function (resp) {
                     setOrderDetails(resp.data);
@@ -69,7 +69,6 @@ function OrderDetailList() {
                     <div className="values-top">
                         <div className="content-detail-name">{orderDetail.obj.name}</div>
                     </div>
-                    <br></br>
                     <div className="values-bottom">
                         <div className="price">{orderDetail.obj.price}원</div>
                         <div className="qty">{orderDetail.obj.qty}개</div>
@@ -85,18 +84,21 @@ function OrderDetailList() {
 
     return (
         <div>
-            <h1>주문 내역 상세</h1>
-            <br />
-            <div className="contents">
-                {
-                    orderDetails.map(function (object) {
-                        return (
-                            <GetOrderDetailList obj={object} />
-                        )
-                    })
-                }
-                <Link className='moveButton' to={`/mypage`}
-                >뒤로가기</Link>
+            <div className='order-detail'>
+                <h1>주문 내역 상세</h1>
+                <br />
+                <div className="contents">
+                    {
+                        orderDetails.map(function (object) {
+                            return (
+                                <GetOrderDetailList obj={object} />
+                            )
+                        })
+                    }
+                    <div className='order-detail-move-button'>
+                        <Link className='moveButton' to={`/mypage`}>뒤로가기</Link>
+                    </div>
+                </div>
             </div>
         </div>
     )
