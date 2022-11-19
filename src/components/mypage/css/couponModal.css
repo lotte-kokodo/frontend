@@ -240,6 +240,5 @@
 }
 .mypage-coupon-container{
     margin: 20px;
-    overflow-y: scroll;
     height: 400px;
 }
