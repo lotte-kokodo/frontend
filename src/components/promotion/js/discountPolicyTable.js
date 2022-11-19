@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import DiscountPolicyProductModal from './discountPolicyProductModal';
 import "../css/couponTable.css"
+
 import {AuthContext} from "../../../context/authProvider";
 import freeDelivery from '../../../src_assets/seller/free_delivery.png';
 import rate from '../../../src_assets/seller/rate.png';
@@ -202,10 +203,9 @@ export default function DiscountPolicyTable() {
                                     {!listFlag && <td>{object.minPrice} 원</td>}
                                     {listFlag && <td>{object.rate} %</td>}
                                     {listFlag && <td>{object.minPrice} 원</td>}
-                                    <td><button onClick={() => showProductModal(object.name)} style={{
-                                        backgroundColor: "#fff", padding: "5px", textAlign: "center",
-                                        color: "#FB7D98", borderRadius: "5px", border: "1px solid #FB7D98"
-                                    }}>적용 상품 보기</button>
+                                    <td><button onClick={() => showProductModal(object.name)} style={{backgroundColor: "#fff", padding : "5px", textAlign:"center",
+                                        color:"black", borderRadius: "4px", border: "1px solid black"}}
+                                    >적용 상품 보기</button>
                                     </td>
                                 </tr>
                             )
