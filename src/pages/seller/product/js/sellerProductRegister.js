@@ -342,10 +342,10 @@ function SellerProductRegister() {
             alert("대표 이미지를 등록하세요.");
         }else if(formDisplayName===null || formDisplayName===""){
             alert("노출 상품명을 입력하세요.");
-        }else if(price===null || price===""){
-            alert("가격을 입력하세요.");
-        }else if(stock===null || stock===""){
-            alert("재고를 입력하세요.");
+        }else if(price===null || price==="" || price <= 0 || price > 100000000){
+            alert("가격을 입력하세요. 가격은 0원 이하 1억 초과 불가능합니다.");
+        }else if(stock===null || stock==="" || stock <= 0 || stock > 100000000){
+            alert("재고를 올바르게 입력하세요. 재고는 0 이하 및 1억 초과를 할 수 없습니다.");
         }else if(deadline===null || deadline===""){
             alert("유통기한을 입력하세요.");
         }else if(selectCategory===null || selectCategory===""){

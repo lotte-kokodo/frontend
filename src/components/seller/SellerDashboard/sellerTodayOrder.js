@@ -3,13 +3,22 @@ import SellerInfoBox from "./sellerInfoBox";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
 import {AuthContext} from "../../../context/authProvider";
 import axios from "axios";
+import {moneyComma} from "../../../common/calculate/function";
 
 export default function SellerTodayOrder(){
 
     const { url } = useContext(ServerConfigContext);
     const { sellerHeaders } = useContext(AuthContext);
 
-    const [todayOrderCount, setTodayOrderCount] = useState(0);
+    const orderCountInitData = {
+        todayOrderCount: 0,
+        upDownFlag: true,
+        changeNumberInfo: 0,
+        changeNumberPercent: 0
+    }
+    const [orderCountDto, setOrderCountDto] = useState(orderCountInitData);
+    const titleName = "당일 주문건수"
+    const unit = " 건"
 
 
     useEffect(()=>{
@@ -17,11 +26,11 @@ export default function SellerTodayOrder(){
     },[]);
 
     const getTodayOrderCount = async () => {
-        const api = url + "/seller-service/orders/todayCount";
+        const api = url + "/seller-service/orders/count";
 
         await axios.get(api, {headers: sellerHeaders})
         .then((resp) => {
-            setTodayOrderCount(resp.data.result.data);
+            setOrderCountDto(resp.data.result.data);
         })
         .catch((err) => {
             console.log(err);
@@ -29,6 +38,13 @@ export default function SellerTodayOrder(){
     }
 
     return(
-        <SellerInfoBox numberInfo={todayOrderCount} titleName={"당일 주문건수"} unit={"건"}/>
+        <>
+            <SellerInfoBox titleName={titleName}
+                           numberInfo={orderCountDto.todayOrderCount}
+                           updownFlag={orderCountDto.upDownFlag ? 1 : 0}
+                           changeNumberInfo={orderCountDto.changeNumberInfo}
+                           changNumberPercent={orderCountDto.changeNumberPercent}
+                           unit={unit}/>
+        </>
     )
 }

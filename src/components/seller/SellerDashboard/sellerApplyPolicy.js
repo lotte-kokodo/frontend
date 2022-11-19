@@ -11,7 +11,7 @@ export default function SellerApplyPolicy(){
     const sellerId = localStorage.getItem("sellerId");
     let titleName = "이번주 적용된 정책 할인 가격";
     let unit = "원"
-    const [numberInfo, setNumberInfo] = useState("");
+    const [numberInfo, setNumberInfo] = useState("0");
 
     const getCalculateExpectMount = async () => {
         await axios.get( url + `/promotion-service/rate-discount/seller/${sellerId}/week`,{headers : sellerHeaders})

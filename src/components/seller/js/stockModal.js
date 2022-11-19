@@ -18,19 +18,26 @@ export default function StockModal(props) {
 
 
     const stockaxios = async () => {
-        await axios({
-            method: "post",
-            url: url + `/seller-service/product/stock`,
-            data : params,
-            headers: sellerHeaders
-        }) 
-        .then(function(){
-            props.stcokUpdate.stock = stockModify;
-            props.onModalDisplay();
-        })
-        .catch(function(error){
-            console.log(error);
-        })
+
+        if(stockModify < 0) {
+            alert("재고는 0 미만 일 수 없습니다. 확인해주세요.");
+        }else if(stockModify > 100000000) {
+            alert("재고는 1억 초과 일 수 없습니다. 확인해주세요.");
+        }else {
+            await axios({
+                method: "post",
+                url: url + `/seller-service/product/stock`,
+                data : params,
+                headers: sellerHeaders
+            }) 
+            .then(function(){
+                props.stcokUpdate.stock = stockModify;
+                props.onModalDisplay();
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        }
     }
 
     return (

@@ -62,6 +62,16 @@ function Home() {
         history('/mdRecommendation')
     }
 
+    const arCoupon = () => {
+        if(localStorage.getItem('memberId') == null || localStorage.getItem('memberId') == "") {
+            alert("로그인 후 이용이 가능합니다.");
+            history('/login');    
+        }else {
+            history('/clientApp/clientIndex.html');
+            window.location.reload();
+        }
+    }
+
     // 상품
     const [newState, setNewState] = useState([]);
     const [saleState, setSaleState] = useState([]);
@@ -135,14 +145,15 @@ function Home() {
                 </div>
 
                 <div className="banner_images" ref={slideRef}>
+                    
                     <img className="banner_img" alt="banner"
-                    src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20221011/IMG1665uVR463652254.jpg"/>
+                    src="https://kokodo-product.s3.ap-northeast-1.amazonaws.com//banner.png" onClick={arCoupon}/>
                     <img className="banner_img" alt="banner"
                     src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220902/IMG1662TWQ094834801.jpg"/>
                     <img className="banner_img" alt="banner"
                     src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220930/IMG1664Kbq521622683.jpg"/>
                     <img className="banner_img" alt="banner"
-                    src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220902/IMG1662YEZ094822689.jpg"/>
+                    src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220902/IMG1662YEZ094822689.jpg"/>\
                     <img className="banner_img" alt="banner"
                     src="https://file.rankingdak.com/image/RANK/BANNER/AR_IMG_1/20220916/IMG1663ZYA316795501.jpg"/>
                 </div>

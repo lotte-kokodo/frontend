@@ -30,6 +30,7 @@ export default function ProductDetail({img, template}) {
     const [totalReview, setTotalReview ]=useState(0);
     const [ coupon, setCoupon ] =useState('');
     const [ratePolicy, setRatePolicy] =useState('');
+    const [ fixCoupon, setFixCoupon] = useState([]);
 
     // productId[key]: qty[value]
     let productQtyMap = {};
@@ -86,7 +87,12 @@ export default function ProductDetail({img, template}) {
             couponIds.push(coupon.id);
         }
 
-        // TODO: Member ID 같이 전송해야함
+        let fixCouponIds = [];
+
+        for(var fixCouponId  of fixCoupon){
+            fixCouponIds.push(fixCouponId.id);
+        }
+        
         const test = async () => {
             await axios.post(url + `/promotion-service/userCoupon/list`,null,{ params: { rateIdList: couponIds.join(",")},  headers: { memberId: memberId } })
                 .then(function (resp) {
@@ -96,8 +102,20 @@ export default function ProductDetail({img, template}) {
                     console.log(error);
                 })
         }
+        console.log("fixCoupon list");
+        console.log(fixCoupon);
+        const fixCouponSave = async () => {
+            await axios.post(url + `/promotion-service/userCoupon/list/fixCoupon`,null,{ params: { fixCouponList: fixCouponIds.join(",")},  headers: { memberId: memberId } })
+                .then(function (resp) {
+                    alert("무료 배송 쿠폰 다운로드 성공");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
 
         test(productId);
+        fixCouponSave(productId);
     }
 
     const recentProduct = (item) => {
@@ -181,7 +199,20 @@ export default function ProductDetail({img, template}) {
                     console.log(error);
                 })
         }
+
+        const fetchFixData = async () => {
+            await axios.get(url + `/promotion-service/fixCoupon/${productId}`)
+                .then(function (resp) {
+                    console.log("고정 쿠폰 조회");
+                    console.log(resp);
+                    setFixCoupon(resp.data.result.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
         fetchData(productId);
+        fetchFixData();
     }, []);
 
     // 할인 정책 정보
@@ -241,7 +272,7 @@ export default function ProductDetail({img, template}) {
         <div className="swiper-container goods-top swiper-container-fade swiper-container-initialized swiper-container-horizontal">
             <ul className="swiper-wrapper" style={st1}>
                 <li className="swiper-slide swiper-slide-prev" style={st2}>
-                    <img  data-src={product.thumbnail} style={{ height:'500px'}} 
+                    <img  data-src={product.thumbnail} style={{ height:'500px',"overflow": "hidden"}} 
                         alt="[맛있닭] 명실상부 No.1 닭가슴살 스테이크 &amp; 추가 증정" className="lozad" src={product.thumbnail} data-loaded="true" />
                     <div className="goods-badge">
                         <img src="https://file.rankingdak.com/image/RANK/PRODUCT/ICONTHUMB/20220406/IMG1649RCM228742248.png" alt="" />
