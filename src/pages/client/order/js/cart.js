@@ -15,10 +15,15 @@ const Cart = () => {
 
 	return (
 		<>
+			<div className="order-page-title-container d-flex justify-content-center">
+				<i className="fas fa-shopping-basket"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+				<span className="order-page-title-name-span">장바구니</span>
+			</div>
 				<div className="order-container">
 					<div className="row">
 						<div className="col-9">
 							<Delivery /> {/* 배송정보 */}
+							<br />
 							<SellerList /> {/* 장바구니 상품 목록 */}
 						</div>
 						<div className="col-3">

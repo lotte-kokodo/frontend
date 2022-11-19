@@ -7,6 +7,9 @@ import {ServerConfigContext} from "../../../context/serverConfigProvider";
 import {AuthContext} from "../../../context/authProvider";
 import axios from "axios";
 
+import "../../../pages/client/order/css/order.css"
+
+
 // Provider
 
 const OrderButton = () => {
@@ -46,7 +49,13 @@ const OrderButton = () => {
       checkCartMap.get(sellerId).map((cart) => {
         cartIds.push(cart.cartId);
         productIds.push(cart.productId);
-        productQtyMap[cart.productId] = cart.qty;
+
+        if (productQtyMap[cart.productId]) {
+          productQtyMap[cart.productId] = productQtyMap[cart.productId] + cart.qty;
+        }
+        else {
+          productQtyMap[cart.productId] = cart.qty;
+        }
       })
     });
     setRateDiscountPolicyMap({});
@@ -58,10 +67,12 @@ const OrderButton = () => {
   return (
       <>
         <br/>
-        <div className="row btn btn-danger btn-block" onClick={getOrdersheet}>
-        {/*<div className="row btn btn-danger btn-block" onClick={createOrderProductInfo}>*/}
-          주문하기
+        <div  className="d-flex justify-content-end">
+          <div className="btn btn-block order-btn" onClick={getOrdersheet}>
+            주문하기
+          </div>
         </div>
+
       </>
   )
 }

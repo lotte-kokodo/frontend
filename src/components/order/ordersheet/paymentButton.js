@@ -19,7 +19,7 @@ const PaymentButton = (props) => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers, memberId } = useContext(AuthContext);
-  const { orderProductMap, checkRateCoupons, checkFixCoupons } = useContext(OrderContext);
+  const { orderProductMap, checkRateCoupons, checkFixCoupons, setCheckRateCoupons, setCheckFixCoupons } = useContext(OrderContext);
 
   const navigate = useNavigate();
 
@@ -40,8 +40,9 @@ const PaymentButton = (props) => {
 
     await axios.post(api, req, { headers: headers })
     .then((resp) => {
+      clearCheckCoupons();
       alert(resp.data.result.data);
-      navigate(`/`); // TODO 주문상세로 이동
+      navigate(`/orderDetailList`);
     })
     .catch((err) => {
       console.log(err);
@@ -76,8 +77,9 @@ const PaymentButton = (props) => {
 
     await axios.post(api, req, {headers: headers})
     .then((resp) => {
+      clearCheckCoupons();
       alert(resp.data.result.data);
-      navigate(`/`);
+      navigate(`/orderDetailList`);
     })
     .catch((err) => {
       console.log(err);
@@ -89,11 +91,16 @@ const PaymentButton = (props) => {
     });
   }
 
+  const clearCheckCoupons = () => {
+    setCheckRateCoupons([]);
+    setCheckFixCoupons([]);
+  }
+
   return (
       <>
         <br/>
-        <div className="row">
-            <button className="btn btn-danger btn-block"
+        <div  className="d-flex justify-content-end">
+            <button className="btn btn-block order-btn"
                     onClick={cartIds.length !== 0 ? orderCartProducts : orderSingleProduct}>
               결제하기
             </button>

@@ -4,6 +4,8 @@
 
 // Context
 import {OrderContext} from "../../../context/orderProvider";
+import "../../../pages/client/order/css/order.css"
+
 
 // Module
 import {useContext, useEffect, useState} from "react"
@@ -20,9 +22,7 @@ const Payment = (props) => {
   const [ payPrice, setPayPrice ] = useState(999999);
 
   useEffect(() => {
-    if (orderProductMap && rateDiscountPolicyMap && fixDiscountPolicyMap && checkRateCoupons && checkFixCoupons) {
-      calcPaymentPrice();
-    }
+    calcPaymentPrice();
   }, [orderProductMap, rateDiscountPolicyMap,
     fixDiscountPolicyMap, checkRateCoupons, checkFixCoupons]);
 
@@ -62,8 +62,9 @@ const Payment = (props) => {
     });
 
     let delPrice = 0;
+    console.log("배송비 게산");
     sellerIds.map((sellerId) => {
-      if (notAppliedFixDiscountPolicy(sellerId) && notAppliedFixCouponPolicy(sellerId)) {
+      if (notAppliedFixDiscountPolicy(sellerId) && notAppliedFixCoupon(sellerId)) {
         delPrice += DELIVERY_PRICE;
       }
     })
@@ -76,10 +77,12 @@ const Payment = (props) => {
     return fixDiscountPolicyMap[sellerId] === false;
   }
 
-  const notAppliedFixCouponPolicy = (sellerId) => {
+  const notAppliedFixCoupon = (sellerId) => {
     for (let i=0; i<checkFixCoupons.length; i++) {
       const fixCoupon = checkFixCoupons[i];
+      console.log(fixCoupon);
       if (fixCoupon.sellerId === sellerId) {
+        console.log("배송쿠폰 적용")
         return false;
       }
     }
@@ -89,25 +92,27 @@ const Payment = (props) => {
   return (
       <>
         <h3>결제예정금액</h3><hr/>
-        <table>
+        <table className="payment-table">
           <tbody>
           <tr>
             <td>상품금액</td>
-            <td>{replaceNumberComma(totalPrice)} 원</td>
+            <td className="table-value-td">{replaceNumberComma(totalPrice)} 원</td>
           </tr>
           <tr>
             <td>상품할인금액</td>
-            <td>-{replaceNumberComma(discountPrice)} 원</td>
+            <td className="table-value-td">- &nbsp; {replaceNumberComma(discountPrice)} 원</td>
           </tr>
           <tr>
             <td>배송비</td>
-            <td>{replaceNumberComma(deliveryPrice)} 원</td>
+            <td className="table-value-td">{replaceNumberComma(deliveryPrice)} 원</td>
           </tr>
           </tbody>
         </table>
-        <hr/>
         <div>
-          <span>{replaceNumberComma(payPrice)} 원</span>
+          <hr/>
+          <div className="d-flex justify-content-end">
+            <span className="total-price-span">{replaceNumberComma(payPrice)} 원</span>
+          </div>
         </div>
       </>
   )
