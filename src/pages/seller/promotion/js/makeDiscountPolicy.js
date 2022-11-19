@@ -48,7 +48,7 @@ const MakeDiscountPolicy = () => {
     const sellerId = localStorage.getItem("sellerId");
     const [productList, setProductList] = React.useState([]);
     const [productName, setProductName] = useState();
-    
+
     var discountPolicyName, startDate, endDate, radioCheck;
     var rateMinPrice, ratePercent;
     var fixMinPrice, fixWon;
@@ -164,12 +164,12 @@ const MakeDiscountPolicy = () => {
     const FetchProduct = () => {
         if (productName === undefined) {
             const fetchProduct = () => {
-                axios({
-                    method: "get",
-                    url: url + "/product-service/product/detail/all",
-                    params: {sellerId: sellerId}
-                })
+                axios.get(
+                    url + "/product-service/product/detail/all/" + sellerId
+                )
                     .then(function (resp) {
+                        console.log("정책 결과물!!!")
+                        console.log(resp)
                         setProductList(resp.data.result.data);
                     })
                     .catch(function (error) {
