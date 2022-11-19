@@ -47,7 +47,8 @@ const PaymentButton = (props) => {
       console.log(err);
       const errMessage = err.response.data.message;
       if (errMessage === "배송정보 미등록") {
-        navigate("/mypageRead")
+        alert(errMessage);
+        navigate("/mypageRead");
       }
     });
 

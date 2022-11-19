@@ -61,14 +61,14 @@ const DiscountPolicyInput = (props) => {
     }
 
     const setPropStartDate = (startDate) => {
-        startDate.setHours(0, 0, 0);
         setStartDate(startDate);
+        startDate.setHours(0, 0, 0);
         props.setPropStartDate(startDate);
     }
 
     const setPropEndDate = (endDate) => {
-        endDate.setHours(23, 59, 59);
         setEndDate(endDate);
+        endDate.setHours(23, 59, 59);
         props.setPropEndDate(endDate);
     }
 

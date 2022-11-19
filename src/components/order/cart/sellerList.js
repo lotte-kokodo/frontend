@@ -12,7 +12,7 @@ const SellerList = () => {
 
   const { url } = useContext(ServerConfigContext);
   const { headers } = useContext(AuthContext);
-  const { cartMap, setCartMap, checkCartMap, setCheckCartMap, setFixDiscountPolicyMap, setRateDiscountPolicyMap, setSellerNameMap, fixDiscountPolicy } = useContext(OrderContext);
+  const { cartMap, setCartMap, checkCartMap, setCheckCartMap, setFixDiscountPolicyMap, setRateDiscountPolicyMap, setSellerNameMap, fixDiscountPolicy, sellerNameMap } = useContext(OrderContext);
 
   const api = url + "/order-service/carts";
 
@@ -151,7 +151,7 @@ const SellerList = () => {
 
             return (
                 <div className="row container-fluid">
-                  <SellerName sellerId={sellerId} sellerCartCnt={sellerCarts.length} />
+                  <SellerName sellerId={sellerId} sellerCartCnt={sellerCarts.length} sellerNameMap={sellerNameMap} />
                   <CartList carts={sellerCarts} sellerId={sellerId}/>
                   <FixDiscountPolicy sellerId={sellerId}/>
                 </div>

@@ -12,6 +12,10 @@
     display: flex;
 }
 
+.banner_img{
+    width: 100%;
+}
+
 .banner_buttonsLeft{
     width: 70px;
     height: 70px;
