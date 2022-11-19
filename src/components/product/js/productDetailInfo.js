@@ -74,7 +74,7 @@ export default function ProductDetail({img, template}) {
         let saleNum = originPrice * (percent/100);
         let tmp=originPrice - saleNum;
 
-        return tmp;
+        return Math.floor(tmp);
     }
 
     const changeOrderNum = (e)=>{
