@@ -28,8 +28,9 @@ export default function SellerApplyPolicy(){
 
     return(    
         <SellerInfoBox titleName={titleName} 
-            numberInfo={numberInfo}
+            numberInfo={numberInfo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             unit={unit}
+            updownFlag={"0"}
             >
         </SellerInfoBox>
     )
