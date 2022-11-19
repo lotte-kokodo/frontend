@@ -1,6 +1,7 @@
 import React from "react"
 import axios from "axios"
 import "../css/saleList.css"
+import "../../promotion/css/couponManagement.css"
 import Pagination from "react-js-pagination";
 import {useState, useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -14,7 +15,7 @@ import { useContext } from "react";
 import { ServerConfigContext } from "../../../../context/serverConfigProvider";
 
 import moment from "moment";
-import discountPolicyImg from "../../../../src_assets/seller/title/discount-policy-title.png";
+import salesImage from "../../../../src_assets/seller/title/sales-title.png";
 
 export default function SaleList() {
     const { url } = useContext(ServerConfigContext);
@@ -126,13 +127,14 @@ export default function SaleList() {
 
     return (
         <div className="body">
-            <div className="saleList-management-title">
-                <img src={discountPolicyImg} className="coupon-management-img"></img>
+            <div className="saleList-management-title"></div>
+            <div className="coupon-management-title">
+                <img src={salesImage} className="coupon-management-img"></img>
                 <h2 className="coupon-management-title-h3">매출 내역</h2>
             </div>
-            <div>
+            {/* <div>
                 <div className="saleList-title-box">매출내역</div>
-            </div>
+            </div> */}
             <div>
                 <div className="saleList-search-criteria-box">
                     <div className="saleList-criteria-day-box">기간</div>
@@ -149,7 +151,7 @@ export default function SaleList() {
                     </div>
                     <div className="saleList-provide-status-border">
                         <div className="saleList-title-provide-status-box">조회조건</div>
-                        <input name="prvidesuccess" className="saleList-radio-unit" value="PROVIDE_SCHEDULE" type="radio" onClick={provideStatusChange}/>
+                        <input name="prvidesuccess" className="saleList-radio-unit" value="PROVIDE_SCHEDULE" type="radio" onClick={provideStatusChange} checked/>
                         <div className="saleList-radio-unit2" value="PROVIDE_SCHEDULE">업체별</div>
                         <input name="prvidesuccess"className="saleList-radio-unit" value="PROVIDE_POSTPONE" type="radio" onClick={provideStatusChange}/>
                         <div className="saleList-radio-unit2" value="PROVIDE_POSTPONE">상품별</div>
