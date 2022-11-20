@@ -115,9 +115,13 @@ const CartRow = (props) => {
 										<span>&nbsp;&nbsp;{cart.productName}</span>
 									</div>
 									<div className="col-2">
-										<button onClick={decreaseQty}>-</button> &nbsp;
+										<button onClick={decreaseQty}>
+											<i className="fas fa-plus-circle"></i>
+										</button> &nbsp;
 										<span>{qty}</span> &nbsp;
-										<button onClick={increaseQty}>+</button> &nbsp;
+										<button onClick={increaseQty}>
+											<i className="fas fa-minus-circle"></i>
+										</button> &nbsp;
 									</div>
 									<div className="col-3">
 										<Price cart={cart} />
