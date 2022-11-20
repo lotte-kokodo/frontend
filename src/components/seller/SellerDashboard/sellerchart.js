@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components';
 import {Line} from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
 import axios from "axios";
-import {moneyComma} from "../../../common/calculate/function";
-import {useParams} from "react-router-dom";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
 import {AuthContext} from "../../../context/authProvider";
 
@@ -20,7 +17,7 @@ const SellerChart = () => {
     let monthlySaleDataset =  {
         type: 'line',
         label: '2022년 정산 현황',
-        borderColor: 'rgb(54, 162, 235)',
+        borderColor: 'rgb(155, 17, 30)',
         borderWidth: 2,
         data: Array.from({length: 12}, () => 0)
     };
@@ -30,8 +27,8 @@ const SellerChart = () => {
      */
     let monthlyOrderDataset =  {
         type: 'bar',
-        label: '월별 주문건수',
-        borderColor: 'rgb(54, 162, 235)',
+        label: '2022년 주문 현황',
+        borderColor: 'rgb(211, 211, 211)',
         borderWidth: 2,
         data: Array.from({length: 12}, () => 0)
 
@@ -47,9 +44,13 @@ const SellerChart = () => {
     const getAnnualSalesInfo = async () =>{
         await axios.get( url + `/calculate-service/calculate/${sellerId}/annualSalesInfo`,{
         }).then(function (resp) {
-            // TODO: 백엔드와 연동 시 52라인 주석, 51라인 사용
-            // monthlySaleDataset.data = resp.data.result.data;
-            monthlySaleDataset.data = [2,2,2,2,2,2,2,2,2,2,2,2];
+            // TODO: 백엔드와 연동 시 51-53라인 사용
+            // const data = resp.data.result.data;
+            // monthlySaleDataset.data = [data.january, data.febuary, data.march, data.april, data.may, data.june,
+            //                             data.july, data.august, data.september, data.october, data.november, data.december];
+
+            monthlySaleDataset.data = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
+
             setInitData(prevState => ({...prevState,
                 datasets: [monthlySaleDataset, monthlyOrderDataset]
             }));
