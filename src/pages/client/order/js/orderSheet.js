@@ -48,24 +48,28 @@ function OrderSheet() {
 	return (
 			<>
 				{/*<OrderProvider>*/}
+				<div className="order-page-title-container d-flex justify-content-center">
+					<i className="far fa-file-alt"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+					<span className="order-page-title-name-span">주문서</span>
+				</div>
 				<div className="order-container">
 					<div className="row">
 						<div className="col">
-							<Delivery />
+							<Delivery /><br/><br/>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col">
 							<OrderProductList
 									productIds={productIds}
-									productQtyMap={productQtyMap}/>
+									productQtyMap={productQtyMap}/><br/><br/>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-9">
 							<CouponList
 									productIds={productIds}
-									productQtyMap={productQtyMap}/>
+									productQtyMap={productQtyMap}/><br/>
 						</div>
 						<div className="col-3">
 							<Payment

@@ -11,7 +11,7 @@ import {useContext, useEffect, useState} from "react"
 const Payment = () => {
 
 	const { cartMap, checkCartMap, fixDiscountPolicyMap, rateDiscountPolicyMap,
-				replaceNumberComma, DELIVERY_PRICE } = useContext(OrderContext)
+		replaceNumberComma, DELIVERY_PRICE } = useContext(OrderContext)
 
 	const [totalPrice, setTotalPrice] = useState(999999999);
 	const [discountPrice, setDiscountPrice] = useState(0);
@@ -68,29 +68,32 @@ const Payment = () => {
 	}
 
 	return (
-		<>
-			<h3>결제예정금액</h3><br/>
-			<table>
-				<tbody>
+			<>
+				<h3>결제예정금액</h3><br/>
+				<table className="payment-table">
+					<tbody>
 					<tr>
 						<td>상품금액</td>
-						<td>{replaceNumberComma(totalPrice)} 원</td>
+						<td className="table-value-td">{replaceNumberComma(totalPrice)} 원</td>
 					</tr>
 					<tr>
 						<td>상품할인금액</td>
-						<td>{replaceNumberComma(discountPrice)} 원</td>
+						<td className="table-value-td">{replaceNumberComma(discountPrice)} 원</td>
 					</tr>
 					<tr>
 						<td>배송비</td>
-						<td>{replaceNumberComma(deliveryPrice)} 원</td>
+						<td className="table-value-td">{replaceNumberComma(deliveryPrice)} 원</td>
 					</tr>
-				</tbody>
-			</table>
-			<hr/>
-			<div>
-				<span>{replaceNumberComma(payPrice)} 원</span>
-			</div>
-		</>
+					</tbody>
+				</table>
+				<div>
+					<hr/>
+					<div className="d-flex justify-content-end">
+						<span className="total-price-span">{replaceNumberComma(payPrice)} 원</span>
+					</div>
+
+				</div>
+			</>
 	)
 }
 

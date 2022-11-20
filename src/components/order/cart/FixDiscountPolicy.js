@@ -22,8 +22,8 @@ const FixDiscountPolicy = (props) => {
   const deliveryPrice = () => {
 
     return (
-        <div className="row container-fluid">
-          <span>배송비 {replaceNumberComma(DELIVERY_PRICE)} 원</span>
+        <div className="row fix-discount-policy-div">
+          <span>판매자 상품 배송비 {replaceNumberComma(DELIVERY_PRICE)} 원</span>
         </div>
     )
   }

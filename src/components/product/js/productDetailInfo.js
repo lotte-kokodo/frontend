@@ -31,6 +31,8 @@ export default function ProductDetail({img, template}) {
     const [ coupon, setCoupon ] =useState('');
     const [ratePolicy, setRatePolicy] =useState('');
     const [ fixCoupon, setFixCoupon] = useState([]);
+
+    const navigate = useNavigate();
     const [couponFlag, setCouponFlag] = useState(false);
 
     // productId[key]: qty[value]
@@ -260,6 +262,7 @@ export default function ProductDetail({img, template}) {
             console.log(resp.data.result.data);
 
             alert(resp.data.result.data);
+            navigate("/cart");
         })
         .catch((err) => {
             console.log(err);
