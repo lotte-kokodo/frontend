@@ -1,7 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components';
 import {Line} from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
 import axios from "axios";
+import {moneyComma} from "../../../common/calculate/function";
+import {useParams} from "react-router-dom";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
 import {AuthContext} from "../../../context/authProvider";
 
@@ -46,7 +49,7 @@ const SellerChart = () => {
         }).then(function (resp) {
             // TODO: 백엔드와 연동 시 51-53라인 사용
             const data = resp.data.result.data;
-            monthlySaleDataset.data = [data.january, data.febuary, data.march, data.april, data.may, data.june,
+            monthlySaleDataset.data = [data.january, data.february, data.march, data.april, data.may, data.june,
                                         data.july, data.august, data.september, data.october, data.november, data.december];
 
             // monthlySaleDataset.data = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
