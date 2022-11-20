@@ -45,11 +45,11 @@ const SellerChart = () => {
         await axios.get( url + `/calculate-service/calculate/${sellerId}/annualSalesInfo`,{
         }).then(function (resp) {
             // TODO: 백엔드와 연동 시 51-53라인 사용
-            // const data = resp.data.result.data;
-            // monthlySaleDataset.data = [data.january, data.febuary, data.march, data.april, data.may, data.june,
-            //                             data.july, data.august, data.september, data.october, data.november, data.december];
+            const data = resp.data.result.data;
+            monthlySaleDataset.data = [data.january, data.febuary, data.march, data.april, data.may, data.june,
+                                        data.july, data.august, data.september, data.october, data.november, data.december];
 
-            monthlySaleDataset.data = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
+            // monthlySaleDataset.data = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
 
             setInitData(prevState => ({...prevState,
                 datasets: [monthlySaleDataset, monthlyOrderDataset]
