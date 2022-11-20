@@ -12,7 +12,7 @@ import {useEffect} from "react";
   const qty = props.qty;
 
   return (
-      <div className="row">
+      <div className="row order-product-row-div">
        <div className="col-2">
         <img className="order-product-img" src={product.thumbnail} alt={product.name} />
        </div>

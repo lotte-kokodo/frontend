@@ -17,6 +17,7 @@ import {useContext, useState} from "react"
 import {AuthContext} from "../../../context/authProvider";
 import {OrderContext} from "../../../context/orderProvider";
 import {ServerConfigContext} from "../../../context/serverConfigProvider";
+import {useNavigate} from "react-router-dom";
 
 const CartRow = (props) => {
 
@@ -28,6 +29,8 @@ const CartRow = (props) => {
 	const [qty, setQty] = useState(cart.qty);
 	const { checkCartMap, setCheckCartMap, cartMap } = useContext(OrderContext);
 
+	const navigate = useNavigate();
+
 	const updateQty = async (updatedQty) => {
 
 		const api = url + "/order-service/carts/qty";
@@ -37,7 +40,7 @@ const CartRow = (props) => {
 			qty: updatedQty
 		}
 
-		await axios.post(api, req, {headers: headers })
+		await axios.patch(api, req, {headers: headers })
 		.then((resp) => {
 			setQty(updatedQty);
 			updateProductQty(updatedQty);
@@ -45,7 +48,11 @@ const CartRow = (props) => {
 		.catch((err) => {
 			const data = err.response.data;
 			alert(data.message);
-			setQty(data.result.qtyAvailable);
+
+			const qtyAvailable = data.result.qtyAvailable;
+			if (qtyAvailable) {
+				setQty(qtyAvailable);
+			}
 		});
 	}
 
@@ -76,6 +83,11 @@ const CartRow = (props) => {
 		updateQty(updatedQty);
 	}
 
+	const routeProductDetail = () =>{
+		let path = `/productDetail/${cart.productId}`;
+		navigate(path);
+	}
+
 	return (
 			<>
 				<div className="row container-fluid order-product-row-div">
@@ -97,10 +109,10 @@ const CartRow = (props) => {
 															sellerCartCnt={props.sellerCartCnt}/>
 									</div>
 									<div className="col-2">
-										<img className="order-product-img" src={cart.productThumbnail} alt={cart.productName} />
+										<img className="order-product-img" src={cart.productThumbnail} onClick={routeProductDetail} alt={cart.productName} />
 									</div>
 									<div className="col-4">
-										<span>{cart.productName}</span>
+										<span>&nbsp;&nbsp;{cart.productName}</span>
 									</div>
 									<div className="col-2">
 										<button onClick={decreaseQty}>-</button> &nbsp;

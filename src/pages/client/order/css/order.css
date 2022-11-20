@@ -1,23 +1,107 @@
 .order-container {
 	width: 1000px;
-	margin: 50px auto;
+	margin: 20px auto;
 }
 
 .order-product-img {
 	width: 7em;
 	height: 7em;
+	border-radius: 10%;
 }
 
 .order-product-row-div, .seller-name-row-div {
-	margin-top: 25px;
-	margin-bottom: 25px;
+	margin-top: 10px;
 }
 
-.coupon-card-div {
+.seller-list-div {
+	background-color: #F8F9FA;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 2%;
+}
+
+.seller-name-span {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.seller-name-row-div {
+	margin-bottom: 20px;
+}
+
+.fix-discount-policy-div {
+	font-weight: bold;
+	margin: 20px auto 0 auto;
+}
+
+.order-page-title-container {
+	width: 1000px;
+	margin: 10px auto 0 auto;
+}
+
+.order-page-title-name-span {
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.fa-shopping-basket, .fa-file-alt {
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.order-btn{
+	color: #FFFFFF;
+	background-color: #000000;
+}
+
+.order-btn:hover{
+	color: #000000;
+	background-color: #ffffff;
+	border-color: #000000;
+}
+
+.table-value-td {
+	text-align: right;
+}
+
+.payment-table {
+	width: 100%;
+}
+
+.total-price-span {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.check-coupon-card-div {
 	height: 120px;
+	width: 300px;
 	padding: 10px;
+	float: left;
+	margin: 0 10px 10px 0;
+
+	color: #000000;
+	background: #EDEDED !important;
+	opacity: 0.8;
 }
 
-.coupon-card-div:active {
-	color: #fb7d98;
+.uncheck-coupon-card-div {
+	height: 120px;
+	width: 300px;
+	padding: 10px;
+	float: left;
+	margin: 0 10px 10px 0;
+
+	background-color: #FFFFFF;
+}
+
+.check-coupon-card-div:hover, .uncheck-coupon-card-div:hover {
+	color: #ff0000 !important;
+	opacity: 0.8;
+}
+
+.coupon-price-span {
+	font-weight: bold;
+	font-size: 20px;
 }

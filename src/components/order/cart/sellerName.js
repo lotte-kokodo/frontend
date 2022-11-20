@@ -1,6 +1,9 @@
 import {useContext, useEffect} from "react";
 import {OrderContext} from "../../../context/orderProvider";
 
+import "../../../pages/client/order/css/order.css"
+
+
 const SellerName = (props) => {
 
   const sellerCartCnt = props.sellerCartCnt;
@@ -15,7 +18,7 @@ const SellerName = (props) => {
   return (
       <>
         <div className="row container-fluid seller-name-row-div">
-            <span>{sellerNameMap[sellerId]} &nbsp; {sellerCartCnt} 건</span>
+            <span className="seller-name-span">{sellerNameMap[sellerId]} &nbsp; {sellerCartCnt} 건</span>
         </div>
       </>
   )
