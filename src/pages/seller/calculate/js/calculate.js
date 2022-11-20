@@ -90,6 +90,7 @@ export default function CalculatePresent() {
     const getExpectEndDay = async () => {
         let today = new Date();
         today.setMonth(today.getMonth() + 1);
+        today.setDate(today.getDate() + 1)
         setTmpEndDate(parseToLocalDate(today.getFullYear() + "-" + today.getMonth() + "-" + today.getUTCDate()))
         console.log(tmpEndDate);
     }
@@ -237,7 +238,7 @@ export default function CalculatePresent() {
                 <div className="calculate-provide-status-border">
                     <div className="calculate-title-provide-status-box">지급상태</div>
                     <input name="prvidesuccess" className="calculate-radio-unit" value="ALL"
-                        type="radio" onClick={provideStatusChange} checked/>
+                        type="radio" onClick={provideStatusChange}/>
                     <div className="calculate-radio-unit2" value="">전체</div>
                     <input name="prvidesuccess" id='test' className="calculate-radio-unit" value="PROVIDE_SUCCESS"
                         type="radio" onClick={provideStatusChange} />
