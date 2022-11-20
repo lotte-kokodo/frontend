@@ -116,11 +116,11 @@ const CartRow = (props) => {
 									</div>
 									<div className="col-2">
 										<button onClick={decreaseQty}>
-											<i className="fas fa-plus-circle"></i>
+											<i className="fas fa-minus-circle"></i>
 										</button> &nbsp;
 										<span>{qty}</span> &nbsp;
 										<button onClick={increaseQty}>
-											<i className="fas fa-minus-circle"></i>
+											<i className="fas fa-plus-circle"></i>
 										</button> &nbsp;
 									</div>
 									<div className="col-3">

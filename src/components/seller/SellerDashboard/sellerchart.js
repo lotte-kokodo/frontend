@@ -22,26 +22,61 @@ const SellerChart = () => {
         label: '2022년 정산 현황',
         borderColor: 'rgb(155, 17, 30)',
         borderWidth: 2,
-        data: Array.from({length: 12}, () => 0)
+        data: Array.from({length: 12}, () => 0),
+        yAxisID: "calculate-y"
     };
 
     /**
      * 월간 주문 차트
      */
-    let monthlyOrderDataset =  {
+    let monthlyOrderDataset = {
         type: 'bar',
         label: '2022년 주문 현황',
         borderColor: 'rgb(211, 211, 211)',
         borderWidth: 2,
-        data: Array.from({length: 12}, () => 0)
-
-    };
+        data: Array.from({length: 12}, () => 0),
+        yAxisID: "order-y"
+    }
 
     const [initData, setInitData] = useState({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'],
+        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월','10월', '11월', '12월'],
         datasets: [
             monthlySaleDataset, monthlyOrderDataset
-        ]
+        ],
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            stacked: false,
+            scales: {
+                'left-y-axis': {
+                    type: 'linear',
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: "정산금액"
+                    },
+                    grid: {
+                        borderDash: [8, 6],
+                        lineWidth: 2
+                    }
+                },
+                'right-y-axis' : {
+                    type: 'linear',
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: "주문건수"
+                    },
+                    grid: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                },
+            },
+
+        }
     });
 
     const getAnnualSalesInfo = async () =>{
