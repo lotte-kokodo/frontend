@@ -20,7 +20,7 @@ const Price = (props) => {
 				<>
 					<del>{replaceNumberComma(totalPrice)} 원</del><br/><br/>
 					<span>{replaceNumberComma(discPrice)}</span> 원 &nbsp;
-					<i className="far fa-question-circle"></i> &npbs;
+					<i className="far fa-question-circle"></i> &nbsp;
 					<span>{discountRate} % 할인 적용</span>
 				</>
 		);
