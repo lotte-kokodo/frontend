@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import '../css/productDetailNavBar.css';
@@ -7,6 +7,8 @@ import '../css/productDetailNavBar.css';
 import Review from "./review";
 import DetailImage from "./detailImage";
 import DetailTemplate from "./detailTemplate";
+import { AuthContext } from "../../../context/authProvider";
+import { ServerConfigContext } from "../../../context/serverConfigProvider";
 
 // const st1 = { transitionDuration: "300ms" }
 // const st2 = { width: "480px", opacity: "1", transform: "translate3d(0px, 0px, 0px)", transitionDuration: "300ms" }
@@ -14,8 +16,11 @@ import DetailTemplate from "./detailTemplate";
 // const st4 = { width: "88px", marginRight: "10px" }
 
 export default function ProductDetailNavBar(props) {
-
+    const { url } = useContext(ServerConfigContext);
     // let { productId } = useParams(null);
+    const { headers, memberId } = useContext(AuthContext);
+    const [productId, setProductId]=useState(props.productId);
+    
 
     const [checked, setChecked]=useState(false);
     const getDetailImage = () =>{
@@ -32,6 +37,8 @@ export default function ProductDetailNavBar(props) {
         console.log("props");
         console.log(props.detailFlag);
     });
+
+    
 
     return (
 

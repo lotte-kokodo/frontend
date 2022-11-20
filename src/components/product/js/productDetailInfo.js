@@ -31,7 +31,9 @@ export default function ProductDetail({img, template}) {
     const [ coupon, setCoupon ] =useState('');
     const [ratePolicy, setRatePolicy] =useState('');
     const [ fixCoupon, setFixCoupon] = useState([]);
+
     const navigate = useNavigate();
+    const [couponFlag, setCouponFlag] = useState(false);
 
     // productId[key]: qty[value]
     let productQtyMap = {};
@@ -75,7 +77,7 @@ export default function ProductDetail({img, template}) {
         let saleNum = originPrice * (percent/100);
         let tmp=originPrice - saleNum;
 
-        return tmp;
+        return Math.floor(tmp);
     }
 
     const changeOrderNum = (e)=>{
@@ -194,6 +196,10 @@ export default function ProductDetail({img, template}) {
                 .then(function (resp) {
                     console.log("쿠폰 조회");
                     console.log(resp);
+                    
+                    if(resp.data.result.data.length !== 0) {
+                        setCouponFlag(true);
+                    }
                     setCoupon(resp.data.result.data)
                 })
                 .catch(function (error) {
@@ -206,6 +212,10 @@ export default function ProductDetail({img, template}) {
                 .then(function (resp) {
                     console.log("고정 쿠폰 조회");
                     console.log(resp);
+
+                    if(resp.data.result.data.length !== 0) {
+                        setCouponFlag(true);
+                    }
                     setFixCoupon(resp.data.result.data);
                 })
                 .catch(function (error) {
@@ -303,10 +313,10 @@ export default function ProductDetail({img, template}) {
         <p className="origin"><span>{moneyComma(product.price)}</span>원</p>
     </div>
     <div className="orange-mem-box">
-        <a onClick={()=>{downloadCoupon(coupon)}} href="#" className="box-head">
+        {couponFlag && <a onClick={()=>{downloadCoupon(coupon)}} href="#" className="box-head">
             <i className="ico-bl-orgmem"></i><strong className="product-info-coupon-primary">주문 시 적용되는 혜택이 있어요</strong>
             <span className="txt">쿠폰 다운로드 <i className="ico-arr-right"></i></span>
-        </a>
+        </a>}
         <ul className="sale-desc">
             { coupon[0]!=undefined ?<li><span>{coupon[0].name}</span><em className="number"><strong>{coupon[0].rate}%</strong></em></li>: "" }
             {/* <li><span>{coupon.name}</span><em className="number"><strong>{coupon.rate}%</strong></em></li> */}
