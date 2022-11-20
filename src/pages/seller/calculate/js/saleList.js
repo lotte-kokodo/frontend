@@ -20,23 +20,19 @@ import salesImage from "../../../../src_assets/seller/title/sales-title.png";
 export default function SaleList() {
     const { url } = useContext(ServerConfigContext);
     const sellerId = localStorage.getItem("sellerId")
+
     let today = new Date();
-    today.setMonth(today.getMonth() + 1);
+    today.setDate(today.getDate() + 1)
 
     let pastTime = new Date();
     pastTime.setDate(today.getDate() - 7)
 
-
-    let startTimeInitValue = pastTime.toISOString;
-    let endTimeInitValue = today.toISOString;
-
-    // console.log(pastTime.toISOString().substring(0,10))
     let history = useNavigate();
     const [saleList, setSaleList] = useState([]);
     const [searchCondition, setSearchCondition] = useState("");
 
     const [tmpStartDate, setTmpStartDate] = useState(() => pastTime.toISOString().substring(0, 10));
-    const [tmpEndDate, setTmpEndDate] = useState(() => new Date().toISOString().substring(0, 10));
+    const [tmpEndDate, setTmpEndDate] = useState(() => today.toISOString().substring(0, 10));
 
     const provideStatusChange = (e) => {setSearchCondition(e.target.value);};
 
@@ -72,14 +68,6 @@ export default function SaleList() {
         }).catch(function (error) {
             console.log(error);
         })
-    }
-
-    const getExpectEndDay = async() =>{
-        setTmpEndDate(parseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
-    }
-
-    const getExpecStartDay = async() =>{
-        setTmpStartDate(weekDateParseToLocalDate(today.getFullYear() +"-" + today.getMonth() + "-" + today.getUTCDate()))
     }
 
     const fetchTodayAddOne = () =>{
@@ -149,13 +137,13 @@ export default function SaleList() {
                         <input type="button" className="saleList-criteria-button2" value="+2" onClick={fetchTodayAddTwo}/>
 
                     </div>
-                    <div className="saleList-provide-status-border">
-                        <div className="saleList-title-provide-status-box">조회조건</div>
-                        <input name="prvidesuccess" className="saleList-radio-unit" value="PROVIDE_SCHEDULE" type="radio" onClick={provideStatusChange} checked/>
-                        <div className="saleList-radio-unit2" value="PROVIDE_SCHEDULE">업체별</div>
-                        <input name="prvidesuccess"className="saleList-radio-unit" value="PROVIDE_POSTPONE" type="radio" onClick={provideStatusChange}/>
-                        <div className="saleList-radio-unit2" value="PROVIDE_POSTPONE">상품별</div>
-                    </div>
+                    {/*<div className="saleList-provide-status-border">*/}
+                    {/*    <div className="saleList-title-provide-status-box">조회조건</div>*/}
+                    {/*    <input name="prvidesuccess" className="saleList-radio-unit" value="PROVIDE_SCHEDULE" type="radio" onClick={provideStatusChange} checked/>*/}
+                    {/*    <div className="saleList-radio-unit2" value="PROVIDE_SCHEDULE">업체별</div>*/}
+                    {/*    <input name="prvidesuccess"className="saleList-radio-unit" value="PROVIDE_POSTPONE" type="radio" onClick={provideStatusChange}/>*/}
+                    {/*    <div className="saleList-radio-unit2" value="PROVIDE_POSTPONE">상품별</div>*/}
+                    {/*</div>*/}
                 </div>
             </div>
             &nbsp;
@@ -180,7 +168,7 @@ export default function SaleList() {
                     <th>전담택배비(D)</th>
                     <th>판매자서비스이용료(E)</th>
                     <th>패널티</th>
-                    <th>상세다운로드</th>
+                    {/*<th>상세다운로드</th>*/}
                 </tr>
                 </thead>
 
@@ -248,9 +236,9 @@ function SaleListTableRow(row) {
                     <div className="saleList-entire-cycle">0</div>
                 </td>
                 {/*상세 다운로드*/}
-                <td className="saleList-table-selle-down py-0 pl-0 pr-0">
-                    <div className="saleList-entire-cycle">상세 다운로드</div>
-                </td>
+                {/*<td className="saleList-table-selle-down py-0 pl-0 pr-0">*/}
+                {/*    <div className="saleList-entire-cycle">상세 다운로드</div>*/}
+                {/*</td>*/}
             </tr>
     )
 }
