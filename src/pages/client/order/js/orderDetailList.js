@@ -72,6 +72,8 @@ function OrderDetailList() {
                     <div className="values-bottom">
                         <div className="price">{orderDetail.obj.price}원</div>
                         <div className="qty">{orderDetail.obj.qty}개</div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div className="total-price">총 {(orderDetail.obj.price) * (orderDetail.obj.qty)}원</div>
                     </div>
                 </div>
                 <div className="status">
