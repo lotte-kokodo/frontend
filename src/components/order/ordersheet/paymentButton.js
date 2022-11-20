@@ -42,7 +42,7 @@ const PaymentButton = (props) => {
     .then((resp) => {
       clearCheckCoupons();
       alert(resp.data.result.data);
-      navigate(`/orderDetailList`);
+      navigate(`/`);
     })
     .catch((err) => {
       console.log(err);
@@ -79,7 +79,7 @@ const PaymentButton = (props) => {
     .then((resp) => {
       clearCheckCoupons();
       alert(resp.data.result.data);
-      navigate(`/orderDetailList`);
+      navigate(`/`);
     })
     .catch((err) => {
       console.log(err);
