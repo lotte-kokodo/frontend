@@ -61,8 +61,8 @@ class App {
             if (yleft > yright) {
                 [yleft, yright] = [yright, yleft]
             }
-            var zleft = couponArr[idx].zpos - (couponArr[idx].zpos / 2);
-            var zright = couponArr[idx].zpos + (couponArr[idx].zpos / 2);
+            var zleft = couponArr[idx].zpos - (couponArr[idx].zpos / 2.4);
+            var zright = couponArr[idx].zpos + (couponArr[idx].zpos / 2.4);
             if (zleft > zright) {
                 [zleft, zright] = [zright, zleft]
             }
@@ -140,7 +140,7 @@ class App {
 const url = "https://api.kokodo.shop/promotion-service/"
 // const url = "http://18.177.67.173:8001/promotion-service/"
 // const url = "http://localhost:8001/promotion-service/"
-const clientId = localStorage.getItem("clientId");
+const clientId = localStorage.getItem("memberId");
 
 const arCouponPos = async () => {
     await axios.get(url + `arCoupon/client/searchCoupon`, {})
