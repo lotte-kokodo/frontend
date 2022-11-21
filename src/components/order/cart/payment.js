@@ -78,7 +78,7 @@ const Payment = () => {
 					</tr>
 					<tr>
 						<td>상품할인금액</td>
-						<td className="table-value-td">{replaceNumberComma(discountPrice)} 원</td>
+						<td className="table-value-td">- &nbsp; {replaceNumberComma(discountPrice)} 원</td>
 					</tr>
 					<tr>
 						<td>배송비</td>
