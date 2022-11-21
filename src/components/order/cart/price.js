@@ -13,6 +13,9 @@ const Price = (props) => {
 	const { rateDiscountPolicyMap, replaceNumberComma } = useContext(OrderContext);
 	const discountRate = rateDiscountPolicyMap[productId] ? rateDiscountPolicyMap[productId].rate : undefined;
 
+	useEffect(() => {
+	}, [rateDiscountPolicyMap]);
+
 	const discProduct = () => {
 		const discPrice = Math.floor(totalPrice*(1-0.01*discountRate));
 
