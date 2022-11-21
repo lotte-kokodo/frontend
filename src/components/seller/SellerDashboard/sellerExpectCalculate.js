@@ -20,18 +20,19 @@ export default function SellerExpectCalculate(){
         await axios.get( url + `/calculate-service/calculate/${sellerId}/SellerDashBoardExpectMoney`,{headers : sellerHeaders})
         .then(function (resp) {
             setChangeNumberInfo(resp.data.result.data.changeNumberInfo);
-            setNumberInfo(moneyComma(resp.data.result.data.numberInfo));
+            setNumberInfo(resp.data.result.data.numberInfo);
         }).catch(function (error) {
             console.log(error);
         })
     }
 
+    let parseChangeNumberInfo = changeNumberInfo.substring(1).split('(')
     useEffect(()=>{
         getCalculateExpectMount();
     },[]);
 
     let idx = changeNumberInfo.indexOf('(');
     return(
-        <SellerInfoBox titleName={titleName} numberInfo={numberInfo} updownFlag={changeNumberInfo.substring(0, 1) == '^' ? true : false} changeNumberInfo={moneyComma(changeNumberInfo.substring(1, idx - 1))} changNumberPercent={changeNumberInfo.substring(idx)} unit={unit}></SellerInfoBox>
+        <SellerInfoBox titleName={titleName} numberInfo={moneyComma(numberInfo)} updownFlag={changeNumberInfo.substring(0, 1) == '^' ? true : false} changeNumberInfo={moneyComma(parseChangeNumberInfo[0])} changNumberPercent={changeNumberInfo.substring(idx)} unit={unit}></SellerInfoBox>
     )
 }
