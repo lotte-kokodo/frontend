@@ -11,7 +11,7 @@ const FixDiscountPolicy = (props) => {
 
   const discountDeliveryPrice = () => {
     return (
-        <div className="row container-fluid">
+        <div className="row container-fluid fix-discount-policy-div">
           <span>배송비 0원 &nbsp;&nbsp;
             <i className="far fa-question-circle"></i> 판매자 배송비 할인정책 적용
           </span>
