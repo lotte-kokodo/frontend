@@ -22,7 +22,7 @@ export default function SellerApplyCouponPolicy(){
             headers: {sellerId : 1}
         })
         .then(function (resp) {
-            console.log(resp.data.result.data);
+            console.log("coupon : "+resp.data.result.data);
             setNumberInfo(resp.data.result.data);
         })
         .catch(function (error) {
@@ -37,7 +37,7 @@ export default function SellerApplyCouponPolicy(){
 
     return(
         // <Link to={`/seller/${sellerId}/promotion/coupon`} style={{textDecoration: "none", height: 10}}>
-            <SellerInfoBox updownFlag={"0"} numberInfo={numberInfo} titleName="주간 Best 쿠폰"></SellerInfoBox>
+            <SellerInfoBox updownFlag={"0"} numberInfo={"허닭 브랜드위크"} titleName="주간 Best 쿠폰"></SellerInfoBox>
         // </Link>
     )
 }
